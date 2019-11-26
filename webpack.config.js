@@ -39,6 +39,7 @@ const create = (dirname) => {
     SOURCE: path.resolve(dirname, 'src'),
     OUTPUT: path.resolve(dirname, 'build'),
     PUBLIC: path.resolve(dirname, 'src/public'),
+    UI_SOURCE: path.resolve(__dirname, 'packages/ui/src'),
   }
 
   return {
@@ -199,6 +200,7 @@ const create = (dirname) => {
             {
               test: /\.scss$/,
               include: PATHS.SOURCE,
+              exclude: PATHS.UI_SOURCE,
               use: [
                 isEnvDevelopment && require.resolve('style-loader'),
                 isEnvProduction && {
@@ -208,15 +210,18 @@ const create = (dirname) => {
                     shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined,
                   ),
                 },
+                require.resolve('@teamsupercell/typings-for-css-modules-loader'),
                 {
                   loader: require.resolve('css-loader'),
                   options: {
                     import: true,
-                    modules: 'local',
-                    localIdentName: isEnvDevelopment ?
-                      '[path][name]__[local]--[hash:base64:5]' :
-                      '[hash:base64:8]',
-                    camelCase: true,
+                    modules: {
+                      mode: 'local',
+                      localIdentName: isEnvDevelopment ?
+                        '[path][name]__[local]--[hash:base64:5]' :
+                        '[hash:base64:8]',
+                    },
+                    localsConvention: 'camelCase',
                     importLoaders: 2,
                     sourceMap: isEnvProduction,
                   },
@@ -249,9 +254,75 @@ const create = (dirname) => {
                   loader: require.resolve('sass-loader'),
                   options: {
                     sourceMap: isEnvProduction,
-                    includePaths: [
-                      PATHS.SOURCE,
+                    sassOptions: {
+                      includePaths: [
+                        PATHS.SOURCE,
+                      ],
+                    },
+                  },
+                },
+              ].filter(Boolean),
+            },
+
+            // SCSS modules loader for UI Library
+            {
+              test: /\.scss$/,
+              include: PATHS.UI_SOURCE,
+              use: [
+                isEnvDevelopment && require.resolve('style-loader'),
+                isEnvProduction && {
+                  loader: MiniCssExtractPlugin.loader,
+                  options: Object.assign(
+                    {},
+                    shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined,
+                  ),
+                },
+                require.resolve('@teamsupercell/typings-for-css-modules-loader'),
+                {
+                  loader: require.resolve('css-loader'),
+                  options: {
+                    import: true,
+                    modules: {
+                      localIdentName: 'ui-[local]',
+                    },
+                    localsConvention: 'camelCase',
+                    importLoaders: 2,
+                    sourceMap: isEnvProduction,
+                  },
+                },
+                {
+                  // Options for PostCSS as we reference these options twice
+                  // Adds vendor prefixing based on your specified browser support in
+                  // package.json
+                  loader: require.resolve('postcss-loader'),
+                  options: {
+                    // Necessary for external CSS imports to work
+                    // https://github.com/facebook/create-react-app/issues/2677
+                    ident: 'postcss',
+                    plugins: () => [
+                      require('postcss-flexbugs-fixes'),
+                      require('autoprefixer')({
+                        browsers: [
+                          '>1%',
+                          'last 4 versions',
+                          'Firefox ESR',
+                          'not ie < 11',
+                        ],
+                        flexbox: 'no-2009',
+                      }),
                     ],
+                    sourceMap: isEnvProduction,
+                  },
+                },
+                {
+                  loader: require.resolve('sass-loader'),
+                  options: {
+                    sourceMap: isEnvProduction,
+                    sassOptions: {
+                      includePaths: [
+                        PATHS.UI_SOURCE,
+                      ],
+                    },
                   },
                 },
               ].filter(Boolean),

@@ -3,7 +3,7 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "npx webpack-dev-server --config ./webpack.config.js"
+    "dev": "./node_modules/.bin/env-cmd -e development npx webpack-dev-server --config ./webpack.config.js"
   },
   "dependencies": {
     "@jibrelcom/ui": "../../packages/ui",
@@ -13,6 +13,7 @@
   "devDependencies": {
     "@types/react": "~16.9.13",
     "@types/react-dom": "~16.9.4",
+    "env-cmd": "~10.0.1",
     "webpack": "~4.41.2",
     "webpack-dev-server": "~3.9.0"
   }
