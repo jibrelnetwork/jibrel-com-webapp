@@ -1,0 +1,42 @@
+@import './grid.scss';
+
+.inside {
+  height: 64px;
+  background: rgba(0, 61, 198, 0.2);
+}
+
+.first {
+  width: $column-s-2;
+
+  @include screen(">xsmall") {
+    width: $column-m-1;
+  }
+
+  @include screen(">medium") {
+    width: $column-l-7;
+  }
+}
+
+.second {
+  width: $column-s-1;
+
+  @include screen(">xsmall") {
+    width: $column-m-5;
+  }
+
+  @include screen(">medium") {
+    width: $column-l-4;
+  }
+}
+
+.third {
+  width: $column-s-1;
+
+  @include screen(">xsmall") {
+    width: $column-m-2;
+  }
+
+  @include screen(">medium") {
+    width: $column-l-1;
+  }
+}
