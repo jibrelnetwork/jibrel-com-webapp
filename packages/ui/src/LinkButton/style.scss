@@ -1,0 +1,101 @@
+@import '../theme/colors';
+@import '../utils/scss/ellipsis';
+
+.button {
+  box-sizing: border-box;
+  display: inline-flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  align-items: flex-start;
+  font-size: 16px;
+  line-height: 19px;
+  font-weight: bold;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: .15s ease-in-out color;
+  color: $color-main-blue;
+  border: none;
+  background: none;
+  padding: 0;
+  text-align: inherit;
+
+  &:hover .text, &:focus .text {
+    text-decoration-color: $color-main-blue;
+  }
+
+  &:active .icon,
+  &:active .text {
+    color: $color-main-blue-40;
+    text-decoration-color: $color-main-blue-40;
+  }
+}
+
+.icon {
+  flex: 0 0 auto;
+  width: 24px;
+  color: $color-main-blue;
+  display: none;
+
+  &.left {
+    margin-right: 8px;
+  }
+
+  &.right {
+    margin-left: 8px;
+  }
+
+  .prev &.left {
+    display: inline-block;
+  }
+
+  .next &.right {
+    display: inline-block;
+  }
+
+  [dir=rtl] .prev &.left {
+    display: none;
+  }
+
+  [dir=rtl] .prev &.right {
+    display: inline-block;
+  }
+
+  [dir=rtl] .next &.left {
+    display: inline-block;
+  }
+
+  [dir=rtl] .next &.right {
+    display: none;
+  }
+}
+
+.text {
+  flex: 1 1 auto;
+  text-decoration: underline;
+  text-decoration-color: transparent;
+  text-decoration-thickness: 1.5px;
+  text-decoration-skip-ink: auto;
+  transition: .15s ease-in-out text-decoration-color;
+
+  .prev &,
+  .next & {
+    margin: 3px 0 2px;
+  }
+
+  .prev & {
+    text-align: left;
+  }
+
+  .next & {
+    text-align: right;
+  }
+
+  [dir=rtl] .prev & {
+    text-align: right;
+  }
+
+  [dir=rtl] .next & {
+    text-align: left;
+  }
+}
