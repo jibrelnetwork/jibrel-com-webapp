@@ -8,7 +8,7 @@ import Icon from '../Icon'
 import { LinkButtonVariant } from './types'
 
 export interface LinkButtonProps {
-  variant?: LinkButtonVariant
+  variant?: LinkButtonVariant,
   className?: string,
   isDisabled?: boolean,
 }
@@ -24,7 +24,7 @@ const LinkButton: React.FunctionComponent<LinkButtonProps> = ({
     {...props}
     className={cc([
       style.button,
-      style[variant],
+      variant && style[variant],
       className,
     ])}
     disabled={isDisabled}
