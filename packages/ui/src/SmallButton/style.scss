@@ -1,5 +1,6 @@
 @import '../theme/colors';
 @import '../utils/scss/ellipsis';
+@import '../utils/scss/disabled';
 
 .button {
   box-sizing: border-box;
@@ -39,7 +40,7 @@
     color: $color-main-blue;
   }
 
-  &:disabled, &[disabled], &:disabled:hover, &:disabled:active, &[disabled]:hover, &[disabled]:active {
+  @include disabled {
     background: $color-main-black-10;
     border-color: $color-main-black-10;
     color: $color-main-black-40;

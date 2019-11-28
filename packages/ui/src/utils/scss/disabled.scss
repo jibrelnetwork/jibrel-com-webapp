@@ -1,0 +1,5 @@
+@mixin disabled {
+  &:disabled, &[disabled], &:disabled:hover, &:disabled:active, &[disabled]:hover, &[disabled]:active {
+    @content;
+  }
+}

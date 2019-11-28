@@ -1,5 +1,6 @@
 @import '../theme/colors';
 @import '../utils/scss/ellipsis';
+@import '../utils/scss/disabled';
 
 .button {
   @include ellipsis;
@@ -43,7 +44,7 @@
     color: $color-main-blue;
   }
 
-  &:disabled, &[disabled], &:disabled:hover, &:disabled:active, &[disabled]:hover, &[disabled]:active {
+  @include disabled {
     background: $color-main-black-10;
     border-color: $color-main-black-10;
     color: $color-main-black-40;
@@ -70,9 +71,10 @@
     color: $color-main-black;
   }
 
-  &:disabled, &[disabled], &:disabled:hover, &:disabled:active, &[disabled]:hover, &[disabled]:active {
+  @include disabled {
     background: transparent;
     border-color: $color-main-black-30;
     color: $color-main-black;
+    cursor: auto;
   }
 }
