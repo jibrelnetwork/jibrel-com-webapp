@@ -39,7 +39,7 @@ const create = (dirname) => {
     SOURCE: path.resolve(dirname, 'src'),
     OUTPUT: path.resolve(dirname, 'build'),
     PUBLIC: path.resolve(dirname, 'src/public'),
-    UI_SOURCE: path.resolve(__dirname, 'packages/ui/src'),
+    PACKAGES: path.resolve(__dirname, 'packages'),
   }
 
   return {
@@ -199,7 +199,10 @@ const create = (dirname) => {
             // SCSS modules loader
             {
               test: /\.scss$/,
-              include: PATHS.SOURCE,
+              include: [
+                PATHS.SOURCE,
+                PATHS.PACKAGES,
+              ],
               use: [
                 isEnvDevelopment && require.resolve('style-loader'),
                 isEnvProduction && {
@@ -256,6 +259,7 @@ const create = (dirname) => {
                     sassOptions: {
                       includePaths: [
                         PATHS.SOURCE,
+                        PATHS.PACKAGES,
                       ],
                     },
                   },
@@ -276,7 +280,10 @@ const create = (dirname) => {
                 compact: isEnvProduction,
                 rootMode: 'upward',
               },
-              include: PATHS.SOURCE,
+              include: [
+                PATHS.SOURCE,
+                PATHS.PACKAGES,
+              ],
             },
 
             // "file" loader makes sure assets end up in the `build` folder.
