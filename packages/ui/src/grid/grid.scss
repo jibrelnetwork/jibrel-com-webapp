@@ -12,7 +12,6 @@
 
 .centered {
   @include margin-horizontal(24px);
-  max-width: 1128px;
   display: flex;
   flex-direction: column;
 
@@ -30,6 +29,7 @@
 
   @include screen(">large") {
     @include margin-horizontal(auto);
+    max-width: 1128px;
   }
 }
 
