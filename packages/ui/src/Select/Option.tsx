@@ -32,8 +32,6 @@ export const Option: React.FunctionComponent<OptionProps> = ({
     [title]
   ), [value, title])
 
-  console.log(value, mode)
-
   if (mode === OptionRenderMode.preview) {
     return (
       <div
