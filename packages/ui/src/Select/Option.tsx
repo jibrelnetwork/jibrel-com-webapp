@@ -30,7 +30,7 @@ export const Option: React.FunctionComponent<OptionProps> = ({
     value,
     // FIXME: stub, replace with implementation when custom select design will be required
     [title]
-  ))
+  ), [value, title])
 
   console.log(value, mode)
 
