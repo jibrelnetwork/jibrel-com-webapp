@@ -2,8 +2,12 @@ import React from 'react'
 import cc from 'classcat'
 
 import style from './style.scss'
-
 import { IconName } from './types'
+
+import {
+  icons,
+  SpriteIcon,
+} from '../utils/sprite'
 
 interface IconProps {
   name: IconName,
@@ -14,17 +18,38 @@ const Icon: React.FunctionComponent<IconProps> = ({
   name,
   className,
   ...props
-}) => (
-  <svg
-    {...props}
-    key={name}
-    className={cc([
-      style.icon,
-      className,
-    ])}
-    width='24'
-    height='24'
-  />
-)
+}) => {
+  const data: SpriteIcon = icons[`${name}-usage`]
+
+  if (!data) {
+    return (
+      <div
+        className={cc([
+          style.icon,
+          style.empty,
+          className,
+        ])}
+      />
+    )
+  }
+
+  return (
+    <svg
+      className={cc([
+        style.icon,
+        data.colored && style.colored,
+        className,
+      ])}
+      width={data.width}
+      height={data.height}
+      {...props}
+    >
+      <use
+        key={name}
+        xlinkHref={data.url}
+      />
+    </svg>
+  )
+}
 
 export default React.memo(Icon)

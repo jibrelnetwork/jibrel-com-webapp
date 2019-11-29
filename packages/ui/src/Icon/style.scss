@@ -1,7 +1,27 @@
+@import '../theme/colors';
+
 .icon {
   display: inline-block;
-  /* FIXME: temporary styles for icon visibility */
-  width: 100%;
-  height: auto;
-  background: red;
+  stroke-width: 0;
+  fill-opacity: 1;
+  stroke-opacity: 0;
+  transition: stroke 0.3s ease 0s;
+  cursor: inherit;
+}
+
+.empty {
+  width: 24px;
+  height: 24px;
+  background-color: $color-main-red;
+}
+
+.colored {
+  fill-opacity: initial;
+  stroke-width: initial;
+}
+
+.blank {
+  fill-opacity: 0;
+  stroke-opacity: 1;
+  stroke-width: 1.5px;
 }
