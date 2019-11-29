@@ -9,7 +9,6 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const zopfli = require('@gfx/zopfli')
 
-const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
@@ -32,12 +31,21 @@ const shouldUseRelativeAssetPaths = publicPath === './'
 // Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
 const publicUrl = publicPath.slice(0, -1)
 
+const APPS_DIR = path.resolve(__dirname, 'apps')
+
 const create = (dirname) => {
+  const isApp = path.resolve(dirname).startsWith(APPS_DIR)
+
+  const OUTPUT_POSTFIX = isApp
+    ? path.relative(APPS_DIR, dirname)
+    : path.relative(__dirname, dirname)
+
   const PATHS = {
     INDEX_HTML: path.resolve(__dirname, 'index.html'),
     PACKAGE: path.resolve(dirname, 'package.json'),
     SOURCE: path.resolve(dirname, 'src'),
-    OUTPUT: path.resolve(dirname, 'build'),
+    OUTPUT: path.resolve(__dirname, 'build', OUTPUT_POSTFIX),
+    REPORT: path.resolve(__dirname, 'reports', OUTPUT_POSTFIX),
     PUBLIC: path.resolve(dirname, 'src/public'),
     PACKAGES: path.resolve(__dirname, 'packages'),
   }
@@ -98,13 +106,16 @@ const create = (dirname) => {
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
         isEnvProduction && {
-          test: /\.(ts|tsx|js|jsx)$/,
+          test: /\.(ts|tsx)$/,
           enforce: 'pre',
           use: [
             {
               options: {
-                formatter: typescriptFormatter,
-                eslintPath: require.resolve('tslint'),
+                tslint: require.resolve('tslint'),
+                fileOutput: {
+                  dir: path.resolve(PATHS.REPORT, 'tslint'),
+                  clean: true,
+                },
               },
               loader: require.resolve('tslint-loader'),
             },
@@ -360,7 +371,7 @@ const create = (dirname) => {
       isEnvProduction &&
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
-        reportFilename: '../reports/bundle-size/index.html',
+        reportFilename: path.resolve(PATHS.REPORT, 'bundle-size', 'index.html'),
         openAnalyzer: false,
       }),
 
