@@ -1,0 +1,65 @@
+@import '../theme/colors';
+@import '../utils/scss/ellipsis';
+
+.select {
+  box-sizing: border-box;
+  max-width: 100%;
+  height: 64px;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: nowrap;
+  border: 1px solid $color-main-black-30;
+  border-radius: 4px;
+  background: $color-white;
+  position: relative;
+  padding: 9px 7px;
+
+  .icon {
+    flex: 0 0 24px;
+    width: 24px;
+    align-self: center;
+    margin: 0 8px;
+  }
+}
+
+.content {
+  flex: 1 1 auto;
+  margin: 0 8px;
+}
+
+.title {
+  @include ellipsis;
+  flex: 1 1 auto;
+  color: $color-main-black-60;
+  font-size: 12px;
+  line-height: 17px;
+  margin-bottom: 2px;
+}
+
+.placeholder {
+  @include ellipsis;
+  flex: 1 1 auto;
+  color: $color-main-black-40;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.preview {
+  @include ellipsis;
+  flex: 1 1 auto;
+  color: $color-main-black;
+  height: 25px;
+  font-size: 18px;
+  line-height: 25px;
+}
+
+.native {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  appearance: none;
+  opacity: 0;
+}
