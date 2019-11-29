@@ -8,8 +8,10 @@
   },
   "dependencies": {
     "@jibrelcom/ui": "../../packages/ui",
+    "final-form": "~4.18.6",
     "react": "~16.12.0",
-    "react-dom": "~16.12.0"
+    "react-dom": "~16.12.0",
+    "react-final-form": "~6.3.3"
   },
   "devDependencies": {
     "@types/react": "~16.9.13",
