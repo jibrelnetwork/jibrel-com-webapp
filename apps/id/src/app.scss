@@ -1,0 +1,45 @@
+@import '../node_modules/@jibrelcom/ui/src/theme';
+
+html,
+body {
+  min-width: 100%;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+h2 {
+  margin: 0;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  color: $color-main-black;
+}
+
+.app {
+  min-width: 100%;
+  min-height: 100%;
+}
+
+.form {
+  width: 100%;
+  max-width: 440px;
+  margin: 40px;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: $color-white;
+}
+
+.title {
+  margin-bottom: 32px;
+}
+
+.fields {
+  margin-bottom: 26px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
