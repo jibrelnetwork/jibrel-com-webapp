@@ -4,7 +4,8 @@
   "private": true,
   "scripts": {
     "clean": "npx rimraf ./build/* && npx rimraf ./reports/*",
-    "build": "lerna run build"
+    "build": "npx lerna run build",
+    "build:clean": "npm run clean && npm run build"
   },
   "devDependencies": {
     "@babel/core": "~7.7.2",

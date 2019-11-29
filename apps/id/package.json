@@ -3,8 +3,8 @@
   "version": "0.0.0",
   "private": true,
   "scripts": {
-    "dev": "./node_modules/.bin/env-cmd -e development npx webpack-dev-server --config ./webpack.config.js",
-    "build": "./node_modules/.bin/env-cmd -e production npx webpack --config ./webpack.config.js"
+    "dev": "npx env-cmd -e development npx webpack-dev-server --config ./webpack.config.js",
+    "build": "npx env-cmd -e production npx webpack --config ./webpack.config.js"
   },
   "dependencies": {
     "@jibrelcom/ui": "../../packages/ui",
