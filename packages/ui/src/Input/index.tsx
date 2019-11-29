@@ -1,6 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
-import { FieldMetaState } from 'react-final-form'
+import { FieldRenderProps } from 'react-final-form'
 
 import getErrorMessage, { FormValidateType } from '../utils/forms/getErrorMessage'
 
@@ -8,11 +8,9 @@ import style from './style.scss'
 
 import { InputMessageType } from './types'
 
-export interface InputProps {
+export interface InputProps extends FieldRenderProps<string | number | boolean> {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
-  meta: FieldMetaState<string | number | boolean>,
   type: string,
-  name: string,
   label: string,
   message: string,
   className: string,
@@ -26,7 +24,6 @@ const Input: React.FunctionComponent<InputProps> = ({
   onChange,
   meta,
   type,
-  name,
   label,
   message,
   className,
