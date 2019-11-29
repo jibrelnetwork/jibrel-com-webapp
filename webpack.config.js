@@ -113,9 +113,7 @@ const create = (dirname) => {
         },
         {
           test: /\.svg$/,
-          include: [
-            path.resolve(__dirname, 'src/public/sprite/icons'),
-          ],
+          include: path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/plain'),
           use: [
             {
               loader: 'svg-sprite-loader',
@@ -148,9 +146,7 @@ const create = (dirname) => {
         },
         {
           test: /\.svg$/,
-          include: [
-            path.resolve(__dirname, 'src/public/sprite/colored'),
-          ],
+          include: path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/colored'),
           use: [
             {
               loader: 'svg-sprite-loader',
@@ -296,10 +292,9 @@ const create = (dirname) => {
               // it's runtime that would otherwise processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|jsx)$/, /\.html$/, /\.json$/,
-                path.resolve(__dirname, 'src/public/assets/icons/sprite-pack'),
-                path.resolve(__dirname, 'src/public/assets/icons/sprite-colored'),
-                path.resolve(__dirname, 'src/public/assets/tokens'),
+              exclude: [
+                /\.(js|jsx|ts|tsx|html|json)$/,
+                path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons'),
               ],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',
