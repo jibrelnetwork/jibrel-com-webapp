@@ -35,6 +35,7 @@ const Icon: React.FunctionComponent<IconProps> = ({
 
   return (
     <svg
+      {...props}
       className={cc([
         style.icon,
         data.colored && style.colored,
@@ -42,7 +43,6 @@ const Icon: React.FunctionComponent<IconProps> = ({
       ])}
       width={data.width}
       height={data.height}
-      {...props}
     >
       <use
         key={name}
