@@ -1,4 +1,5 @@
 @import '../node_modules/@jibrelcom/ui/src/theme/colors';
+@import '../node_modules/@jibrelcom/ui/src/utils/scss/iconColor.scss';
 
 .main {
   display: flex;
@@ -21,10 +22,6 @@
   line-height: 140%;
   text-align: center;
   color: $color-main-black;
-
-  svg {
-    display: none;
-  }
 }
 
 .action {
@@ -34,4 +31,8 @@
 .terms {
   margin-left: 4px;
   color: $color-main-blue;
+}
+
+.arrow {
+  @include icon-color($color-main-blue);
 }

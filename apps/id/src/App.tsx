@@ -13,6 +13,7 @@ import {
 } from 'react-final-form'
 
 import {
+  Icon,
   Input,
   BigButton,
   LinkButton,
@@ -146,6 +147,11 @@ function renderSignupForm({
         >
           SIGN IN
         </LinkButton>
+        <Icon
+          name='ic_arrow_down_24'
+          className={signup.arrow}
+        />
+        <Icon name='ic_en_24' />
       </div>
     </form>
   )

@@ -1,6 +1,7 @@
 declare namespace SignupScssModule {
   export interface ISignupScss {
     action: string;
+    arrow: string;
     main: string;
     signin: string;
     submit: string;
