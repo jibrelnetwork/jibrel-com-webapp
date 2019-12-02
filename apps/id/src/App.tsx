@@ -1,29 +1,44 @@
 import React from 'react'
 
 import {
-  Link,
   Route,
   Switch,
   BrowserRouter as Router,
 } from 'react-router-dom'
 
+import {
+  Form,
+  Field,
+  FormRenderProps,
+} from 'react-final-form'
+
+import {
+  Input,
+  BigButton,
+  LinkButton,
+} from '@jibrelcom/ui'
+
+import app from './app.scss'
+import signup from './signup.scss'
+
+interface SignupFormFields {
+  firstName: string,
+  lastName: string,
+  email: string,
+  password: string,
+}
+
+const SIGNUP_INITIAL_VALUES: SignupFormFields = {
+  firstName: '',
+  lastName: '',
+  email: '',
+  password: '',
+}
+
 export default function App() {
   return (
-      <Router>
-      <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to='/'>Home</Link>
-            </li>
-            <li>
-              <Link to='/signin'>Sign In</Link>
-            </li>
-            <li>
-              <Link to='/signup'>Sign Up</Link>
-            </li>
-          </ul>
-        </nav>
+    <Router>
+      <div className={app.app}>
         <Switch>
           <Route path='/signin'>
             <Signin />
@@ -48,6 +63,113 @@ function Signin() {
   return <h2>Signin</h2>
 }
 
+function renderSignupForm({
+  handleSubmit,
+  values,
+  submitting: isSubmitting,
+}: FormRenderProps<SignupFormFields>) {
+  /* const {
+    firstName,
+    lastName,
+    email,
+    password,
+  }: SignupFormFields = values */
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className={app.form}
+    >
+      <h2 className={app.title}>Sign Up</h2>
+      <div className={app.fields}>
+        <Field
+          component={Input}
+          className={app.field}
+          name='firstName'
+          label='First Name'
+          message='First message'
+          maxLength={256}
+        />
+        <Field
+          component={Input}
+          className={app.field}
+          name='lastName'
+          label='Last Name'
+          message='Last message'
+          messageType='success'
+          maxLength={256}
+        />
+        <Field
+          component={Input}
+          className={app.field}
+          name='email'
+          label='Email'
+          message='Email message'
+          messageType='info'
+          maxLength={256}
+        />
+        <Field
+          component={Input}
+          className={app.field}
+          name='password'
+          label='Password'
+          message='Password message'
+          messageType='error'
+          maxLength={256}
+        />
+      </div>
+      <label htmlFor='terms'>
+        <input
+          id='terms'
+          type='checkbox'
+        />
+        <span>I agree to Jibrel's</span>
+        <a
+          href='#'
+          className={signup.terms}
+        >
+          Terms and Conditions and Privacy Policy
+        </a>
+      </label>
+      <BigButton
+        className={signup.submit}
+        type='submit'
+        isLoading={isSubmitting}
+      >
+        Create Account
+      </BigButton>
+      <div className={signup.signin}>
+        <span>Already have a Jibrel account?</span>
+        <LinkButton
+          href='/signin'
+          className={signup.action}
+        >
+          SIGN IN
+        </LinkButton>
+      </div>
+    </form>
+  )
+}
+
 function Signup() {
-  return <h2>Signup</h2>
+  const handleSubmit = (values: SignupFormFields) => {
+    console.log(values)
+
+    return {
+      firstName: 'firstName error',
+      lastName: 'lastName error',
+      email: 'email error',
+      password: 'password error',
+    }
+  }
+
+  return (
+    <div className={signup.main}>
+      <Form
+        onSubmit={handleSubmit}
+        render={renderSignupForm}
+        initialValues={SIGNUP_INITIAL_VALUES}
+      />
+    </div>
+  )
 }
