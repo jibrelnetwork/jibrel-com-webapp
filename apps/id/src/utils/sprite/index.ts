@@ -1,14 +1,14 @@
-import loadSprite from '@jibrelcom/ui/src/utils/sprite/loadSprite'
+import { loadSprite } from '@jibrelcom/ui'
 
-import spritePlain from './spritePlain'
 import spriteColored from './spriteColored'
+import spriteMonochrome from './spriteMonochrome'
 
-const iconsPlain = loadSprite(spritePlain)
 const iconsColored = loadSprite(spriteColored, true)
+const iconsMonochrome = loadSprite(spriteMonochrome)
 
 const icons = {
-  ...iconsPlain,
   ...iconsColored,
+  ...iconsMonochrome,
 }
 
 export default icons
