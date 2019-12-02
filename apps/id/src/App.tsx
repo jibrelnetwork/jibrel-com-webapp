@@ -13,6 +13,7 @@ import {
 } from 'react-final-form'
 
 import {
+  Icon,
   Input,
   BigButton,
   LinkButton,
@@ -37,7 +38,7 @@ const SIGNUP_INITIAL_VALUES: SignupFormFields = {
 
 export default function App() {
   return (
-    <Router>
+    <Router basename='/id'>
       <div className={app.app}>
         <Switch>
           <Route path='/signin'>
@@ -146,6 +147,23 @@ function renderSignupForm({
         >
           SIGN IN
         </LinkButton>
+        <Icon
+          name='ic_arrow_down_24'
+          className={signup.arrow}
+        />
+        <Icon
+          namespace='id'
+          name='ic_arrow_right_24'
+          className={signup.arrow}
+        />
+        <Icon
+          namespace='ui'
+          name='ic_en_24'
+        />
+        <Icon
+          namespace='id'
+          name='ic_es_24'
+        />
       </div>
     </form>
   )

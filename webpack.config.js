@@ -95,7 +95,8 @@ const create = (dirname) => {
         {
           test: /\.svg$/,
           include: [
-            path.resolve(__dirname, 'src/public/sprite/icons'),
+            path.resolve(PATHS.SOURCE, 'utils/sprite/icons/monochrome'),
+            path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/monochrome'),
           ],
           use: [
             {
@@ -103,7 +104,6 @@ const create = (dirname) => {
               options: {
                 extract: true,
                 spriteFilename: '[hash:8].sprite-icons.svg',
-                publicPath: '/static/media/',
               },
             },
             {
@@ -130,7 +130,8 @@ const create = (dirname) => {
         {
           test: /\.svg$/,
           include: [
-            path.resolve(__dirname, 'src/public/sprite/colored'),
+            path.resolve(PATHS.SOURCE, 'utils/sprite/icons/colored'),
+            path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/colored'),
           ],
           use: [
             {
@@ -138,7 +139,6 @@ const create = (dirname) => {
               options: {
                 extract: true,
                 spriteFilename: '[hash:8].sprite-colored.svg',
-                publicPath: '/static/media/',
               },
             },
             {
@@ -273,10 +273,10 @@ const create = (dirname) => {
               // it's runtime that would otherwise processed through "file" loader.
               // Also exclude `html` and `json` extensions so they get processed
               // by webpacks internal loaders.
-              exclude: [/\.(js|jsx)$/, /\.html$/, /\.json$/,
-                path.resolve(__dirname, 'src/public/assets/icons/sprite-pack'),
-                path.resolve(__dirname, 'src/public/assets/icons/sprite-colored'),
-                path.resolve(__dirname, 'src/public/assets/tokens'),
+              exclude: [
+                /\.(js|jsx|ts|tsx|html|json)$/,
+                path.resolve(PATHS.SOURCE, 'utils/sprite/icons'),
+                path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons'),
               ],
               options: {
                 name: 'static/media/[name].[hash:8].[ext]',

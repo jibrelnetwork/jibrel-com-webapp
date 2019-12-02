@@ -1,0 +1,4 @@
+@mixin icon-color($color) {
+  fill: $color;
+  stroke: $color;
+}

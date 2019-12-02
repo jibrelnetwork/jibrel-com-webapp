@@ -1,5 +1,8 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
+    blank: string;
+    colored: string;
+    empty: string;
     icon: string;
   }
 }
