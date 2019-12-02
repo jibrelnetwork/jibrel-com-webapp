@@ -6,7 +6,7 @@ export default function loadSprite(
   sprite: any,
   isColored: boolean = false,
 ) {
-  return keyBy<SpriteIcon, string>(
+  return keyBy<SpriteIcon>(
     sprite.keys().map((name: string) => {
       const file: SpriteIcon = sprite(name).default
       const [,, width, height] = file.viewBox.split(/(\s+)/).filter((e: string) => !!e.trim().length)
