@@ -409,7 +409,7 @@ const create = (dirname) => {
       overlay: false,
       historyApiFallback: {
         rewrites: [
-          { from: new RegExp(`^/${OUTPUT_POSTFIX}/(?!static).*$`), to: '/id/index.html' },
+          { from: new RegExp(`^/${OUTPUT_POSTFIX}/(?!static).*$`), to: `/${OUTPUT_POSTFIX}/index.html` },
         ],
       },
     },
