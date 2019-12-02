@@ -1,0 +1,25 @@
+---
+root: true
+parser: "@typescript-eslint/parser"
+parserOptions:
+  project: "./tsconfig.json"
+plugins:
+  - "@typescript-eslint"
+  - "react"
+extends:
+  - "eslint:recommended"
+  - "plugin:react/recommended"
+  - "plugin:@typescript-eslint/eslint-recommended"
+  - "plugin:@typescript-eslint/recommended"
+  - "plugin:@typescript-eslint/recommended-requiring-type-checking"
+rules:
+  semi:
+    - "warn"
+    - "never"
+  quotes:
+    - "warn"
+    - "single"
+  "@typescript-eslint/member-delimiter-style":
+    - "warn"
+  "react/prop-types":
+    - "off"
