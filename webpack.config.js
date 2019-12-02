@@ -104,7 +104,6 @@ const create = (dirname) => {
               options: {
                 extract: true,
                 spriteFilename: '[hash:8].sprite-icons.svg',
-                publicPath: '/static/media/',
               },
             },
             {
@@ -140,7 +139,6 @@ const create = (dirname) => {
               options: {
                 extract: true,
                 spriteFilename: '[hash:8].sprite-colored.svg',
-                publicPath: '/static/media/',
               },
             },
             {
