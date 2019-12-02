@@ -409,8 +409,7 @@ const create = (dirname) => {
       overlay: false,
       historyApiFallback: {
         rewrites: [
-          // FIXME: should construct regex based on path prefix
-          { from: /^\/id\/(?!static).*$/, to: '/id/index.html' },
+          { from: new RegExp(`^/${OUTPUT_POSTFIX}/(?!static).*$`), to: '/id/index.html' },
         ],
       },
     },
