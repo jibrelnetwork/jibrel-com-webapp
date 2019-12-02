@@ -1,12 +1,13 @@
 {
   "name": "@jibrelcom/id",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
   "scripts": {
-    "dev": "./node_modules/.bin/env-cmd -e development npx webpack-dev-server --config ./webpack.config.js"
+    "dev": "npx env-cmd -e development npx webpack-dev-server --config ./webpack.config.js",
+    "build": "npx env-cmd -e production npx webpack --config ./webpack.config.js"
   },
   "dependencies": {
-    "@jibrelcom/ui": "../../packages/ui",
+    "@jibrelcom/ui": "0.0.1",
     "final-form": "~4.18.6",
     "react": "~16.12.0",
     "react-dom": "~16.12.0",

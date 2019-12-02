@@ -1,7 +1,12 @@
 {
   "name": "@jibrelnetwork/jibrel-com-webapp",
-  "version": "0.0.0",
+  "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "clean": "npx rimraf ./build/* && npx rimraf ./reports/*",
+    "build": "npx lerna run build",
+    "build:clean": "npm run clean && npm run build"
+  },
   "devDependencies": {
     "@babel/core": "~7.7.2",
     "@babel/plugin-proposal-class-properties": "~7.7.0",
@@ -22,11 +27,13 @@
     "css-loader": "~3.2.0",
     "file-loader": "~5.0.2",
     "html-webpack-plugin": "~4.0.0-beta.11",
+    "lerna": "^3.19.0",
     "mini-css-extract-plugin": "~0.8.0",
     "node-sass": "~4.13.0",
     "postcss-flexbugs-fixes": "~4.1.0",
     "postcss-loader": "~3.0.0",
     "react-dev-utils": "~9.1.0",
+    "rimraf": "~3.0.0",
     "sass-loader": "~8.0.0",
     "style-loader": "~1.0.0",
     "svg-sprite-loader": "~4.1.6",
