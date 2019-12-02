@@ -151,7 +151,19 @@ function renderSignupForm({
           name='ic_arrow_down_24'
           className={signup.arrow}
         />
-        <Icon name='ic_en_24' />
+        <Icon
+          namespace='id'
+          name='ic_arrow_right_24'
+          className={signup.arrow}
+        />
+        <Icon
+          namespace='ui'
+          name='ic_en_24'
+        />
+        <Icon
+          namespace='id'
+          name='ic_es_24'
+        />
       </div>
     </form>
   )

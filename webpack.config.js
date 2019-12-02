@@ -113,7 +113,10 @@ const create = (dirname) => {
         },
         {
           test: /\.svg$/,
-          include: path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/plain'),
+          include: [
+            path.resolve(PATHS.SOURCE, 'utils/sprite/icons/plain'),
+            path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/plain'),
+          ],
           use: [
             {
               loader: 'svg-sprite-loader',
@@ -146,7 +149,10 @@ const create = (dirname) => {
         },
         {
           test: /\.svg$/,
-          include: path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/colored'),
+          include: [
+            path.resolve(PATHS.SOURCE, 'utils/sprite/icons/colored'),
+            path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/colored'),
+          ],
           use: [
             {
               loader: 'svg-sprite-loader',
@@ -294,6 +300,7 @@ const create = (dirname) => {
               // by webpacks internal loaders.
               exclude: [
                 /\.(js|jsx|ts|tsx|html|json)$/,
+                path.resolve(PATHS.SOURCE, 'utils/sprite/icons'),
                 path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons'),
               ],
               options: {
