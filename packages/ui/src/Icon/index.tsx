@@ -2,24 +2,25 @@ import React from 'react'
 import cc from 'classcat'
 
 import style from './style.scss'
-import { IconName } from './types'
 
 import {
-  icons,
+  getSprite,
   SpriteIcon,
 } from '../utils/sprite'
 
 interface IconProps {
-  name: IconName,
+  name: string,
+  namespace?: string,
   className?: string,
 }
 
 const Icon: React.FunctionComponent<IconProps> = ({
   name,
   className,
+  namespace = 'ui',
   ...props
 }) => {
-  const data: SpriteIcon = icons[`${name}-usage`]
+  const data: SpriteIcon = getSprite(namespace)[`${name}-usage`]
 
   if (!data) {
     return (
@@ -50,6 +51,10 @@ const Icon: React.FunctionComponent<IconProps> = ({
       />
     </svg>
   )
+}
+
+Icon.defaultProps = {
+  namespace: undefined,
 }
 
 export default React.memo(Icon)
