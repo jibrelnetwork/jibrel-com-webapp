@@ -92,25 +92,6 @@ const create = (dirname) => {
         // Disable require.ensure as it's not a standard language feature.
         { parser: { requireEnsure: false } },
 
-        // First, run the linter.
-        // It's important to do this before Babel processes the JS.
-        isEnvProduction && {
-          test: /\.(ts|tsx)$/,
-          enforce: 'pre',
-          use: [
-            {
-              options: {
-                tslint: require.resolve('tslint'),
-                fileOutput: {
-                  dir: path.resolve(PATHS.REPORT, 'tslint'),
-                  clean: true,
-                },
-              },
-              loader: require.resolve('tslint-loader'),
-            },
-          ],
-          include: PATHS.SOURCE,
-        },
         {
           test: /\.svg$/,
           include: [
@@ -405,12 +386,14 @@ const create = (dirname) => {
       contentBase: PATHS.PUBLIC,
       watchContentBase: true,
       hot: true,
-      publicPath: PATHS.PUBLIC_URL_PATH,
+      publicPath: PATHS.PUBLIC_URL,
       host: '0.0.0.0',
       port: process.env.WEBPACK_DEV_SERVER_PORT || 3000,
       overlay: false,
       historyApiFallback: {
-        disableDotRule: true,
+        rewrites: [
+          { from: new RegExp(`^/${OUTPUT_POSTFIX}/(?!static).*$`), to: `/${OUTPUT_POSTFIX}/index.html` },
+        ],
       },
     },
 
