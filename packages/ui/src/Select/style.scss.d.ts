@@ -1,7 +1,11 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
     content: string;
+    "has-error": string;
+    hasError: string;
     icon: string;
+    "is-open": string;
+    isOpen: string;
     native: string;
     placeholder: string;
     preview: string;

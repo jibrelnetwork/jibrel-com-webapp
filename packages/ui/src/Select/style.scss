@@ -1,5 +1,6 @@
 @import '../theme/colors';
 @import '../utils/scss/ellipsis';
+@import '../utils/scss/iconColor';
 
 .select {
   box-sizing: border-box;
@@ -13,12 +14,63 @@
   background: $color-white;
   position: relative;
   padding: 9px 7px;
+  transition:
+          .15s ease-in-out border-width,
+          .15s ease-in-out border-color,
+          .15s ease-in-out padding;
 
   .icon {
     flex: 0 0 24px;
     width: 24px;
     align-self: center;
     margin: 0 8px;
+    transition:
+            .15s ease-in-out fill,
+            .15s ease-in-out stroke;
+
+    @include icon-color($color-main-black-60);
+  }
+
+  &:hover {
+    border-color: $color-main-blue-40;
+
+    .icon {
+      @include icon-color($color-main-blue-60);
+    }
+
+    .title {
+      color: $color-main-blue-60;
+    }
+  }
+
+  &.is-open {
+    border-color: $color-main-blue;
+    border-width: 2px;
+    padding: 8px 6px;
+
+    .icon {
+      @include icon-color($color-main-blue);
+    }
+
+    .title {
+      color: $color-main-blue;
+    }
+  }
+
+  &.has-error {
+    border-color: $color-main-red-30;
+
+    &:hover {
+      border-color: $color-main-red-60;
+    }
+
+    .title {
+      color: $color-main-red;
+    }
+
+    &.is-open {
+      border-color: $color-main-red;
+    }
   }
 }
 

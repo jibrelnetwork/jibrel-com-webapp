@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import cc from 'classcat'
 import get from 'lodash-es/get'
 import noop from 'lodash-es/noop'
 
@@ -7,11 +8,13 @@ import style from './style.scss'
 import Icon from '../Icon'
 
 export interface SelectProps {
-  title: string,
-  placeholder?: string,
-  defaultValue?: string,
-  value?: string,
-  onChange: (event: React.ChangeEvent) => void,
+  title: string;
+  placeholder?: string;
+  defaultValue?: string;
+  value?: string;
+  hasError?: boolean;
+  onChange: (event: React.ChangeEvent) => void;
+  children: React.ReactChildren;
 }
 
 export const NONE_VALUE = '__none__'
@@ -23,6 +26,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   placeholder,
   defaultValue,
   value,
+  hasError = false,
   onChange = noop,
   children,
 }) => {
@@ -31,7 +35,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
 
   const PreviewOption = getPreviewOption(currentValue, placeholder, children)
 
-  const handleChange = (event: React.ChangeEvent) => {
+  const handleChange = (event: React.ChangeEvent): void => {
     setCurrentValue(
       get(event, 'target.value')
     )
@@ -40,21 +44,28 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   }
 
   return (
-    <div className={style.select}>
+    <div
+      className={cc([
+        style.select,
+        isOpen && style.isOpen,
+        hasError && style.hasError,
+      ])}
+    >
       <div className={style.content}>
         <div className={style.title}>{title}</div>
         <PreviewOption />
       </div>
       <Icon
         className={style.icon}
-        name={isOpen ? 'arrow-up' : 'arrow-down'}
+        name={isOpen ? 'ic_arrow_up_24' : 'ic_arrow_down_24'}
+        namespace='ui'
       />
       <select
         onChange={handleChange}
         value={currentValue || NONE_VALUE}
         className={style.native}
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
+        onFocus={(): void => setIsOpen(true)}
+        onBlur={(): void => setIsOpen(false)}
       >
         {placeholder && (
           <option

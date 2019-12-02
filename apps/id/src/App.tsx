@@ -17,6 +17,7 @@ import {
   Input,
   BigButton,
   LinkButton,
+  Select,
 } from '@jibrelcom/ui'
 
 import app from './app.scss'
@@ -164,6 +165,12 @@ function renderSignupForm({
           namespace='id'
           name='ic_es_24'
         />
+        <Select.Select title="foo" hasError={true}>
+          <Select.Option value="1" title="1" />
+          <Select.Option value="2" title="2" />
+          <Select.Option value="3" title="3" />
+          <Select.Option value="4" title="4" />
+        </Select.Select>
       </div>
     </form>
   )
