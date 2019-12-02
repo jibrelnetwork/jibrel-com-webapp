@@ -38,7 +38,7 @@ const SIGNUP_INITIAL_VALUES: SignupFormFields = {
 
 export default function App() {
   return (
-    <Router>
+    <Router basename='/id'>
       <div className={app.app}>
         <Switch>
           <Route path='/signin'>
