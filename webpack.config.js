@@ -67,6 +67,7 @@ const create = (dirname) => {
     resolve: {
       modules: [
         PATHS.SOURCE,
+        path.resolve(dirname, 'node_modules'),
         'node_modules',
       ],
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
