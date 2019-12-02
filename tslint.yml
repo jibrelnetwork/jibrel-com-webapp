@@ -1,0 +1,11 @@
+---
+extends: "tslint:recommended"
+rules:
+  semicolon:
+    options:
+      - "never"
+  quotemark:
+    options:
+      - "single"
+      - "jsx-single"
+  ordered-imports: false

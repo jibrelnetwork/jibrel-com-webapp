@@ -9,7 +9,6 @@ const CompressionPlugin = require('compression-webpack-plugin')
 const TerserPlugin = require('terser-webpack-plugin')
 const zopfli = require('@gfx/zopfli')
 
-const typescriptFormatter = require('react-dev-utils/typescriptFormatter')
 const ModuleScopePlugin = require('react-dev-utils/ModuleScopePlugin')
 const InterpolateHtmlPlugin = require('react-dev-utils/InterpolateHtmlPlugin')
 const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
@@ -19,27 +18,25 @@ const SpriteLoaderPlugin = require('svg-sprite-loader/plugin')
 const isEnvDevelopment = process.env.NODE_ENV === 'development'
 const isEnvProduction = process.env.NODE_ENV === 'production'
 
-// Webpack uses `publicPath` to determine where the app is being served from.
-// It requires a trailing slash, or the file assets will get an incorrect path.
-const publicPath = '/'
-
-// Some apps do not use client-side routing with pushState.
-// For these, "homepage" can be set to "." to enable relative asset paths.
-const shouldUseRelativeAssetPaths = publicPath === './'
-
-// `publicUrl` is just like `publicPath`, but we will provide it to our app
-// as %PUBLIC_URL% in `index.html` and `process.env.PUBLIC_URL` in JavaScript.
-// Omit trailing slash as %PUBLIC_URL%/xyz looks better than %PUBLIC_URL%xyz.
-const publicUrl = publicPath.slice(0, -1)
+const APPS_DIR = path.resolve(__dirname, 'apps')
 
 const create = (dirname) => {
+  const isApp = path.resolve(dirname).startsWith(APPS_DIR)
+
+  const OUTPUT_POSTFIX = isApp
+    ? path.relative(APPS_DIR, dirname)
+    : path.relative(__dirname, dirname)
+
   const PATHS = {
     INDEX_HTML: path.resolve(__dirname, 'index.html'),
     PACKAGE: path.resolve(dirname, 'package.json'),
     SOURCE: path.resolve(dirname, 'src'),
-    OUTPUT: path.resolve(dirname, 'build'),
+    OUTPUT: path.resolve(__dirname, 'build', OUTPUT_POSTFIX),
+    REPORT: path.resolve(__dirname, 'reports', OUTPUT_POSTFIX),
     PUBLIC: path.resolve(dirname, 'src/public'),
     PACKAGES: path.resolve(__dirname, 'packages'),
+    PUBLIC_URL_PATH: `/${OUTPUT_POSTFIX}/`,
+    PUBLIC_URL: `/${OUTPUT_POSTFIX}`,
   }
 
   return {
@@ -53,7 +50,7 @@ const create = (dirname) => {
     ].filter(Boolean),
 
     output: {
-      publicPath,
+      publicPath: PATHS.PUBLIC_URL_PATH,
       path: PATHS.OUTPUT,
       globalObject: 'this',
       pathinfo: isEnvDevelopment,
@@ -98,13 +95,16 @@ const create = (dirname) => {
         // First, run the linter.
         // It's important to do this before Babel processes the JS.
         isEnvProduction && {
-          test: /\.(ts|tsx|js|jsx)$/,
+          test: /\.(ts|tsx)$/,
           enforce: 'pre',
           use: [
             {
               options: {
-                formatter: typescriptFormatter,
-                eslintPath: require.resolve('tslint'),
+                tslint: require.resolve('tslint'),
+                fileOutput: {
+                  dir: path.resolve(PATHS.REPORT, 'tslint'),
+                  clean: true,
+                },
               },
               loader: require.resolve('tslint-loader'),
             },
@@ -209,10 +209,6 @@ const create = (dirname) => {
                 isEnvDevelopment && require.resolve('style-loader'),
                 isEnvProduction && {
                   loader: MiniCssExtractPlugin.loader,
-                  options: Object.assign(
-                    {},
-                    shouldUseRelativeAssetPaths ? { publicPath: '../../' } : undefined,
-                  ),
                 },
                 require.resolve('@teamsupercell/typings-for-css-modules-loader'),
                 {
@@ -327,7 +323,7 @@ const create = (dirname) => {
       // in `package.json`, in which case it will be the pathname of that URL.
       new InterpolateHtmlPlugin(HtmlWebpackPlugin, {
         NODE_ENV: process.env.NODE_ENV,
-        PUBLIC_URL: publicUrl,
+        PUBLIC_URL: PATHS.PUBLIC_URL,
         GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
       }),
 
@@ -354,7 +350,7 @@ const create = (dirname) => {
       // having to parse `index.html`.
       new ManifestPlugin({
         fileName: 'asset-manifest.json',
-        publicPath,
+        publicPath: PATHS.PUBLIC_URL_PATH,
       }),
 
       // we show bundle size report for production builds only
@@ -362,7 +358,7 @@ const create = (dirname) => {
       isEnvProduction &&
       new BundleAnalyzerPlugin({
         analyzerMode: 'static',
-        reportFilename: '../reports/bundle-size/index.html',
+        reportFilename: path.resolve(PATHS.REPORT, 'bundle-size', 'index.html'),
         openAnalyzer: false,
       }),
 
@@ -409,7 +405,7 @@ const create = (dirname) => {
       contentBase: PATHS.PUBLIC,
       watchContentBase: true,
       hot: true,
-      publicPath: '/',
+      publicPath: PATHS.PUBLIC_URL_PATH,
       host: '0.0.0.0',
       port: process.env.WEBPACK_DEV_SERVER_PORT || 3000,
       overlay: false,
