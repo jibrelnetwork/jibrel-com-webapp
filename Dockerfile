@@ -10,8 +10,8 @@ COPY packages/ui/package*.json ./packages/ui/
 COPY apps/id/package*.json ./apps/id/
 COPY apps/investor/package*.json ./apps/investor/
 RUN npm ci --quiet --no-progress && npx lerna bootstrap && npm cache clean --force
-COPY . .
 
+COPY . .
 RUN npm run build:clean
 
 FROM nginx:alpine
