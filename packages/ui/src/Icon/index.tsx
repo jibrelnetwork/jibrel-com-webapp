@@ -6,6 +6,7 @@ import style from './style.scss'
 import {
   getSprite,
   SpriteIcon,
+  DEFAULT_ALL_KEY,
 } from '../utils/sprite'
 
 interface IconProps {
@@ -17,7 +18,7 @@ interface IconProps {
 const Icon: React.FunctionComponent<IconProps> = ({
   name,
   className,
-  namespace = 'ui',
+  namespace = DEFAULT_ALL_KEY,
   ...props
 }) => {
   const data: SpriteIcon = getSprite(namespace)[`${name}-usage`]
