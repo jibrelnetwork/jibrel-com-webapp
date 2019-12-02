@@ -95,8 +95,8 @@ const create = (dirname) => {
         {
           test: /\.svg$/,
           include: [
-            path.resolve(PATHS.SOURCE, 'utils/sprite/icons/plain'),
-            path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/plain'),
+            path.resolve(PATHS.SOURCE, 'utils/sprite/icons/monochrome'),
+            path.resolve(PATHS.PACKAGES, 'ui/src/Icon/icons/monochrome'),
           ],
           use: [
             {

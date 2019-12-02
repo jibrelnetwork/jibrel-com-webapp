@@ -15,13 +15,13 @@ const sprite: Sprite = {
 
 export function registerSprite(
   namespace: string,
-  icons: SpriteIcons,
+  spriteIcons: SpriteIcons,
 ) {
-  sprite[namespace] = icons
+  sprite[namespace] = spriteIcons
 
   sprite[DEFAULT_ALL_KEY] = {
     ...sprite[DEFAULT_ALL_KEY],
-    ...icons,
+    ...spriteIcons,
   }
 }
 

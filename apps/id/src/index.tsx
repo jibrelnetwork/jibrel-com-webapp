@@ -1,7 +1,7 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-import { registerSprite } from '@jibrelcom/ui/src/utils/sprite'
+import { registerSprite } from '@jibrelcom/ui'
 
 import App from './App'
 import sprite from './utils/sprite'

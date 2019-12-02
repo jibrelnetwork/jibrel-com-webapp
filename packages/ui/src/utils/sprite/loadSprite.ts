@@ -9,15 +9,15 @@ export default function loadSprite(
   return keyBy<SpriteIcon>(
     sprite.keys().map((name: string) => {
       const file: SpriteIcon = sprite(name).default
-      const [,, width, height] = file.viewBox.split(/(\s+)/).filter((e: string) => !!e.trim().length)
-  
+      const [, , width, height] = file.viewBox.split(/(\s+)/).filter((e: string) => !!e.trim().length)
+
       file.width = width
       file.height = height
 
       if (isColored) {
         file.colored = true
       }
-  
+
       return file
     }),
     'id',
