@@ -1,0 +1,11 @@
+{
+  "extends": "./tsconfig.json",
+  "include": [
+    "apps/id/src/**/*.ts",
+    "apps/id/src/**/*.tsx",
+    "apps/investor/src/**/*.ts",
+    "apps/investor/src/**/*.tsx",
+    "packages/ui/src/**/*.ts",
+    "packages/ui/src/**/*.tsx"
+  ]
+}

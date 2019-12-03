@@ -190,7 +190,7 @@ const create = (dirname) => {
                 isEnvProduction && {
                   loader: MiniCssExtractPlugin.loader,
                 },
-                require.resolve('@teamsupercell/typings-for-css-modules-loader'),
+                isEnvDevelopment && require.resolve('@teamsupercell/typings-for-css-modules-loader'),
                 {
                   loader: require.resolve('css-loader'),
                   options: {

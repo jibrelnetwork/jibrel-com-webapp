@@ -6,6 +6,12 @@ export { default as SmallButton } from './SmallButton'
 export { default as Select } from './Select'
 
 export {
+  withMessage,
+  withFieldUX,
+  withField,
+} from './FieldWrapper'
+
+export {
   loadSprite,
   registerSprite,
 } from './utils/sprite'

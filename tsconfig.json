@@ -26,13 +26,7 @@
     ],
     "baseUrl": ".",
     "outDir": "build",
-    "rootDir": ".",
-    "paths": {
-      "~/*": [
-        "packages/*",
-        "apps/*"
-      ]
-    }
+    "rootDir": "."
   },
   "exclude": [
     "node_modules",

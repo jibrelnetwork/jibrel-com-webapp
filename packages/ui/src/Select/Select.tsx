@@ -5,6 +5,7 @@ import noop from 'lodash-es/noop'
 
 import style from './style.scss'
 
+import { withField, withFieldUX, withMessage } from '../FieldWrapper'
 import Icon from '../Icon'
 
 export interface SelectProps {
@@ -81,4 +82,6 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   )
 }
 
-export default React.memo(Select)
+export default React.memo(withMessage(Select))
+
+export const SelectField = withField(withFieldUX(React.memo(withMessage(Select))))
