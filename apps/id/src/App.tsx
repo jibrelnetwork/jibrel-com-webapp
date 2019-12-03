@@ -17,6 +17,7 @@ import {
   Input,
   BigButton,
   LinkButton,
+  Select,
 } from '@jibrelcom/ui'
 
 import app from './app.scss'
@@ -91,6 +92,16 @@ function renderSignupForm({
           message='First message'
           maxLength={256}
         />
+        <Select.SelectField
+          name="select"
+          title="foo"
+          validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
+        >
+          <Select.Option value="1" title="1" />
+          <Select.Option value="2" title="2" />
+          <Select.Option value="3" title="3" />
+          <Select.Option value="4" title="4" />
+        </Select.SelectField>
         <Field
           component={Input}
           className={app.field}

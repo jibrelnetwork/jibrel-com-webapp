@@ -67,6 +67,7 @@ const create = (dirname) => {
     resolve: {
       modules: [
         PATHS.SOURCE,
+        path.resolve(dirname, 'node_modules'),
         'node_modules',
       ],
       extensions: ['.ts', '.tsx', '.js', '.jsx', '.json'],
@@ -189,7 +190,7 @@ const create = (dirname) => {
                 isEnvProduction && {
                   loader: MiniCssExtractPlugin.loader,
                 },
-                require.resolve('@teamsupercell/typings-for-css-modules-loader'),
+                isEnvDevelopment && require.resolve('@teamsupercell/typings-for-css-modules-loader'),
                 {
                   loader: require.resolve('css-loader'),
                   options: {

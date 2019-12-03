@@ -1,0 +1,34 @@
+@import '../theme/colors';
+@import '../theme/media';
+
+.wrapper {
+  display: block;
+  margin-bottom: 16px;
+
+  @include screen('>small') {
+    margin-bottom: 24px;
+  }
+
+  &.info .message {
+    display: block;
+    color: $color-main-black-60;
+  }
+
+  &.error .message {
+    display: block;
+    color: $color-main-red;
+  }
+
+  &.success .message {
+    display: block;
+    color: $color-main-blue;
+  }
+}
+
+.message {
+  display: none;
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 140%;
+  letter-spacing: -0.54px;
+}

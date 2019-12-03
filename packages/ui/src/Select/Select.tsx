@@ -1,17 +1,23 @@
 import React, { useState } from 'react'
+import cc from 'classcat'
 import get from 'lodash-es/get'
 import noop from 'lodash-es/noop'
 
 import style from './style.scss'
 
+import { withField, withFieldUX, withMessage } from '../FieldWrapper'
 import Icon from '../Icon'
 
 export interface SelectProps {
-  title: string,
-  placeholder?: string,
-  defaultValue?: string,
-  value?: string,
-  onChange: (event: React.ChangeEvent) => void,
+  title: string;
+  placeholder?: string;
+  defaultValue?: string;
+  value?: string;
+  hasError?: boolean;
+  onChange: (event: React.ChangeEvent) => void;
+  onFocus: (event: React.FocusEvent) => void;
+  onBlur: (event: React.FocusEvent) => void;
+  children: React.ReactChildren;
 }
 
 export const NONE_VALUE = '__none__'
@@ -23,7 +29,10 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   placeholder,
   defaultValue,
   value,
+  hasError = false,
   onChange = noop,
+  onFocus = noop,
+  onBlur = noop,
   children,
 }) => {
   const [currentValue, setCurrentValue] = useState(value || defaultValue)
@@ -31,7 +40,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
 
   const PreviewOption = getPreviewOption(currentValue, placeholder, children)
 
-  const handleChange = (event: React.ChangeEvent) => {
+  const handleChange = (event: React.ChangeEvent): void => {
     setCurrentValue(
       get(event, 'target.value')
     )
@@ -39,22 +48,39 @@ export const Select: React.FunctionComponent<SelectProps> = ({
     onChange(event)
   }
 
+  const handleFocus = (event: React.FocusEvent): void => {
+    setIsOpen(true)
+    return onFocus(event)
+  }
+
+  const handleBlur = (event: React.FocusEvent): void => {
+    setIsOpen(false)
+    return onBlur(event)
+  }
+
   return (
-    <div className={style.select}>
+    <div
+      className={cc([
+        style.select,
+        isOpen && style.isOpen,
+        hasError && style.hasError,
+      ])}
+    >
       <div className={style.content}>
         <div className={style.title}>{title}</div>
         <PreviewOption />
       </div>
       <Icon
         className={style.icon}
-        name={isOpen ? 'arrow-up' : 'arrow-down'}
+        name={isOpen ? 'ic_arrow_up_24' : 'ic_arrow_down_24'}
+        namespace='ui'
       />
       <select
         onChange={handleChange}
         value={currentValue || NONE_VALUE}
         className={style.native}
-        onFocus={() => setIsOpen(true)}
-        onBlur={() => setIsOpen(false)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       >
         {placeholder && (
           <option
@@ -70,4 +96,6 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   )
 }
 
-export default React.memo(Select)
+export default React.memo(withMessage(Select))
+
+export const SelectField = withField(withFieldUX(React.memo(withMessage(Select))))
