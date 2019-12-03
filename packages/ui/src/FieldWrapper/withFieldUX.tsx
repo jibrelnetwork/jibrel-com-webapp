@@ -1,21 +1,20 @@
 import React from 'react'
-import { FieldInputProps, FieldMetaState, useFormState } from 'react-final-form'
+import { useFormState } from 'react-final-form'
 
 import { getMessage } from './getMessage'
 
-import { GenericFieldProps, GenericFieldValue } from './types'
+import { GenericFieldProps } from './types'
+import { WithMessageProps } from './withMessage'
 
 export interface WithFieldUXWrapperProps extends GenericFieldProps {
-  meta: FieldMetaState<GenericFieldValue>;
   hint?: string;
   success?: string;
-  input: FieldInputProps<GenericFieldValue>;
   className?: string;
   children: React.ReactNode;
 }
 
-export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElements['input']>>(Component: React.ComponentType<P>): React.FunctionComponent<P & WithFieldUXWrapperProps> => {
-  const WithFieldUXWrapper: React.FunctionComponent<P & WithFieldUXWrapperProps> = ({
+export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElements['input']>>(Component: React.ComponentType<P & WithMessageProps>): React.FunctionComponent<P & WithFieldUXWrapperProps & GenericFieldProps> => {
+  const WithFieldUXWrapper: React.FunctionComponent<P & WithFieldUXWrapperProps & GenericFieldProps> = ({
     meta,
     hint,
     success,
