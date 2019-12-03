@@ -8,7 +8,6 @@ import {
 
 import {
   Form,
-  Field,
   FormRenderProps,
 } from 'react-final-form'
 
@@ -87,12 +86,11 @@ function renderSignupForm({
     >
       <h2 className={app.title}>Sign Up</h2>
       <div className={app.fields}>
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='firstName'
           label='First Name'
-          message='First message'
+          hint='First message'
           maxLength={256}
         />
         <Select.SelectField
@@ -105,40 +103,31 @@ function renderSignupForm({
           <Select.Option value="3" title="3" />
           <Select.Option value="4" title="4" />
         </Select.SelectField>
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='lastName'
           label='Last Name'
-          message='Last message'
-          messageType='success'
+          success='Last message'
           maxLength={256}
         />
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='email'
           label='Email'
-          message='Email message'
-          messageType='info'
+          hint='Email message'
           maxLength={256}
         />
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='password'
           label='Password'
           message='Password message'
-          messageType='error'
           maxLength={256}
         />
       </div>
-      <Field
-        component={Checkbox}
+      <Checkbox
         className={app.field}
         name='terms'
-        message='Terms message'
-        messageType='success'
       >
         <span>I agree to Jibrel's</span>
         <a
@@ -147,7 +136,7 @@ function renderSignupForm({
         >
           Terms and Conditions and Privacy Policy
         </a>
-      </Field>
+      </Checkbox>
       <BigButton
         className={signup.submit}
         type='submit'
