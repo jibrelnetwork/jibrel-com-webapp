@@ -22,6 +22,7 @@ import {
 
 import app from './app.scss'
 import signup from './signup.scss'
+import CountrySelect from './components/CountrySelect'
 
 interface SignupFormFields {
   firstName: string,
@@ -102,6 +103,10 @@ function renderSignupForm({
           <Select.Option value="3" title="3" />
           <Select.Option value="4" title="4" />
         </Select.Select>
+        <CountrySelect
+          name="country"
+          title="Country"
+        />
         <Field
           component={Input}
           className={app.field}
