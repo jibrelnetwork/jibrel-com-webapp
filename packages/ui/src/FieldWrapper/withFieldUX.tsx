@@ -2,7 +2,7 @@ import React from 'react'
 
 import { getMessage } from './getMessage'
 
-import { GenericFieldProps } from './types'
+import { GenericFieldProps, MessageType } from './types'
 import { WithMessageProps } from './withMessage'
 
 export interface WithFieldUXWrapperProps extends GenericFieldProps {
@@ -28,6 +28,7 @@ export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
       {...props as P}
       {...message}
       {...input}
+      hasError={message.messageType === MessageType.error}
     />
   }
 
