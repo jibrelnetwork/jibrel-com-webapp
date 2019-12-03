@@ -18,7 +18,7 @@ export const MessageWrapper: React.FunctionComponent<MessageWrapperProps> = ({
   children,
 }) => {
   return (
-    <div className={cc([style.input, style[messageType], className])}>
+    <div className={cc([style.wrapper, style[messageType], className])}>
       {children}
       <p className={style.message}>{message}</p>
     </div>

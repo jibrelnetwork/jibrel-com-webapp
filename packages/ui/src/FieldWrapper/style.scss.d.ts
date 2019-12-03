@@ -2,9 +2,9 @@ declare namespace StyleScssModule {
   export interface IStyleScss {
     error: string;
     info: string;
-    input: string;
     message: string;
     success: string;
+    wrapper: string;
   }
 }
 
