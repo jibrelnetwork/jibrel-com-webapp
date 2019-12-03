@@ -10,11 +10,12 @@ export enum OptionRenderMode {
 }
 
 export interface OptionProps {
-  register?: (value: string, searchTerms: string[]) => () => void,
-  onSelect?: (value: string) => void,
-  value: string,
-  title: string,
-  mode?: OptionRenderMode,
+  register?: (value: string, searchTerms: string[]) => () => void;
+  onSelect?: (value: string) => void;
+  value: string;
+  title: string;
+  mode?: OptionRenderMode;
+  children?: React.ReactNode;
 }
 
 export const Option: React.FunctionComponent<OptionProps> = ({
@@ -44,7 +45,7 @@ export const Option: React.FunctionComponent<OptionProps> = ({
 
   // FIXME: stub, replace with implementation when custom select design will be required
   if (mode === OptionRenderMode.dropdown) {
-    const handleClick = (...args: any[]) => {
+    const handleClick = (...args: any[]): void => {
       onSelect(value)
       invoke(props, 'onClick', ...args)
     }
