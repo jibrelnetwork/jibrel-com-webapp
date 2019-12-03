@@ -3,12 +3,10 @@ import { MessageType, GenericFieldValue } from './types'
 
 export const getMessage = ({
   meta,
-  dirtySinceLastSubmit,
   hint,
   success,
 }: {
   meta: FieldMetaState<GenericFieldValue>;
-  dirtySinceLastSubmit: boolean;
   hint?: string;
   success?: string;
 }): {
@@ -22,7 +20,7 @@ export const getMessage = ({
     }
   }
 
-  if (!dirtySinceLastSubmit && meta.submitError) {
+  if (!meta.dirtySinceLastSubmit && meta.submitError) {
     return {
       messageType: MessageType.error,
       message: meta.submitError,

@@ -95,6 +95,7 @@ function renderSignupForm({
         <Select.SelectField
           name="select"
           title="foo"
+          validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
         >
           <Select.Option value="1" title="1" />
           <Select.Option value="2" title="2" />

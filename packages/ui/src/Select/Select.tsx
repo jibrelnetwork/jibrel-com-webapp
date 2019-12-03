@@ -15,6 +15,8 @@ export interface SelectProps {
   value?: string;
   hasError?: boolean;
   onChange: (event: React.ChangeEvent) => void;
+  onFocus: (event: React.FocusEvent) => void;
+  onBlur: (event: React.FocusEvent) => void;
   children: React.ReactChildren;
 }
 
@@ -29,6 +31,8 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   value,
   hasError = false,
   onChange = noop,
+  onFocus = noop,
+  onBlur = noop,
   children,
 }) => {
   const [currentValue, setCurrentValue] = useState(value || defaultValue)
@@ -42,6 +46,16 @@ export const Select: React.FunctionComponent<SelectProps> = ({
     )
     setIsOpen(false)
     onChange(event)
+  }
+
+  const handleFocus = (event: React.FocusEvent): void => {
+    setIsOpen(true)
+    return onFocus(event)
+  }
+
+  const handleBlur = (event: React.FocusEvent): void => {
+    setIsOpen(false)
+    return onBlur(event)
   }
 
   return (
@@ -65,8 +79,8 @@ export const Select: React.FunctionComponent<SelectProps> = ({
         onChange={handleChange}
         value={currentValue || NONE_VALUE}
         className={style.native}
-        onFocus={(): void => setIsOpen(true)}
-        onBlur={(): void => setIsOpen(false)}
+        onFocus={handleFocus}
+        onBlur={handleBlur}
       >
         {placeholder && (
           <option

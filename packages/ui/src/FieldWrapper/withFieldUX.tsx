@@ -1,5 +1,4 @@
 import React from 'react'
-import { useFormState } from 'react-final-form'
 
 import { getMessage } from './getMessage'
 
@@ -21,11 +20,8 @@ export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
     input,
     ...props
   }) => {
-    const { dirtySinceLastSubmit } = useFormState()
-
     const message = getMessage({
       meta,
-      dirtySinceLastSubmit,
       hint,
       success,
     })
