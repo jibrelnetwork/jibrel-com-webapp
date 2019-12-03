@@ -38,7 +38,7 @@ export const getMessage = ({
 
   if (!meta.error && success) {
     return {
-      messageType: MessageType.info,
+      messageType: MessageType.success,
       message: success,
     }
   }
