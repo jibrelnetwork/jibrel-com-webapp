@@ -182,13 +182,12 @@ function renderSignupForm({
 
 function Signup() {
   const handleSubmit = (values: SignupFormFields) => {
-    console.log(values)
-
     return {
       firstName: 'firstName error',
       lastName: 'lastName error',
       email: 'email error',
       password: 'password error',
+      terms: 'terms error',
     }
   }
 

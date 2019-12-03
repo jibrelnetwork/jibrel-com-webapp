@@ -3,11 +3,8 @@ declare namespace StyleScssModule {
     error: string;
     field: string;
     frame: string;
-    info: string;
     input: string;
     label: string;
-    message: string;
-    success: string;
   }
 }
 
