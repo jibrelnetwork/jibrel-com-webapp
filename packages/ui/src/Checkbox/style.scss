@@ -1,33 +1,26 @@
 @import '../theme/colors';
 @import '../utils/scss/iconColor';
 
-.input {
+.checkbox {
+  position: relative;
+  display: flex;
+
   &:hover {
-    .checkbox.off {
+    .tick.off {
       @include icon-color($color-main-blue-40);
     }
   }
 
-  &,
-  &.info,
-  &.success {
-    position: relative;
-    display: block;
-  }
-
   &.error {
-    .checkbox.off {
+    .tick.off {
       @include icon-color($color-main-red);
     }
   }
 }
 
-.checkbox {
+.tick {
   @include icon-color($color-main-blue);
 
-  position: absolute;
-  top: 0;
-  left: 0;
   transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
 
   &.off,
@@ -43,10 +36,8 @@
 }
 
 .label {
-  position: absolute;
-  top: 0;
   width: 100%;
-  padding: 0 32px;
+  margin: 0 8px;
   letter-spacing: -0.54px;
   font-size: 15px;
   font-style: normal;

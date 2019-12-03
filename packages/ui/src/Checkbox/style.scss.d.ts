@@ -4,11 +4,9 @@ declare namespace StyleScssModule {
     disabled: string;
     error: string;
     field: string;
-    info: string;
-    input: string;
     label: string;
     off: string;
-    success: string;
+    tick: string;
   }
 }
 

@@ -12,23 +12,29 @@ import {
 export interface CheckboxProps {
   children: React.ReactNode,
   className: string,
-  value: boolean,
-  hasError: boolean,
-  isDisabled: boolean,
-  isRequired: boolean,
+  value?: boolean,
+  hasError?: boolean,
+  isDisabled?: boolean,
+  isRequired?: boolean,
 }
 
 const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
-  value,
   className,
-  hasError,
-  isDisabled,
-  isRequired,
+  value = false,
+  hasError = false,
+  isDisabled = false,
+  isRequired = false,
   ...props
 }) => {
   return (
-    <label className={cc([style.input, hasError && style.error, className])}>
+    <label
+      className={cc([
+        style.checkbox,
+        hasError && style.error,
+        className,
+      ])}
+    >
       <input
         {...props}
         name={name}
@@ -39,17 +45,15 @@ const Checkbox: React.FunctionComponent<CheckboxProps> = ({
       />
       <Icon
         name={`checkbox_${value ? 'on' : 'off'}`}
-        className={cc([style.checkbox, !value && style.off, isDisabled && style.disabled])}
+        className={cc([
+          style.tick,
+          !value && style.off,
+          isDisabled && style.disabled,
+        ])}
       />
       <p className={style.label}>{children}</p>
     </label> 
   )
-}
-
-Checkbox.defaultProps = {
-  hasError: false,
-  isDisabled: false,
-  isRequired: false,
 }
 
 export default withField(withFieldUX(React.memo(Checkbox)))
