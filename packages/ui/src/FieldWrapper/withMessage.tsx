@@ -24,7 +24,6 @@ export const withMessage = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
     >
       <InputComponent
         {...props as P}
-        hasError={messageType === MessageType.error}
       />
     </MessageWrapper>
   )

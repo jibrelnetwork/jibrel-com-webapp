@@ -14,10 +14,10 @@ export interface SelectProps {
   defaultValue?: string;
   value?: string;
   hasError?: boolean;
-  onChange: (event: React.ChangeEvent) => void;
-  onFocus: (event: React.FocusEvent) => void;
-  onBlur: (event: React.FocusEvent) => void;
-  children: React.ReactChildren;
+  onChange?: (event: React.ChangeEvent) => void;
+  onFocus?: (event: React.FocusEvent) => void;
+  onBlur?: (event: React.FocusEvent) => void;
+  children: React.ReactNode;
 }
 
 export const NONE_VALUE = '__none__'
