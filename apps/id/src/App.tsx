@@ -15,6 +15,7 @@ import {
 import {
   Icon,
   Input,
+  Checkbox,
   BigButton,
   LinkButton,
   Select,
@@ -28,6 +29,7 @@ interface SignupFormFields {
   lastName: string,
   email: string,
   password: string,
+  terms: boolean,
 }
 
 const SIGNUP_INITIAL_VALUES: SignupFormFields = {
@@ -35,6 +37,7 @@ const SIGNUP_INITIAL_VALUES: SignupFormFields = {
   lastName: '',
   email: '',
   password: '',
+  terms: false,
 }
 
 export default function App() {
@@ -130,11 +133,13 @@ function renderSignupForm({
           maxLength={256}
         />
       </div>
-      <label htmlFor='terms'>
-        <input
-          id='terms'
-          type='checkbox'
-        />
+      <Field
+        component={Checkbox}
+        className={app.field}
+        name='terms'
+        message='Terms message'
+        messageType='success'
+      >
         <span>I agree to Jibrel's</span>
         <a
           href='#'
@@ -142,7 +147,7 @@ function renderSignupForm({
         >
           Terms and Conditions and Privacy Policy
         </a>
-      </label>
+      </Field>
       <BigButton
         className={signup.submit}
         type='submit'
