@@ -1,13 +1,15 @@
 import React from 'react'
-import { FieldInputProps, FieldMetaState, FieldProps, FieldRenderProps, useFormState } from 'react-final-form'
+import { FieldInputProps, FieldMetaState, useFormState } from 'react-final-form'
 
 import { getMessage } from './getMessage'
 
-export interface WithFieldUXWrapperProps extends FieldProps<any, FieldRenderProps<any, HTMLElement>> {
-  meta: FieldMetaState<any>;
+import { GenericFieldProps, GenericFieldValue } from './types'
+
+export interface WithFieldUXWrapperProps extends GenericFieldProps {
+  meta: FieldMetaState<GenericFieldValue>;
   hint?: string;
   success?: string;
-  input: FieldInputProps<any>;
+  input: FieldInputProps<GenericFieldValue>;
   className?: string;
   children: React.ReactNode;
 }

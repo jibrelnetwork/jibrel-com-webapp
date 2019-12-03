@@ -1,12 +1,11 @@
 import React from 'react'
-import { FieldRenderProps } from 'react-final-form'
 
 import { FormValidateType } from '../utils/forms/getErrorMessage'
 
 import MessageWrapper from './MessageWrapper'
 import { MessageType } from './types'
 
-export interface WithMessageProps extends FieldRenderProps<string | number | boolean> {
+export interface WithMessageProps {
   message: string;
   messageType: MessageType;
   validateType: FormValidateType;

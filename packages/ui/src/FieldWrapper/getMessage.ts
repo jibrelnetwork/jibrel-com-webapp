@@ -1,5 +1,5 @@
 import { FieldMetaState } from 'react-final-form'
-import { MessageType } from './types'
+import { MessageType, GenericFieldValue } from './types'
 
 export const getMessage = ({
   meta,
@@ -7,7 +7,7 @@ export const getMessage = ({
   hint,
   success,
 }: {
-  meta: FieldMetaState<any>;
+  meta: FieldMetaState<GenericFieldValue>;
   dirtySinceLastSubmit: boolean;
   hint?: string;
   success?: string;

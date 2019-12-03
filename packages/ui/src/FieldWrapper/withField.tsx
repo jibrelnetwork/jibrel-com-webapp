@@ -1,8 +1,10 @@
 import React from 'react'
-import { Field, FieldRenderProps } from 'react-final-form'
+import { Field } from 'react-final-form'
 
-export const withField = <P extends React.PropsWithoutRef<JSX.IntrinsicElements['input']>>(Component: React.ComponentClass<FieldRenderProps<any, HTMLElement>, P>): React.FunctionComponent<P> => {
-  const WithFinalFormFieldWrapper: React.FunctionComponent = (props) => (
+import { GenericFieldProps, GenericFieldRenderProps } from './types'
+
+export const withField = <P extends React.PropsWithoutRef<JSX.IntrinsicElements['input']>>(Component: React.ComponentClass<GenericFieldRenderProps>): React.FunctionComponent<P & GenericFieldProps> => {
+  const WithFinalFormFieldWrapper: React.FunctionComponent<P & GenericFieldProps> = (props) => (
     <Field
       {...props}
       component={Component}
