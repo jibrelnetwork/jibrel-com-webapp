@@ -1,6 +1,5 @@
 import React from 'react'
 import cc from 'classcat'
-import { FieldRenderProps } from 'react-final-form'
 
 import style from './style.scss'
 
@@ -10,7 +9,7 @@ import {
   withMessage,
 } from '../FieldWrapper'
 
-export interface InputProps extends FieldRenderProps<string | number> {
+export interface InputProps {
   type: string,
   label: string,
   className: string,
@@ -20,8 +19,6 @@ export interface InputProps extends FieldRenderProps<string | number> {
 }
 
 const Input: React.FunctionComponent<InputProps> = ({
-  meta,
-  input,
   type,
   label,
   className,
@@ -34,7 +31,6 @@ const Input: React.FunctionComponent<InputProps> = ({
     <label className={cc([style.input, hasError && style.error, className])}>
       <input
         {...props}
-        {...input}
         name={name}
         type={type}
         className={style.field}
@@ -54,6 +50,4 @@ Input.defaultProps = {
   isRequired: false,
 }
 
-export default React.memo(withMessage(Input))
-
-export const SelectField = withField(withFieldUX(React.memo(withMessage(Input))))
+export default withField(withFieldUX(React.memo(withMessage(Input))))
