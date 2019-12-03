@@ -8,6 +8,7 @@ export { default as Select } from './Select'
 export {
   withMessage,
   withFieldUX,
+  withDependenciesFieldUX,
   withField,
 } from './FieldWrapper'
 
