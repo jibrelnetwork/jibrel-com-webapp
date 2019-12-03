@@ -92,7 +92,7 @@ function renderSignupForm({
           message='First message'
           maxLength={256}
         />
-        <Select.SelectField
+        <Select.Select
           name="select"
           title="foo"
           validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
@@ -101,7 +101,7 @@ function renderSignupForm({
           <Select.Option value="2" title="2" />
           <Select.Option value="3" title="3" />
           <Select.Option value="4" title="4" />
-        </Select.SelectField>
+        </Select.Select>
         <Field
           component={Input}
           className={app.field}

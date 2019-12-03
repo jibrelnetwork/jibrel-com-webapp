@@ -96,6 +96,4 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   )
 }
 
-export default React.memo(withMessage(Select))
-
-export const SelectField = withField(withFieldUX(React.memo(withMessage(Select))))
+export default withField(withFieldUX(React.memo(withMessage(Select))))
