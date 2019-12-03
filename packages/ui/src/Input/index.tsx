@@ -2,11 +2,9 @@ import React from 'react'
 import cc from 'classcat'
 import { FieldRenderProps } from 'react-final-form'
 
-import getErrorMessage, { FormValidateType } from '../utils/forms/getErrorMessage'
-
 import style from './style.scss'
-
-import { InputMessageType } from './types'
+import FieldMessage, { FieldMessageType } from '../FieldMessage'
+import getErrorMessage, { FormValidateType } from '../utils/forms/getErrorMessage'
 
 export interface InputProps extends FieldRenderProps<string | number | boolean> {
   onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
@@ -14,7 +12,7 @@ export interface InputProps extends FieldRenderProps<string | number | boolean> 
   label: string,
   message: string,
   className: string,
-  messageType: InputMessageType,
+  messageType: FieldMessageType,
   validateType: FormValidateType,
   isDisabled: boolean,
   isRequired: boolean,
@@ -39,7 +37,7 @@ const Input: React.FunctionComponent<InputProps> = ({
   )
 
   const msg: string = errorMsg || message
-  const msgType: InputMessageType = !!errorMsg ? InputMessageType.error : messageType
+  const msgType: FieldMessageType = !!errorMsg ? FieldMessageType.error : messageType
 
   return (
     <label className={cc([style.input, style[msgType], className])}>
@@ -54,7 +52,7 @@ const Input: React.FunctionComponent<InputProps> = ({
       />
       <div className={style.frame} />
       <p className={style.label}>{label}</p>
-      <p className={style.message}>{msg}</p>
+      <FieldMessage type={msgType}>{msg}</FieldMessage>
     </label> 
   )
 }
@@ -62,7 +60,7 @@ const Input: React.FunctionComponent<InputProps> = ({
 Input.defaultProps = {
   message: '',
   type: 'text',
-  messageType: InputMessageType.info,
+  messageType: FieldMessageType.info,
   validateType: FormValidateType.dirtySinceLastSubmit,
   isDisabled: false,
   isRequired: false,
