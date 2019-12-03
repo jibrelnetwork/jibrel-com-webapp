@@ -1,14 +1,11 @@
 import React from 'react'
 
-import { FormValidateType } from '../utils/forms/getErrorMessage'
-
 import MessageWrapper from './MessageWrapper'
 import { MessageType } from './types'
 
 export interface WithMessageProps {
   message: string;
   messageType: MessageType;
-  validateType: FormValidateType;
   className: string;
   children: React.ReactNode;
 }
