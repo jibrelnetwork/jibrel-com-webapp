@@ -15,3 +15,9 @@ export {
   loadSprite,
   registerSprite,
 } from './utils/sprite'
+
+export {
+  composeValidators,
+  FieldValidatorConfiguration,
+  FieldValidatorWithConfiguration,
+} from './utils/forms'
