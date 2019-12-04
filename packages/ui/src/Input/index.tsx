@@ -1,51 +1,36 @@
 import React from 'react'
 import cc from 'classcat'
-import { FieldRenderProps } from 'react-final-form'
-
-import getErrorMessage, { FormValidateType } from '../utils/forms/getErrorMessage'
 
 import style from './style.scss'
 
-import { InputMessageType } from './types'
+import { 
+  withField,
+  withFieldUX,
+  withMessage,
+} from '../FieldWrapper'
 
-export interface InputProps extends FieldRenderProps<string | number | boolean> {
-  onChange: (e: React.ChangeEvent<HTMLInputElement>) => void,
+export interface InputProps {
   type: string,
   label: string,
-  message: string,
   className: string,
-  messageType: InputMessageType,
-  validateType: FormValidateType,
+  hasError: boolean,
   isDisabled: boolean,
   isRequired: boolean,
 }
 
 const Input: React.FunctionComponent<InputProps> = ({
-  onChange,
-  meta,
   type,
   label,
-  message,
   className,
-  messageType,
-  validateType,
+  hasError,
   isDisabled,
   isRequired,
   ...props
 }) => {
-  const errorMsg: string | null = getErrorMessage(
-    meta,
-    validateType,
-  )
-
-  const msg: string = errorMsg || message
-  const msgType: InputMessageType = !!errorMsg ? InputMessageType.error : messageType
-
   return (
-    <label className={cc([style.input, style[msgType], className])}>
+    <label className={cc([style.input, hasError && style.error, className])}>
       <input
         {...props}
-        onChange={onChange}
         name={name}
         type={type}
         className={style.field}
@@ -54,18 +39,15 @@ const Input: React.FunctionComponent<InputProps> = ({
       />
       <div className={style.frame} />
       <p className={style.label}>{label}</p>
-      <p className={style.message}>{msg}</p>
     </label> 
   )
 }
 
 Input.defaultProps = {
-  message: '',
   type: 'text',
-  messageType: InputMessageType.info,
-  validateType: FormValidateType.dirtySinceLastSubmit,
+  hasError: false,
   isDisabled: false,
   isRequired: false,
 }
 
-export default React.memo(Input)
+export default withField(withFieldUX(React.memo(withMessage(Input))))

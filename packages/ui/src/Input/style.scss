@@ -14,12 +14,6 @@
     }
   }
 
-  &.info {
-    .message {
-      color: $color-main-black-60;
-    }
-  }
-
   &.error {
     .field {
       border-color: $color-main-red-30;
@@ -35,8 +29,7 @@
       }
     }
 
-    .label,
-    .message {
+    .label {
       color: $color-main-red;
     }
 
@@ -44,12 +37,6 @@
       .field {
         border-color: $color-main-red-60;
       }
-    }
-  }
-
-  &.success {
-    .message {
-      color: $color-main-blue;
     }
   }
 }
@@ -103,11 +90,4 @@
       color: $color-main-blue;
     }
   }
-}
-
-.message {
-  margin-top: 32px;
-  font-size: 12px;
-  line-height: 140%;
-  letter-spacing: -0.54px;
 }
