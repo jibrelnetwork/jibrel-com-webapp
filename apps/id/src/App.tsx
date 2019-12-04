@@ -17,6 +17,7 @@ import {
   Checkbox,
   BigButton,
   LinkButton,
+  PasswordInput,
   Select,
 } from '@jibrelcom/ui'
 
@@ -117,12 +118,12 @@ function renderSignupForm({
           hint='Email message'
           maxLength={256}
         />
-        <Input
+        <PasswordInput
+          onScoreChange={console.log}
           className={app.field}
           name='password'
-          label='Password'
-          message='Password message'
           maxLength={256}
+          withIndicator
         />
       </div>
       <Checkbox
