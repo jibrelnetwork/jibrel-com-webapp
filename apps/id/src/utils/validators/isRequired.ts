@@ -1,6 +1,6 @@
 import { FieldValidatorWithConfiguration } from '@jibrelcom/ui'
 
-const isRequired: FieldValidatorWithConfiguration = ({ i18n }) => (value): string | void => {
+const isRequired: FieldValidatorWithConfiguration<string> = ({ i18n }) => (value): string | void => {
   return value
     ? undefined
     // FIXME: should be proper string

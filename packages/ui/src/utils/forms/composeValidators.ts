@@ -7,15 +7,15 @@ type PossibleError = string | void
 export interface FieldValidatorConfiguration {
   i18n: I18n;
 }
-export type FieldValidatorWithConfiguration = ({ i18n }: FieldValidatorConfiguration) => FieldValidator<any>
+export type FieldValidatorWithConfiguration<FieldValue> = ({ i18n }: FieldValidatorConfiguration) => FieldValidator<FieldValue>
 
-const composeValidators = (
+const composeValidators = <FieldValue>(
   i18n: I18n,
-  validators: FieldValidatorWithConfiguration[],
+  validators: FieldValidatorWithConfiguration<FieldValue>[],
 ) => (
-  value: any,
+  value: FieldValue,
   allValues: object,
-  meta?: FieldState<any>,
+  meta?: FieldState<FieldValue>,
 ): string | void => {
   validators.reduce((errorOrPromise, validator) => {
     if (isPromise(errorOrPromise)) {
