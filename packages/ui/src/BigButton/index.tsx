@@ -5,10 +5,11 @@ import style from './style.scss'
 
 import { BigButtonVariant } from './types'
 
-export interface BigButtonProps {
-  variant?: BigButtonVariant,
-  className?: string,
-  isDisabled?: boolean,
+export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
+  variant?: BigButtonVariant;
+  className?: string;
+  isDisabled?: boolean;
+  children: React.ReactNode;
 }
 
 const BigButton: React.FunctionComponent<BigButtonProps> = ({
