@@ -95,13 +95,13 @@ function renderSignupForm({
         />
         <Select.Select
           name="select"
-          title="foo"
+          label="foo"
           validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
         >
-          <Select.Option value="1" title="1" />
-          <Select.Option value="2" title="2" />
-          <Select.Option value="3" title="3" />
-          <Select.Option value="4" title="4" />
+          <Select.Option value="1" label="1" />
+          <Select.Option value="2" label="2" />
+          <Select.Option value="3" label="3" />
+          <Select.Option value="4" label="4" />
         </Select.Select>
         <Input
           className={app.field}
