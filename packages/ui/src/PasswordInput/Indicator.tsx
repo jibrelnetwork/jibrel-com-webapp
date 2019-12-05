@@ -3,18 +3,24 @@ import cc from 'classcat'
 
 import style from './style.scss'
 import getStatusByScore from './getStatusByScore'
-import { IndicatorStatus } from './types'
-import { checkPasswordStrength } from '../utils/forms'
+
+import {
+  IndicatorStatus,
+  PasswordStrengthScore,
+} from './types'
 
 export interface IndicatorProps {
-  onScoreChange: (score: number) => void,
-  value: string,
+  onScoreChange: (score: number) => void;
+  checkPasswordStrength: (value: string) => Promise<PasswordStrengthScore>;
+  value: string;
 }
 
+type IndicatorScore = PasswordStrengthScore | -1
+
 interface IndicatorState {
-  score: number,
-  isFetching: boolean,
-  isInitialised: boolean,
+  score: IndicatorScore;
+  isFetching: boolean;
+  isInitialised: boolean;
 }
 
 class Indicator extends Component <IndicatorProps, IndicatorState> {
@@ -34,7 +40,7 @@ class Indicator extends Component <IndicatorProps, IndicatorState> {
     }
   }
 
-  componentDidUpdate(prevProps: IndicatorProps) {
+  componentDidUpdate(prevProps: IndicatorProps): void {
     const { value } = this.props
 
     if (prevProps.value === value) {
@@ -48,19 +54,19 @@ class Indicator extends Component <IndicatorProps, IndicatorState> {
     }
   }
 
-  setScore = (score: number) => {
+  setScore = (score: IndicatorScore): void => {
     this.setState({ score })
     this.props.onScoreChange(score)
   }
 
-  checkPassword = async (password: string) => {
+  checkPassword = async (password: string): Promise<void> => {
     const { isInitialised }: IndicatorState = this.state
 
     if (!isInitialised) {
       this.setState({ isFetching: true })
     }
 
-    const { score } = await checkPasswordStrength(password)
+    const score = await this.props.checkPasswordStrength(password)
     this.setScore(score)
 
     if (!isInitialised) {
@@ -71,7 +77,7 @@ class Indicator extends Component <IndicatorProps, IndicatorState> {
     }
   }
 
-  render() {
+  render(): React.ReactNode {
     const {
       score,
       isFetching,

@@ -24,12 +24,14 @@ import {
 import app from './app.scss'
 import signup from './signup.scss'
 
+import { checkPasswordStrength } from './utils/forms'
+
 interface SignupFormFields {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  terms: boolean,
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  terms: boolean;
 }
 
 const SIGNUP_INITIAL_VALUES: SignupFormFields = {
@@ -120,6 +122,7 @@ function renderSignupForm({
         />
         <PasswordInput
           onScoreChange={console.log}
+          checkPasswordStrength={checkPasswordStrength}
           className={app.field}
           name='password'
           maxLength={256}
