@@ -106,7 +106,7 @@ function renderSignupForm({
         </Select.Select>
         <CountrySelect
           name="country"
-          title="Country"
+          label="Country"
         />
         <Input
           className={app.field}
