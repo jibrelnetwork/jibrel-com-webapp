@@ -1,0 +1,54 @@
+@import '../theme/colors';
+@import '../utils/scss/iconColor';
+
+.checkbox {
+  position: relative;
+  display: flex;
+
+  &:hover {
+    .tick.off {
+      @include icon-color($color-main-blue-40);
+    }
+  }
+
+  &.error {
+    .tick.off {
+      @include icon-color($color-main-red);
+    }
+  }
+}
+
+.tick {
+  @include icon-color($color-main-blue);
+
+  transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
+
+  &.off,
+  &.disabled {
+    @include icon-color($color-main-black-30);
+  }
+
+  &.off {
+    stroke-opacity: 1;
+    stroke-width: 1px;
+    fill-opacity: 0;
+  }
+}
+
+.label {
+  width: 100%;
+  margin: 0 8px;
+  letter-spacing: -0.54px;
+  font-size: 15px;
+  font-style: normal;
+  font-weight: normal;
+  line-height: 140%;
+  color: $color-main-black-60;
+}
+
+.field {
+  width: 0;
+  height: 0;
+  opacity: 0;
+  visibility: hidden;
+}
