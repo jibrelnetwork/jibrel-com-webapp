@@ -25,6 +25,8 @@ import {
 import app from './app.scss'
 import signup from './signup.scss'
 
+import { checkPasswordStrength } from './utils/forms'
+
 interface SignupFormFields {
   firstName: string;
   lastName: string;
@@ -96,16 +98,16 @@ function renderSignupForm({
           hint='First message'
           maxLength={256}
         />
-        <Select.SelectField
+        <Select.Select
           name="select"
-          title="foo"
+          label="foo"
           validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
         >
-          <Select.Option value="1" title="1" />
-          <Select.Option value="2" title="2" />
-          <Select.Option value="3" title="3" />
-          <Select.Option value="4" title="4" />
-        </Select.SelectField>
+          <Select.Option value="1" label="1" />
+          <Select.Option value="2" label="2" />
+          <Select.Option value="3" label="3" />
+          <Select.Option value="4" label="4" />
+        </Select.Select>
         <Input
           className={app.field}
           name='lastName'
@@ -122,6 +124,7 @@ function renderSignupForm({
         />
         <PasswordInput
           onScoreChange={console.log}
+          checkPasswordStrength={checkPasswordStrength}
           className={app.field}
           name='password'
           maxLength={256}

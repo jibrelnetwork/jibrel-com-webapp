@@ -9,7 +9,7 @@ import { withField, withFieldUX, withMessage } from '../FieldWrapper'
 import Icon from '../Icon'
 
 export interface SelectProps {
-  title: string;
+  label: string;
   placeholder?: string;
   defaultValue?: string;
   value?: string;
@@ -25,7 +25,7 @@ export const NONE_VALUE = '__none__'
 import { getPreviewOption } from './getPreviewOption'
 
 export const Select: React.FunctionComponent<SelectProps> = ({
-  title,
+  label,
   placeholder,
   defaultValue,
   value,
@@ -67,7 +67,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
       ])}
     >
       <div className={style.content}>
-        <div className={style.title}>{title}</div>
+        <div className={style.title}>{label}</div>
         <PreviewOption />
       </div>
       <Icon
@@ -96,6 +96,4 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   )
 }
 
-export default React.memo(withMessage(Select))
-
-export const SelectField = withField(withFieldUX(React.memo(withMessage(Select))))
+export default withField(withFieldUX(React.memo(withMessage(Select))))

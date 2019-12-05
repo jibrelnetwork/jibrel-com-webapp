@@ -1,2 +1,6 @@
 export { default as getErrorMessage } from './getErrorMessage'
-export { default as checkPasswordStrength } from './checkPasswordStrength'
+export {
+  default as composeValidators,
+  FieldValidatorConfiguration,
+  FieldValidatorWithConfiguration,
+} from './composeValidators'
