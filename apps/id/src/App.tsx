@@ -15,6 +15,7 @@ import {
   Icon,
   Input,
   Checkbox,
+  CodeInput,
   BigButton,
   LinkButton,
   PasswordInput,
@@ -25,11 +26,11 @@ import app from './app.scss'
 import signup from './signup.scss'
 
 interface SignupFormFields {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  terms: boolean,
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  terms: boolean;
 }
 
 const SIGNUP_INITIAL_VALUES: SignupFormFields = {
@@ -37,6 +38,7 @@ const SIGNUP_INITIAL_VALUES: SignupFormFields = {
   lastName: '',
   email: '',
   password: '',
+  code: '',
   terms: false,
 }
 
@@ -125,6 +127,10 @@ function renderSignupForm({
           maxLength={256}
           withIndicator
         />
+        <CodeInput
+          className={app.field}
+          name='code'
+        />
       </div>
       <Checkbox
         className={app.field}
@@ -182,6 +188,7 @@ function Signup() {
       lastName: 'lastName error',
       email: 'email error',
       password: 'password error',
+      code: 'code error',
       terms: 'terms error',
     }
   }
