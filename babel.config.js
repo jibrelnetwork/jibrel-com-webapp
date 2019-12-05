@@ -2,7 +2,7 @@ module.exports = {
   presets: [
     ["@babel/preset-typescript"],
     ["@babel/preset-env", {
-      "modules": "commonjs",
+      "modules": "umd",
       "useBuiltIns": "entry",
       "corejs": 3
     }],

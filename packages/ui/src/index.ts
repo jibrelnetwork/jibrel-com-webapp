@@ -4,6 +4,7 @@ export { default as Checkbox } from './Checkbox'
 export { default as BigButton } from './BigButton'
 export { default as LinkButton } from './LinkButton'
 export { default as SmallButton } from './SmallButton'
+export { default as PasswordInput } from './PasswordInput'
 export { default as Select } from './Select'
 
 export {

@@ -54,8 +54,4 @@ const Icon: React.FunctionComponent<IconProps> = ({
   )
 }
 
-Icon.defaultProps = {
-  namespace: undefined,
-}
-
 export default React.memo(Icon)
