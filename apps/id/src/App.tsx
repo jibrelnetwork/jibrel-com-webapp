@@ -8,13 +8,13 @@ import {
 
 import {
   Form,
-  Field,
   FormRenderProps,
 } from 'react-final-form'
 
 import {
   Icon,
   Input,
+  Checkbox,
   BigButton,
   LinkButton,
   Select,
@@ -29,6 +29,7 @@ interface SignupFormFields {
   lastName: string,
   email: string,
   password: string,
+  terms: boolean,
 }
 
 const SIGNUP_INITIAL_VALUES: SignupFormFields = {
@@ -36,6 +37,7 @@ const SIGNUP_INITIAL_VALUES: SignupFormFields = {
   lastName: '',
   email: '',
   password: '',
+  terms: false,
 }
 
 export default function App() {
@@ -85,61 +87,53 @@ function renderSignupForm({
     >
       <h2 className={app.title}>Sign Up</h2>
       <div className={app.fields}>
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='firstName'
           label='First Name'
-          message='First message'
+          hint='First message'
           maxLength={256}
         />
         <Select.Select
           name="select"
-          title="foo"
+          label="foo"
           validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
         >
-          <Select.Option value="1" title="1" />
-          <Select.Option value="2" title="2" />
-          <Select.Option value="3" title="3" />
-          <Select.Option value="4" title="4" />
+          <Select.Option value="1" label="1" />
+          <Select.Option value="2" label="2" />
+          <Select.Option value="3" label="3" />
+          <Select.Option value="4" label="4" />
         </Select.Select>
         <CountrySelect
           name="country"
           title="Country"
         />
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='lastName'
           label='Last Name'
-          message='Last message'
-          messageType='success'
+          success='Last message'
           maxLength={256}
         />
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='email'
           label='Email'
-          message='Email message'
-          messageType='info'
+          hint='Email message'
           maxLength={256}
         />
-        <Field
-          component={Input}
+        <Input
           className={app.field}
           name='password'
           label='Password'
           message='Password message'
-          messageType='error'
           maxLength={256}
         />
       </div>
-      <label htmlFor='terms'>
-        <input
-          id='terms'
-          type='checkbox'
-        />
+      <Checkbox
+        className={app.field}
+        name='terms'
+      >
         <span>I agree to Jibrel's</span>
         <a
           href='#'
@@ -147,7 +141,7 @@ function renderSignupForm({
         >
           Terms and Conditions and Privacy Policy
         </a>
-      </label>
+      </Checkbox>
       <BigButton
         className={signup.submit}
         type='submit'
@@ -187,13 +181,12 @@ function renderSignupForm({
 
 function Signup() {
   const handleSubmit = (values: SignupFormFields) => {
-    console.log(values)
-
     return {
       firstName: 'firstName error',
       lastName: 'lastName error',
       email: 'email error',
       password: 'password error',
+      terms: 'terms error',
     }
   }
 

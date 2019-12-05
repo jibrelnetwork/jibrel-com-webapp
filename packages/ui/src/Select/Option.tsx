@@ -13,41 +13,41 @@ export interface OptionProps {
   register?: (value: string, searchTerms: string[]) => () => void;
   onSelect?: (value: string) => void;
   value: string;
-  title: string;
+  label: string;
   mode?: OptionRenderMode;
   children?: React.ReactNode;
 }
 
 export const Option: React.FunctionComponent<OptionProps> = ({
-  register = () => noop,
+  register = (): () => void => noop,
   onSelect = noop,
   value,
   mode,
-  title,
+  label,
   children,
   ...props
 }) => {
   useEffect(() => register(
     value,
     // FIXME: stub, replace with implementation when custom select design will be required
-    [title]
-  ), [value, title])
+    [label]
+  ), [value, label])
 
   if (mode === OptionRenderMode.preview) {
     return (
       <div
         className={style.preview}
       >
-        {children || title}
+        {children || label}
       </div>
     )
   }
 
   // FIXME: stub, replace with implementation when custom select design will be required
   if (mode === OptionRenderMode.dropdown) {
-    const handleClick = (...args: any[]): void => {
+    const handleClick: React.MouseEventHandler = (event) => {
       onSelect(value)
-      invoke(props, 'onClick', ...args)
+      invoke(props, 'onClick', event)
     }
 
     return (
@@ -60,7 +60,7 @@ export const Option: React.FunctionComponent<OptionProps> = ({
   }
 
   return (
-    <option value={value}>{title}</option>
+    <option value={value}>{label}</option>
   )
 }
 

@@ -2,14 +2,14 @@ import React from 'react'
 import cc from 'classcat'
 
 import Icon from '../Icon'
-import { IconName } from '../Icon/types'
 
 import style from './style.scss'
 
-interface SmallButtonProps {
-  className?: string,
-  isDisabled?: boolean,
-  iconName?: IconName,
+interface SmallButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
+  className?: string;
+  isDisabled?: boolean;
+  iconName?: string;
+  children: React.ReactNode;
 }
 
 const SmallButton: React.FunctionComponent<SmallButtonProps> = ({
