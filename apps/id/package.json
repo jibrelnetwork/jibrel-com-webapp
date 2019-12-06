@@ -8,6 +8,7 @@
   },
   "dependencies": {
     "@jibrelcom/ui": "0.0.1",
+    "classcat": "~4.0.2",
     "final-form": "~4.18.6",
     "react": "~16.12.0",
     "react-dom": "~16.12.0",
