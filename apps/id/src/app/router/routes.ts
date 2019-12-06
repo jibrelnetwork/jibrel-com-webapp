@@ -80,50 +80,54 @@ export const routes: Route[] = [
   {
     name: 'KYCInvestor',
     path: '/kyc/investor',
-  },
-  {
-    name: 'KYCInvestor.Personal',
-    path: '/kyc/investor/personal',
-  },
-  {
-    name: 'KYCInvestor.Residency',
-    path: '/kyc/investor/residency',
-  },
-  {
-    name: 'KYCInvestor.Income',
-    path: '/kyc/investor/income',
-  },
-  {
-    name: 'KYCInvestor.Status',
-    path: '/kyc/investor/status',
+    children: [
+      {
+        name: 'Personal',
+        path: '/personal',
+      },
+      {
+        name: 'Residency',
+        path: '/residency',
+      },
+      {
+        name: 'Income',
+        path: '/income',
+      },
+      {
+        name: 'Status',
+        path: '/status',
+      },
+    ],
   },
   {
     name: 'KYCCompany',
     path: '/kyc/company',
-  },
-  {
-    name: 'KYCCompany.Information',
-    path: '/kyc/company/information',
-  },
-  {
-    name: 'KYCCompany.Office',
-    path: '/kyc/company/office',
-  },
-  {
-    name: 'KYCCompany.Contact',
-    path: '/kyc/company/contact',
-  },
-  {
-    name: 'KYCCompany.Beneficiary',
-    path: '/kyc/company/beneficiary',
-  },
-  {
-    name: 'KYCCompany.Director',
-    path: '/kyc/company/director',
-  },
-  {
-    name: 'KYCCompany.Status',
-    path: '/kyc/company/status',
+    children: [
+      {
+        name: 'Information',
+        path: '/information',
+      },
+      {
+        name: 'Office',
+        path: '/office',
+      },
+      {
+        name: 'Contact',
+        path: '/contact',
+      },
+      {
+        name: 'Beneficiary',
+        path: '/beneficiary',
+      },
+      {
+        name: 'Director',
+        path: '/director',
+      },
+      {
+        name: 'Status',
+        path: '/status',
+      },
+    ],
   },
 ].map((route) => ({
   ...route,
