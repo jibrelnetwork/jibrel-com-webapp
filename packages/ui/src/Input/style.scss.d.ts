@@ -5,6 +5,7 @@ declare namespace StyleScssModule {
     frame: string;
     input: string;
     label: string;
+    mask: string;
   }
 }
 
