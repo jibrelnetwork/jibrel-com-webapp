@@ -69,8 +69,18 @@ export const routes: Route[] = [
   },
 
   {
-    name: 'VerifyPhoneNumber',
+    name: 'VerifyPhone',
     path: '/verify/phonenumber',
+    children: [
+      {
+        name: 'Code',
+        path: '/code',
+      },
+      {
+        name: 'Failure',
+        path: '/failure',
+      },
+    ],
   },
 
   {
