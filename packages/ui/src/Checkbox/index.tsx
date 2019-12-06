@@ -1,30 +1,32 @@
 import React from 'react'
 import cc from 'classcat'
+import omit from 'lodash-es/omit'
 
 import Icon from '../Icon'
 import style from './style.scss'
 
-import { 
+import {
   withField,
   withFieldUX,
 } from '../FieldWrapper'
 
 export interface CheckboxProps {
-  children: React.ReactNode,
-  className: string,
-  value?: boolean,
-  hasError?: boolean,
-  isDisabled?: boolean,
+  children: React.ReactNode;
+  className: string;
+  checked?: boolean;
+  hasError?: boolean;
+  isDisabled?: boolean;
 }
 
 const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   children,
   className,
-  value = false,
+  checked = false,
   hasError = false,
   isDisabled = false,
-  ...props
+  ...initialProps
 }) => {
+  const props = omit(initialProps, ['message', 'messageType'])
   return (
     <label
       className={cc([
@@ -35,22 +37,26 @@ const Checkbox: React.FunctionComponent<CheckboxProps> = ({
     >
       <input
         {...props}
+        checked={checked}
         name={name}
         className={style.field}
         type='checkbox'
         disabled={isDisabled}
       />
       <Icon
-        name={`checkbox_${value ? 'on' : 'off'}`}
+        name={`checkbox_${checked ? 'on' : 'off'}`}
         className={cc([
           style.tick,
-          !value && style.off,
+          !checked && style.off,
           isDisabled && style.disabled,
         ])}
       />
       <p className={style.label}>{children}</p>
-    </label> 
+    </label>
   )
 }
 
-export default withField(withFieldUX(React.memo(Checkbox)))
+export default withField(
+  withFieldUX(React.memo(Checkbox)),
+  { type: 'checkbox' },
+)
