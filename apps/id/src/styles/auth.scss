@@ -1,0 +1,60 @@
+@import '../node_modules/@jibrelcom/ui/src/theme/colors';
+
+.main {
+  display: flex;
+  min-width: 100vw;
+  min-height: 100vh;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background-color: $color-main-blue-5;
+}
+
+.form {
+  width: 100%;
+  max-width: 440px;
+  margin: 40px;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: $color-white;
+}
+
+.title {
+  margin-bottom: 32px;
+}
+
+.fields {
+  margin-bottom: 26px;
+}
+
+.field {
+  margin-bottom: 16px;
+}
+
+.submit {
+  margin-top: 30px;
+  margin-bottom: 32px;
+}
+
+.submit {
+  margin-top: 30px;
+  margin-bottom: 32px;
+}
+
+.switch {
+  width: 100%;
+  font-size: 15px;
+  line-height: 140%;
+  text-align: center;
+  color: $color-main-black;
+}
+
+.action {
+  padding: 0 16px;
+}
+
+.wide {
+  width: 100%;
+  margin-bottom: 32px;
+  text-align: center;
+}
