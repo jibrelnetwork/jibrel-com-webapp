@@ -6,123 +6,126 @@ const ROUTER_ROOT = '/id'
 export const routes: Route[] = [
   {
     name: 'Account',
-    path: `${ROUTER_ROOT}/`,
+    path: '/',
   },
   {
     name: 'Security',
-    path: `${ROUTER_ROOT}/security`,
+    path: '/security',
   },
 
   {
     name: 'redirect!Login',
-    path: `${ROUTER_ROOT}/login`,
+    path: '/login',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'Login',
-    path: `${ROUTER_ROOT}/:lang/login`,
+    path: '/:lang/login',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
   {
     name: 'redirect!SignUp',
-    path: `${ROUTER_ROOT}/signup`,
+    path: '/signup',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'SignUp',
-    path: `${ROUTER_ROOT}/:lang/signup`,
+    path: '/:lang/signup',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
   {
     name: 'redirect!Forgot',
-    path: `${ROUTER_ROOT}/forgot`,
+    path: '/forgot',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'Forgot',
-    path: `${ROUTER_ROOT}/:lang/forgot`,
+    path: '/:lang/forgot',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
   {
     name: 'redirect!Reset',
-    path: `${ROUTER_ROOT}/reset`,
+    path: '/reset',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'Reset',
-    path: `${ROUTER_ROOT}/:lang/reset`,
+    path: '/:lang/reset',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
   {
     name: 'redirect!VerifyEmail',
-    path: `${ROUTER_ROOT}/verify/email`,
+    path: '/verify/email',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'VerifyEmail',
-    path: `${ROUTER_ROOT}/:lang/verify/email`,
+    path: '/:lang/verify/email',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
   {
     name: 'VerifyPhoneNumber',
-    path: `${ROUTER_ROOT}/verify/phonenumber`,
+    path: '/verify/phonenumber',
   },
 
   {
     name: 'KYCStart',
-    path: `${ROUTER_ROOT}/kyc`,
+    path: '/kyc',
   },
   {
     name: 'KYCInvestor',
-    path: `${ROUTER_ROOT}/kyc/investor`,
+    path: '/kyc/investor',
   },
   {
     name: 'KYCInvestor.Personal',
-    path: `${ROUTER_ROOT}/kyc/investor/personal`,
+    path: '/kyc/investor/personal',
   },
   {
     name: 'KYCInvestor.Residency',
-    path: `${ROUTER_ROOT}/kyc/investor/residency`,
+    path: '/kyc/investor/residency',
   },
   {
     name: 'KYCInvestor.Income',
-    path: `${ROUTER_ROOT}/kyc/investor/income`,
+    path: '/kyc/investor/income',
   },
   {
     name: 'KYCInvestor.Status',
-    path: `${ROUTER_ROOT}/kyc/investor/status`,
+    path: '/kyc/investor/status',
   },
   {
     name: 'KYCCompany',
-    path: `${ROUTER_ROOT}/kyc/company`,
+    path: '/kyc/company',
   },
   {
     name: 'KYCCompany.Information',
-    path: `${ROUTER_ROOT}/kyc/company/information`,
+    path: '/kyc/company/information',
   },
   {
     name: 'KYCCompany.Office',
-    path: `${ROUTER_ROOT}/kyc/company/office`,
+    path: '/kyc/company/office',
   },
   {
     name: 'KYCCompany.Contact',
-    path: `${ROUTER_ROOT}/kyc/company/contact`,
+    path: '/kyc/company/contact',
   },
   {
     name: 'KYCCompany.Beneficiary',
-    path: `${ROUTER_ROOT}/kyc/company/beneficiary`,
+    path: '/kyc/company/beneficiary',
   },
   {
     name: 'KYCCompany.Director',
-    path: `${ROUTER_ROOT}/kyc/company/director`,
+    path: '/kyc/company/director',
   },
   {
     name: 'KYCCompany.Status',
-    path: `${ROUTER_ROOT}/kyc/company/status`,
+    path: '/kyc/company/status',
   },
-]
+].map((route) => ({
+  ...route,
+  path: ROUTER_ROOT + route.path,
+}))
