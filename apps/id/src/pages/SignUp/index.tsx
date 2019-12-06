@@ -15,6 +15,7 @@ import {
   LinkButton,
   Select,
   PasswordInput,
+  CodeInput,
 } from '@jibrelcom/ui'
 import { checkPasswordStrength } from '../../utils/forms'
 
@@ -99,6 +100,10 @@ function renderSignupForm({
           maxLength={256}
           withIndicator
         />
+        <CodeInput
+          className={app.field}
+          name='code'
+        />
       </div>
       <Checkbox
         className={app.field}
@@ -157,6 +162,7 @@ export default function SignUp() {
       email: 'email error',
       password: 'password error',
       terms: 'terms error',
+      code: 'code error',
     }
   }
 
