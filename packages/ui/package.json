@@ -9,7 +9,8 @@
   "dependencies": {
     "classcat": "~4.0.2",
     "include-media": "~1.4.9",
-    "lodash-es": "~4.17.15"
+    "lodash-es": "~4.17.15",
+    "react-text-mask": "~5.4.3"
   },
   "devDependencies": {
     "@types/lingui__core": "~2.7.0",

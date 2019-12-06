@@ -10,11 +10,11 @@ import {
 } from '../FieldWrapper'
 
 export interface InputProps {
-  type?: string,
-  label: string,
-  className?: string,
-  hasError?: boolean,
-  isDisabled?: boolean,
+  type?: string;
+  label: string;
+  className?: string;
+  hasError?: boolean;
+  isDisabled?: boolean;
 }
 
 const Input: React.FunctionComponent<InputProps> = ({
@@ -36,7 +36,7 @@ const Input: React.FunctionComponent<InputProps> = ({
       />
       <div className={style.frame} />
       <p className={style.label}>{label}</p>
-    </label> 
+    </label>
   )
 }
 
