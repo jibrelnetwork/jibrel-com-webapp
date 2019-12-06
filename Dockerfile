@@ -23,7 +23,7 @@ RUN wget -q https://github.com/jibrelnetwork/dockerize/releases/latest/download/
  && tar -C /usr/local/bin -xzvf dockerize-alpine-linux-amd64-latest.tar.gz \
  && rm dockerize-alpine-linux-amd64-latest.tar.gz
 
-COPY docker/nginx.tpl.conf /etc/nginx/nginx.tpl.conf
+COPY docker/nginx/ /etc/nginx/
 COPY docker/run.sh /bin/run.sh
 
 COPY --from=build /app/build/. /app/
