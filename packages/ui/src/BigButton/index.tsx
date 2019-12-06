@@ -8,6 +8,7 @@ import { BigButtonVariant } from './types'
 export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
   variant?: BigButtonVariant;
   className?: string;
+  isLoading?: boolean;
   isDisabled?: boolean;
   children: React.ReactNode;
 }
@@ -15,6 +16,7 @@ export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicEleme
 const BigButton: React.FunctionComponent<BigButtonProps> = ({
   variant = BigButtonVariant.main,
   className,
+  isLoading = false,
   isDisabled = false,
   children,
   ...props
@@ -28,7 +30,7 @@ const BigButton: React.FunctionComponent<BigButtonProps> = ({
     ])}
     disabled={isDisabled}
   >
-    {children}
+    {isLoading ? '...' : children}
   </button>
 )
 
