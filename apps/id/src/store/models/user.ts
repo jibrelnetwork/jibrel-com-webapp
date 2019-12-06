@@ -11,7 +11,18 @@ export enum UserStatus {
 
 export const user = createModel({
   state: {
-    status: UserStatus.ANONYMOUS,
-    languageCode: LanguageCode.en,
+    status: undefined,
+    languageCode: undefined,
   },
+  effects: (dispatch) => ({
+    async profile (): Promise<void> {
+      await new Promise((resolve) => setTimeout(resolve, 2000))
+      dispatch.user.status(UserStatus.ANONYMOUS)
+      dispatch.user.languageCode(LanguageCode.en)
+    }
+  }),
+  reducers: {
+    status: (state, payload): UserStatus => payload,
+    languageCode: (state, payload): LanguageCode => payload,
+  }
 })

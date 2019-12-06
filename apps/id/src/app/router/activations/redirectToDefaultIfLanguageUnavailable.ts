@@ -4,24 +4,33 @@ import { ActivationFnFactory } from 'router5'
 
 import { DEFAULT_LANGUAGE_CODE, LANGUAGE_CODE_LIST } from '../../../data/languages'
 
-export const redirectToDefaultIfLanguageUnavailable: ActivationFnFactory = () => (toState, fromState, done) => {
-  const lang = get(toState, 'params.lang')
-  const name = toState.name.startsWith('redirect!')
-    ? toState.name.slice(9)
-    : toState.name
+export const redirectToDefaultIfLanguageUnavailable: ActivationFnFactory = (router, dependencies) =>
+  async (toState) => {
+    const { store } = dependencies
+    let { user } = store.getState()
 
-  if (!includes(LANGUAGE_CODE_LIST, lang)) {
-    return done({
-      redirect: {
-        name,
-        params: {
-          ...toState.params,
-          lang: DEFAULT_LANGUAGE_CODE,
+    if (!user.status) {
+      await store.dispatch.user.profile()
+      user = store.getState().user
+    }
+
+    const lang = get(toState, 'params.lang')
+    const name = toState.name.startsWith('redirect!')
+      ? toState.name.slice(9)
+      : toState.name
+
+    if (!includes(LANGUAGE_CODE_LIST, lang)) {
+      throw {
+        redirect: {
+          name,
+          params: {
+            ...toState.params,
+            lang: user.languageCode || DEFAULT_LANGUAGE_CODE,
+          }
         }
       }
-    })
-  }
+    }
 
-  return done()
-}
+    return true
+  }
 

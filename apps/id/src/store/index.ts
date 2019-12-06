@@ -1,17 +1,11 @@
 import { init, RematchRootState } from '@rematch/core'
 import createLoadingPlugin from '@rematch/loading'
-import thunkMiddleware from 'redux-thunk'
 
 import * as models from './models'
 
-const loadingPlugin = createLoadingPlugin({
-  name: 'isLoading',
-})
+const loadingPlugin = createLoadingPlugin()
 
 const store = init({
-  redux: {
-    middlewares: [thunkMiddleware],
-  },
   models,
   plugins: [loadingPlugin],
 })

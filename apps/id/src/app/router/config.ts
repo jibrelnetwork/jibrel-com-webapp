@@ -9,5 +9,3 @@ export const router = createRouter(routes)
 
 router.usePlugin(browserPlugin())
 router.useMiddleware(setLangCookie)
-
-router.start()

@@ -9,6 +9,9 @@ import locales from './locales'
 import store from './store'
 import Pages from './pages'
 
+router.setDependency('store', store)
+router.start()
+
 const LoadI18n: React.FunctionComponent = ({
   children,
 }) => {

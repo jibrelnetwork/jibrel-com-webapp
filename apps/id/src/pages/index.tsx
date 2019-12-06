@@ -12,6 +12,8 @@ const Pages: React.FunctionComponent = () => {
 
   if (!route) {
     console.error(new Error('NO_PAGE_SPECIFIED_FOR_PATH'))
+
+    // FIXME: should show loader
     return null
   }
 
@@ -19,14 +21,14 @@ const Pages: React.FunctionComponent = () => {
 
   if (!Page) {
     const error = new Error('NO_PAGE_SPECIFIED_FOR_NAME')
-    error.props = {
-      name: route.name,
-    }
     console.error(error)
+    console.error(route.name)
 
     // FIXME: should return 404
     return null
   }
+
+  console.log(route.name)
 
   window.scrollTo(0, 0)
 
