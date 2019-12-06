@@ -1,0 +1,131 @@
+@import '../theme/colors';
+@import '../utils/scss/iconColor';
+
+$standard-field-padding: 16px;
+$password-field-padding: 48px;
+$indicator-field-padding: 140px;
+
+.password {
+  position: relative;
+
+  input {
+    padding-right: $password-field-padding;
+  }
+
+  &.padding {
+    input {
+      padding-right: $indicator-field-padding;
+    }
+  }
+
+  [dir=rtl] & {
+    input {
+      padding-left: $password-field-padding;
+      padding-right: $standard-field-padding;
+    }
+
+    &.padding {
+      input {
+        padding-left: $indicator-field-padding;
+        padding-right: $standard-field-padding;
+      }
+    }
+  }
+}
+
+.indicator {
+  position: absolute;
+  top: 29px;
+  right: 64px;
+  width: 60px;
+  border-radius: 4px;
+  background-color: $color-main-black-10;
+
+  [dir=rtl] & {
+    left: 64px;
+    right: initial;
+    transform: rotate(180deg);
+  }
+}
+
+.bar {
+  position: relative;
+  width: 100%;
+  height: 6px;
+  border-radius: 4px;
+
+  &::after {
+    position: absolute;
+    top: 0;
+    left: 0;
+    display: block;
+    height: 100%;
+    border-radius: 4px;
+    content: '';
+    transition: width 0.3s ease 0s, background-color 0.3s ease 0s;
+  }
+}
+
+.fetching::after {
+  position: relative;
+  width: 100%;
+  animation: loading 1s linear 0s infinite alternate;
+  background: $color-main-black;
+  opacity: 0.3;
+}
+
+.weak::after {
+  width: 25%;
+  background-color: #E27C7E;
+}
+
+.normal::after {
+  width: 50%;
+  background-color: #E98B4C;
+}
+
+.good::after {
+  width: 75%;
+  background-color: #F9EA63;
+}
+
+.strong::after {
+  width: 100%;
+  background-color: #7ACE7D;
+}
+
+.button {
+  border: none;
+  appearance: none;
+  background: transparent;
+}
+
+.icon {
+  @include icon-color($color-main-black-60);
+
+  position: absolute;
+  top: 0px;
+  right: 0px;
+  margin: 20px 16px;
+  transition: fill 0.3s ease 0s, stroke 0.3s ease 0s;
+  cursor: pointer;
+
+  [dir=rtl] & {
+    left: 0;
+    right: initial;
+  }
+
+  &:hover {
+    @include icon-color($color-main-blue-60);
+  }
+}
+
+@keyframes loading {
+  0% {
+    opacity: 0.1;
+  }
+
+  100% {
+    opacity: 0.3;
+  }
+}

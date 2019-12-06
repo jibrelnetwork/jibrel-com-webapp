@@ -15,7 +15,6 @@ export interface CheckboxProps {
   value?: boolean,
   hasError?: boolean,
   isDisabled?: boolean,
-  isRequired?: boolean,
 }
 
 const Checkbox: React.FunctionComponent<CheckboxProps> = ({
@@ -24,7 +23,6 @@ const Checkbox: React.FunctionComponent<CheckboxProps> = ({
   value = false,
   hasError = false,
   isDisabled = false,
-  isRequired = false,
   ...props
 }) => {
   return (
@@ -40,7 +38,6 @@ const Checkbox: React.FunctionComponent<CheckboxProps> = ({
         name={name}
         className={style.field}
         type='checkbox'
-        required={isRequired}
         disabled={isDisabled}
       />
       <Icon
