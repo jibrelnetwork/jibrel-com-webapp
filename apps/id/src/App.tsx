@@ -23,6 +23,7 @@ import {
 
 import app from './app.scss'
 import signup from './signup.scss'
+import Login from './pages/Login'
 
 import { checkPasswordStrength } from './utils/forms'
 
@@ -48,7 +49,7 @@ export default function App() {
       <div className={app.app}>
         <Switch>
           <Route path='/signin'>
-            <Signin />
+            <Login />
           </Route>
           <Route path='/signup'>
             <Signup />
@@ -64,10 +65,6 @@ export default function App() {
 
 function Home() {
   return <h2>Home</h2>
-}
-
-function Signin() {
-  return <h2>Signin</h2>
 }
 
 function renderSignupForm({
