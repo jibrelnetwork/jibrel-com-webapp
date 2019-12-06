@@ -72,6 +72,22 @@
       border-color: $color-main-red;
     }
   }
+
+  &.is-disabled {
+    border-color: $color-main-black-10;
+
+    &:hover {
+      border-color: $color-main-black-20;
+    }
+
+    .icon {
+      @include icon-color($color-main-black-20);
+    }
+
+    .title, .placeholder, .preview {
+      color: $color-main-black-20;
+    }
+  }
 }
 
 .content {
