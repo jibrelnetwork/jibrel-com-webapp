@@ -19,6 +19,7 @@
     "@lingui/cli": "~2.8.3",
     "@lingui/macro": "~2.8.3",
     "@teamsupercell/typings-for-css-modules-loader": "~2.1.0",
+    "@types/webpack-env": "~1.14.1",
     "@typescript-eslint/eslint-plugin": "~2.9.0",
     "@typescript-eslint/parser": "~2.9.0",
     "autoprefixer": "~9.7.2",
