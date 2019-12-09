@@ -39,7 +39,7 @@ $indicator-field-padding: 140px;
   right: 64px;
   width: 60px;
   border-radius: 4px;
-  background-color: $color-main-black-10;
+  background-color: $color-black-10;
 
   [dir=rtl] & {
     left: 64px;
@@ -70,7 +70,7 @@ $indicator-field-padding: 140px;
   position: relative;
   width: 100%;
   animation: loading 1s linear 0s infinite alternate;
-  background: $color-main-black;
+  background: $color-black;
   opacity: 0.3;
 }
 
@@ -101,7 +101,7 @@ $indicator-field-padding: 140px;
 }
 
 .icon {
-  @include icon-color($color-main-black-60);
+  @include icon-color($color-black-60);
 
   position: absolute;
   top: 0px;
@@ -116,7 +116,7 @@ $indicator-field-padding: 140px;
   }
 
   &:hover {
-    @include icon-color($color-main-blue-60);
+    @include icon-color($color-blue-60);
   }
 }
 
