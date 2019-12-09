@@ -8,24 +8,24 @@ $indicator-field-padding: 140px;
 .password {
   position: relative;
 
-  input {
+  .input {
     padding-right: $password-field-padding;
   }
 
   &.padding {
-    input {
+    .input {
       padding-right: $indicator-field-padding;
     }
   }
 
   [dir=rtl] & {
-    input {
+    .input {
       padding-left: $password-field-padding;
       padding-right: $standard-field-padding;
     }
 
     &.padding {
-      input {
+      .input {
         padding-left: $indicator-field-padding;
         padding-right: $standard-field-padding;
       }

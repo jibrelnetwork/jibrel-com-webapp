@@ -1,60 +1,40 @@
 import React from 'react'
 import cc from 'classcat'
-import MaskedInput from 'react-text-mask'
 
-import style from '../Input/style.scss'
-
-import { 
-  withField,
-  withFieldUX,
-  withMessage,
-} from '../FieldWrapper'
+import Input from '../Input'
+import style from './style.scss'
+import { GenericFieldProps } from '../FieldWrapper/types'
 
 export interface PhoneInputProps {
   ccc: string;
   label?: string;
   className?: string;
-  hasError?: boolean;
 }
 
-const PhoneInput: React.FunctionComponent<PhoneInputProps> = ({
+const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> = ({
   ccc,
   className,
   label = 'Phone Number',
-  hasError = false,
   ...props
 }) => {
   return (
-    <label
+    <div
       className={cc([
-        style.input,
         style.phone,
-        hasError && style.error,
         className,
       ])}
     >
       <span className={style.ccc}>
         {ccc}
       </span>
-      <MaskedInput
-        placeholderChar=' '
-        mask={['(', /\d/, /\d/, /\d/, ')', /\d/, /\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/]}
+      <Input
         {...props}
-        render={(ref, inputProps): React.ReactNode => (
-          <input
-            {...inputProps}
-            ref={ref}
-            className={cc([
-              style.field,
-              style.mask,
-            ])}
-          />
-        )}
+        label={label}
+        inputClassName={style.input}
+        labelClassName={style.label}
       />
-      <div className={style.frame} />
-      <p className={style.label}>{label}</p>
-    </label>
+    </div>
   )
 }
 
-export default withField(withFieldUX(React.memo(withMessage(PhoneInput))))
+export default React.memo(PhoneInput)

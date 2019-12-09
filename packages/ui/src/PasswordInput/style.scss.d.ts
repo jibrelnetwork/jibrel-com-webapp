@@ -6,6 +6,7 @@ declare namespace StyleScssModule {
     good: string;
     icon: string;
     indicator: string;
+    input: string;
     loading: string;
     normal: string;
     padding: string;
