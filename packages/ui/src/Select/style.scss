@@ -9,7 +9,7 @@
   display: flex;
   flex-direction: row;
   flex-wrap: nowrap;
-  border: 1px solid $color-main-black-30;
+  border: 1px solid $color-black-30;
   border-radius: 4px;
   background: $color-white;
   position: relative;
@@ -28,64 +28,64 @@
             .15s ease-in-out fill,
             .15s ease-in-out stroke;
 
-    @include icon-color($color-main-black-60);
+    @include icon-color($color-black-60);
   }
 
   &:hover {
-    border-color: $color-main-blue-40;
+    border-color: $color-blue-40;
 
     .icon {
-      @include icon-color($color-main-blue-60);
+      @include icon-color($color-blue-60);
     }
 
     .title {
-      color: $color-main-blue-60;
+      color: $color-blue-60;
     }
   }
 
   &.is-open {
-    border-color: $color-main-blue;
+    border-color: $color-blue;
     border-width: 2px;
     padding: 8px 6px;
 
     .icon {
-      @include icon-color($color-main-blue);
+      @include icon-color($color-blue);
     }
 
     .title {
-      color: $color-main-blue;
+      color: $color-blue;
     }
   }
 
   &.has-error {
-    border-color: $color-main-red-30;
+    border-color: $color-red-30;
 
     &:hover {
-      border-color: $color-main-red-60;
+      border-color: $color-red-60;
     }
 
     .title {
-      color: $color-main-red;
+      color: $color-red;
     }
 
     &.is-open {
-      border-color: $color-main-red;
+      border-color: $color-red;
     }
   }
 
   &.is-disabled {
-    border-color: $color-main-black-10;
+    border-color: $color-black-10;
 
     &:hover {
-      border-color: $color-main-black-20;
+      border-color: $color-black-20;
     }
 
     .icon {
-      @include icon-color($color-main-black-20);
+      @include icon-color($color-black-20);
     }
 
     .title, .placeholder, .preview {
-      color: $color-main-black-20;
+      color: $color-black-20;
     }
   }
 }
@@ -98,7 +98,7 @@
 .title {
   @include ellipsis;
   flex: 1 1 auto;
-  color: $color-main-black-60;
+  color: $color-black-60;
   font-size: 12px;
   line-height: 17px;
   margin-bottom: 2px;
@@ -107,7 +107,7 @@
 .placeholder {
   @include ellipsis;
   flex: 1 1 auto;
-  color: $color-main-black-40;
+  color: $color-black-40;
   font-size: 18px;
   line-height: 25px;
 }
@@ -115,7 +115,7 @@
 .preview {
   @include ellipsis;
   flex: 1 1 auto;
-  color: $color-main-black;
+  color: $color-black;
   height: 25px;
   font-size: 18px;
   line-height: 25px;
