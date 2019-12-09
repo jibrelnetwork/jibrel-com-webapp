@@ -15,6 +15,7 @@ export interface OptionProps {
   value: string;
   label: string;
   mode?: OptionRenderMode;
+  children?: React.ReactNode;
 }
 
 export const Option: React.FunctionComponent<OptionProps> = ({

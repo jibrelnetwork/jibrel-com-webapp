@@ -18,6 +18,7 @@ import {
   CodeInput,
 } from '@jibrelcom/ui'
 import { checkPasswordStrength } from '../../utils/forms'
+import CountrySelect from '../../components/CountrySelect'
 
 interface SignupFormFields {
   firstName: string,
@@ -71,6 +72,10 @@ function renderSignupForm({
           <Select.Option value="3" label="3" />
           <Select.Option value="4" label="4" />
         </Select.Select>
+        <CountrySelect
+          name="country"
+          label="Country"
+        />
         <Input
           className={app.field}
           name='lastName'
