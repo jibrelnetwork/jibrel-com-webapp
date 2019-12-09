@@ -63,7 +63,7 @@ const renderLoginForm: React.FunctionComponent = ({
         Sign In
       </BigButton>
       <InternalLink
-        to='/forgot'
+        name='Forgot'
         className={cc([style.action, style.wide])}
       >
         FORGOT PASSWORD?
@@ -71,7 +71,7 @@ const renderLoginForm: React.FunctionComponent = ({
       <div className={style.switch}>
         <span>Don&apos;t have an account?</span>
         <InternalLink
-          to='/signup'
+          name='SignUp'
           className={style.action}
         >
           SIGN UP

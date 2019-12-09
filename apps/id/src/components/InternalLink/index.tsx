@@ -1,25 +1,29 @@
 import React from 'react'
 import cc from 'classcat'
+import { Link } from 'react-router5'
 
 import style from '@jibrelcom/ui/src/LinkButton/style.scss'
 
 export interface InternalLinkProps extends React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
-  to: string;
+  params?: object;
+  name: string;
   className?: string;
   isDisabled?: boolean;
   children: React.ReactNode;
 }
 
 const InternalLink: React.FunctionComponent<InternalLinkProps> = ({
-  to,
+  params = { lang: 'en' },
+  name,
   className,
   isDisabled = false,
   children,
   ...props
 }) => (
-  <a
+  <Link
     {...props}
-    href={__DEV__ ? `/id${to}` : to}
+    routeParams={params}
+    routeName={name}
     className={cc([
       style.button,
       isDisabled && style.disabled,
@@ -27,7 +31,7 @@ const InternalLink: React.FunctionComponent<InternalLinkProps> = ({
     ])}
   >
     <span className={style.text}>{children}</span>
-  </a>
+  </Link>
 )
 
 export default React.memo(InternalLink)
