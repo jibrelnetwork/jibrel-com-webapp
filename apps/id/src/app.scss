@@ -1,4 +1,4 @@
-@import '../node_modules/@jibrelcom/ui/src/theme';
+@import '~@jibrelcom/ui/src/theme';
 
 html,
 body {
@@ -6,16 +6,6 @@ body {
   min-height: 100%;
   margin: 0;
   padding: 0;
-}
-
-h2 {
-  margin: 0;
-  font-style: normal;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 38px;
-  text-align: center;
-  color: $color-black;
 }
 
 .app {
@@ -33,7 +23,13 @@ h2 {
 }
 
 .title {
-  margin-bottom: 32px;
+  margin: 0 0 32px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  color: $color-black;
 }
 
 .fields {

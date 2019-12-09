@@ -5,7 +5,9 @@ import { routes } from './routes'
 
 import { setLangCookie } from './middlewares/setLangCookie'
 
-export const router = createRouter(routes)
+export const router = createRouter(routes, {
+  allowNotFound: true,
+})
 
 router.usePlugin(browserPlugin())
 router.useMiddleware(setLangCookie)

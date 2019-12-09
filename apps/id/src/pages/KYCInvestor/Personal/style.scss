@@ -1,0 +1,34 @@
+@import '~@jibrelcom/ui/src/index.scss';
+
+.title {
+  @include font-h1-l;
+  padding-top: 64px;
+  padding-bottom: 32px;
+  flex-shrink: 1;
+}
+
+.step {
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-m-5;
+  }
+
+  @include screen('>small') {
+    width: $column-m-4;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-5;
+  }
+}
+
+.step-title {
+  @include font-h2-l;
+  padding: 0 0 24px;
+}
+
+.group-title {
+  @include font-title;
+  padding: 8px 0 24px;
+}

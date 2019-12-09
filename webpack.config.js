@@ -218,7 +218,7 @@ const create = (dirname) => {
                     plugins: () => [
                       require('postcss-flexbugs-fixes'),
                       require('autoprefixer')({
-                        browsers: [
+                        overrideBrowserslist: [
                           '>1%',
                           'last 4 versions',
                           'Firefox ESR',
@@ -380,6 +380,9 @@ const create = (dirname) => {
     },
 
     devServer: {
+      allowedHosts: [
+        '.jibrelcom.local',
+      ],
       compress: true,
       clientLogLevel: 'none',
       contentBase: PATHS.PUBLIC,

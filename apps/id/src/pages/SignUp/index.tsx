@@ -1,5 +1,5 @@
 import app from '../../app.scss'
-import signup from '../../signup.scss'
+import signup from './signup.scss'
 import React from 'react'
 
 import {
