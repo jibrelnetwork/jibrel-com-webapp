@@ -1,6 +1,7 @@
 {
   "extends": "./tsconfig.json",
   "include": [
+    "globals.d.ts",
     "apps/id/src/**/*.ts",
     "apps/id/src/**/*.tsx",
     "apps/investor/src/**/*.ts",

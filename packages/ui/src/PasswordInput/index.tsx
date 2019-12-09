@@ -15,14 +15,14 @@ import {
 
 export interface PasswordInputProps {
   onScoreChange?: (score: number) => void;
-  checkPasswordStrength: (value: string) => Promise<PasswordStrengthScore>;
+  checkPasswordStrength?: (value: string) => Promise<PasswordStrengthScore>;
   label?: string;
   withIndicator?: boolean;
 }
 
 const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputProps> = ({
-  checkPasswordStrength,
   onScoreChange = noop,
+  checkPasswordStrength = undefined,
   label = 'Password',
   withIndicator = false,
   ...props
@@ -43,7 +43,7 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
         value={value}
         type={isOpen ? 'text' : 'password'}
       />
-      {withIndicator && (
+      {withIndicator && checkPasswordStrength && (
         <Indicator
           onScoreChange={onScoreChange}
           checkPasswordStrength={checkPasswordStrength}
