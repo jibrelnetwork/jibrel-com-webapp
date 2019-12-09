@@ -108,7 +108,7 @@ $indicator-field-padding: 140px;
 
   &:hover {
     .icon {
-      @include icon-color($color-main-blue-60);
+      @include icon-color($color-blue-60);
     }
   }
 }
