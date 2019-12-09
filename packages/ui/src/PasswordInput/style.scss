@@ -111,21 +111,17 @@ $indicator-field-padding: 140px;
       @include icon-color($color-blue-60);
     }
   }
+
+  [dir=rtl] & {
+    left: 0;
+    right: initial;
+  }
 }
 
 .icon {
   @include icon-color($color-black-60);
 
   transition: fill 0.3s ease 0s, stroke 0.3s ease 0s;
-
-  &:hover {
-    @include icon-color($color-blue-60);
-  }
-
-  [dir=rtl] & {
-    left: 0;
-    right: initial;
-  }
 }
 
 @keyframes loading {
