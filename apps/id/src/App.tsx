@@ -1,198 +1,53 @@
-import React from 'react'
+import React, { useState } from 'react'
+import { RouterProvider } from 'react-router5'
+import { Provider as ReduxProvider } from 'react-redux'
 
-import {
-  Route,
-  Switch,
-  BrowserRouter as Router,
-} from 'react-router-dom'
+import { router } from './app/router'
+import { I18nProvider } from './app/i18n'
+import { LanguageCode } from './data/languages'
+import locales from './locales'
+import store from './store'
+import Pages from './pages'
 
-import {
-  Form,
-  FormRenderProps,
-} from 'react-final-form'
+router.setDependency('store', store)
+router.start()
 
-import {
-  Icon,
-  Input,
-  Checkbox,
-  BigButton,
-  LinkButton,
-  PasswordInput,
-  Select,
-} from '@jibrelcom/ui'
+const LoadI18n: React.FunctionComponent = ({
+  children,
+}) => {
+  // FIXME: replace with real logic
+  // After we parse the route and redirect user to the destination
+  // and request all their profile information
+  // we should know, which language to load
+  const [catalog, setCatalog] = useState()
 
-import app from './app.scss'
-import signup from './signup.scss'
-import Login from './pages/Login'
+  if (!catalog) {
+    locales[LanguageCode.en]()
+      .then((c) => setCatalog(c))
 
-import { checkPasswordStrength } from './utils/forms'
-
-interface SignupFormFields {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  terms: boolean;
-}
-
-const SIGNUP_INITIAL_VALUES: SignupFormFields = {
-  firstName: '',
-  lastName: '',
-  email: '',
-  password: '',
-  terms: false,
-}
-
-export default function App() {
-  return (
-    <Router basename='/id'>
-      <div className={app.app}>
-        <Switch>
-          <Route path='/signin'>
-            <Login />
-          </Route>
-          <Route path='/signup'>
-            <Signup />
-          </Route>
-          <Route path='/'>
-            <Home />
-          </Route>
-        </Switch>
-      </div>
-    </Router>
-  )
-}
-
-function Home() {
-  return <h2>Home</h2>
-}
-
-function renderSignupForm({
-  handleSubmit,
-  values,
-  submitting: isSubmitting,
-}: FormRenderProps<SignupFormFields>) {
-  /* const {
-    firstName,
-    lastName,
-    email,
-    password,
-  }: SignupFormFields = values */
-
-  return (
-    <form
-      onSubmit={handleSubmit}
-      className={app.form}
-    >
-      <h2 className={app.title}>Sign Up</h2>
-      <div className={app.fields}>
-        <Input
-          className={app.field}
-          name='firstName'
-          label='First Name'
-          hint='First message'
-          maxLength={256}
-        />
-        <Select.Select
-          name="select"
-          label="foo"
-          validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
-        >
-          <Select.Option value="1" label="1" />
-          <Select.Option value="2" label="2" />
-          <Select.Option value="3" label="3" />
-          <Select.Option value="4" label="4" />
-        </Select.Select>
-        <Input
-          className={app.field}
-          name='lastName'
-          label='Last Name'
-          success='Last message'
-          maxLength={256}
-        />
-        <Input
-          className={app.field}
-          name='email'
-          label='Email'
-          hint='Email message'
-          maxLength={256}
-        />
-        <PasswordInput
-          onScoreChange={console.log}
-          checkPasswordStrength={checkPasswordStrength}
-          className={app.field}
-          name='password'
-          maxLength={256}
-          withIndicator
-        />
-      </div>
-      <Checkbox
-        className={app.field}
-        name='terms'
-      >
-        <span>I agree to Jibrel's</span>
-        <a
-          href='#'
-          className={signup.terms}
-        >
-          Terms and Conditions and Privacy Policy
-        </a>
-      </Checkbox>
-      <BigButton
-        className={signup.submit}
-        type='submit'
-        isLoading={isSubmitting}
-      >
-        Create Account
-      </BigButton>
-      <div className={signup.signin}>
-        <span>Already have a Jibrel account?</span>
-        <LinkButton
-          href='/signin'
-          className={signup.action}
-        >
-          SIGN IN
-        </LinkButton>
-        <Icon
-          name='ic_arrow_down_24'
-          className={signup.arrow}
-        />
-        <Icon
-          namespace='id'
-          name='ic_arrow_right_24'
-          className={signup.arrow}
-        />
-        <Icon
-          namespace='ui'
-          name='ic_en_24'
-        />
-        <Icon
-          namespace='id'
-          name='ic_es_24'
-        />
-      </div>
-    </form>
-  )
-}
-
-function Signup() {
-  const handleSubmit = (values: SignupFormFields) => {
-    return {
-      firstName: 'firstName error',
-      lastName: 'lastName error',
-      email: 'email error',
-      password: 'password error',
-      terms: 'terms error',
-    }
+    return null
   }
 
   return (
-    <div className={signup.main}>
-      <Form
-        onSubmit={handleSubmit}
-        render={renderSignupForm}
-        initialValues={SIGNUP_INITIAL_VALUES}
-      />
-    </div>
+    <I18nProvider
+      languageCode={LanguageCode.en}
+      catalog={catalog}
+    >
+      {children}
+    </I18nProvider>
   )
 }
+
+const App: React.FunctionComponent = () => {
+  return (
+    <RouterProvider router={router}>
+      <ReduxProvider store={store}>
+        <LoadI18n>
+          <Pages />
+        </LoadI18n>
+      </ReduxProvider>
+    </RouterProvider>
+  )
+}
+
+export default App

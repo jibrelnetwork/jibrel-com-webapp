@@ -2,6 +2,8 @@
 .vscode
 build
 /reports
+**/locales/_build/
+**/locales/*/messages.js
 
 # Logs
 logs
