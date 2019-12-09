@@ -12,6 +12,7 @@ import {
   Input,
   Checkbox,
   BigButton,
+  PhoneInput,
   LinkButton,
   Select,
   PasswordInput,
@@ -21,11 +22,12 @@ import { checkPasswordStrength } from '../../utils/forms'
 import CountrySelect from '../../components/CountrySelect'
 
 interface SignupFormFields {
-  firstName: string,
-  lastName: string,
-  email: string,
-  password: string,
-  terms: boolean,
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  phone: string;
+  terms: boolean;
 }
 
 const SIGNUP_INITIAL_VALUES: SignupFormFields = {
@@ -33,6 +35,7 @@ const SIGNUP_INITIAL_VALUES: SignupFormFields = {
   lastName: '',
   email: '',
   password: '',
+  phone: '',
   terms: false,
 }
 
@@ -109,6 +112,10 @@ function renderSignupForm({
           className={app.field}
           name='code'
         />
+        <PhoneInput
+          ccc='+777'
+          name='phone'
+        />
       </div>
       <Checkbox
         className={app.field}
@@ -166,8 +173,9 @@ export default function SignUp() {
       lastName: 'lastName error',
       email: 'email error',
       password: 'password error',
-      terms: 'terms error',
       code: 'code error',
+      phone: 'phone error',
+      terms: 'terms error',
     }
   }
 
