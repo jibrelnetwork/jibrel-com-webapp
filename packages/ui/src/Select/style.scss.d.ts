@@ -4,7 +4,9 @@ declare namespace StyleScssModule {
     "has-error": string;
     hasError: string;
     icon: string;
+    "is-disabled": string;
     "is-open": string;
+    isDisabled: string;
     isOpen: string;
     native: string;
     placeholder: string;
