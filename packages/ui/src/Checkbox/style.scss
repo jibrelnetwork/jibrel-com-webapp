@@ -7,25 +7,25 @@
 
   &:hover {
     .tick.off {
-      @include icon-color($color-main-blue-40);
+      @include icon-color($color-blue-40);
     }
   }
 
   &.error {
     .tick.off {
-      @include icon-color($color-main-red);
+      @include icon-color($color-red);
     }
   }
 }
 
 .tick {
-  @include icon-color($color-main-blue);
+  @include icon-color($color-blue);
 
   transition: fill 0.2s ease-in-out, stroke 0.2s ease-in-out;
 
   &.off,
   &.disabled {
-    @include icon-color($color-main-black-30);
+    @include icon-color($color-black-30);
   }
 
   &.off {
@@ -43,7 +43,7 @@
   font-style: normal;
   font-weight: normal;
   line-height: 140%;
-  color: $color-main-black-60;
+  color: $color-black-60;
 }
 
 .field {

@@ -14,6 +14,7 @@ export interface SelectProps {
   defaultValue?: string;
   value?: string;
   hasError?: boolean;
+  isDisabled?: boolean;
   onChange?: (event: React.ChangeEvent) => void;
   onFocus?: (event: React.FocusEvent) => void;
   onBlur?: (event: React.FocusEvent) => void;
@@ -30,6 +31,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
   defaultValue,
   value,
   hasError = false,
+  isDisabled = false,
   onChange = noop,
   onFocus = noop,
   onBlur = noop,
@@ -64,6 +66,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
         style.select,
         isOpen && style.isOpen,
         hasError && style.hasError,
+        isDisabled && style.isDisabled,
       ])}
     >
       <div className={style.content}>
@@ -81,6 +84,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
         className={style.native}
         onFocus={handleFocus}
         onBlur={handleBlur}
+        disabled={isDisabled}
       >
         {placeholder && (
           <option

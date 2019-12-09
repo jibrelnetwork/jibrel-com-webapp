@@ -6,36 +6,36 @@
 
   &:hover {
     .field {
-      border-color: $color-main-blue-40;
+      border-color: $color-blue-40;
     }
 
     .label {
-      color: $color-main-blue-60;
+      color: $color-blue-60;
     }
   }
 
   &.error {
     .field {
-      border-color: $color-main-red-30;
+      border-color: $color-red-30;
 
       &:focus {
         ~ .frame {
-          border-color: $color-main-red;
+          border-color: $color-red;
         }
 
         ~ .label {
-          color: $color-main-red;
+          color: $color-red;
         }
       }
     }
 
     .label {
-      color: $color-main-red;
+      color: $color-red;
     }
 
     &:hover {
       .field {
-        border-color: $color-main-red-60;
+        border-color: $color-red-60;
       }
     }
   }
@@ -50,7 +50,7 @@
   letter-spacing: -0.54px;
   font-size: 12px;
   line-height: 140%;
-  color: $color-main-black-60;
+  color: $color-black-60;
   cursor: text;
   transition: color 0.2s ease-in-out;
 }
@@ -79,15 +79,15 @@
   padding-left: 16px;
   padding-right: 16px;
   background-color: transparent;
-  border-color: $color-main-black-30;
+  border-color: $color-black-30;
 
   &:focus {
     ~ .frame {
-      border-color: $color-main-blue;
+      border-color: $color-blue;
     }
 
     ~ .label {
-      color: $color-main-blue;
+      color: $color-blue;
     }
   }
 }

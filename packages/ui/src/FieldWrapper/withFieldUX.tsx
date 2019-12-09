@@ -1,4 +1,5 @@
 import React from 'react'
+import { useFormState } from 'react-final-form'
 
 import { getMessage } from './getMessage'
 
@@ -18,6 +19,12 @@ export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
     success,
     ...props
   }) => {
+    const { submitting } = useFormState({
+      subscription: {
+        submitting: true
+      }
+    })
+
     const message = getMessage({
       meta,
       hint,
@@ -29,6 +36,7 @@ export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
       {...message}
       {...input}
       hasError={message.messageType === MessageType.error}
+      isDisabled={props.isDisabled || submitting}
     />
   }
 

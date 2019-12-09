@@ -11,17 +11,17 @@
 
   &.info .message {
     display: block;
-    color: $color-main-black-60;
+    color: $color-black-60;
   }
 
   &.error .message {
     display: block;
-    color: $color-main-red;
+    color: $color-red;
   }
 
   &.success .message {
     display: block;
-    color: $color-main-blue;
+    color: $color-blue;
   }
 }
 

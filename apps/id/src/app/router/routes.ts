@@ -1,7 +1,7 @@
 import { Route } from 'router5'
 import { redirectToDefaultIfLanguageUnavailable } from './activations/redirectToDefaultIfLanguageUnavailable'
 
-const ROUTER_ROOT = '/id'
+const ROUTER_ROOT = ''
 
 export const routes: Route[] = [
   {
