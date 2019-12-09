@@ -35,8 +35,8 @@ const create = (dirname) => {
     REPORT: path.resolve(__dirname, 'reports', OUTPUT_POSTFIX),
     PUBLIC: path.resolve(dirname, 'src/public'),
     PACKAGES: path.resolve(__dirname, 'packages'),
-    PUBLIC_URL_PATH: `/${OUTPUT_POSTFIX}/`,
-    PUBLIC_URL: `/${OUTPUT_POSTFIX}`,
+    PUBLIC_URL_PATH: '/',
+    PUBLIC_URL: '',
   }
 
   return {
@@ -391,7 +391,7 @@ const create = (dirname) => {
       overlay: false,
       historyApiFallback: {
         rewrites: [
-          { from: new RegExp(`^/${OUTPUT_POSTFIX}/(?!static).*$`), to: `/${OUTPUT_POSTFIX}/index.html` },
+          { from: new RegExp(`^/(?!static).*$`), to: `/index.html` },
         ],
       },
     },

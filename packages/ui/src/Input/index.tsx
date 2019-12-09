@@ -10,21 +10,19 @@ import {
 } from '../FieldWrapper'
 
 export interface InputProps {
-  type: string,
-  label: string,
-  className: string,
-  hasError: boolean,
-  isDisabled: boolean,
-  isRequired: boolean,
+  type?: string;
+  label: string;
+  className?: string;
+  hasError?: boolean;
+  isDisabled?: boolean;
 }
 
 const Input: React.FunctionComponent<InputProps> = ({
-  type,
   label,
   className,
-  hasError,
-  isDisabled,
-  isRequired,
+  type = 'text',
+  hasError = false,
+  isDisabled = false,
   ...props
 }) => {
   return (
@@ -34,20 +32,12 @@ const Input: React.FunctionComponent<InputProps> = ({
         name={name}
         type={type}
         className={style.field}
-        required={isRequired}
         disabled={isDisabled}
       />
       <div className={style.frame} />
       <p className={style.label}>{label}</p>
-    </label> 
+    </label>
   )
-}
-
-Input.defaultProps = {
-  type: 'text',
-  hasError: false,
-  isDisabled: false,
-  isRequired: false,
 }
 
 export default withField(withFieldUX(React.memo(withMessage(Input))))

@@ -2,7 +2,19 @@
   "name": "@jibrelcom/investor",
   "version": "0.0.1",
   "private": true,
+  "scripts": {
+    "dev": "npx env-cmd -e development npx webpack-dev-server --config ./webpack.config.js",
+    "build": "npx env-cmd -e production npx webpack --config ./webpack.config.js"
+  },
   "dependencies": {
-
+    "react": "~16.12.0",
+    "react-dom": "~16.12.0"
+  },
+  "devDependencies": {
+    "@types/react": "~16.9.15",
+    "@types/react-dom": "~16.9.4",
+    "env-cmd": "~10.0.1",
+    "webpack": "~4.41.2",
+    "webpack-dev-server": "~3.9.0"
   }
 }
