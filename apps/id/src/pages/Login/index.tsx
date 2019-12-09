@@ -40,7 +40,7 @@ const renderLoginForm: React.FunctionComponent = ({
       onSubmit={handleSubmit}
       className={style.form}
     >
-      <h2 className={style.title}>Sign Up</h2>
+      <h2 className={style.title}>Sign In</h2>
       <div className={style.fields}>
         <Input
           className={style.field}
