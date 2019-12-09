@@ -5,6 +5,7 @@ ENVIRONMENT="${ENV:-undefined}"
 
 function prepare_and_check() {
     env $@ sh -c 'dockerize -template /etc/nginx/nginx.tpl.conf:/etc/nginx/nginx.conf'
+    env $@ sh -c 'dockerize -template /etc/nginx/include.d/headers.tpl.conf:/etc/nginx/include.d/headers.conf'
     /usr/sbin/nginx -t
 }
 
@@ -17,6 +18,7 @@ else
     echo "Starting jibrel-com-webapp service, version: `cat /app/version.txt` on node `hostname`, mode: ${ENVIRONMENT}"
 
     dockerize -template /etc/nginx/nginx.tpl.conf:/etc/nginx/nginx.conf
+    dockerize -template /etc/nginx/include.d/headers.tpl.conf:/etc/nginx/include.d/headers.conf
 
     /usr/sbin/nginx
 fi
