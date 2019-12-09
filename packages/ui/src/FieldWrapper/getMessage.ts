@@ -5,10 +5,12 @@ export const getMessage = ({
   meta,
   hint,
   success,
+  isDependencyChanged = false,
 }: {
   meta: FieldMetaState<GenericFieldValue>;
   hint?: string;
   success?: string;
+  isDependencyChanged?: boolean;
 }): {
   messageType: MessageType | void;
   message: string | void;
@@ -20,7 +22,7 @@ export const getMessage = ({
     }
   }
 
-  if (!meta.dirtySinceLastSubmit && meta.submitError) {
+  if (!meta.dirtySinceLastSubmit && meta.submitError && !isDependencyChanged) {
     return {
       messageType: MessageType.error,
       message: meta.submitError,
