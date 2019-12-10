@@ -1,9 +1,10 @@
-import { Route } from 'router5'
 import { redirectToDefaultIfLanguageUnavailable } from './activations/redirectToDefaultIfLanguageUnavailable'
 
 const ROUTER_ROOT = ''
 
-export const routes: Route[] = [
+import { RouteEnhanced } from './types'
+
+export const routes: RouteEnhanced[] = [
   {
     name: 'Account',
     path: '/',

@@ -4,10 +4,12 @@ import browserPlugin from 'router5-plugin-browser'
 import { routes } from './routes'
 
 import { setLangCookie } from './middlewares/setLangCookie'
+import { onRouteActivateMiddleware } from './middlewares/onRouteActivateMiddleware'
 
 export const router = createRouter(routes, {
   allowNotFound: true,
 })
 
 router.usePlugin(browserPlugin())
+router.useMiddleware(onRouteActivateMiddleware(routes))
 router.useMiddleware(setLangCookie)
