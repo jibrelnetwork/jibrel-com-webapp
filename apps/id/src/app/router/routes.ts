@@ -71,7 +71,10 @@ export const routes: RouteEnhanced[] = [
 
   {
     name: 'VerifyPhone',
-    path: '/verify/phonenumber',
+    path: '/verify/phone',
+    // onActivate: get phone verification status from backend
+    // canActivate: if phone is not verified, then true
+    //    else redirect to KYC
     children: [
       {
         name: 'Code',
@@ -85,60 +88,57 @@ export const routes: RouteEnhanced[] = [
   },
 
   {
-    name: 'KYCStart',
+    name: 'KYC',
     path: '/kyc',
-  },
-  {
-    name: 'KYCInvestor',
-    path: '/kyc/investor',
+    // onActivate: get kyc status from backend
+    // canActivate: if kyc status is "not submitted", then true
+    //    else redirect to CMS
     children: [
       {
-        name: 'Personal',
-        path: '/personal',
+        name: 'Individual',
+        path: '/individual',
+        children: [
+          {
+            name: 'Residency',
+            path: '/residency',
+          },
+          {
+            name: 'Income',
+            path: '/income',
+          },
+          {
+            name: 'Status',
+            path: '/status',
+          },
+        ],
       },
       {
-        name: 'Residency',
-        path: '/residency',
+        name: 'Company',
+        path: '/company',
+        children: [
+          {
+            name: 'Office',
+            path: '/office',
+          },
+          {
+            name: 'Contact',
+            path: '/contact',
+          },
+          {
+            name: 'Beneficiary',
+            path: '/beneficiary',
+          },
+          {
+            name: 'Director',
+            path: '/director',
+          },
+          {
+            name: 'Status',
+            path: '/status',
+          },
+        ],
       },
-      {
-        name: 'Income',
-        path: '/income',
-      },
-      {
-        name: 'Status',
-        path: '/status',
-      },
-    ],
-  },
-  {
-    name: 'KYCCompany',
-    path: '/kyc/company',
-    children: [
-      {
-        name: 'Information',
-        path: '/information',
-      },
-      {
-        name: 'Office',
-        path: '/office',
-      },
-      {
-        name: 'Contact',
-        path: '/contact',
-      },
-      {
-        name: 'Beneficiary',
-        path: '/beneficiary',
-      },
-      {
-        name: 'Director',
-        path: '/director',
-      },
-      {
-        name: 'Status',
-        path: '/status',
-      },
-    ],
+    ]
   },
 ].map((route) => ({
   ...route,

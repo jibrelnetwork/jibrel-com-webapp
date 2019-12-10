@@ -8,6 +8,7 @@ declare namespace StyleScssModule {
     step: string;
     "step-title": string;
     stepTitle: string;
+    submit: string;
     title: string;
   }
 }
