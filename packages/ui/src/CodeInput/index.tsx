@@ -23,16 +23,26 @@ const CodeInput: React.FunctionComponent<CodeInputProps> = ({
   ...props
 }) => {
   return (
-    <label className={cc([style.input, hasError && style.error, className])}>
+    <label
+      className={cc([
+        style.input,
+        style.code,
+        hasError && style.error,
+        className,
+      ])}
+    >
       <MaskedInput
-        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/,]}
+        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
         showMask
         {...props}
         render={(ref, inputProps): React.ReactNode => (
           <input
             {...inputProps}
             ref={ref}
-            className={cc([style.field, style.mask])}
+            className={cc([
+              style.field,
+              style.mask,
+            ])}
           />
         )}
       />

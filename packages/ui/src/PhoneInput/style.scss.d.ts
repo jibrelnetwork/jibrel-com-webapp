@@ -1,12 +1,9 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    code: string;
-    error: string;
-    field: string;
-    frame: string;
+    ccc: string;
     input: string;
     label: string;
-    mask: string;
+    phone: string;
   }
 }
 
