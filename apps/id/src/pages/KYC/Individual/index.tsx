@@ -14,7 +14,7 @@ import AuthenticatedLayout from 'layouts/AuthenticatedLayout'
 import { useI18n } from 'app/i18n'
 import axios from 'store/axios'
 import CountrySelect from 'components/CountrySelect'
-import { PersonalValues } from 'store/models/kycIndividual'
+import { PersonalValues } from 'store/types'
 import {
   RootState,
   Dispatch,
