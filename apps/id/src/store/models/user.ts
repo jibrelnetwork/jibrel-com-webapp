@@ -9,20 +9,31 @@ export enum UserStatus {
   BANNED = 'BANNED',
 }
 
-export const user = createModel({
+export interface UserState {
+  status: UserStatus | void;
+  languageCode: string | void;
+}
+
+export const user = createModel<UserState>({
   state: {
     status: undefined,
     languageCode: undefined,
   },
   effects: (dispatch) => ({
-    async profile (): Promise<void> {
+    async updateProfile (): Promise<void> {
       await new Promise((resolve) => setTimeout(resolve, 2000))
-      dispatch.user.status(UserStatus.ANONYMOUS)
-      dispatch.user.languageCode(LanguageCode.en)
+      this.setStatus(UserStatus.ANONYMOUS)
+      this.setLanguageCode(LanguageCode.en)
     }
   }),
   reducers: {
-    status: (state, payload): UserStatus => payload,
-    languageCode: (state, payload): LanguageCode => payload,
+    setStatus: (state, payload): UserState => ({
+      ...state,
+      status: payload,
+    }),
+    setLanguageCode: (state, payload): UserState => ({
+      ...state,
+      languageCode: payload,
+    }),
   }
 })
