@@ -12,9 +12,9 @@ import {
 
 import style from './style.scss'
 import authStyle from '../../styles/auth.scss'
+import AuthLayout from '../../layouts/AuthLayout'
 
 import {
-  Link,
   InternalLink,
   UserActionInfo,
 } from '../../components'
@@ -158,13 +158,15 @@ class Forgot extends Component<ForgotProps, ForgotState> {
 
   render(): React.ReactNode {
     return (
-      <div className={authStyle.main}>
-        <Form
-          onSubmit={this.handleSubmit}
-          render={this.renderForgotForm}
-          initialValues={FORGOT_INITIAL_VALUES}
-        />
-      </div>
+      <AuthLayout>
+        <div className={authStyle.main}>
+          <Form
+            onSubmit={this.handleSubmit}
+            render={this.renderForgotForm}
+            initialValues={FORGOT_INITIAL_VALUES}
+          />
+        </div>
+      </AuthLayout>
     )
   }
 }
