@@ -13,6 +13,8 @@ export interface InputProps {
   type?: string;
   label: string;
   className?: string;
+  inputClassName?: string;
+  labelClassName?: string;
   hasError?: boolean;
   isDisabled?: boolean;
 }
@@ -20,6 +22,8 @@ export interface InputProps {
 const Input: React.FunctionComponent<InputProps> = ({
   label,
   className,
+  inputClassName,
+  labelClassName,
   type = 'text',
   hasError = false,
   isDisabled = false,
@@ -31,11 +35,21 @@ const Input: React.FunctionComponent<InputProps> = ({
         {...props}
         name={name}
         type={type}
-        className={style.field}
+        className={cc([
+          style.field,
+          inputClassName,
+        ])}
         disabled={isDisabled}
       />
       <div className={style.frame} />
-      <p className={style.label}>{label}</p>
+      <p
+        className={cc([
+          style.label,
+          labelClassName,
+        ])}
+      >
+        {label}
+      </p>
     </label>
   )
 }

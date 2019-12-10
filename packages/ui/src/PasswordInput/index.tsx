@@ -41,6 +41,7 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
         {...props}
         label={label}
         value={value}
+        inputClassName={style.input}
         type={isOpen ? 'text' : 'password'}
       />
       {withIndicator && checkPasswordStrength && (

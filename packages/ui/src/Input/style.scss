@@ -39,6 +39,12 @@
       }
     }
   }
+
+  &.code {
+    .mask {
+      letter-spacing: 4px;
+    }
+  }
 }
 
 .label {
@@ -90,8 +96,4 @@
       color: $color-blue;
     }
   }
-}
-
-.mask {
-  letter-spacing: 4px;
 }
