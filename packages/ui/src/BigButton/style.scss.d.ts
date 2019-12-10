@@ -1,6 +1,7 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
     button: string;
+    loading: string;
     main: string;
     secondary: string;
   }

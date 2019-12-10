@@ -1,9 +1,10 @@
 import React from 'react'
 import cc from 'classcat'
 
+import Loader from '../Loader'
 import style from './style.scss'
-
 import { BigButtonVariant } from './types'
+import { LoaderColor } from '../Loader/types'
 
 export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
   variant?: BigButtonVariant;
@@ -26,11 +27,17 @@ const BigButton: React.FunctionComponent<BigButtonProps> = ({
     className={cc([
       style.button,
       style[variant],
+      isLoading && style.loading,
       className,
     ])}
     disabled={isDisabled}
   >
-    {isLoading ? '...' : children}
+    {!isLoading ? children : (
+      <Loader
+        color={LoaderColor.white}
+        hoverColor={LoaderColor.blue}
+      />
+    )}
   </button>
 )
 

@@ -1,5 +1,6 @@
 export { default as Icon } from './Icon'
 export { default as Input } from './Input'
+export { default as Loader } from './Loader'
 export { default as Checkbox } from './Checkbox'
 export { default as CodeInput } from './CodeInput'
 export { default as BigButton } from './BigButton'
