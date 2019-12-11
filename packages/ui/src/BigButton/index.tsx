@@ -4,6 +4,7 @@ import cc from 'classcat'
 import style from './style.scss'
 
 import { BigButtonVariant } from './types'
+import { withSubmitButtonUX } from '../FieldWrapper'
 
 export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
   variant?: BigButtonVariant;
@@ -35,3 +36,5 @@ const BigButton: React.FunctionComponent<BigButtonProps> = ({
 )
 
 export default React.memo(BigButton)
+
+export const BigButtonSubmit = withSubmitButtonUX(BigButton)
