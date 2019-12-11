@@ -11,7 +11,7 @@ import {
   Icon,
   Input,
   Checkbox,
-  BigButton,
+  BigButtonSubmit,
   PhoneInput,
   LinkButton,
   Select,
@@ -129,13 +129,11 @@ function renderSignupForm({
           Terms and Conditions and Privacy Policy
         </a>
       </Checkbox>
-      <BigButton
+      <BigButtonSubmit
         className={signup.submit}
-        type='submit'
-        isLoading={isSubmitting}
       >
         Create Account
-      </BigButton>
+      </BigButtonSubmit>
       <div className={signup.signin}>
         <span>Already have a Jibrel account?</span>
         <LinkButton
