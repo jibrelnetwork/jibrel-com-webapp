@@ -2,7 +2,10 @@ export { default as Icon } from './Icon'
 export { default as Input } from './Input'
 export { default as Checkbox } from './Checkbox'
 export { default as CodeInput } from './CodeInput'
-export { default as BigButton } from './BigButton'
+export {
+  default as BigButton,
+  BigButtonSubmit,
+} from './BigButton'
 export { default as PhoneInput } from './PhoneInput'
 export { default as LinkButton } from './LinkButton'
 export { default as SmallButton } from './SmallButton'
@@ -14,6 +17,7 @@ export {
   withFieldUX,
   withDependenciesFieldUX,
   withField,
+  withSubmitButtonUX,
 } from './FieldWrapper'
 
 export {
