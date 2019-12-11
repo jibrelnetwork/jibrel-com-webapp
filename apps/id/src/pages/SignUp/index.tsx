@@ -116,7 +116,7 @@ const SignUp: React.FunctionComponent<SignUpProps> = ({
 }
 
 export default connect(
-  () => null,
+  () => ({}),
   (dispatch: Dispatch) => ({
     onSubmit: dispatch.user.signUp,
   })
