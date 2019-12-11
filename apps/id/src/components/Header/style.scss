@@ -1,0 +1,35 @@
+@import '../../../node_modules/@jibrelcom/ui/src/theme';
+@import '../../../node_modules/@jibrelcom/ui/src/utils/scss/flex';
+
+.header {
+  background: $color-white;
+}
+
+.main {
+  @include flex-row;
+
+  max-width: 1128px;
+  margin: 0 auto;
+  align-items: center;
+}
+
+.logo {
+  margin: 32px auto 32px 0;
+}
+
+.action {
+  padding: 0;
+  border: none;
+  background: none;
+  color: $color-black;
+  text-decoration: none;
+  font-weight: 600;
+  font-size: 12px;
+  line-height: 14px;
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+
+  &:not(:last-child) {
+    margin-right: 48px;
+  }
+}
