@@ -1,5 +1,6 @@
 import { createModel } from '@rematch/core'
 import mapValues from 'lodash-es/mapValues'
+import { actions as routerActions } from 'redux-router5'
 
 import axios from '../axios'
 import {
@@ -66,6 +67,11 @@ export const user = createModel<UserState>({
           })
 
         this.setProfile(data.data)
+
+        dispatch(routerActions.navigateTo(
+          'VerifyEmail',
+          { lang: language },
+        ))
 
         return
       } catch (error) {
