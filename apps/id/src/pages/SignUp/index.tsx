@@ -2,7 +2,6 @@ import app from '../../app.scss'
 import signup from './signup.scss'
 import React from 'react'
 import { connect } from 'react-redux'
-import mapValues from 'lodash-es/mapValues'
 import {
   Form,
   FormRenderProps,
@@ -17,27 +16,14 @@ import {
 } from '@jibrelcom/ui'
 import { checkPasswordStrength } from 'utils/forms'
 import {
-  axios,
   Dispatch,
-  RootState,
 } from 'store'
-import { Profile } from 'store/types'
+import {
+  SignUpFormValues,
+  SignUpFormErrors,
+} from 'store/types'
 import isRequired from 'utils/validators/isRequired'
 import { useI18n } from 'app/i18n'
-import { LanguageCode } from 'data/languages'
-import { AxiosError, AxiosResponse } from 'axios'
-
-interface SignUpFormValues {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  terms: boolean;
-}
-
-type SignUpFormErrors = {
-  [key in keyof SignUpFormValues]?: string | void;
-}
 
 const SIGNUP_INITIAL_VALUES: SignUpFormValues = {
   firstName: '',
@@ -112,52 +98,16 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
 }
 
 interface SignUpProps {
-  language: LanguageCode;
-  onSubmitSuccess: (profile: Profile) => void;
+  onSubmit: (values: SignUpFormValues) => Promise<SignUpFormErrors | undefined | void>;
 }
 
 const SignUp: React.FunctionComponent<SignUpProps> = ({
-  language,
-  onSubmitSuccess,
+  onSubmit,
 }) => {
-  const handleSubmit = ({
-    firstName,
-    lastName,
-    email,
-    password,
-    terms,
-  }: SignUpFormValues): Promise<SignUpFormErrors | undefined | void> => {
-    return axios
-      .post('/v1/auth/registration', {
-        userName: `${firstName} ${lastName}`,
-        email,
-        password,
-        language,
-        isAgreedTerms: terms,
-        isAgreedPrivacyPolicy: terms,
-      })
-      .then((result: AxiosResponse<{ data: Profile }>) => {
-        onSubmitSuccess(result.data.data)
-        console.log(result)
-      })
-      .catch((error: AxiosError) => {
-        if (!error.response) {
-          throw error
-        }
-
-        const { status, data } = error.response
-        if (status === 400) {
-          return mapValues(data.errors, (e) => e[0].message)
-        }
-
-        throw error
-      })
-  }
-
   return (
     <div className={signup.main}>
       <Form
-        onSubmit={handleSubmit}
+        onSubmit={onSubmit}
         render={SignUpForm}
         initialValues={SIGNUP_INITIAL_VALUES}
       />
@@ -166,12 +116,8 @@ const SignUp: React.FunctionComponent<SignUpProps> = ({
 }
 
 export default connect(
-  (state: RootState) => ({
-    language: state.user.languageCode,
-  }),
+  () => ({}),
   (dispatch: Dispatch) => ({
-    onSubmitSuccess: (profile: Profile): void => {
-      dispatch.user.setProfile(profile)
-    }
+    onSubmit: dispatch.user.signUp,
   })
 )(SignUp)
