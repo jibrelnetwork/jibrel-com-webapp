@@ -12,7 +12,7 @@ export const redirectToDefaultIfLanguageUnavailable: ActivationFnFactory = (rout
     let { user } = store.getState()
 
     if (!user.status) {
-      await store.dispatch.user.profile()
+      await store.dispatch.user.updateProfile()
       user = store.getState().user
     }
 
