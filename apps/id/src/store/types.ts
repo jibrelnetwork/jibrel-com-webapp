@@ -20,3 +20,15 @@ export interface Profile {
 
   kycStatus: KYCStatus;
 }
+
+export interface SignUpFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  terms: boolean;
+}
+
+export type SignUpFormErrors = {
+  [key in keyof SignUpFormValues]?: string | void;
+}
