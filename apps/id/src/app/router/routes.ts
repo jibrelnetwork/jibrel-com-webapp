@@ -80,8 +80,13 @@ export const routes: Route[] = [
   },
 
   {
-    name: 'VerifyPhone',
+    name: 'redirect!VerifyPhone',
     path: '/verify/phonenumber',
+    canActivate: redirectToDefaultIfLanguageUnavailable,
+  },
+  {
+    name: 'VerifyPhone',
+    path: '/:lang/verify/phonenumber',
     children: [
       {
         name: 'Code',
