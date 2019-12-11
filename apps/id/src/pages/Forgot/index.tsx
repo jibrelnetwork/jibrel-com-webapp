@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { FORM_ERROR } from 'final-form'
 
 import {
   Form,
@@ -14,7 +15,6 @@ import style from './style.scss'
 import authStyle from '../../styles/auth.scss'
 
 import {
-  Link,
   InternalLink,
   UserActionInfo,
 } from '../../components'
@@ -25,21 +25,18 @@ interface ForgotFormFields {
 
 interface ForgotFormErrors {
   email?: string;
+  [FORM_ERROR]?: string;
 }
 
 interface ForgotProps {
-  handleSubmit: (values: ForgotFormFields) => Promise<ForgotFormFields>;
-}
-
-interface ForgotState {
-  errors?: ForgotFormErrors;
+  handleSubmit: (values: ForgotFormFields) => Promise<ForgotFormErrors>;
 }
 
 const FORGOT_INITIAL_VALUES: ForgotFormFields = {
   email: '',
 }
 
-class Forgot extends Component<ForgotProps, ForgotState> {
+class Forgot extends Component<ForgotProps> {
   constructor(props: ForgotProps) {
     super(props)
 
@@ -48,20 +45,19 @@ class Forgot extends Component<ForgotProps, ForgotState> {
     }
   }
 
-  handleSubmit = async (values: ForgotFormFields): Promise<void> => {
-    this.setState({
-      errors: await new Promise((resolve) => {
-        setTimeout(() => resolve({}), 5000)
-      }),
+  handleSubmit = async (values: ForgotFormFields): Promise<ForgotFormErrors> => {
+    return new Promise((resolve) => {
+      setTimeout(() => resolve({ [FORM_ERROR]: 'Unable to deliver' }), 5000)
     })
   }
 
   renderForgotEmailSent = ({
     handleSubmit,
     values: { email },
+    form: { getState },
     submitting: isSubmitting,
   }: FormRenderProps<ForgotFormFields>): React.ReactNode => {
-    const error = (this.state.errors || {}).email
+    const { submitError } = getState()
 
     return (
       <form onSubmit={handleSubmit}>
@@ -79,14 +75,14 @@ class Forgot extends Component<ForgotProps, ForgotState> {
               <span>We are sending a new email. Please check your inbox.</span>
             </div>
           )}
-          {!isSubmitting && error && (
+          {!isSubmitting && submitError && (
             <div className={style.error}>
-              <span className={style.message}>{error}</span><br />
+              <span className={style.message}>{submitError}</span><br />
               <span>Please check your spam folder or contact our</span><br />
               <a className={style.support} href='#'>Support team.</a>
             </div>
           )}
-          {!isSubmitting && !error && (
+          {!isSubmitting && !submitError && (
             <button
               type='submit'
               className={style.action}
@@ -103,12 +99,18 @@ class Forgot extends Component<ForgotProps, ForgotState> {
     const {
       handleSubmit,
       values: { email },
+      form: { getState },
       submitting: isSubmitting,
     } = props
 
-    const isSubmitted = !!this.state.errors
+    const {
+      submitError,
+      errors: {
+        email: emailError,
+      },
+    } = getState()
 
-    if (isSubmitting || isSubmitted) {
+    if (isSubmitting || (submitError && !emailError)) {
       return this.renderForgotEmailSent(props)
     }
 
