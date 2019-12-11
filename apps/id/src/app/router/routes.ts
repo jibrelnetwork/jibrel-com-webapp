@@ -70,12 +70,12 @@ export const routes: Route[] = [
 
   {
     name: 'redirect!VerifyEmail',
-    path: '/verify/email',
+    path: '/verify/email/:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'VerifyEmail',
-    path: '/:lang/verify/email',
+    path: '/:lang/verify/email/:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
