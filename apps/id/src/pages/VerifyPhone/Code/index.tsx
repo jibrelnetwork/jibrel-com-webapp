@@ -14,8 +14,8 @@ import {
 } from '@jibrelcom/ui'
 
 import style from './style.scss'
-import authStyle from '../../styles/auth.scss'
-import InternalLink from '../../components/InternalLink'
+import authStyle from '../../../styles/auth.scss'
+import InternalLink from '../../../components/InternalLink'
 
 interface VerifyPhoneCodeFormFields {
   code: string;
@@ -165,7 +165,7 @@ class VerifyPhoneCode extends Component<VerifyPhoneCodeProps, VerifyPhoneCodeSta
         You can change your number or wait
         {!!min && (
           <>
-            <span>{min}</span> min 
+            <span>{min}</span> min
           </>
         )}
         {!!sec && (

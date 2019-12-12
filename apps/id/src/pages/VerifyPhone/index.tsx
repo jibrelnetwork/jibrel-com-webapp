@@ -17,6 +17,8 @@ import COUNTRIES_INDEX from 'components/CountrySelect/countries/index.json'
 import { useI18n } from 'app/i18n'
 import { isRequired } from 'utils/validators'
 
+import Code from './Code'
+
 import style from './style.scss'
 
 interface VerifyPhoneFormFields {
@@ -95,6 +97,8 @@ class VerifyPhone extends Component<VerifyPhoneProps> {
       </div>
     )
   }
+
+  static Code = Code
 }
 
 export default VerifyPhone
