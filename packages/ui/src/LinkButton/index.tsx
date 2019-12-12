@@ -26,6 +26,7 @@ const LinkButton: React.FunctionComponent<LinkButtonProps> = ({
     className={cc([
       style.button,
       variant && style[variant],
+      isDisabled && style.disabled,
       className,
     ])}
     disabled={isDisabled}
