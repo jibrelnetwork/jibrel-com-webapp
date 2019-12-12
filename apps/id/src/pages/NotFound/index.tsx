@@ -1,11 +1,11 @@
 import React from 'react'
 
-import AuthenticatedLayout from 'layouts/AuthenticatedLayout'
+import ProfileLayout from 'layouts/ProfileLayout'
 
 const NotFound: React.FunctionComponent = () => (
-  <AuthenticatedLayout>
+  <ProfileLayout>
     <h1>404 Not Found</h1>
-  </AuthenticatedLayout>
+  </ProfileLayout>
 )
 
 export default NotFound

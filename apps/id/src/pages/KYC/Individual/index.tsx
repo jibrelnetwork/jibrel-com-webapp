@@ -10,7 +10,7 @@ import noop from 'lodash-es/noop'
 import cc from 'classcat'
 import { connect } from 'react-redux'
 
-import AuthenticatedLayout from 'layouts/AuthenticatedLayout'
+import ProfileLayout from 'layouts/ProfileLayout'
 import { useI18n } from 'app/i18n'
 import axios from 'store/axios'
 import CountrySelect from 'components/CountrySelect'
@@ -103,7 +103,7 @@ const Personal: React.FunctionComponent<PersonalProps> = ({
   const i18n = useI18n()
 
   return (
-    <AuthenticatedLayout>
+    <ProfileLayout>
       <div className={grid.grid}>
         <h1 className={cc([
           grid.column,
@@ -125,7 +125,7 @@ const Personal: React.FunctionComponent<PersonalProps> = ({
           />
         </div>
       </div>
-    </AuthenticatedLayout>
+    </ProfileLayout>
   )
 }
 

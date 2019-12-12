@@ -1,15 +1,16 @@
 import React from 'react'
 import cc from 'classcat'
 import { centered } from '@jibrelcom/ui/src/theme/grid.scss'
+import Header from 'components/Header'
 
 import style from './style.scss'
 
-const AuthenticatedLayout: React.FunctionComponent = ({
+const ProfileLayout: React.FunctionComponent = ({
   children,
 }) => {
   return (
     <div className={style.wrapper}>
-      <div className={style.header}>Menu</div>
+      <Header />
       <main className={cc([
         style.content,
         centered,
@@ -21,4 +22,4 @@ const AuthenticatedLayout: React.FunctionComponent = ({
   )
 }
 
-export default AuthenticatedLayout
+export default ProfileLayout
