@@ -1,0 +1,30 @@
+@import '../node_modules/@jibrelcom/ui/src/theme/colors';
+
+.info {
+  margin-bottom: 32px;
+  font-size: 18px;
+  line-height: 140%;
+}
+
+.email {
+  font-weight: 600;
+}
+
+.error {
+  font-size: 15px;
+  line-height: 140%;
+}
+
+.message {
+  color: $color-red;
+  font-size: 18px;
+  line-height: 140%;
+}
+
+.support {
+  color: $color-blue;
+}
+
+.close {
+  margin: 32px 0;
+}

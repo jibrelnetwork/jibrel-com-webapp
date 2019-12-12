@@ -37,6 +37,17 @@ export const routes: RouteEnhanced[] = [
   },
 
   {
+    name: 'redirect!EmailVerification',
+    path: '/email-verification',
+    canActivate: redirectToDefaultIfLanguageUnavailable,
+  },
+  {
+    name: 'EmailVerification',
+    path: '/:lang/email-verification',
+    canActivate: redirectToDefaultIfLanguageUnavailable,
+  },
+
+  {
     name: 'redirect!Forgot',
     path: '/forgot',
     canActivate: redirectToDefaultIfLanguageUnavailable,
@@ -60,12 +71,12 @@ export const routes: RouteEnhanced[] = [
 
   {
     name: 'redirect!VerifyEmail',
-    path: '/verify/email',
+    path: '/verify/email/:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'VerifyEmail',
-    path: '/:lang/verify/email',
+    path: '/:lang/verify/email/:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 

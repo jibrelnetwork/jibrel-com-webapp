@@ -218,6 +218,7 @@ const create = (dirname) => {
                     plugins: () => [
                       require('postcss-flexbugs-fixes'),
                       require('autoprefixer')({
+                        // FIXME: should use global browsers list, when we start bundle size optimization
                         overrideBrowserslist: [
                           '>1%',
                           'last 4 versions',

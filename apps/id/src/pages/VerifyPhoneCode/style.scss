@@ -1,0 +1,53 @@
+@import '~@jibrelcom/ui/src/theme/colors';
+
+.description {
+  margin-bottom: 16px;
+  font-size: 18px;
+  line-height: 140%;
+
+  span {
+    font-weight: 600;
+  }
+}
+
+.action {
+  margin-bottom: 32px;
+  text-decoration: none;
+}
+
+.wide {
+  width: 100%;
+  margin-bottom: 0;
+  text-align: center;
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}
+
+.button {
+  margin-bottom: 32px;
+}
+
+.countdown {
+  width: 100%;
+  padding: 20px 0;
+  font-size: 15px;
+  line-height: 140%;
+  text-align: center;
+  color: $color-black;
+
+  span {
+    margin-left: 4px;
+    font-weight: 600;
+    color: $color-blue;
+  }
+}
+
+.error {
+  width: 100%;
+  text-align: center;
+  font-size: 15px;
+  line-height: 140%;
+  color: $color-red;
+}

@@ -42,7 +42,7 @@ const Pages: React.FunctionComponent = () => {
         <html lang={language.tag} dir={language.dir} />
         <title>{i18n._('meta.website.title.empty')}</title>
       </Helmet>
-      <Page />
+      <Page {...route.params} />
     </>
   )
 }
