@@ -1,10 +1,13 @@
-import { FieldValidatorWithConfiguration } from '@jibrelcom/ui'
+import { FieldValidatorConfiguration } from '@jibrelcom/ui'
 
-const isRequired: FieldValidatorWithConfiguration<string> = ({ i18n }) => (value): string | void => {
+const isRequired = (
+  { i18n }: FieldValidatorConfiguration,
+) => (
+  value: string | void,
+): string | void => {
   return value
     ? undefined
-    // FIXME: should be proper string
-    : i18n._('required')
+    : i18n._('form.error.isRequired')
 }
 
 export default isRequired
