@@ -1,55 +1,42 @@
 import app from '../../app.scss'
-import signup from '../../signup.scss'
+import signup from './signup.scss'
 import React from 'react'
-
+import { connect } from 'react-redux'
 import {
   Form,
   FormRenderProps,
 } from 'react-final-form'
 
 import {
-  Icon,
   Input,
   Checkbox,
   BigButtonSubmit,
-  PhoneInput,
   LinkButton,
-  Select,
   PasswordInput,
-  CodeInput,
 } from '@jibrelcom/ui'
-import { checkPasswordStrength } from '../../utils/forms'
-import CountrySelect from '../../components/CountrySelect'
+import { checkPasswordStrength } from 'utils/forms'
+import {
+  Dispatch,
+} from 'store'
+import {
+  SignUpFormValues,
+  SignUpFormErrors,
+} from 'store/types'
+import isRequired from 'utils/validators/isRequired'
+import { useI18n } from 'app/i18n'
 
-interface SignupFormFields {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  phone: string;
-  terms: boolean;
-}
-
-const SIGNUP_INITIAL_VALUES: SignupFormFields = {
+const SIGNUP_INITIAL_VALUES: SignUpFormValues = {
   firstName: '',
   lastName: '',
   email: '',
   password: '',
-  phone: '',
   terms: false,
 }
 
-function renderSignupForm({
+const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
   handleSubmit,
-  values,
-  submitting: isSubmitting,
-}: FormRenderProps<SignupFormFields>) {
-  /* const {
-    firstName,
-    lastName,
-    email,
-    password,
-  }: SignupFormFields = values */
+}) => {
+  const i18n = useI18n()
 
   return (
     <form
@@ -59,67 +46,30 @@ function renderSignupForm({
       <h2 className={app.title}>Sign Up</h2>
       <div className={app.fields}>
         <Input
-          className={app.field}
           name='firstName'
           label='First Name'
-          hint='First message'
-          maxLength={256}
-        />
-        <Select.Select
-          name="select"
-          label="foo"
-          validate={(value: string): string | void => value === '2' ? 'NOT TWO!!!!!' : undefined}
-        >
-          <Select.Option value="1" label="1" />
-          <Select.Option value="2" label="2" />
-          <Select.Option value="3" label="3" />
-          <Select.Option value="4" label="4" />
-        </Select.Select>
-        <CountrySelect
-          name="country"
-          label="Country"
+          validate={isRequired({ i18n })}
         />
         <Input
-          className={app.field}
           name='lastName'
           label='Last Name'
-          success='Last message'
-          maxLength={256}
+          validate={isRequired({ i18n })}
         />
         <Input
-          className={app.field}
           name='email'
           label='Email'
-          hint='Email message'
-          maxLength={256}
-        />
-        <Input
-          className={app.field}
-          name='password'
-          label='Password'
-          message='Password message'
-          maxLength={256}
+          validate={isRequired({ i18n })}
         />
         <PasswordInput
           onScoreChange={console.log}
           checkPasswordStrength={checkPasswordStrength}
-          className={app.field}
           name='password'
-          maxLength={256}
           withIndicator
-        />
-        <CodeInput
-          className={app.field}
-          name='code'
-        />
-        <PhoneInput
-          ccc='+777'
-          name='phone'
         />
       </div>
       <Checkbox
-        className={app.field}
         name='terms'
+        validate={isRequired({ i18n })}
       >
         <span>I agree to Jibrel's</span>
         <a
@@ -142,48 +92,32 @@ function renderSignupForm({
         >
           SIGN IN
         </LinkButton>
-        <Icon
-          name='ic_arrow_down_24'
-          className={signup.arrow}
-        />
-        <Icon
-          namespace='id'
-          name='ic_arrow_right_24'
-          className={signup.arrow}
-        />
-        <Icon
-          namespace='ui'
-          name='ic_en_24'
-        />
-        <Icon
-          namespace='id'
-          name='ic_es_24'
-        />
       </div>
     </form>
   )
 }
 
-export default function SignUp() {
-  const handleSubmit = (values: SignupFormFields) => {
-    return {
-      firstName: 'firstName error',
-      lastName: 'lastName error',
-      email: 'email error',
-      password: 'password error',
-      code: 'code error',
-      phone: 'phone error',
-      terms: 'terms error',
-    }
-  }
+interface SignUpProps {
+  onSubmit: (values: SignUpFormValues) => Promise<SignUpFormErrors | undefined | void>;
+}
 
+const SignUp: React.FunctionComponent<SignUpProps> = ({
+  onSubmit,
+}) => {
   return (
     <div className={signup.main}>
       <Form
-        onSubmit={handleSubmit}
-        render={renderSignupForm}
+        onSubmit={onSubmit}
+        render={SignUpForm}
         initialValues={SIGNUP_INITIAL_VALUES}
       />
     </div>
   )
 }
+
+export default connect(
+  null,
+  (dispatch: Dispatch) => ({
+    onSubmit: dispatch.user.signUp,
+  })
+)(SignUp)

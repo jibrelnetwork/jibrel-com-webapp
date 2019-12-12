@@ -12,7 +12,7 @@ import {
 
 export interface CheckboxProps {
   children: React.ReactNode;
-  className: string;
+  className?: string;
   checked?: boolean;
   hasError?: boolean;
   isDisabled?: boolean;
