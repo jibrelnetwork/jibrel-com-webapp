@@ -36,6 +36,17 @@ export const routes: Route[] = [
   },
 
   {
+    name: 'redirect!EmailVerification',
+    path: '/email-verification',
+    canActivate: redirectToDefaultIfLanguageUnavailable,
+  },
+  {
+    name: 'EmailVerification',
+    path: '/:lang/email-verification',
+    canActivate: redirectToDefaultIfLanguageUnavailable,
+  },
+
+  {
     name: 'redirect!Forgot',
     path: '/forgot',
     canActivate: redirectToDefaultIfLanguageUnavailable,
