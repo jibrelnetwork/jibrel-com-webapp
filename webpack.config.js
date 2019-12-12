@@ -380,6 +380,9 @@ const create = (dirname) => {
     },
 
     devServer: {
+      allowedHosts: [
+        '.jibrelcom.local',
+      ],
       compress: true,
       clientLogLevel: 'none',
       contentBase: PATHS.PUBLIC,
