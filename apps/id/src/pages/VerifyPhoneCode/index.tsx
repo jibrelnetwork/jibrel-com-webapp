@@ -116,18 +116,15 @@ class VerifyPhoneCode extends Component<VerifyPhoneCodeProps, VerifyPhoneCodeSta
   }
 
   renderSubmitError = (isSubmitError: boolean): React.ReactNode => {
-    if (!isSubmitError) {
+    if (!(isSubmitError && this.state.countdown)) {
       return null
     }
 
     return <div className={style.error}>No attempts left.</div>
   }
 
-  renderActions = (
-    isSubmitting: boolean,
-    isSubmitError: boolean,
-  ): React.ReactNode => {
-    if (isSubmitError || this.state.countdown) {
+  renderActions = (isSubmitting: boolean): React.ReactNode => {
+    if (this.state.countdown) {
       return null
     }
 
@@ -222,7 +219,7 @@ class VerifyPhoneCode extends Component<VerifyPhoneCodeProps, VerifyPhoneCodeSta
         </BigButton>
         {this.renderSubmitError(isSubmitError)}
         {this.renderCountdown()}
-        {this.renderActions(isSubmitting, isSubmitError)}
+        {this.renderActions(isSubmitting)}
       </form>
     )
   }
