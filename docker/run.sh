@@ -19,6 +19,7 @@ else
 
     dockerize -template /etc/nginx/nginx.tpl.conf:/etc/nginx/nginx.conf
     dockerize -template /etc/nginx/include.d/headers.tpl.conf:/etc/nginx/include.d/headers.conf
+    dockerize -template /app/id/settings.js:/app/id/settings.js
 
     /usr/sbin/nginx
 fi
