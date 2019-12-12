@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
 
 import {
-  BigButton,
   PhoneInput,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
 
 import {
@@ -10,10 +10,14 @@ import {
   FormRenderProps,
 } from 'react-final-form'
 
+
+import authStyle from 'styles/auth.scss'
+import CountrySelect from 'components/CountrySelect'
+import COUNTRIES_INDEX from 'components/CountrySelect/countries/index.json'
+import { useI18n } from 'app/i18n'
+import { isRequired } from 'utils/validators'
+
 import style from './style.scss'
-import authStyle from '../../styles/auth.scss'
-import CountrySelect from '../../components/CountrySelect'
-import COUNTRIES_INDEX from '../../components/CountrySelect/countries/index.json'
 
 interface VerifyPhoneFormFields {
   country: string;
@@ -43,13 +47,10 @@ class VerifyPhone extends Component<VerifyPhoneProps> {
 
   renderVerifyPhoneForm = ({
     handleSubmit,
-    values: {
-      country,
-      phone,
-    },
-    submitting: isSubmitting,
+    values,
   }: FormRenderProps<VerifyPhoneFormFields>): React.ReactNode => {
-    const countryData = COUNTRIES_INDEX[country]
+    const i18n = useI18n()
+    const countryData = COUNTRIES_INDEX[values.country]
 
     if (!countryData) {
       return null
@@ -66,21 +67,19 @@ class VerifyPhone extends Component<VerifyPhoneProps> {
         </div>
         <div className={authStyle.fields}>
           <CountrySelect
+            validate={isRequired({ i18n })}
             name='country'
             label='Country'
           />
           <PhoneInput
+            validate={isRequired({ i18n })}
             ccc={countryData.ccc}
             name='phone'
           />
         </div>
-        <BigButton
-          type='submit'
-          isLoading={isSubmitting}
-          isDisabled={!(country && phone)}
-        >
+        <BigButtonSubmit>
           Send Code
-        </BigButton>
+        </BigButtonSubmit>
       </form>
     )
   }
