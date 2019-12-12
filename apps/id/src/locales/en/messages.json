@@ -20,5 +20,6 @@
   "KYC.form.action.finish": "Finish",
   "KYC.form.action.next": "Next",
   "KYC.form.action.start": "Back to start",
-  "KYC.form.action.prev": "Previous"
+  "KYC.form.action.prev": "Previous",
+  "form.error.isRequired": "Field value is required"
 }
