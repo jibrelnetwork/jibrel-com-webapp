@@ -44,6 +44,11 @@
     color: $color-blue;
   }
 
+  &.loading {
+    height: 64px;
+    padding: 0;
+  }
+
   @include disabled {
     background: $color-black-10;
     border-color: $color-black-10;
