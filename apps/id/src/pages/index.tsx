@@ -17,7 +17,7 @@ const Pages: React.FunctionComponent = () => {
     return null
   }
 
-  const Page: React.ComponentClass | void = pagesAvailable[route.name]
+  const Page: React.ComponentClass | void = pagesAvailable[route.name.replace('.', '')]
 
   if (!Page) {
     const error = new Error('NO_PAGE_SPECIFIED_FOR_NAME')
