@@ -50,8 +50,6 @@ export interface LoginFormFields {
 
 export interface EmailVerificationFormFields {
   email: string;
-  timeLeft: number;
-  isResendUnavailable: boolean;
 }
 
 export type FormErrors<FormFields> = {

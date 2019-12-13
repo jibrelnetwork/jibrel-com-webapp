@@ -3,6 +3,9 @@ import { FORM_ERROR } from 'final-form'
 import { createModel } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
+import { RootState } from 'store'
+import { LanguageCode } from 'data/languages'
+
 import axios from '../axios'
 import getUserLimits from './getUserLimits'
 
@@ -14,8 +17,6 @@ import {
   SignUpFormValues,
   EmailVerificationFormFields,
 } from '../types'
-
-import { LanguageCode } from 'data/languages'
 
 export enum UserStatus {
   ANONYMOUS = 'ANONYMOUS',
@@ -29,7 +30,7 @@ export interface UserState {
   profile: Profile | void;
   limits: UserLimits | void;
   status: UserStatus | void;
-  languageCode: LanguageCode | void;
+  languageCode: LanguageCode;
 }
 
 export const user = createModel<UserState>({
@@ -40,19 +41,29 @@ export const user = createModel<UserState>({
     languageCode: LanguageCode.en,
   },
   effects: (dispatch) => ({
-    async updateProfile (): Promise<void> {
+    async updateLimits (): Promise<void> {
       try {
-        const { data } = await axios.get('/v1/user/profile')
         const limits = await axios.get('/v1/user/limits')
-
-        this.setProfile(data.data)
         this.setProfileLimits(getUserLimits(limits.data))
 
         return
       } catch (error) {
-        this.setProfile(undefined)
+        console.error(error)
+        this.setProfileLimits(undefined)
+      }
+    },
+    async updateProfile (): Promise<void> {
+      try {
+        const { data } = await axios.get('/v1/user/profile')
+        this.setProfile(data.data)
 
-        throw error
+        const limits = await axios.get('/v1/user/limits')
+        this.setProfileLimits(getUserLimits(limits.data))
+
+        return
+      } catch (error) {
+        console.error(error)
+        this.setProfile(undefined)
       }
     },
     setProfile (profile: Profile | void): void {
@@ -155,14 +166,13 @@ export const user = createModel<UserState>({
         throw error
       }
     },
-    async logout (_: null, rootState): Promise<void> {
-      const language = rootState.user.languageCode
+    async logout (_: null, rootState: RootState): Promise<void> {
       await axios.post('/v1/auth/logout')
       this.setProfile(undefined)
 
       dispatch(routerActions.navigateTo(
         'Login',
-        { lang: language },
+        { lang: rootState.user.languageCode },
       ))
 
       return
@@ -178,8 +188,15 @@ export const user = createModel<UserState>({
 
         return
       } catch (error) {
+        console.error(error)
         return { [FORM_ERROR]: 'We are unable to deliver email to your inbox.' }
       }
+    },
+    async checkEmailToken (key: string): Promise<void> {
+      await axios.post('/v1/auth/registration/email-verify', { key })
+      this.updateProfile()
+
+      return
     },
   }),
   reducers: {
