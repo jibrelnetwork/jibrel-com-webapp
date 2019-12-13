@@ -3,9 +3,11 @@
 }
 
 .header {
-
+  z-index: 1;
+  position: relative;
+  height: 96px;
 }
 
 .content {
-
+  margin-top: -96px;
 }

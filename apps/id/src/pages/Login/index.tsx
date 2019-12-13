@@ -1,5 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
+import { connect } from 'react-redux'
 
 import {
   Form,
@@ -8,32 +9,33 @@ import {
 
 import {
   Input,
-  BigButton,
   PasswordInput,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
 
-import style from '../../styles/auth.scss'
-import InternalLink from '../../components/InternalLink'
+import style from 'styles/auth.scss'
+import AuthLayout from 'layouts/AuthLayout'
+import InternalLink from 'components/InternalLink'
+import isRequired from 'utils/validators/isRequired'
+import { Dispatch } from 'store'
+import { useI18n } from 'app/i18n'
 
-interface LoginFormFields {
-  email: string;
-  password: string;
-}
+import {
+  FormSubmit,
+  LoginFormFields,
+} from 'store/types'
 
 const LOGIN_INITIAL_VALUES: LoginFormFields = {
   email: '',
   password: '',
 }
 
-const renderLoginForm: React.FunctionComponent = ({
+const LoginForm: React.FunctionComponent = ({
   handleSubmit,
-  values,
-  submitting: isSubmitting,
+  form: { getState },
 }: FormRenderProps<LoginFormFields>) => {
-  const {
-    email,
-    password,
-  }: LoginFormFields = values
+  const i18n = useI18n()
+  const { submitError } = getState()
 
   return (
     <form
@@ -43,25 +45,23 @@ const renderLoginForm: React.FunctionComponent = ({
       <h2 className={style.title}>Sign In</h2>
       <div className={style.fields}>
         <Input
+          validate={isRequired({ i18n })}
           className={style.field}
           name='email'
           label='Email'
           maxLength={256}
         />
         <PasswordInput
+          validate={isRequired({ i18n })}
           className={style.field}
           name='password'
           maxLength={256}
         />
       </div>
-      <BigButton
-        className={style.submit}
-        type='submit'
-        isLoading={isSubmitting}
-        isDisabled={!(email && password)}
-      >
+      {!!submitError && <div className={style.error}>{submitError}</div>}
+      <BigButtonSubmit className={style.submit}>
         Sign In
-      </BigButton>
+      </BigButtonSubmit>
       <InternalLink
         name='Forgot'
         className={cc([style.action, style.wide])}
@@ -81,23 +81,29 @@ const renderLoginForm: React.FunctionComponent = ({
   )
 }
 
-const Login: React.FunctionComponent = () => {
-  const handleSubmit = (): LoginFormFields => {
-    return {
-      email: 'email error',
-      password: 'password error',
-    }
-  }
+interface LoginProps {
+  handleSubmit: FormSubmit<LoginFormFields>;
+}
 
+const Login: React.FunctionComponent<LoginProps> = ({
+  handleSubmit,
+}) => {
   return (
-    <div className={style.main}>
-      <Form
-        onSubmit={handleSubmit}
-        render={renderLoginForm}
-        initialValues={LOGIN_INITIAL_VALUES}
-      />
-    </div>
+    <AuthLayout>
+      <div className={style.main}>
+        <Form
+          onSubmit={handleSubmit}
+          render={LoginForm}
+          initialValues={LOGIN_INITIAL_VALUES}
+        />
+      </div>
+    </AuthLayout>
   )
 }
 
-export default Login
+export default connect(
+  null,
+  (dispatch: Dispatch) => ({
+    handleSubmit: dispatch.user.login,
+  })
+)(Login)

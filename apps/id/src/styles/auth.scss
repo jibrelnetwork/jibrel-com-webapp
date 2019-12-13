@@ -4,6 +4,7 @@
   display: flex;
   min-width: 100vw;
   min-height: 100vh;
+  padding-top: 96px;
   flex-direction: column;
   align-items: center;
   justify-content: center;
@@ -21,6 +22,12 @@
 
 .title {
   margin-bottom: 32px;
+  font-style: normal;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 38px;
+  text-align: center;
+  color: $color-black;
 }
 
 .fields {
@@ -36,9 +43,12 @@
   margin-bottom: 32px;
 }
 
-.submit {
-  margin-top: 30px;
-  margin-bottom: 32px;
+.error {
+  width: 100%;
+  font-size: 15px;
+  color: $color-red;
+  line-height: 140%;
+  text-align: center;
 }
 
 .switch {
