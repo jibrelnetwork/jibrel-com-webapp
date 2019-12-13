@@ -1,7 +1,6 @@
-import app from '../../app.scss'
-import signup from './signup.scss'
 import React from 'react'
 import { connect } from 'react-redux'
+
 import {
   Form,
   FormRenderProps,
@@ -10,20 +9,24 @@ import {
 import {
   Input,
   Checkbox,
-  BigButtonSubmit,
-  LinkButton,
   PasswordInput,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
-import { checkPasswordStrength } from 'utils/forms'
-import {
-  Dispatch,
-} from 'store'
-import {
-  SignUpFormValues,
-  SignUpFormErrors,
-} from 'store/types'
+
+import AuthLayout from 'layouts/AuthLayout'
+import InternalLink from 'components/InternalLink'
 import isRequired from 'utils/validators/isRequired'
+import { Dispatch } from 'store'
 import { useI18n } from 'app/i18n'
+import { checkPasswordStrength } from 'utils/forms'
+
+import {
+  FormSubmit,
+  SignUpFormValues,
+} from 'store/types'
+
+import app from '../../app.scss'
+import signup from './signup.scss'
 
 const SIGNUP_INITIAL_VALUES: SignUpFormValues = {
   firstName: '',
@@ -86,32 +89,34 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
       </BigButtonSubmit>
       <div className={signup.signin}>
         <span>Already have a Jibrel account?</span>
-        <LinkButton
-          href='/signin'
+        <InternalLink
+          name='Login'
           className={signup.action}
         >
           SIGN IN
-        </LinkButton>
+        </InternalLink>
       </div>
     </form>
   )
 }
 
 interface SignUpProps {
-  onSubmit: (values: SignUpFormValues) => Promise<SignUpFormErrors | undefined | void>;
+  onSubmit: FormSubmit<SignUpFormValues>;
 }
 
 const SignUp: React.FunctionComponent<SignUpProps> = ({
   onSubmit,
 }) => {
   return (
-    <div className={signup.main}>
-      <Form
-        onSubmit={onSubmit}
-        render={SignUpForm}
-        initialValues={SIGNUP_INITIAL_VALUES}
-      />
-    </div>
+    <AuthLayout>
+      <div className={signup.main}>
+        <Form
+          onSubmit={onSubmit}
+          render={SignUpForm}
+          initialValues={SIGNUP_INITIAL_VALUES}
+        />
+      </div>
+    </AuthLayout>
   )
 }
 
