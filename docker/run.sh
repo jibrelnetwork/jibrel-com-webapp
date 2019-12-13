@@ -17,8 +17,10 @@ if [ "${RUNMODE}" = "check" ]; then
 else
     echo "Starting jibrel-com-webapp service, version: `cat /app/version.txt` on node `hostname`, mode: ${ENVIRONMENT}"
 
-    dockerize -template /etc/nginx/nginx.tpl.conf:/etc/nginx/nginx.conf
-    dockerize -template /etc/nginx/include.d/headers.tpl.conf:/etc/nginx/include.d/headers.conf
+    dockerize \
+        -template /etc/nginx/nginx.tpl.conf:/etc/nginx/nginx.conf \
+        -template /etc/nginx/include.d/headers.tpl.conf:/etc/nginx/include.d/headers.conf \
+        -template /app/id/settings.js:/app/id/settings.js
 
     /usr/sbin/nginx
 fi

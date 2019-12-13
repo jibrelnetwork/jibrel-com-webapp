@@ -1,6 +1,8 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
+// settings should be initialized before everything else in the app
+import './app/settings'
 import { registerSprite } from '@jibrelcom/ui'
 
 import App from './App'

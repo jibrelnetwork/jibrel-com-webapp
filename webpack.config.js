@@ -311,6 +311,8 @@ const create = (dirname) => {
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'process.env.BUILD_NUMBER': process.env.BUILD_NUMBER || 'dev',
+        'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
+        'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASEURL),
         '__DEV__': isEnvDevelopment,
         '__PROD__': isEnvProduction,
       }),
@@ -349,6 +351,11 @@ const create = (dirname) => {
           to: PATHS.OUTPUT,
           ignore: ['index.html'],
           transformPath: targetPath => targetPath.replace(/src\/public/, ''),
+        },
+        {
+          from: 'src/settings.js',
+          to: PATHS.OUTPUT,
+          transformPath: targetPath => targetPath.replace(/src/, ''),
         },
       ]),
 
