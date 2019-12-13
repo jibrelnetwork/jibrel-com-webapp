@@ -1,5 +1,5 @@
-import React, { Component } from 'react'
-import { FORM_ERROR } from 'final-form'
+import React from 'react'
+import { connect } from 'react-redux'
 import { Loader } from '@jibrelcom/ui'
 import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
@@ -8,86 +8,171 @@ import {
   FormRenderProps,
 } from 'react-final-form'
 
-import style from './style.scss'
-import authStyle from '../../styles/auth.scss'
-import AuthLayout from '../../layouts/AuthLayout'
-import UserActionInfo from '../../components/UserActionInfo'
+import authStyle from 'styles/auth.scss'
+import AuthLayout from 'layouts/AuthLayout'
 
-interface EmailVerificationErrors {
-  [FORM_ERROR]?: string;
-}
+import {
+  Countdown,
+  UserActionInfo
+} from 'components'
+
+import {
+  UserLimit,
+  FormSubmit,
+  EmailVerificationFormFields,
+} from 'store/types'
+
+import {
+  Dispatch,
+  RootState,
+} from 'store'
+
+import style from './style.scss'
 
 interface EmailVerificationProps {
-  handleSubmit: () => Promise<EmailVerificationErrors>;
-  email: string;
+  sendEmailLink: FormSubmit<EmailVerificationFormFields>;
+  email: string | void;
+  resendVerificationEmail: UserLimit | void;
 }
 
-class EmailVerification extends Component<EmailVerificationProps> {
-  handleSubmit = async (): Promise<EmailVerificationErrors> => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve({ [FORM_ERROR]: 'Unable to deliver' }), 5000)
-    })
-  }
+interface EmailVerificationStatusProps {
+  timeLeft: number;
+  isSubmitting: boolean;
+  isSubmitError: boolean;
+}
 
-  renderEmailVerification = ({
-    handleSubmit,
-    form: { getState },
-    submitting: isSubmitting,
-  }: FormRenderProps): React.ReactNode => {
-    const { submitError } = getState()
+const EmailVerificationSending: React.FunctionComponent = () => {
+  return (
+    <div className={style.loading}>
+      <div className={style.loader}>
+        <Loader color={LoaderColor.blue} />
+      </div>
+      <span>We are sending a new email. Please check your inbox.</span>
+    </div>
+  )
+}
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <UserActionInfo
-          title='Verify Your Email'
-          iconName='status_sent'
-        >
-          <p className={style.info}>
-            We&apos;ve sent a verification email to <span className={style.email}>
-              {this.props.email}
-            </span>.<br />
-            Click the link inside to get started.
-          </p>
-          {isSubmitting && (
-            <div className={style.loading}>
-              <div className={style.loader}>
-                <Loader color={LoaderColor.blue} />
-              </div>
-              <span>We are sending a new email. Please check your inbox.</span>
-            </div>
-          )}
-          {!isSubmitting && submitError && (
-            <div className={style.error}>
-              <span className={style.message}>{submitError}</span><br />
-              <span>Please check your spam folder or contact our</span><br />
-              <a className={style.support} href='#'>Support team.</a>
-            </div>
-          )}
-          {!isSubmitting && !submitError && (
-            <button
-              type='submit'
-              className={style.action}
-            >
-              EMAIL DIDN&apos;T ARRIVE?
-            </button>
-          )}
-        </UserActionInfo>
-      </form>
-    )
-  }
+const EmailVerificationError: React.FunctionComponent = () => {
+  return (
+    <div className={style.error}>
+      <span className={style.message}>
+        We are unable to deliver email to your inbox.
+      </span><br />
+      <span>Please check your spam folder or contact our</span><br />
+      <a className={style.support} href='#'>Support team.</a>
+    </div>
+  )
+}
 
-  render(): React.ReactNode {
-    return (
-      <AuthLayout>
-        <div className={authStyle.main}>
-          <Form
-            onSubmit={this.handleSubmit}
-            render={this.renderEmailVerification}
-          />
-        </div>
-      </AuthLayout>
-    )
+const EmailVerificationWait: React.FunctionComponent<{ timeLeft: number }> = ({ timeLeft }) => {
+  return (
+    <div className={style.countdown}>
+      Email sent. Please check your inbox.<br />
+      You can request the email again after<Countdown timeLeft={timeLeft} />
+    </div>
+  )
+}
+
+const EmailVerificationSent: React.FunctionComponent = () => {
+  return (
+    <button
+      type='submit'
+      className={style.action}
+    >
+      EMAIL DIDN&apos;T ARRIVE?
+    </button>
+  )
+}
+
+const EmailVerificationStatus: React.FunctionComponent<EmailVerificationStatusProps> = ({
+  timeLeft,
+  isSubmitting,
+  isSubmitError,
+}) => {
+  if (isSubmitting) {
+    return <EmailVerificationSending />
+  } else if (isSubmitError) {
+    return <EmailVerificationError />
+  } else if (timeLeft) {
+    return <EmailVerificationWait timeLeft={timeLeft} />
+  } else {
+    return <EmailVerificationSent />
   }
 }
 
-export default EmailVerification
+const EmailVerificationForm: React.FunctionComponent<FormRenderProps> = ({
+  handleSubmit,
+  values: {
+    email,
+    timeLeft,
+    isResendUnavailable,
+  },
+  form: { getState },
+  submitting: isSubmitting,
+}: FormRenderProps) => {
+  const { submitError } = getState()
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <UserActionInfo
+        title='Verify Your Email'
+        iconName='status_sent'
+      >
+        <p className={style.info}>
+          We&apos;ve sent a verification email to <span className={style.email}>
+            {email}
+          </span>.<br />
+          Click the link inside to get started.
+        </p>
+        <EmailVerificationStatus
+          timeLeft={timeLeft}
+          isSubmitting={isSubmitting}
+          isSubmitError={!!submitError || isResendUnavailable}
+        />
+      </UserActionInfo>
+    </form>
+  )
+}
+
+const EmailVerification: React.FunctionComponent<EmailVerificationProps> = ({
+  sendEmailLink,
+  email,
+  resendVerificationEmail,
+}: EmailVerificationProps) => {
+  if (!(email && resendVerificationEmail)) {
+    return null
+  }
+
+  return (
+    <AuthLayout>
+      <div className={authStyle.main}>
+        <Form
+          onSubmit={sendEmailLink}
+          render={EmailVerificationForm}
+          initialValues={{
+            email,
+            timeLeft: resendVerificationEmail.leftSeconds,
+            isResendUnavailable: resendVerificationEmail.temproraryUnavailable,
+          }}
+        />
+      </div>
+    </AuthLayout>
+  )
+}
+
+export default connect(
+  (state: RootState) => {
+    const {
+      limits,
+      profile,
+    } = state.user
+
+    return {
+      email: profile ? profile.userEmail : undefined,
+      resendVerificationEmail: limits ? limits.resendVerificationEmail : undefined,
+    }
+  },
+  (dispatch: Dispatch) => ({
+    sendEmailLink: dispatch.user.sendEmailLink,
+  })
+)(EmailVerification)

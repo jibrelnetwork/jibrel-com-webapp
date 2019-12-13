@@ -4,12 +4,15 @@ import { createModel } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
 import axios from '../axios'
+import getUserLimits from './getUserLimits'
 
 import {
   Profile,
+  UserLimits,
   LoginFormFields,
   FormSubmitResult,
   SignUpFormValues,
+  EmailVerificationFormFields,
 } from '../types'
 
 import { LanguageCode } from 'data/languages'
@@ -23,27 +26,46 @@ export enum UserStatus {
 }
 
 export interface UserState {
+  profile: Profile | void;
+  limits: UserLimits | void;
   status: UserStatus | void;
-  languageCode: string | void;
+  languageCode: LanguageCode | void;
 }
 
 export const user = createModel<UserState>({
   state: {
+    profile: undefined,
+    limits: undefined,
     status: undefined,
-    languageCode: undefined,
+    languageCode: LanguageCode.en,
   },
   effects: (dispatch) => ({
     async updateProfile (): Promise<void> {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      this.setStatus(UserStatus.ANONYMOUS)
-      this.setLanguageCode(LanguageCode.en)
-    },
-    setProfile (profile: Profile | null): void {
-      if (!profile) {
-        this.setStatus(UserStatus.ANONYMOUS)
+      try {
+        const { data } = await axios.get('/v1/user/profile')
+        const limits = await axios.get('/v1/user/limits')
+
+        this.setProfile(data.data)
+        this.setProfileLimits(getUserLimits(limits.data))
 
         return
-      } else if (profile.isPhoneConfirmed) {
+      } catch (error) {
+        this.setProfile(undefined)
+
+        throw error
+      }
+    },
+    setProfile (profile: Profile | void): void {
+      if (!profile) {
+        this.setProfileData(undefined)
+        this.setStatus(undefined)
+
+        return
+      }
+
+      this.setProfileData(profile)
+
+      if (profile.isPhoneConfirmed) {
         this.setStatus(UserStatus.VERIFIED)
       } else if (profile.isEmailConfirmed) {
         this.setStatus(UserStatus.PHONE_UNVERIFIED)
@@ -135,10 +157,8 @@ export const user = createModel<UserState>({
     },
     async logout (_: null, rootState): Promise<void> {
       const language = rootState.user.languageCode
-
       await axios.post('/v1/auth/logout')
-
-      this.setProfile(null)
+      this.setProfile(undefined)
 
       dispatch(routerActions.navigateTo(
         'Login',
@@ -146,7 +166,21 @@ export const user = createModel<UserState>({
       ))
 
       return
-    }
+    },
+    async sendEmailLink ({
+      email,
+    }: EmailVerificationFormFields): FormSubmitResult<EmailVerificationFormFields> {
+      try {
+        await axios.post('/v1/auth/registration/confirmation-email-resend', { email })
+
+        const { data } = await axios.get('/v1/user/limits')
+        this.setProfileLimits(getUserLimits(data))
+
+        return
+      } catch (error) {
+        return { [FORM_ERROR]: 'We are unable to deliver email to your inbox.' }
+      }
+    },
   }),
   reducers: {
     setStatus: (state, payload): UserState => ({
@@ -156,6 +190,14 @@ export const user = createModel<UserState>({
     setLanguageCode: (state, payload): UserState => ({
       ...state,
       languageCode: payload,
+    }),
+    setProfileData: (state, payload): UserState => ({
+      ...state,
+      profile: payload,
+    }),
+    setProfileLimits: (state, payload): UserState => ({
+      ...state,
+      limits: payload,
     }),
   }
 })
