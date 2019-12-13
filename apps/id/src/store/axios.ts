@@ -1,8 +1,9 @@
 import axios from 'axios'
 
+import settings from 'app/settings'
+
 const instance = axios.create({
-  // FIXME: take it from environment
-  baseURL: 'http://api.jibrelcom.local/',
+  baseURL: settings.API_BASE_URL,
   xsrfHeaderName: 'X-CSRFToken',
   xsrfCookieName: 'csrftoken',
   withCredentials: true,
