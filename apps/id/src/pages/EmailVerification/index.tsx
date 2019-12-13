@@ -30,12 +30,14 @@ import {
 import style from './style.scss'
 
 interface EmailVerificationProps {
+  updateLimits: () => Promise<void>;
   sendEmailLink: FormSubmit<EmailVerificationFormFields>;
   email: string | void;
   resendVerificationEmail: UserLimit | void;
 }
 
 interface EmailVerificationStatusProps {
+  updateLimits: () => Promise<void>;
   timeLeft: number;
   isSubmitting: boolean;
   isSubmitError: boolean;
@@ -64,11 +66,21 @@ const EmailVerificationError: React.FunctionComponent = () => {
   )
 }
 
-const EmailVerificationWait: React.FunctionComponent<{ timeLeft: number }> = ({ timeLeft }) => {
+const EmailVerificationWait: React.FunctionComponent<{
+  updateLimits: () => Promise<void>;
+  timeLeft: number;
+}> = ({
+  updateLimits,
+  timeLeft,
+}) => {
   return (
     <div className={style.countdown}>
       Email sent. Please check your inbox.<br />
-      You can request the email again after<Countdown timeLeft={timeLeft} />
+      You can request the email again after
+      <Countdown
+        onFinish={updateLimits}
+        timeLeft={timeLeft}
+      />
     </div>
   )
 }
@@ -85,6 +97,7 @@ const EmailVerificationSent: React.FunctionComponent = () => {
 }
 
 const EmailVerificationStatus: React.FunctionComponent<EmailVerificationStatusProps> = ({
+  updateLimits,
   timeLeft,
   isSubmitting,
   isSubmitError,
@@ -94,47 +107,14 @@ const EmailVerificationStatus: React.FunctionComponent<EmailVerificationStatusPr
   } else if (isSubmitError) {
     return <EmailVerificationError />
   } else if (timeLeft) {
-    return <EmailVerificationWait timeLeft={timeLeft} />
+    return <EmailVerificationWait updateLimits={updateLimits} timeLeft={timeLeft} />
   } else {
     return <EmailVerificationSent />
   }
 }
 
-const EmailVerificationForm: React.FunctionComponent<FormRenderProps> = ({
-  handleSubmit,
-  values: {
-    email,
-    timeLeft,
-    isResendUnavailable,
-  },
-  form: { getState },
-  submitting: isSubmitting,
-}: FormRenderProps) => {
-  const { submitError } = getState()
-
-  return (
-    <form onSubmit={handleSubmit}>
-      <UserActionInfo
-        title='Verify Your Email'
-        iconName='status_sent'
-      >
-        <p className={style.info}>
-          We&apos;ve sent a verification email to <span className={style.email}>
-            {email}
-          </span>.<br />
-          Click the link inside to get started.
-        </p>
-        <EmailVerificationStatus
-          timeLeft={timeLeft}
-          isSubmitting={isSubmitting}
-          isSubmitError={!!submitError || isResendUnavailable}
-        />
-      </UserActionInfo>
-    </form>
-  )
-}
-
 const EmailVerification: React.FunctionComponent<EmailVerificationProps> = ({
+  updateLimits,
   sendEmailLink,
   email,
   resendVerificationEmail,
@@ -143,17 +123,47 @@ const EmailVerification: React.FunctionComponent<EmailVerificationProps> = ({
     return null
   }
 
+  const {
+    leftSeconds,
+    temproraryUnavailable,
+  } = resendVerificationEmail
+
   return (
     <AuthLayout>
       <div className={authStyle.main}>
         <Form
           onSubmit={sendEmailLink}
-          render={EmailVerificationForm}
-          initialValues={{
-            email,
-            timeLeft: resendVerificationEmail.leftSeconds,
-            isResendUnavailable: resendVerificationEmail.temproraryUnavailable,
+          render={({
+            handleSubmit,
+            values: { email },
+            form: { getState },
+            submitting: isSubmitting,
+          }: FormRenderProps): React.ReactNode => {
+            const { submitError } = getState()
+
+            return (
+              <form onSubmit={handleSubmit}>
+                <UserActionInfo
+                  title='Verify Your Email'
+                  iconName='status_sent'
+                >
+                  <p className={style.info}>
+                    We&apos;ve sent a verification email to <span className={style.email}>
+                      {email}
+                    </span>.<br />
+                    Click the link inside to get started.
+                  </p>
+                  <EmailVerificationStatus
+                    updateLimits={updateLimits}
+                    timeLeft={leftSeconds}
+                    isSubmitting={isSubmitting}
+                    isSubmitError={!!submitError || temproraryUnavailable}
+                  />
+                </UserActionInfo>
+              </form>
+            )
           }}
+          initialValues={{ email }}
         />
       </div>
     </AuthLayout>
@@ -173,6 +183,7 @@ export default connect(
     }
   },
   (dispatch: Dispatch) => ({
+    updateLimits: dispatch.user.updateLimits,
     sendEmailLink: dispatch.user.sendEmailLink,
   })
 )(EmailVerification)
