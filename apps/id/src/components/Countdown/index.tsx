@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import style from './style.scss'
 
 interface CountdownProps {
+  onFinish?: () => Promise<void> | void;
   timeLeft: number;
 }
 
@@ -31,6 +32,12 @@ class Countdown extends Component<CountdownProps, CountdownState> {
 
     if (countdown < 0) {
       this.setState({ countdown: 0 })
+
+      const { onFinish } = this.props
+
+      if (onFinish) {
+        onFinish()
+      }
 
       return
     }
