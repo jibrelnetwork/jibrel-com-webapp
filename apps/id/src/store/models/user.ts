@@ -1,6 +1,9 @@
 import mapValues from 'lodash-es/mapValues'
 import { FORM_ERROR } from 'final-form'
-import { createModel } from '@rematch/core'
+import {
+  createModel,
+  ModelConfig,
+} from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
 import { RootState } from 'store'
@@ -14,29 +17,12 @@ import {
   UserState,
   FormSubmitResult,
   Profile,
-  UserLimits,
   LoginFormFields,
-  FormSubmitResult,
   SignUpFormValues,
   EmailVerificationFormFields,
 } from '../types'
 
-export enum UserStatus {
-  ANONYMOUS = 'ANONYMOUS',
-  EMAIL_UNVERIFIED = 'EMAIL_UNVERIFIED',
-  PHONE_UNVERIFIED = 'PHONE_UNVERIFIED',
-  VERIFIED = 'VERIFIED',
-  BANNED = 'BANNED',
-}
-
-export interface UserState {
-  profile: Profile | void;
-  limits: UserLimits | void;
-  status: UserStatus | void;
-  languageCode: LanguageCode;
-}
-
-export const user = createModel<UserState>({
+export const user: ModelConfig<UserState> = createModel<UserState>({
   state: {
     profile: undefined,
     limits: undefined,
