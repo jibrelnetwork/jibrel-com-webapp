@@ -17,7 +17,7 @@ const isValidVerificationStep: ActivationFnFactory = (
   router: Router,
   dependencies: RouterDependencies,
 ) =>
-  (toState: State): boolean => {
+  (toState: State): Promise<boolean> => {
     const { store } = dependencies
     const { user } = store.getState()
 
@@ -25,31 +25,31 @@ const isValidVerificationStep: ActivationFnFactory = (
       user.status === UserStatus.EMAIL_UNVERIFIED
       && toState.name !== NEXT_ROUTE[UserStatus.EMAIL_UNVERIFIED]
     ) {
-      throw {
+      return Promise.reject({
         redirect: {
           name: NEXT_ROUTE[UserStatus.EMAIL_UNVERIFIED],
           params: {
             lang: user.languageCode,
           },
         }
-      }
+      })
     }
 
     if (
       user.status === UserStatus.PHONE_UNVERIFIED
       && toState.name !== NEXT_ROUTE[UserStatus.PHONE_UNVERIFIED]
     ) {
-      throw {
+      return Promise.reject({
         redirect: {
           name: NEXT_ROUTE[UserStatus.PHONE_UNVERIFIED],
           params: {
             lang: user.languageCode,
           },
         }
-      }
+      })
     }
 
-    return true
+    return Promise.resolve(true)
   }
 
 export default isValidVerificationStep
