@@ -312,7 +312,7 @@ const create = (dirname) => {
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'process.env.BUILD_NUMBER': process.env.BUILD_NUMBER || 'dev',
         'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
-        'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASEURL),
+        'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL),
         '__DEV__': isEnvDevelopment,
         '__PROD__': isEnvProduction,
       }),
