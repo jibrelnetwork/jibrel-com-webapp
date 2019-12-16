@@ -26,7 +26,8 @@
   }
 }
 
-.error {
+.error,
+.countdown {
   font-size: 15px;
   line-height: 140%;
 }
@@ -47,4 +48,8 @@
   color: $color-blue;
   outline: none;
   appearance: none;
+}
+
+.countdown {
+  color: $color-black;
 }
