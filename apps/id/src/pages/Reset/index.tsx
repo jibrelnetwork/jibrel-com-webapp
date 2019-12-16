@@ -17,13 +17,18 @@ import {
 import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
 import { useI18n } from 'app/i18n'
-import { UserActionInfo } from 'components'
+
 import { checkPasswordStrength } from 'utils/forms'
 
 import {
   Dispatch,
   RootState,
 } from 'store'
+
+import {
+  ResponseLoader,
+  UserActionInfo,
+} from 'components'
 
 import {
   isRequired,
@@ -107,6 +112,14 @@ class Reset extends Component<ResetProps, ResetState> {
     const i18n = useI18n()
     const { submitSucceeded } = getState()
 
+    if (this.state.isChecking) {
+      return (
+        <ResponseLoader>
+          Wait a moment, please...
+        </ResponseLoader>
+      )
+    }
+
     if (!isSubmitting && submitSucceeded) {
       return <ResetSuccess email={values.email} />
     }
@@ -146,10 +159,6 @@ class Reset extends Component<ResetProps, ResetState> {
       email,
       token,
     } = this.props
-
-    if (this.state.isChecking) {
-      return null
-    }
 
     return (
       <AuthLayout>
