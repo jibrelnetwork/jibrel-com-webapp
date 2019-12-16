@@ -32,3 +32,5 @@ export {
   FieldValidatorConfiguration,
   FieldValidatorWithConfiguration,
 } from './utils/forms'
+
+export { default as isPromise } from './utils/isPromise'

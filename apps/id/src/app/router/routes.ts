@@ -1,5 +1,10 @@
 import { Route } from 'router5'
-import { redirectToDefaultIfLanguageUnavailable } from './activations/redirectToDefaultIfLanguageUnavailable'
+import composeActivations from './utils/composeActivations'
+import {
+  redirectLang,
+  isLoggedIn,
+  isValidVerificationStep,
+} from './activations'
 
 const ROUTER_ROOT = ''
 
@@ -7,6 +12,7 @@ export const routes: Route[] = [
   {
     name: 'Account',
     path: '/',
+    forwardTo: 'Login',
   },
   {
     name: 'Security',
@@ -16,72 +22,80 @@ export const routes: Route[] = [
   {
     name: 'redirect!Login',
     path: '/login',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
   {
     name: 'Login',
     path: '/:lang/login',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
 
   {
     name: 'redirect!SignUp',
     path: '/signup',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
   {
     name: 'SignUp',
     path: '/:lang/signup',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
 
   {
     name: 'redirect!EmailVerification',
     path: '/email-verification',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
   {
     name: 'EmailVerification',
     path: '/:lang/email-verification',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: composeActivations([
+      redirectLang,
+      isLoggedIn,
+      isValidVerificationStep,
+    ]),
   },
 
   {
     name: 'redirect!Forgot',
     path: '/forgot',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
   {
     name: 'Forgot',
     path: '/:lang/forgot',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
 
   {
     name: 'redirect!Reset',
     path: '/reset',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
   {
     name: 'Reset',
     path: '/:lang/reset',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
 
   {
     name: 'redirect!VerifyEmail',
     path: '/verify/email/:token',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
   {
     name: 'VerifyEmail',
     path: '/:lang/verify/email/:token',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
+    canActivate: redirectLang,
   },
 
   {
     name: 'VerifyPhone',
-    path: '/verify/phonenumber',
+    path: '/verify/phone',
+    canActivate: composeActivations([
+      isLoggedIn,
+      isValidVerificationStep,
+    ]),
     children: [
       {
         name: 'Code',
@@ -95,7 +109,7 @@ export const routes: Route[] = [
   },
 
   {
-    name: 'KYCStart',
+    name: 'KYC',
     path: '/kyc',
   },
   {
