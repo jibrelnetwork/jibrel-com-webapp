@@ -15,7 +15,6 @@ import {
 
 import AuthLayout from 'layouts/AuthLayout'
 import InternalLink from 'components/InternalLink'
-import isRequired from 'utils/validators/isRequired'
 import { Dispatch } from 'store'
 import { useI18n } from 'app/i18n'
 import { checkPasswordStrength } from 'utils/forms'
@@ -24,6 +23,11 @@ import {
   FormSubmit,
   SignUpFormValues,
 } from 'store/types'
+
+import {
+  isRequired,
+  isStrongPassword,
+} from 'utils/validators'
 
 import app from '../../app.scss'
 import signup from './signup.scss'
@@ -36,8 +40,15 @@ const SIGNUP_INITIAL_VALUES: SignUpFormValues = {
   terms: false,
 }
 
+const handleChangeScore = (change: (
+  name: string,
+  value: number,
+) => void) => (score: number): void => change('score', score)
+
 const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
   handleSubmit,
+  values,
+  form: { change },
 }) => {
   const i18n = useI18n()
 
@@ -64,8 +75,14 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
           validate={isRequired({ i18n })}
         />
         <PasswordInput
-          onScoreChange={console.log}
+          validate={isStrongPassword({ i18n })}
+          onScoreChange={handleChangeScore(change)}
           checkPasswordStrength={checkPasswordStrength}
+          userInputs={[
+            values.email,
+            values.lastName,
+            values.firstName,
+          ]}
           name='password'
           withIndicator
         />

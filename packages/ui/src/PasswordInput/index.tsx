@@ -5,7 +5,7 @@ import { useFormState } from 'react-final-form'
 
 import style from './style.scss'
 import Indicator from './Indicator'
-import { PasswordStrengthScore } from './types'
+import { CheckPasswordStrengthHandler } from './types'
 import { GenericFieldProps } from '../FieldWrapper/types'
 
 import {
@@ -15,7 +15,8 @@ import {
 
 export interface PasswordInputProps {
   onScoreChange?: (score: number) => void;
-  checkPasswordStrength?: (value: string) => Promise<PasswordStrengthScore>;
+  checkPasswordStrength?: CheckPasswordStrengthHandler;
+  userInputs?: string[];
   label?: string;
   withIndicator?: boolean;
 }
@@ -23,6 +24,7 @@ export interface PasswordInputProps {
 const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputProps> = ({
   onScoreChange = noop,
   checkPasswordStrength = undefined,
+  userInputs,
   label = 'Password',
   withIndicator = false,
   ...props
@@ -48,6 +50,7 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
         <Indicator
           onScoreChange={onScoreChange}
           checkPasswordStrength={checkPasswordStrength}
+          userInputs={userInputs}
           value={value}
         />
       )}
