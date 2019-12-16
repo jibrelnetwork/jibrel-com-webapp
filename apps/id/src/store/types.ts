@@ -23,6 +23,18 @@ export interface Profile {
   kycStatus: KYCStatus;
 }
 
+export interface UserLimit {
+  leftSeconds: number;
+  temproraryUnavailable: boolean;
+}
+
+export interface UserLimits {
+  uploadKYCDocument: UserLimit;
+  resendVerificationSMS: UserLimit;
+  resendVerificationCall: UserLimit;
+  resendVerificationEmail: UserLimit;
+}
+
 export interface SignUpFormValues {
   firstName: string;
   lastName: string;
@@ -34,6 +46,10 @@ export interface SignUpFormValues {
 export interface LoginFormFields {
   email: string;
   password: string;
+}
+
+export interface EmailVerificationFormFields {
+  email: string;
 }
 
 export type FormErrors<FormFields> = {

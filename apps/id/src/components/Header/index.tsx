@@ -61,7 +61,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
 
 export default connect(
   (state: RootState) => ({
-    isAuthenticated: (state.user.status !== UserStatus.ANONYMOUS),
+    isAuthenticated: state.user.status ? (state.user.status !== UserStatus.ANONYMOUS) : false,
   }),
   (dispatch: Dispatch) => ({
     logout: dispatch.user.logout,

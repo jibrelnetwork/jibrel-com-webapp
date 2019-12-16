@@ -2,19 +2,27 @@ import React, { Component } from 'react'
 import cc from 'classcat'
 import bigButtonStyle from '@jibrelcom/ui/src/BigButton/style.scss'
 import { Link } from 'react-router5'
+import { connect } from 'react-redux'
 
 import style from './style.scss'
-import authStyle from '../../styles/auth.scss'
-import AuthLayout from '../../layouts/AuthLayout'
-import UserActionInfo from '../../components/UserActionInfo'
+import authStyle from 'styles/auth.scss'
+import AuthLayout from 'layouts/AuthLayout'
+import UserActionInfo from 'components/UserActionInfo'
+
+import {
+  Dispatch,
+  RootState,
+} from 'store'
 
 interface VerifyEmailProps {
+  checkEmailToken: (token: string) => Promise<void>;
   token: string;
+  email: string | void;
 }
 
 interface VerifyEmailState {
-  email: string | null;
   isSubmitting: boolean;
+  isSubmitError: boolean;
 }
 
 class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
@@ -22,36 +30,46 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
     super(props)
 
     this.state = {
-      email: null,
       isSubmitting: true,
+      isSubmitError: false,
     }
   }
 
   async componentDidMount(): Promise<void> {
-    console.log(this.props.token)
-
     const {
+      checkEmailToken,
       email,
-      isSubmitting,
-    } = this.state
+      token,
+    } = this.props
 
-    if (!email && isSubmitting) {
-      this.setState({
-        email: await new Promise((resolve) => {
-          setTimeout(() => resolve('foo@bar.com'), 1000)
-        }),
-        isSubmitting: false,
-      })
+    if (email && token) {
+      try {
+        await checkEmailToken(token)
+
+        this.setState({
+          isSubmitting: false,
+          isSubmitError: false,
+        })
+      } catch (error) {
+        console.error(error)
+
+        this.setState({
+          isSubmitting: false,
+          isSubmitError: true,
+        })
+      }
     }
   }
 
   render(): React.ReactNode {
+    const { email } = this.props
+
     const {
-      email,
       isSubmitting,
+      isSubmitError,
     } = this.state
 
-    if (isSubmitting) {
+    if (!email || isSubmitting) {
       return null
     }
 
@@ -59,10 +77,10 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
       <AuthLayout>
         <div className={authStyle.main}>
           <UserActionInfo
-            iconName={`status_${email ? 'ok' : 'fail'}`}
-            title={email ? 'Email Is Verified' : 'Email Is Not Verified'}
+            iconName={`status_${isSubmitError ? 'fail' : 'ok'}`}
+            title={isSubmitError ? 'Email Is Not Verified' : 'Email Is Verified'}
           >
-            {email ? (
+            {!isSubmitError ? (
               <>
                 <p className={style.info}>
                   Congratulations!<br />
@@ -105,4 +123,15 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
   }
 }
 
-export default VerifyEmail
+export default connect(
+  (state: RootState) => {
+    const { profile } = state.user
+
+    return {
+      email: profile ? profile.userEmail : undefined,
+    }
+  },
+  (dispatch: Dispatch) => ({
+    checkEmailToken: dispatch.user.checkEmailToken,
+  })
+)(VerifyEmail)
