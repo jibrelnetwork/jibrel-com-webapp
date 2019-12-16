@@ -11,6 +11,20 @@ export interface PhoneInputProps {
   className?: string;
 }
 
+export const clearPhoneNumber = (ccc: string) => (phoneNumber: string): string => {
+  if (!phoneNumber) {
+    return phoneNumber
+  }
+
+  const unspacedPhoneNumber = phoneNumber.replace(/\s/g, '')
+
+  if (unspacedPhoneNumber.startsWith(ccc)) {
+    return unspacedPhoneNumber.replace(ccc, '').replace(/[^\d]/g, '')
+  }
+
+  return phoneNumber.replace(/[^\d]/g, '')
+}
+
 const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> = ({
   ccc,
   className,
@@ -32,6 +46,7 @@ const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> =
         label={label}
         inputClassName={style.input}
         labelClassName={style.label}
+        parse={clearPhoneNumber(ccc)}
       />
     </div>
   )
