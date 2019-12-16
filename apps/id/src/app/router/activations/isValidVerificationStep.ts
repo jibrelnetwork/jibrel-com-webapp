@@ -21,27 +21,13 @@ const isValidVerificationStep: ActivationFnFactory = (
     const { store } = dependencies
     const { user } = store.getState()
 
-    if (
-      user.status === UserStatus.EMAIL_UNVERIFIED
-      && toState.name !== NEXT_ROUTE[UserStatus.EMAIL_UNVERIFIED]
-    ) {
-      return Promise.reject({
-        redirect: {
-          name: NEXT_ROUTE[UserStatus.EMAIL_UNVERIFIED],
-          params: {
-            lang: user.languageCode,
-          },
-        }
-      })
-    }
+    const nextRoute = NEXT_ROUTE[user.status]
+    const toRoute = toState.name.split('.')[0]
 
-    if (
-      user.status === UserStatus.PHONE_UNVERIFIED
-      && toState.name !== NEXT_ROUTE[UserStatus.PHONE_UNVERIFIED]
-    ) {
+    if (nextRoute !== toRoute) {
       return Promise.reject({
         redirect: {
-          name: NEXT_ROUTE[UserStatus.PHONE_UNVERIFIED],
+          name: nextRoute,
           params: {
             lang: user.languageCode,
           },
