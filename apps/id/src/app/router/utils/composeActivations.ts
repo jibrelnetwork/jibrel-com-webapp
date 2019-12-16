@@ -29,7 +29,7 @@ const promiseActivation = (
   const result = activation(toState, fromState, done)
 
   if (isPromise(result)) {
-    reject()
+    resolve()
     return result
   }
 
