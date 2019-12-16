@@ -56,6 +56,13 @@ export interface ForgotPasswordFormFields {
   email: string;
 }
 
+export interface ResetPasswordFormFields {
+  key: string;
+  email: string;
+  password: string;
+  passwordConfirm: string;
+}
+
 export type FormErrors<FormFields> = {
   [key in keyof FormFields & { [FORM_ERROR]: string }]?: string | void;
 }
