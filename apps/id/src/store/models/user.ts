@@ -4,28 +4,16 @@ import { createModel } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
 import axios from '../axios'
-
 import {
-  Profile,
-  LoginFormFields,
+  UserStatus,
+  UserState,
   FormSubmitResult,
-  SignUpFormValues,
+  Profile,
 } from '../types'
-
-import { LanguageCode } from 'data/languages'
-
-export enum UserStatus {
-  ANONYMOUS = 'ANONYMOUS',
-  EMAIL_UNVERIFIED = 'EMAIL_UNVERIFIED',
-  PHONE_UNVERIFIED = 'PHONE_UNVERIFIED',
-  VERIFIED = 'VERIFIED',
-  BANNED = 'BANNED',
-}
-
-export interface UserState {
-  status: UserStatus | void;
-  languageCode: string | void;
-}
+import {
+  LoginFormFields,
+  SignUpFormValues,
+} from '../types/kyc'
 
 export const user = createModel<UserState>({
   state: {
@@ -34,9 +22,19 @@ export const user = createModel<UserState>({
   },
   effects: (dispatch) => ({
     async updateProfile (): Promise<void> {
-      await new Promise((resolve) => setTimeout(resolve, 2000))
-      this.setStatus(UserStatus.ANONYMOUS)
-      this.setLanguageCode(LanguageCode.en)
+      try {
+        const { data } = await axios
+          .get('/v1/user/profile')
+
+        this.setProfile(data.data)
+      } catch (error) {
+        if (!error.response) {
+          // FIXME: should show global connection error
+          throw error
+        }
+
+        this.setProfile(null)
+      }
     },
     setProfile (profile: Profile | null): void {
       if (!profile) {
