@@ -59,12 +59,12 @@ export const routes: Route[] = [
 
   {
     name: 'redirect!Reset',
-    path: '/reset',
+    path: '/reset/:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'Reset',
-    path: '/:lang/reset',
+    path: '/:lang/reset/:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
