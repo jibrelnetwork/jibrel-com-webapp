@@ -7,11 +7,13 @@ import getStatusByScore from './getStatusByScore'
 import {
   IndicatorStatus,
   PasswordStrengthScore,
+  CheckPasswordStrengthHandler,
 } from './types'
 
 export interface IndicatorProps {
   onScoreChange: (score: number) => void;
-  checkPasswordStrength: (value: string) => Promise<PasswordStrengthScore>;
+  checkPasswordStrength: CheckPasswordStrengthHandler;
+  userInputs?: string[];
   value: string;
 }
 
@@ -60,13 +62,18 @@ class Indicator extends Component <IndicatorProps, IndicatorState> {
   }
 
   checkPassword = async (password: string): Promise<void> => {
+    const {
+      checkPasswordStrength,
+      userInputs,
+    } = this.props
+
     const { isInitialised }: IndicatorState = this.state
 
     if (!isInitialised) {
       this.setState({ isFetching: true })
     }
 
-    const score = await this.props.checkPasswordStrength(password)
+    const score = await checkPasswordStrength(password, userInputs)
     this.setScore(score)
 
     if (!isInitialised) {
