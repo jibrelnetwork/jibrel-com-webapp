@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
-import { FORM_ERROR } from 'final-form'
+import React from 'react'
+import { connect } from 'react-redux'
+import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
   Form,
@@ -8,170 +9,156 @@ import {
 
 import {
   Input,
-  BigButton,
+  Loader,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
 
-import style from './style.scss'
-import authStyle from '../../styles/auth.scss'
-import AuthLayout from '../../layouts/AuthLayout'
+import authStyle from 'styles/auth.scss'
+import AuthLayout from 'layouts/AuthLayout'
+import isRequired from 'utils/validators/isRequired'
+import { Dispatch } from 'store'
+import { useI18n } from 'app/i18n'
+
+import {
+  FormSubmit,
+  ForgotPasswordFormFields,
+} from 'store/types'
 
 import {
   InternalLink,
   UserActionInfo,
-} from '../../components'
+} from 'components'
 
-interface ForgotFormFields {
-  email: string;
-}
-
-interface ForgotFormErrors {
-  email?: string;
-  [FORM_ERROR]?: string;
-}
+import style from './style.scss'
 
 interface ForgotProps {
-  handleSubmit: (values: ForgotFormFields) => Promise<ForgotFormErrors>;
+  handleSubmit: FormSubmit<ForgotPasswordFormFields>;
 }
 
-const FORGOT_INITIAL_VALUES: ForgotFormFields = {
-  email: '',
+const ForgotEmailSent: React.FunctionComponent = ({
+  handleSubmit,
+  values: { email },
+  form: { getState },
+  submitting: isSubmitting,
+}: FormRenderProps<ForgotPasswordFormFields>) => {
+  const { submitError } = getState()
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <UserActionInfo
+        title='Email Sent'
+        iconName='status_sent'
+      >
+        <p className={style.info}>
+          We sent an email to <span className={style.email}>{email}</span>.<br />
+          Click the link inside to get started.
+        </p>
+        {isSubmitting && (
+          <div className={style.loading}>
+            <div className={style.loader}>
+              <Loader color={LoaderColor.blue} />
+            </div>
+            <span>We are sending a new email. Please check your inbox.</span>
+          </div>
+        )}
+        {!isSubmitting && submitError && (
+          <div className={style.error}>
+            <span className={style.message}>
+              We are unable to deliver email to your inbox.
+            </span><br />
+            <span>Please check your spam folder or contact our</span><br />
+            <a className={style.support} href='#'>Support team.</a>
+          </div>
+        )}
+        {!isSubmitting && !submitError && (
+          <button
+            type='submit'
+            className={style.action}
+          >
+            EMAIL DIDN&apos;T ARRIVE?
+          </button>
+        )}
+      </UserActionInfo>
+    </form>
+  )
 }
 
-class Forgot extends Component<ForgotProps> {
-  constructor(props: ForgotProps) {
-    super(props)
-
-    this.state = {
-      errors: undefined,
-    }
-  }
-
-  handleSubmit = async (values: ForgotFormFields): Promise<ForgotFormErrors> => {
-    return new Promise((resolve) => {
-      setTimeout(() => resolve({ [FORM_ERROR]: 'Unable to deliver' }), 5000)
-    })
-  }
-
-  renderForgotEmailSent = ({
+const ForgotForm: React.FunctionComponent = (props: FormRenderProps<ForgotPasswordFormFields>) => {
+  const {
     handleSubmit,
-    values: { email },
     form: { getState },
     submitting: isSubmitting,
-  }: FormRenderProps<ForgotFormFields>): React.ReactNode => {
-    const { submitError } = getState()
+  } = props
 
-    return (
-      <form onSubmit={handleSubmit}>
-        <UserActionInfo
-          title='Email Sent'
-          iconName='status_sent'
+  const {
+    errors,
+    submitError,
+    submitSucceeded,
+  } = getState()
+
+  const i18n = useI18n()
+
+  if (isSubmitting || submitSucceeded || (submitError && !errors.email)) {
+    return <ForgotEmailSent {...props} />
+  }
+
+  return (
+    <form
+      onSubmit={handleSubmit}
+      className={authStyle.form}
+    >
+      <h2 className={authStyle.title}>Forgot Password?</h2>
+      <div className={authStyle.fields}>
+        <Input
+          validate={isRequired({ i18n })}
+          className={authStyle.field}
+          name='email'
+          label='Email'
+          maxLength={256}
+        />
+      </div>
+      <BigButtonSubmit className={authStyle.submit}>
+        Reset Password
+      </BigButtonSubmit>
+      <div className={authStyle.switch}>
+        <span>Already have an account?</span>
+        <InternalLink
+          name='Login'
+          className={authStyle.action}
         >
-          <p className={style.info}>
-            We sent an email to <span className={style.email}>{email}</span>.<br />
-            Click the link inside to get started.
-          </p>
-          {isSubmitting && (
-            <div className={style.loading}>
-              <span className={style.loader}>...</span>
-              <span>We are sending a new email. Please check your inbox.</span>
-            </div>
-          )}
-          {!isSubmitting && submitError && (
-            <div className={style.error}>
-              <span className={style.message}>{submitError}</span><br />
-              <span>Please check your spam folder or contact our</span><br />
-              <a className={style.support} href='#'>Support team.</a>
-            </div>
-          )}
-          {!isSubmitting && !submitError && (
-            <button
-              type='submit'
-              className={style.action}
-            >
-              EMAIL DIDN&apos;T ARRIVE?
-            </button>
-          )}
-        </UserActionInfo>
-      </form>
-    )
-  }
-
-  renderForgotForm = (props: FormRenderProps<ForgotFormFields>): React.ReactNode => {
-    const {
-      handleSubmit,
-      values: { email },
-      form: { getState },
-      submitting: isSubmitting,
-    } = props
-
-    const {
-      submitError,
-      errors: {
-        email: emailError,
-      },
-    } = getState()
-
-    if (isSubmitting || (submitError && !emailError)) {
-      return this.renderForgotEmailSent(props)
-    }
-
-    return (
-      <form
-        onSubmit={handleSubmit}
-        className={authStyle.form}
-      >
-        <h2 className={authStyle.title}>Forgot Password?</h2>
-        <div className={authStyle.fields}>
-          <Input
-            className={authStyle.field}
-            name='email'
-            label='Email'
-            maxLength={256}
-          />
-        </div>
-        <BigButton
-          className={authStyle.submit}
-          type='submit'
-          isLoading={isSubmitting}
-          isDisabled={!email}
+          SIGN IN
+        </InternalLink>
+      </div>
+      <div className={authStyle.switch}>
+        <span>Don&apos;t have an account?</span>
+        <InternalLink
+          name='SignUp'
+          className={authStyle.action}
         >
-          Reset Password
-        </BigButton>
-        <div className={authStyle.switch}>
-          <span>Already have an account?</span>
-          <InternalLink
-            name='Login'
-            className={authStyle.action}
-          >
-            SIGN IN
-          </InternalLink>
-        </div>
-        <div className={authStyle.switch}>
-          <span>Don&apos;t have an account?</span>
-          <InternalLink
-            name='SignUp'
-            className={authStyle.action}
-          >
-            SIGN UP
-          </InternalLink>
-        </div>
-      </form>
-    )
-  }
-
-  render(): React.ReactNode {
-    return (
-      <AuthLayout>
-        <div className={authStyle.main}>
-          <Form
-            onSubmit={this.handleSubmit}
-            render={this.renderForgotForm}
-            initialValues={FORGOT_INITIAL_VALUES}
-          />
-        </div>
-      </AuthLayout>
-    )
-  }
+          SIGN UP
+        </InternalLink>
+      </div>
+    </form>
+  )
 }
 
-export default Forgot
+const Forgot: React.FunctionComponent<ForgotProps> = ({ handleSubmit }) => {
+  return (
+    <AuthLayout>
+      <div className={authStyle.main}>
+        <Form
+          onSubmit={handleSubmit}
+          render={ForgotForm}
+          initialValues={{ email: '' }}
+        />
+      </div>
+    </AuthLayout>
+  )
+}
+
+export default connect(
+  null,
+  (dispatch: Dispatch) => ({
+    handleSubmit: dispatch.user.sendForgotLink,
+  })
+)(Forgot)

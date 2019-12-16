@@ -52,6 +52,10 @@ export interface EmailVerificationFormFields {
   email: string;
 }
 
+export interface ForgotPasswordFormFields {
+  email: string;
+}
+
 export type FormErrors<FormFields> = {
   [key in keyof FormFields & { [FORM_ERROR]: string }]?: string | void;
 }

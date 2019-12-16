@@ -15,6 +15,7 @@ import {
   LoginFormFields,
   FormSubmitResult,
   SignUpFormValues,
+  ForgotPasswordFormFields,
   EmailVerificationFormFields,
 } from '../types'
 
@@ -197,6 +198,18 @@ export const user = createModel<UserState>({
       this.updateProfile()
 
       return
+    },
+    async sendForgotLink ({
+      email,
+    }: ForgotPasswordFormFields): FormSubmitResult<ForgotPasswordFormFields> {
+      try {
+        await axios.post('/v1/auth/password/reset', { email })
+
+        return
+      } catch (error) {
+        console.error(error)
+        return { [FORM_ERROR]: 'We are unable to deliver email to your inbox.' }
+      }
     },
   }),
   reducers: {
