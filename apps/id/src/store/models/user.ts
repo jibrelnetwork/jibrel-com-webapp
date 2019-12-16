@@ -3,45 +3,89 @@ import { FORM_ERROR } from 'final-form'
 import { createModel } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
+import { RootState } from 'store'
+import { LanguageCode } from 'data/languages'
+
 import axios from '../axios'
+import getUserLimits from './getUserLimits'
+
 import {
   UserStatus,
   UserState,
   FormSubmitResult,
   Profile,
-} from '../types'
-import {
+  UserLimits,
   LoginFormFields,
+  FormSubmitResult,
   SignUpFormValues,
-} from '../types/kyc'
+  EmailVerificationFormFields,
+} from '../types'
+
+export enum UserStatus {
+  ANONYMOUS = 'ANONYMOUS',
+  EMAIL_UNVERIFIED = 'EMAIL_UNVERIFIED',
+  PHONE_UNVERIFIED = 'PHONE_UNVERIFIED',
+  VERIFIED = 'VERIFIED',
+  BANNED = 'BANNED',
+}
+
+export interface UserState {
+  profile: Profile | void;
+  limits: UserLimits | void;
+  status: UserStatus | void;
+  languageCode: LanguageCode;
+}
 
 export const user = createModel<UserState>({
   state: {
+    profile: undefined,
+    limits: undefined,
     status: undefined,
-    languageCode: undefined,
+    languageCode: LanguageCode.en,
   },
   effects: (dispatch) => ({
+    async updateLimits (): Promise<void> {
+      try {
+        const limits = await axios.get('/v1/user/limits')
+        this.setProfileLimits(getUserLimits(limits.data))
+
+        return
+      } catch (error) {
+        console.error(error)
+        this.setProfileLimits(undefined)
+      }
+    },
     async updateProfile (): Promise<void> {
       try {
         const { data } = await axios
           .get('/v1/user/profile')
 
         this.setProfile(data.data)
+
+        const limits = await axios.get('/v1/user/limits')
+        this.setProfileLimits(getUserLimits(limits.data))
+
+        return
       } catch (error) {
         if (!error.response) {
           // FIXME: should show global connection error
           throw error
         }
 
-        this.setProfile(null)
+        this.setProfile(undefined)
       }
     },
-    setProfile (profile: Profile | null): void {
+    setProfile (profile: Profile | void): void {
       if (!profile) {
-        this.setStatus(UserStatus.ANONYMOUS)
+        this.setProfileData(undefined)
+        this.setStatus(undefined)
 
         return
-      } else if (profile.isPhoneConfirmed) {
+      }
+
+      this.setProfileData(profile)
+
+      if (profile.isPhoneConfirmed) {
         this.setStatus(UserStatus.VERIFIED)
       } else if (profile.isEmailConfirmed) {
         this.setStatus(UserStatus.PHONE_UNVERIFIED)
@@ -131,20 +175,38 @@ export const user = createModel<UserState>({
         throw error
       }
     },
-    async logout (_: null, rootState): Promise<void> {
-      const language = rootState.user.languageCode
-
+    async logout (_: null, rootState: RootState): Promise<void> {
       await axios.post('/v1/auth/logout')
-
-      this.setProfile(null)
+      this.setProfile(undefined)
 
       dispatch(routerActions.navigateTo(
         'Login',
-        { lang: language },
+        { lang: rootState.user.languageCode },
       ))
 
       return
-    }
+    },
+    async sendEmailLink ({
+      email,
+    }: EmailVerificationFormFields): FormSubmitResult<EmailVerificationFormFields> {
+      try {
+        await axios.post('/v1/auth/registration/confirmation-email-resend', { email })
+
+        const { data } = await axios.get('/v1/user/limits')
+        this.setProfileLimits(getUserLimits(data))
+
+        return
+      } catch (error) {
+        console.error(error)
+        return { [FORM_ERROR]: 'We are unable to deliver email to your inbox.' }
+      }
+    },
+    async checkEmailToken (key: string): Promise<void> {
+      await axios.post('/v1/auth/registration/email-verify', { key })
+      this.updateProfile()
+
+      return
+    },
   }),
   reducers: {
     setStatus: (state, payload): UserState => ({
@@ -154,6 +216,14 @@ export const user = createModel<UserState>({
     setLanguageCode: (state, payload): UserState => ({
       ...state,
       languageCode: payload,
+    }),
+    setProfileData: (state, payload): UserState => ({
+      ...state,
+      profile: payload,
+    }),
+    setProfileLimits: (state, payload): UserState => ({
+      ...state,
+      limits: payload,
     }),
   }
 })
