@@ -7,12 +7,16 @@ import { connect } from 'react-redux'
 import style from './style.scss'
 import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
-import UserActionInfo from 'components/UserActionInfo'
 
 import {
   Dispatch,
   RootState,
 } from 'store'
+
+import {
+  ResponseLoader,
+  UserActionInfo,
+} from 'components'
 
 interface VerifyEmailProps {
   checkEmailToken: (token: string) => Promise<void>;
@@ -38,26 +42,23 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
   async componentDidMount(): Promise<void> {
     const {
       checkEmailToken,
-      email,
       token,
     } = this.props
 
-    if (email && token) {
-      try {
-        await checkEmailToken(token)
+    try {
+      await checkEmailToken(token)
 
-        this.setState({
-          isSubmitting: false,
-          isSubmitError: false,
-        })
-      } catch (error) {
-        console.error(error)
+      this.setState({
+        isSubmitting: false,
+        isSubmitError: false,
+      })
+    } catch (error) {
+      console.error(error)
 
-        this.setState({
-          isSubmitting: false,
-          isSubmitError: true,
-        })
-      }
+      this.setState({
+        isSubmitting: false,
+        isSubmitError: true,
+      })
     }
   }
 
@@ -69,8 +70,12 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
       isSubmitError,
     } = this.state
 
-    if (!email || isSubmitting) {
-      return null
+    if (isSubmitting || !email) {
+      return (
+        <ResponseLoader>
+          Wait a moment, please...
+        </ResponseLoader>
+      )
     }
 
     return (
