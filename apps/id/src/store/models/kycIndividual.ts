@@ -4,7 +4,7 @@ import {
   KYCIndividualStatus,
   KYCIndividualValues,
   KYCIndividualState,
-} from '../types'
+} from '../types/kyc'
 
 export const KYC_INDIVIDUAL_SEQUENCE = [
   KYCIndividualStatus.personal,

@@ -32,7 +32,7 @@ const LinkButton: React.FunctionComponent<LinkButtonProps> = ({
     disabled={isDisabled}
   >
     <Icon
-      name='left-arrow'
+      name='ic_arrow_right_24'
       className={cc([
         style.icon,
         style.left,
@@ -40,7 +40,7 @@ const LinkButton: React.FunctionComponent<LinkButtonProps> = ({
     />
     <span className={style.text}>{children}</span>
     <Icon
-      name='right-arrow'
+      name='ic_arrow_right_24'
       className={cc([
         style.icon,
         style.right,

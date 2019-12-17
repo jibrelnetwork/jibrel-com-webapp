@@ -1,20 +1,24 @@
 import React from 'react'
-import { Form, FormRenderProps } from 'react-final-form'
+import noop from 'lodash-es/noop'
+import { connect } from 'react-redux'
 import { SubmissionErrors } from 'final-form'
+
 import {
   Input,
   BigButton,
 } from '@jibrelcom/ui'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
-import noop from 'lodash-es/noop'
-import cc from 'classcat'
-import { connect } from 'react-redux'
 
-import ProfileLayout from 'layouts/ProfileLayout'
-import { useI18n } from 'app/i18n'
+import {
+  Form,
+  FormRenderProps,
+} from 'react-final-form'
+
 import axios from 'store/axios'
+import KYCLayout from 'layouts/KYCLayout'
 import CountrySelect from 'components/CountrySelect'
-import { PersonalValues } from 'store/types'
+import { useI18n } from 'app/i18n'
+import { PersonalValues } from 'store/types/kyc'
+
 import {
   RootState,
   Dispatch,
@@ -103,29 +107,17 @@ const Personal: React.FunctionComponent<PersonalProps> = ({
   const i18n = useI18n()
 
   return (
-    <ProfileLayout>
-      <div className={grid.grid}>
-        <h1 className={cc([
-          grid.column,
-          style.title,
-        ])}>
-          {i18n._('KYC.Personal.title')}
-        </h1>
-        <div className={cc([
-          grid.column,
-          style.step,
-        ])}>
-          <h2 className={style.stepTitle}>
-            {i18n._('KYC.Personal.section.personal.title')}
-          </h2>
-          <Form
-            initialValues={initialValues}
-            onSubmit={handleFormSubmit}
-            render={PersonalFormContents}
-          />
-        </div>
-      </div>
-    </ProfileLayout>
+    <KYCLayout
+      title={i18n._('KYC.Personal.section.personal.title')}
+      backHandler={console.log}
+      backLabel='BACK TO START'
+    >
+      <Form
+        initialValues={initialValues}
+        onSubmit={handleFormSubmit}
+        render={PersonalFormContents}
+      />
+    </KYCLayout>
   )
 }
 
