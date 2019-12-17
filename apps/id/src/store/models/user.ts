@@ -19,6 +19,8 @@ import {
   Profile,
   LoginFormFields,
   SignUpFormValues,
+  ResetPasswordFormFields,
+  ForgotPasswordFormFields,
   EmailVerificationFormFields,
 } from '../types'
 
@@ -161,7 +163,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
         throw error
       }
     },
-    async logout (_: null, rootState: RootState): Promise<void> {
+    async logout (_: void, rootState: RootState): Promise<void> {
       await axios.post('/v1/auth/logout')
       this.setProfile(undefined)
 
@@ -192,6 +194,51 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
       this.updateProfile()
 
       return
+    },
+    async sendForgotLink ({
+      email,
+    }: ForgotPasswordFormFields): FormSubmitResult<ForgotPasswordFormFields> {
+      try {
+        await axios.post('/v1/auth/password/reset', { email })
+
+        return
+      } catch (error) {
+        console.error(error)
+        return { [FORM_ERROR]: 'We are unable to deliver email to your inbox.' }
+      }
+    },
+    async checkResetToken (key: string, rootState: RootState): Promise<void> {
+      try {
+        await axios.post('/v1/auth/password/reset/activate', { key })
+      } catch (error) {
+        console.error(error)
+
+        dispatch(routerActions.navigateTo(
+          'Login',
+          { lang: rootState.user.languageCode },
+        ))
+      }
+    },
+    async resetPassword ({
+      key,
+      password,
+    }: ResetPasswordFormFields): FormSubmitResult<ResetPasswordFormFields> {
+      try {
+        await axios.post('/v1/auth/password/reset/complete', {
+          key,
+          password,
+        })
+
+        this.updateProfile()
+
+        return
+      } catch (error) {
+        if (error.response && (error.response.status === 400)) {
+          return error.formValidation
+        }
+
+        throw error
+      }
     },
   }),
   reducers: {

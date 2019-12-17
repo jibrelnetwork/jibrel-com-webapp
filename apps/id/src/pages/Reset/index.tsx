@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import cc from 'classcat'
 import bigButtonStyle from '@jibrelcom/ui/src/BigButton/style.scss'
 import { Link } from 'react-router5'
+import { connect } from 'react-redux'
 
 import {
   Form,
@@ -9,35 +10,73 @@ import {
 } from 'react-final-form'
 
 import {
-  BigButton,
   PasswordInput,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
 
+import authStyle from 'styles/auth.scss'
+import AuthLayout from 'layouts/AuthLayout'
+import { useI18n } from 'app/i18n'
+
+import { checkPasswordStrength } from 'utils/forms'
+
+import {
+  Dispatch,
+  RootState,
+} from 'store'
+
+import {
+  ResponseLoader,
+  UserActionInfo,
+} from 'components'
+
+import {
+  isRequired,
+  isMatchedPassword,
+} from 'utils/validators'
+
+import {
+  FormSubmit,
+  ResetPasswordFormFields,
+} from 'store/types'
+
 import style from './style.scss'
-import authStyle from '../../styles/auth.scss'
-import { UserActionInfo } from '../../components'
-
-interface ResetFormFields {
-  password: string;
-  passwordConfirm: string;
-}
-
-interface ResetFormErrors {
-  password?: string;
-  passwordConfirm?: string;
-}
 
 interface ResetProps {
-  handleSubmit: (values: ResetFormFields) => Promise<ResetFormErrors | string>;
+  checkResetToken: (token: string) => Promise<void>;
+  resetPassword: FormSubmit<ResetPasswordFormFields>;
+  email: string;
+  token: string;
 }
 
 interface ResetState {
-  email?: string;
+  isChecking: boolean;
 }
 
-const RESET_INITIAL_VALUES: ResetFormFields = {
-  password: '',
-  passwordConfirm: '',
+const ResetSuccess: React.FunctionComponent<{ email: string }> = ({
+  email,
+}) => {
+  return (
+    <UserActionInfo
+      title='Password Updated'
+      iconName='status_ok'
+    >
+      <p className={style.info}>
+        Congratulations!<br />
+        Password for <span className={style.email}>{email}</span> has been updated.
+      </p>
+      <Link
+        routeName='Login'
+        routeParams={{ lang: 'en' }}
+        className={cc([
+          bigButtonStyle.button,
+          bigButtonStyle.main,
+        ])}
+      >
+        Log In to jibrel
+      </Link>
+    </UserActionInfo>
+  )
 }
 
 class Reset extends Component<ResetProps, ResetState> {
@@ -45,60 +84,44 @@ class Reset extends Component<ResetProps, ResetState> {
     super(props)
 
     this.state = {
-      email: undefined,
+      isChecking: true,
     }
   }
 
-  handleSubmit = async (values: ResetFormFields): Promise<ResetFormErrors | string> => {
-    const result: ResetFormErrors | string = await new Promise((resolve) => {
-      setTimeout(() => resolve('qwe'), 5000)
-    })
+  async componentDidMount(): Promise<void> {
+    const {
+      checkResetToken,
+      token,
+    } = this.props
 
-    if (typeof result === 'string') {
-      this.setState({ email: result })
+    if (token) {
+      await checkResetToken(token)
 
-      return {}
+      this.setState({
+        isChecking: false,
+      })
     }
-
-    return result
-  }
-
-  renderResetSuccess = (): React.ReactNode => {
-    return (
-      <UserActionInfo
-        title='Password Updated'
-        iconName='status_ok'
-      >
-        <p className={style.info}>
-          Congratulations!<br />
-          Password for <span className={style.email}>{this.state.email}</span> has been updated.
-        </p>
-        <Link
-          routeName='Login'
-          routeParams={{ lang: 'en' }}
-          className={cc([
-            bigButtonStyle.button,
-            bigButtonStyle.main,
-          ])}
-        >
-          Log In to jibrel
-        </Link>
-      </UserActionInfo>
-    )
   }
 
   renderResetForm = ({
     handleSubmit,
-    values: {
-      password,
-      passwordConfirm,
-    },
+    values,
+    form: { getState },
     submitting: isSubmitting,
-  }: FormRenderProps<ResetFormFields>): React.ReactNode => {
-    const isSubmitted = !!this.state.email
+  }: FormRenderProps<ResetPasswordFormFields>): React.ReactNode => {
+    const i18n = useI18n()
+    const { submitSucceeded } = getState()
 
-    if (!isSubmitting && isSubmitted) {
-      return this.renderResetSuccess()
+    if (this.state.isChecking) {
+      return (
+        <ResponseLoader>
+          Wait a moment, please...
+        </ResponseLoader>
+      )
+    }
+
+    if (!isSubmitting && submitSucceeded) {
+      return <ResetSuccess email={values.email} />
     }
 
     return (
@@ -109,41 +132,63 @@ class Reset extends Component<ResetProps, ResetState> {
         <h2 className={authStyle.title}>Reset Password?</h2>
         <div className={authStyle.fields}>
           <PasswordInput
-            onScoreChange={console.log}
-            checkPasswordStrength={console.log}
+            validate={isRequired({ i18n })}
+            checkPasswordStrength={checkPasswordStrength}
             name='password'
             label='New Password'
             maxLength={256}
             withIndicator
           />
           <PasswordInput
+            validate={isMatchedPassword({ i18n })}
             name='passwordConfirm'
             label='Confirm Password'
             maxLength={256}
           />
         </div>
-        <BigButton
-          type='submit'
-          isLoading={isSubmitting}
-          isDisabled={!(password && passwordConfirm)}
-        >
+        <BigButtonSubmit>
           Update Password
-        </BigButton>
+        </BigButtonSubmit>
       </form>
     )
   }
 
   render(): React.ReactNode {
+    const {
+      resetPassword,
+      email,
+      token,
+    } = this.props
+
     return (
-      <div className={authStyle.main}>
-        <Form
-          onSubmit={this.handleSubmit}
-          render={this.renderResetForm}
-          initialValues={RESET_INITIAL_VALUES}
-        />
-      </div>
+      <AuthLayout>
+        <div className={authStyle.main}>
+          <Form
+            onSubmit={resetPassword}
+            render={this.renderResetForm}
+            initialValues={{
+              email,
+              key: token,
+              password: '',
+              passwordConfirm: '',
+            }}
+          />
+        </div>
+      </AuthLayout>
     )
   }
 }
 
-export default Reset
+export default connect(
+  (state: RootState) => {
+    const { profile } = state.user
+
+    return {
+      email: profile ? profile.userEmail : undefined,
+    }
+  },
+  (dispatch: Dispatch) => ({
+    resetPassword: dispatch.user.resetPassword,
+    checkResetToken: dispatch.user.checkResetToken,
+  })
+)(Reset)

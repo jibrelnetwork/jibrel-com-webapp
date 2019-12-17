@@ -43,6 +43,14 @@ export interface Profile {
   kycStatus: KYCStatus;
 }
 
+export interface SignUpFormValues {
+  firstName: string;
+  lastName: string;
+  email: string;
+  password: string;
+  terms: boolean;
+}
+
 export interface LoginFormFields {
   email: string;
   password: string;
@@ -52,10 +60,13 @@ export interface EmailVerificationFormFields {
   email: string;
 }
 
-export interface SignUpFormValues {
-  firstName: string;
-  lastName: string;
+export interface ForgotPasswordFormFields {
+  email: string;
+}
+
+export interface ResetPasswordFormFields {
+  key: string;
   email: string;
   password: string;
-  terms: boolean;
+  passwordConfirm: string;
 }
