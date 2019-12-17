@@ -4,5 +4,6 @@
   "meta.website.title.empty": "Jibrel",
   "meta.website.title.template": "{ title } • Jibrel",
   "meta.website.description": "Jibrel enables startups and investors to connect in previously unimaginable ways to create capital formation.",
-  "form.error.isRequired": "Field value is required"
+  "form.error.isRequired": "Field value is required",
+  "form.error.isNotStrongPassword": "Password should be strong enough"
 }
