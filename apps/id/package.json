@@ -30,6 +30,7 @@
     "redux-thunk": "~2.3.0",
     "router5": "~7.0.2",
     "router5-plugin-browser": "~7.0.2",
+    "router5-transition-path": "~7.0.1",
     "zxcvbn": "~4.4.2"
   },
   "devDependencies": {

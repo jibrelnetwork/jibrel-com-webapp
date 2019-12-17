@@ -1,7 +1,9 @@
 import React from 'react'
-import { useI18n, useLanguage } from '../app/i18n'
+import { useI18n, useLanguage } from 'app/i18n'
 import { useRouteNode } from 'react-router5'
 import { Helmet } from 'react-helmet'
+import get from 'lodash-es/get'
+import { constants } from 'router5'
 
 import * as pagesAvailable from './available'
 
@@ -11,13 +13,15 @@ const Pages: React.FunctionComponent = () => {
   const { route } = useRouteNode('')
 
   if (!route) {
-    console.error(new Error('NO_PAGE_SPECIFIED_FOR_PATH'))
+    console.error(new Error('NO_ROUTE'))
 
     // FIXME: should show loader
     return null
   }
 
-  const Page: React.ComponentClass | void = pagesAvailable[route.name.replace('.', '')]
+  const Page: React.ComponentClass | void = route.name === constants.UNKNOWN_ROUTE
+    ? pagesAvailable.NotFound
+    : get(pagesAvailable, route.name)
 
   if (!Page) {
     const error = new Error('NO_PAGE_SPECIFIED_FOR_NAME')
