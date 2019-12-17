@@ -4,6 +4,7 @@ import {
   redirectLang,
   isLoggedIn,
   isValidVerificationStep,
+  verifyPhone,
 } from './activations'
 
 const ROUTER_ROOT = ''
@@ -95,17 +96,17 @@ export const routes: Route[] = [
     canActivate: composeActivations([
       isLoggedIn,
       isValidVerificationStep,
+      verifyPhone,
     ]),
-    children: [
-      {
-        name: 'Code',
-        path: '/code',
-      },
-      {
-        name: 'Failure',
-        path: '/failure',
-      },
-    ],
+  },
+  {
+    name: 'VerifyPhoneCode',
+    path: '/verify/phone/code',
+    canActivate: composeActivations([
+      isLoggedIn,
+      isValidVerificationStep,
+      verifyPhone,
+    ]),
   },
 
   {

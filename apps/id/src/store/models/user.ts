@@ -1,9 +1,6 @@
 import mapValues from 'lodash-es/mapValues'
 import { FORM_ERROR } from 'final-form'
-import {
-  createModel,
-  ModelConfig,
-} from '@rematch/core'
+import { createModel, ModelConfig } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
 import { RootState } from 'store'
@@ -20,6 +17,7 @@ import {
   LoginFormFields,
   SignUpFormValues,
   EmailVerificationFormFields,
+  KYCStatus,
 } from '../types'
 
 export const user: ModelConfig<UserState> = createModel<UserState>({
@@ -33,7 +31,9 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
     async updateLimits (): Promise<void> {
       try {
         const limits = await axios.get('/v1/user/limits')
-        this.setProfileLimits(getUserLimits(limits.data))
+        const userLimits = getUserLimits(limits.data)
+        this.setProfileLimits(userLimits)
+        dispatch.phone.setLimits(userLimits)
 
         return
       } catch (error) {
@@ -48,8 +48,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
 
         this.setProfile(data.data)
 
-        const limits = await axios.get('/v1/user/limits')
-        this.setProfileLimits(getUserLimits(limits.data))
+        this.updateLimits()
 
         return
       } catch (error) {
@@ -72,7 +71,11 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
       this.setProfileData(profile)
 
       if (profile.isPhoneConfirmed) {
-        this.setStatus(UserStatus.VERIFIED)
+        if (profile.kycStatus === KYCStatus.verified || profile.kycStatus === KYCStatus.advanced) {
+          this.setStatus(UserStatus.VERIFIED)
+        } else {
+          this.setStatus(UserStatus.KYC_UNSET)
+        }
       } else if (profile.isEmailConfirmed) {
         this.setStatus(UserStatus.PHONE_UNVERIFIED)
       } else if (profile.uuid) {

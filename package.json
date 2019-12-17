@@ -6,7 +6,8 @@
     "clean": "npx rimraf ./build/* && npx rimraf ./reports/*",
     "build": "npx lerna run build",
     "build:clean": "npm run clean && npm run build",
-    "lint:js": "npx eslint ./packages/** --ext js,jsx,ts,tsx"
+    "lint:js": "npx eslint ./packages/** --ext js,jsx,ts,tsx",
+    "postversion": "echo $npm_package_version > version.txt"
   },
   "devDependencies": {
     "@babel/core": "~7.7.2",
