@@ -1,6 +1,9 @@
 import mapValues from 'lodash-es/mapValues'
 import { FORM_ERROR } from 'final-form'
-import { createModel } from '@rematch/core'
+import {
+  createModel,
+  ModelConfig,
+} from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
 import { RootState } from 'store'
@@ -10,32 +13,18 @@ import axios from '../axios'
 import getUserLimits from './getUserLimits'
 
 import {
-  Profile,
-  UserLimits,
-  LoginFormFields,
+  UserStatus,
+  UserState,
   FormSubmitResult,
+  Profile,
+  LoginFormFields,
   SignUpFormValues,
   ResetPasswordFormFields,
   ForgotPasswordFormFields,
   EmailVerificationFormFields,
 } from '../types'
 
-export enum UserStatus {
-  ANONYMOUS = 'ANONYMOUS',
-  EMAIL_UNVERIFIED = 'EMAIL_UNVERIFIED',
-  PHONE_UNVERIFIED = 'PHONE_UNVERIFIED',
-  VERIFIED = 'VERIFIED',
-  BANNED = 'BANNED',
-}
-
-export interface UserState {
-  profile: Profile | void;
-  limits: UserLimits | void;
-  status: UserStatus | void;
-  languageCode: LanguageCode;
-}
-
-export const user = createModel<UserState>({
+export const user: ModelConfig<UserState> = createModel<UserState>({
   state: {
     profile: undefined,
     limits: undefined,
@@ -56,7 +45,9 @@ export const user = createModel<UserState>({
     },
     async updateProfile (): Promise<void> {
       try {
-        const { data } = await axios.get('/v1/user/profile')
+        const { data } = await axios
+          .get('/v1/user/profile')
+
         this.setProfile(data.data)
 
         const limits = await axios.get('/v1/user/limits')
@@ -64,7 +55,11 @@ export const user = createModel<UserState>({
 
         return
       } catch (error) {
-        console.error(error)
+        if (!error.response) {
+          // FIXME: should show global connection error
+          throw error
+        }
+
         this.setProfile(undefined)
       }
     },

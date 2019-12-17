@@ -1,11 +1,23 @@
 import includes from 'lodash-es/includes'
 import get from 'lodash-es/get'
-import { ActivationFnFactory } from 'router5'
+import {
+  ActivationFnFactory,
+  Router,
+  State,
+} from 'router5'
 
-import { DEFAULT_LANGUAGE_CODE, LANGUAGE_CODE_LIST } from '../../../data/languages'
+import {
+  DEFAULT_LANGUAGE_CODE,
+  LANGUAGE_CODE_LIST,
+} from 'data/languages'
 
-export const redirectToDefaultIfLanguageUnavailable: ActivationFnFactory = (router, dependencies) =>
-  async (toState) => {
+import { RouterDependencies } from '../types'
+
+export const redirectLang: ActivationFnFactory = (
+  router: Router,
+  dependencies: RouterDependencies,
+) =>
+  async (toState: State): Promise<boolean> => {
     const { store } = dependencies
     let { user } = store.getState()
 
@@ -34,3 +46,4 @@ export const redirectToDefaultIfLanguageUnavailable: ActivationFnFactory = (rout
     return true
   }
 
+export default redirectLang
