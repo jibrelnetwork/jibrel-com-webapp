@@ -1,11 +1,31 @@
-import { FORM_ERROR } from 'final-form'
+import { LanguageCode } from 'data/languages'
+import { KYCStatus } from './kyc'
 
-import { LanguageCode } from '../data/languages'
+export enum UserStatus {
+  ANONYMOUS = 'ANONYMOUS',
+  EMAIL_UNVERIFIED = 'EMAIL_UNVERIFIED',
+  PHONE_UNVERIFIED = 'PHONE_UNVERIFIED',
+  VERIFIED = 'VERIFIED',
+  BANNED = 'BANNED',
+}
 
-export enum KYCStatus {
-  unverified = 'unverified',
-  verified = 'verified',
-  advanced = 'advanced',
+export interface UserLimit {
+  leftSeconds: number;
+  temproraryUnavailable: boolean;
+}
+
+export interface UserLimits {
+  uploadKYCDocument: UserLimit;
+  resendVerificationSMS: UserLimit;
+  resendVerificationCall: UserLimit;
+  resendVerificationEmail: UserLimit;
+}
+
+export interface UserState {
+  status: UserStatus | void;
+  languageCode: string | void;
+  profile: Profile | void;
+  limits: UserLimits | void;
 }
 
 export interface Profile {
@@ -21,18 +41,6 @@ export interface Profile {
   isAgreedPrivacyPolicy: boolean;
 
   kycStatus: KYCStatus;
-}
-
-export interface UserLimit {
-  leftSeconds: number;
-  temproraryUnavailable: boolean;
-}
-
-export interface UserLimits {
-  uploadKYCDocument: UserLimit;
-  resendVerificationSMS: UserLimit;
-  resendVerificationCall: UserLimit;
-  resendVerificationEmail: UserLimit;
 }
 
 export interface SignUpFormValues {
@@ -62,10 +70,3 @@ export interface ResetPasswordFormFields {
   password: string;
   passwordConfirm: string;
 }
-
-export type FormErrors<FormFields> = {
-  [key in keyof FormFields & { [FORM_ERROR]: string }]?: string | void;
-}
-
-export type FormSubmitResult<FormFields> = Promise<FormErrors<FormFields> | void>
-export type FormSubmit<FormFields> = (values: FormFields) => FormSubmitResult<FormFields>
