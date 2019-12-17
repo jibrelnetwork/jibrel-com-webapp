@@ -70,12 +70,12 @@ export const routes: Route[] = [
 
   {
     name: 'redirect!Reset',
-    path: '/reset',
+    path: '/reset/:token',
     canActivate: redirectLang,
   },
   {
     name: 'Reset',
-    path: '/:lang/reset',
+    path: '/:lang/reset/:token',
     canActivate: redirectLang,
   },
 

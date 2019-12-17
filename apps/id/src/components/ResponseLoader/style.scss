@@ -1,0 +1,27 @@
+@import '~@jibrelcom/ui/src/theme';
+
+.main {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 40px;
+  padding: 40px;
+  border-radius: 12px;
+  background-color: $color-white;
+}
+
+.loader {
+  height: 24px;
+}
+
+.loader,
+.content {
+  width: 100%;
+  text-align: center;
+}
+
+.content {
+  margin-top: 24px;
+  font-size: 18px;
+  line-height: 140%;
+}
