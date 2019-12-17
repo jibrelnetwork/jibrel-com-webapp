@@ -36,13 +36,8 @@ export const routes: Route[] = [
   },
 
   {
-    name: 'redirect!EmailVerification',
-    path: '/email-verification',
-    canActivate: redirectToDefaultIfLanguageUnavailable,
-  },
-  {
     name: 'EmailVerification',
-    path: '/:lang/email-verification',
+    path: '/email-verification',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
@@ -59,23 +54,23 @@ export const routes: Route[] = [
 
   {
     name: 'redirect!Reset',
-    path: '/reset/:token',
+    path: '/reset?:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'Reset',
-    path: '/:lang/reset/:token',
+    path: '/:lang/reset?:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
   {
     name: 'redirect!VerifyEmail',
-    path: '/verify/email/:token',
+    path: '/verify/email?:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
   {
     name: 'VerifyEmail',
-    path: '/:lang/verify/email/:token',
+    path: '/:lang/verify/email?:token',
     canActivate: redirectToDefaultIfLanguageUnavailable,
   },
 
