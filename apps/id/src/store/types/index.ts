@@ -7,6 +7,8 @@ export {
   LoginFormFields,
   EmailVerificationFormFields,
   SignUpFormValues,
+  ResetPasswordFormFields,
+  ForgotPasswordFormFields,
 } from './user'
 
 export {
