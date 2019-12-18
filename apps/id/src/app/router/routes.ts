@@ -45,7 +45,7 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'EmailVerification',
     path: '/email-verification',
-    canActivate: redirectLang,
+    canActivate: isLoggedIn,
   },
 
   {
