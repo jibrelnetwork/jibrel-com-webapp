@@ -13,7 +13,7 @@ import AuthLayout from 'layouts/AuthLayout'
 
 import {
   Countdown,
-  UserActionInfo
+  UserActionInfo,
 } from 'components'
 
 import {

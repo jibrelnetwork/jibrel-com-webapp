@@ -104,11 +104,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
           })
 
         this.setProfile(data.data)
-
-        dispatch(routerActions.navigateTo(
-          'EmailVerification',
-          { lang: language },
-        ))
+        dispatch(routerActions.navigateTo('EmailVerification'))
 
         return
       } catch (error) {
@@ -127,9 +123,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
     async login ({
       email,
       password,
-    }: LoginFormFields, rootState): FormSubmitResult<LoginFormFields> {
-      const language = rootState.user.languageCode
-
+    }: LoginFormFields): FormSubmitResult<LoginFormFields> {
       try {
         const { data } = await axios.post('/v1/auth/login', {
           email,
@@ -137,11 +131,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
         })
 
         this.setProfile(data.data)
-
-        dispatch(routerActions.navigateTo(
-          'EmailVerification',
-          { lang: language },
-        ))
+        dispatch(routerActions.navigateTo('EmailVerification'))
 
         return
       } catch (error) {

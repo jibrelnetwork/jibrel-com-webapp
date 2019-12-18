@@ -7,12 +7,16 @@ import { connect } from 'react-redux'
 import style from './style.scss'
 import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
-import UserActionInfo from 'components/UserActionInfo'
 
 import {
   Dispatch,
   RootState,
 } from 'store'
+
+import {
+  ResponseLoader,
+  UserActionInfo,
+} from 'components'
 
 interface VerifyEmailProps {
   checkEmailToken: (token: string) => Promise<void>;
@@ -24,6 +28,57 @@ interface VerifyEmailState {
   isSubmitting: boolean;
   isSubmitError: boolean;
 }
+
+interface VerifyEmailInfoProps {
+  email: string | void;
+  isSubmitError: boolean;
+}
+
+const VerifyEmailInfo: React.FunctionComponent<VerifyEmailInfoProps> = ({
+  email,
+  isSubmitError,
+}) => (
+  <UserActionInfo
+    iconName={`status_${isSubmitError ? 'fail' : 'ok'}`}
+    title={isSubmitError ? 'Email Is Not Verified' : 'Email Is Verified'}
+  >
+    {(!isSubmitError && email) ? (
+      <>
+        <p className={style.info}>
+          Congratulations!<br />
+          Your email <span className={style.email}>{email}</span> is verified.
+        </p>
+        <Link
+          routeName='VerifyPhone'
+          className={cc([
+            bigButtonStyle.button,
+            bigButtonStyle.main,
+          ])}
+        >
+          Сontinue
+        </Link>
+      </>
+    ) : (
+      <div className={style.error}>
+        <span className={style.message}>
+          The attempt to verify your email failed.
+        </span>
+        <a
+          href='/'
+          className={cc([
+            style.close,
+            bigButtonStyle.button,
+            bigButtonStyle.main,
+          ])}
+        >
+          Close
+        </a>
+        <span>If you have any questions, please get in touch with our </span><br />
+        <a className={style.support} href='#'>Support team.</a>
+      </div>
+    )}
+  </UserActionInfo>
+)
 
 class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
   constructor(props: VerifyEmailProps) {
@@ -38,26 +93,23 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
   async componentDidMount(): Promise<void> {
     const {
       checkEmailToken,
-      email,
       token,
     } = this.props
 
-    if (email && token) {
-      try {
-        await checkEmailToken(token)
+    try {
+      await checkEmailToken(token)
 
-        this.setState({
-          isSubmitting: false,
-          isSubmitError: false,
-        })
-      } catch (error) {
-        console.error(error)
+      this.setState({
+        isSubmitting: false,
+        isSubmitError: false,
+      })
+    } catch (error) {
+      console.error(error)
 
-        this.setState({
-          isSubmitting: false,
-          isSubmitError: true,
-        })
-      }
+      this.setState({
+        isSubmitting: false,
+        isSubmitError: true,
+      })
     }
   }
 
@@ -69,54 +121,19 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
       isSubmitError,
     } = this.state
 
-    if (!email || isSubmitting) {
-      return null
-    }
-
     return (
       <AuthLayout>
         <div className={authStyle.main}>
-          <UserActionInfo
-            iconName={`status_${isSubmitError ? 'fail' : 'ok'}`}
-            title={isSubmitError ? 'Email Is Not Verified' : 'Email Is Verified'}
-          >
-            {!isSubmitError ? (
-              <>
-                <p className={style.info}>
-                  Congratulations!<br />
-                  Your email <span className={style.email}>{email}</span> is verified.
-                </p>
-                <Link
-                  routeName='Login'
-                  routeParams={{ lang: 'en' }}
-                  className={cc([
-                    bigButtonStyle.button,
-                    bigButtonStyle.main,
-                  ])}
-                >
-                  Сontinue
-                </Link>
-              </>
-            ) : (
-              <div className={style.error}>
-                <span className={style.message}>
-                  The attempt to verify your email failed.
-                </span>
-                <a
-                  href='/'
-                  className={cc([
-                    style.close,
-                    bigButtonStyle.button,
-                    bigButtonStyle.main,
-                  ])}
-                >
-                  Close
-                </a>
-                <span>If you have any questions, please get in touch with our </span><br />
-                <a className={style.support} href='#'>Support team.</a>
-              </div>
-            )}
-          </UserActionInfo>
+          {(isSubmitting || !(email || isSubmitError)) ? (
+            <ResponseLoader>
+              Wait a moment, please...
+            </ResponseLoader>
+          ) : (
+            <VerifyEmailInfo
+              email={email}
+              isSubmitError={isSubmitError}
+            />
+          )}
         </div>
       </AuthLayout>
     )
