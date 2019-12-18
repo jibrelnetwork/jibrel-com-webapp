@@ -28,20 +28,24 @@ const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
   return (
     <ProfileLayout>
       <div className={grid.grid}>
-        <h1 className={cc([
-          grid.column,
-          style.title,
-        ])}>
+        <h1
+          className={cc([
+            grid.column,
+            style.title,
+          ])}
+        >
           {i18n._('KYC.Personal.title')}
         </h1>
-        <div className={cc([
-          grid.column,
-          style.step,
-        ])}>
+        <div
+          className={cc([
+            grid.column,
+            style.step,
+          ])}
+        >
           <LinkButton
             onClick={backHandler}
             className={style.back}
-            variant={LinkButtonVariant.prev}
+            variant={backLabel ? LinkButtonVariant.prev : undefined}
           >
             {backLabel}
           </LinkButton>
