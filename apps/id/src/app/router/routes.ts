@@ -103,6 +103,7 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'KYC',
     path: '/kyc',
+    canActivate: isLoggedIn,
     // onActivate: get kyc status from backend
     // canActivate: if kyc status is "not submitted", then true
     //    else redirect to CMS

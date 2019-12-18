@@ -1,0 +1,59 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+.title {
+  @include font-h2-l;
+
+  padding: 24px 0;
+}
+
+.text,
+.additional {
+  max-width: 456px;
+  margin-top: 32px;
+  font-size: 18px;
+  line-height: 140%;
+
+  p {
+    margin-top: 16px;
+
+    &.first {
+      margin-top: 0;
+    }
+  }
+}
+
+.list {
+  li {
+    position: relative;
+    margin-top: 16px;
+    padding-left: 24px;
+
+    &::before {
+      position: absolute;
+      top: 0;
+      left: 0;
+      font-size: 18px;
+      line-height: 140%;
+      color: $color-black-30;
+      content: "•";
+    }
+  }
+}
+
+.actions {
+  @include flex-row;
+
+  margin-top: 64px;
+}
+
+.action {
+  &.back {
+    margin-left: 24px;
+  }
+}
+
+.additional {
+  margin-top: 400px;
+}
