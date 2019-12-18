@@ -44,7 +44,7 @@ export const routes: Route[] = [
   {
     name: 'EmailVerification',
     path: '/email-verification',
-    canActivate: redirectLang,
+    canActivate: isLoggedIn,
   },
 
   {
