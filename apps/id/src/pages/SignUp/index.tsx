@@ -21,7 +21,7 @@ import { checkPasswordStrength } from 'utils/forms'
 
 import {
   FormSubmit,
-  SignUpFormValues,
+  SignUpFormFields,
 } from 'store/types'
 
 import {
@@ -32,7 +32,7 @@ import {
 import app from '../../app.scss'
 import signup from './signup.scss'
 
-const SIGNUP_INITIAL_VALUES: SignUpFormValues = {
+const SIGNUP_INITIAL_VALUES: SignUpFormFields = {
   firstName: '',
   lastName: '',
   email: '',
@@ -118,7 +118,7 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
 }
 
 interface SignUpProps {
-  onSubmit: FormSubmit<SignUpFormValues>;
+  onSubmit: FormSubmit<SignUpFormFields>;
 }
 
 const SignUp: React.FunctionComponent<SignUpProps> = ({
