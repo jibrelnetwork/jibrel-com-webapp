@@ -5,8 +5,8 @@ import { MessageType } from './types'
 import style from './style.scss'
 
 export interface MessageWrapperProps {
-  message: string;
-  messageType: MessageType;
+  message?: string;
+  messageType?: MessageType;
   className?: string;
   children: ReactNode;
 }
@@ -18,7 +18,12 @@ export const MessageWrapper: React.FunctionComponent<MessageWrapperProps> = ({
   children,
 }) => {
   return (
-    <div className={cc([style.wrapper, style[messageType], className])}>
+    <div
+      className={cc([
+        style.wrapper,
+        messageType && style[messageType],
+        className,
+      ])}>
       {children}
       <p className={style.message}>{message}</p>
     </div>
