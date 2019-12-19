@@ -3,7 +3,6 @@ import React, { useState } from 'react'
 import KYCLayout from 'layouts/KYCLayout'
 
 import style from './style.scss'
-import Individual from './Individual'
 import { KYCType } from './types'
 
 import {
@@ -11,11 +10,7 @@ import {
   Button,
 } from './components'
 
-interface KYCPages extends React.FunctionComponent {
-  Individual: React.Component;
-}
-
-const KYC: KYCPages = () => {
+const KYC: React.FunctionComponent = () => {
   const [kycType, setKYCType] = useState(KYCType.empty)
 
   return (
@@ -42,7 +37,5 @@ const KYC: KYCPages = () => {
     </KYCLayout>
   )
 }
-
-KYC.Individual = Individual
 
 export default KYC

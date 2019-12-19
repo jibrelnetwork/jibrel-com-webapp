@@ -67,8 +67,8 @@ const Info: React.FunctionComponent<KYCInfoProps> = ({
       <div className={style.actions}>
         <BigButton
           onClick={(): void => goTo((type === KYCType.individual)
-            ? 'KYC.Individual'
-            : 'KYC.Company',
+            ? 'KYCIndividual'
+            : 'KYCCompany',
           )}
           className={style.action}
           variant={BigButtonVariant.main}
