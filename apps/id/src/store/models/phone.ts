@@ -161,11 +161,8 @@ export const phone = createModel<PhoneVerificationState>({
       }
     },
     setLimits (payload: UserLimits): void {
-      if (payload.resendVerificationCall && payload.resendVerificationSMS) {
-        const timeout = Math.max(
-          payload.resendVerificationCall.leftSeconds,
-          payload.resendVerificationSMS.leftSeconds,
-        ) * 1000
+      if (payload.resendVerificationSMS) {
+        const timeout = payload.resendVerificationSMS.leftSeconds * 1000
         this.setRequestAvailableAt(
           new Date(Date.now() + timeout)
         )
