@@ -18,7 +18,7 @@ import {
   FormSubmitResult,
   Profile,
   LoginFormFields,
-  SignUpFormValues,
+  SignUpFormFields,
   ResetPasswordFormFields,
   ForgotPasswordFormFields,
   EmailVerificationFormFields,
@@ -89,13 +89,14 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
       email,
       password,
       terms,
-    }: SignUpFormValues, rootState): FormSubmitResult<SignUpFormValues> {
+    }: SignUpFormFields, rootState): FormSubmitResult<SignUpFormFields> {
       const language = rootState.user.languageCode
 
       try {
         const { data } = await axios
           .post('/v1/auth/registration', {
-            userName: `${firstName} ${lastName}`,
+            firstName,
+            lastName,
             email,
             password,
             language,
