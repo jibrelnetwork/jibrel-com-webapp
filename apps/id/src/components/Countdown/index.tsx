@@ -27,6 +27,20 @@ class Countdown extends Component<CountdownProps, CountdownState> {
     this.tick()
   }
 
+  componentWillUnmount(): void {
+    clearTimeout(this.timeout)
+  }
+
+  componentDidUpdate(prevProps: CountdownProps): void {
+    if (this.props.timeLeft !== prevProps.timeLeft) {
+      clearTimeout(this.timeout)
+      this.setState({
+        countdown: this.props.timeLeft,
+      })
+      this.tick()
+    }
+  }
+
   tick = (): void => {
     const countdown = this.state.countdown - 1
 
@@ -42,7 +56,7 @@ class Countdown extends Component<CountdownProps, CountdownState> {
       return
     }
 
-    setTimeout(() => {
+    this.timeout = setTimeout(() => {
       this.setState({ countdown })
       this.tick()
     }, ONE_SECOND)
@@ -62,7 +76,7 @@ class Countdown extends Component<CountdownProps, CountdownState> {
       <div className={style.countdown}>
         {!!min && (
           <>
-            <span className={style.number}>{min}</span> min 
+            <span className={style.number}>{min}</span> min
           </>
         )}
         {!!sec && (
