@@ -1,19 +1,20 @@
-import KYCLayout from '../../../../layouts/KYCLayout'
 import React from 'react'
-import {useI18n} from "app/i18n"
+import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 
 import {
-    Input,
     BigButtonSubmit,
 } from '@jibrelcom/ui'
 
-export const CompanyInformationForm = ({backLabel, backHandler, nextLabel, nextHandler}) => {
+import KYCLayout from '../../../../../layouts/KYCLayout'
+import {FormProps} from '../FormProps'
+
+export const RegisteredOfficeAddressForm: React.FunctionComponent<FormProps> = ({backLabel, backHandler, nextLabel, nextHandler}) => {
     const i18n = useI18n()
     const initialValues = {}
     return (
         <KYCLayout
-            title={i18n._('KYC.Company.section.company.title')}
+            title={i18n._('KYC.Company.section.registeredOfficeAddress.title')}
             backHandler={backHandler}
             backLabel={backLabel}
         >
@@ -22,7 +23,6 @@ export const CompanyInformationForm = ({backLabel, backHandler, nextLabel, nextH
                 onSubmit={nextHandler}
                 render={() => (
                     <div>
-
 
 
 

@@ -3,11 +3,11 @@ import get from 'lodash-es/get'
 import size from 'lodash-es/size'
 
 import {
-    BeneficiaryForm,
     CompanyInformationForm,
-    DirectorForm,
+    RegisteredOfficeAddressForm,
     PrimaryContactForm,
-    RegisteredOfficeAddressForm
+    BeneficiaryForm,
+    DirectorForm,
 } from './steps'
 
 
@@ -22,8 +22,6 @@ const PROCESS_STEPS = [
 const submit = () => console.log('Form submit')
 
 const Company: React.FunctionComponent = () => {
-    // const i18n = useI18n()
-    // const initialValues = {}
 
     const [currentStepNumber, setStep] = useState(0)
 
