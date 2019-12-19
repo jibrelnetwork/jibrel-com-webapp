@@ -43,18 +43,9 @@ export const routes: Route[] = [
   },
 
   {
-    name: 'redirect!EmailVerification',
-    path: '/email-verification',
-    canActivate: redirectLang,
-  },
-  {
     name: 'EmailVerification',
-    path: '/:lang/email-verification',
-    canActivate: composeActivations([
-      redirectLang,
-      isLoggedIn,
-      isValidVerificationStep,
-    ]),
+    path: '/email-verification',
+    canActivate: isLoggedIn,
   },
 
   {
@@ -70,23 +61,23 @@ export const routes: Route[] = [
 
   {
     name: 'redirect!Reset',
-    path: '/reset/:token',
+    path: '/reset?:token',
     canActivate: redirectLang,
   },
   {
     name: 'Reset',
-    path: '/:lang/reset/:token',
+    path: '/:lang/reset?:token',
     canActivate: redirectLang,
   },
 
   {
     name: 'redirect!VerifyEmail',
-    path: '/verify/email/:token',
+    path: '/verify/email?:token',
     canActivate: redirectLang,
   },
   {
     name: 'VerifyEmail',
-    path: '/:lang/verify/email/:token',
+    path: '/:lang/verify/email?:token',
     canActivate: redirectLang,
   },
 

@@ -45,7 +45,7 @@ export interface Profile {
   kycStatus: KYCStatus;
 }
 
-export interface SignUpFormValues {
+export interface SignUpFormFields {
   firstName: string;
   lastName: string;
   email: string;
