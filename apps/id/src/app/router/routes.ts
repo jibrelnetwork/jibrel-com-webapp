@@ -13,7 +13,10 @@ export const routes: Route[] = [
   {
     name: 'Account',
     path: '/',
-    forwardTo: 'Login',
+    canActivate: composeActivations([
+      isLoggedIn,
+      isValidVerificationStep,
+    ]),
   },
   {
     name: 'Security',
