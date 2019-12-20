@@ -1,37 +1,36 @@
 import React from 'react'
 import {useI18n} from 'app/i18n'
-import reduce from 'lodash-es/reduce'
-import isEmpty from 'lodash-es/isEmpty'
 import {Form} from 'react-final-form'
-
-import style from './style.scss'
+import {connect} from 'react-redux'
+import pick from 'lodash-es/pick'
+import isError from 'lodash-es/isError'
 
 import {
     BigButtonSubmit,
     Input,
     FileInput,
 } from '@jibrelcom/ui'
-
 import KYCLayout from 'layouts/KYCLayout'
+
+import style from './style.scss'
 import {FormProps} from '../FormProps'
-import {connect} from 'react-redux'
+import {checkEmptyFields} from '../checkEmptyFieldsValidator'
+import {asyncBackendValidator} from 'pages/KYC/Company/steps/asyncBackendValidator'
 
 
-const checkEmptyFields = (values) =>
-    reduce(values, (errors, value, field) => isEmpty(value)
-        ? {...errors, [field]: 'Field value is required'}
-        : errors
-        , {})
+const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (props) => {
+    const {backLabel, backHandler, nextLabel, nextHandler, formValues, uploadDocument, submit} = props
 
-const initialValues = {
-    companyName: '',
-    tradingName: '',
-    dateOfIncorporation: '',
-    placeOfIncorporation: '',
-}
+    const initialValues = pick(formValues, [
+        'companyName', 'tradingName', 'dateOfIncorporation', 'placeOfIncorporation',
+    ])
 
-const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({backLabel, backHandler, nextLabel, nextHandler, fieldValues, uploadDocument}) => {
-    const {commercialRegister, shareholderRegister, articlesOfIncorporation} = fieldValues
+    const {
+        commercialRegister,
+        shareholderRegister,
+        articlesOfIncorporation,
+    } = formValues
+
     const i18n = useI18n()
     return (
         <KYCLayout
@@ -41,9 +40,9 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({ba
         >
             <Form
                 initialValues={initialValues}
-                onSubmit={nextHandler}
+                onSubmit={submit(nextHandler)}
                 validate={checkEmptyFields}
-                render={({hasValidationErrors, handleSubmit}) => (
+                render={({hasValidationErrors, submitErrors,  handleSubmit}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
                         <Input
                             name='companyName'
@@ -108,10 +107,15 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({ba
     )
 }
 
-const mapDispatch = (dispatch) => ({
-    uploadDocument: () => {
-        console.log('File Upload Stub')
-    },
+const mapState = ({kycOrganization}) => ({formValues: kycOrganization.values})
+
+const mapDispatch = ({kyc, kycOrganizationValidate}) => ({
+    uploadDocument: kyc.uploadDocument,
+    submit: (callback) => (values) =>
+        kycOrganizationValidate.validate({step: 0, ...values})
+            .then(({ payload }) => isError(payload)
+                ? asyncBackendValidator(payload)
+                : callback()),
 })
 
-export const CompanyInformationForm = connect(null, mapDispatch)(CompanyInformationFormComponent)
+export const CompanyInformationForm = connect(mapState, mapDispatch)(CompanyInformationFormComponent)
