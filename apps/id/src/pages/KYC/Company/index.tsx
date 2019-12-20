@@ -23,6 +23,10 @@ const submit = () => console.log('Form submit')
 
 const Company: React.FunctionComponent = () => {
 
+    const fieldValues = {
+
+    }
+
     const [currentStepNumber, setStep] = useState(0)
 
     const backHandler = currentStepNumber === 0
@@ -51,6 +55,7 @@ const Company: React.FunctionComponent = () => {
         backHandler={backHandler}
         nextLabel={nextLabel}
         nextHandler={nextHandler}
+        fieldValues={fieldValues}
     />)
 }
 

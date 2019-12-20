@@ -32,7 +32,7 @@ export const kyc = createModel({
         const formData = new FormData()
         formData.append('file', file)
 
-        const { data } = await axios.post('/v1/kyc/document', formData, {
+        const { data: { data } } = await axios.post('/v1/kyc/document', formData, {
           headers: {
             'content-type': 'multipart/form-data',
           },
