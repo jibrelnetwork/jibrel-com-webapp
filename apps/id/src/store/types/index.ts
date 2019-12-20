@@ -5,7 +5,9 @@ export {
   Profile,
   LoginFormFields,
   EmailVerificationFormFields,
-  SignUpFormValues,
+  SignUpFormFields,
+  ResetPasswordFormFields,
+  ForgotPasswordFormFields,
 } from './user'
 
 export {
