@@ -2,6 +2,7 @@ declare namespace StyleScssModule {
   export interface IStyleScss {
     buttons: string;
     centered: string;
+    chromeframe: string;
     column: string;
     grid: string;
     main: string;

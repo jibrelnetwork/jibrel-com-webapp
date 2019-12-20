@@ -76,31 +76,31 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             label={'Commercial Register'}
                             placeholder={'PNG, PDF, JPG'}
                             value={commercialRegister}
-                            onChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
-                            fileName={commercialRegister ? commercialRegister.fileName : ''}
-                            fileSize={commercialRegister ? commercialRegister.fileSize : 0}
-                            isLoading={commercialRegister ? commercialRegister.isLoading : false}
-                            error={commercialRegister ? commercialRegister.error : ''}
+                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
+                            fileName={get(commercialRegister, 'fileName', '')}
+                            fileSize={get(commercialRegister, 'fileSize', 0)}
+                            isLoading={get(commercialRegister, 'isLoading', false)}
+                            error={get(commercialRegister, 'error', '')}
                         />
                         <FileInput
                             name='shareholderRegister'
                             label={'Shareholder Register'}
                             placeholder={'PNG, PDF, JPG'}
-                            onChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
-                            fileName={shareholderRegister ? shareholderRegister.fileName : ''}
-                            fileSize={shareholderRegister ? shareholderRegister.fileSize : 0}
-                            isLoading={shareholderRegister ? shareholderRegister.isLoading : false}
-                            error={shareholderRegister ? shareholderRegister.error : ''}
+                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
+                            fileName={get(shareholderRegister, 'fileName', '')}
+                            fileSize={get(shareholderRegister, 'fileSize', 0)}
+                            isLoading={get(shareholderRegister, 'isLoading', false)}
+                            error={get(shareholderRegister, 'error', '')}
                         />
                         <FileInput
                             name='articlesOfIncorporation'
                             label={'Article of Incorporation'}
                             placeholder={'PNG, PDF, JPG'}
-                            onChange={(file: File) => uploadDocument({file, fieldName: 'articlesOfIncorporation'})}
-                            fileName={articlesOfIncorporation ? articlesOfIncorporation.fileName : ''}
-                            fileSize={articlesOfIncorporation ? articlesOfIncorporation.fileSize : 0}
-                            isLoading={articlesOfIncorporation ? articlesOfIncorporation.isLoading : false}
-                            error={articlesOfIncorporation ? articlesOfIncorporation.error : ''}
+                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'articlesOfIncorporation'})}
+                            fileName={get(articlesOfIncorporation, 'fileName', '')}
+                            fileSize={get(articlesOfIncorporation, 'fileSize', 0)}
+                            isLoading={get(articlesOfIncorporation, 'isLoading', false)}
+                            error={get(articlesOfIncorporation, 'error', '')}
                         />
 
                         <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors}>
@@ -117,9 +117,9 @@ const mapState = ({kycOrganization, kyc}) => ({
     formValues: kycOrganization.values,
 
     // File upload fields with extra structure
-    commercialRegister: kyc.fields.commercialRegister,
-    shareholderRegister: kyc.fields.shareholderRegister,
-    articlesOfIncorporation: kyc.fields.articlesOfIncorporation,
+    commercialRegister: kyc.documents.commercialRegister,
+    shareholderRegister: kyc.documents.shareholderRegister,
+    articlesOfIncorporation: kyc.documents.articlesOfIncorporation,
 })
 
 const mapDispatch = ({kyc, kycOrganizationValidate}) => ({
