@@ -10,7 +10,7 @@ import {
     LinkButton,
 } from '@jibrelcom/ui'
 
-import KYCLayout from '../../../../../layouts/KYCLayout'
+import KYCLayout from 'layouts/KYCLayout'
 import {FormProps} from '../FormProps'
 import {BeneficiaryFields} from './BeneficiaryFields'
 

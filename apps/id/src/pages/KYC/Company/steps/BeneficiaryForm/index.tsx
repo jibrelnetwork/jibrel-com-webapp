@@ -1,4 +1,4 @@
-import KYCLayout from '../../../../../layouts/KYCLayout'
+import KYCLayout from 'layouts/KYCLayout'
 import React from 'react'
 import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'

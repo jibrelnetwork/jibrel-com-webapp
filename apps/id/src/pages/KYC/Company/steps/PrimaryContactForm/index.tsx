@@ -6,7 +6,7 @@ import {
     BigButtonSubmit,
 } from '@jibrelcom/ui'
 
-import KYCLayout from '../../../../../layouts/KYCLayout'
+import KYCLayout from 'layouts/KYCLayout'
 import {FormProps} from '../FormProps'
 
 export const PrimaryContactForm: React.FunctionComponent<FormProps> = ({backLabel, backHandler, nextLabel, nextHandler}) => {
