@@ -1,10 +1,27 @@
 @import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
+@import '~@jibrelcom/ui/src/index.scss';
 
 .buttons {
   width: 100%;
+  display: flex;
 }
 
 .main {
+  display: block;
   padding-bottom: 400px;
+
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-m-5;
+  }
+
+  @include screen('>small') {
+    width: $column-m-4;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-8;
+  }
 }
