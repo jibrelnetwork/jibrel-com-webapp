@@ -1,0 +1,26 @@
+@import '~@jibrelcom/ui/src/index.scss';
+
+.step {
+  width: $column-l-5;
+
+  @include screen('>xsmall') {
+    width: $column-s-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-4;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-5;
+  }
+}
+
+.group-title {
+  @include font-h3-s;
+  padding: 8px 0 24px;
+}
+
+.submit {
+  margin: 64px 0;
+}
