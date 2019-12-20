@@ -4,7 +4,7 @@ import join from 'lodash-es/join'
 import {FORM_ERROR} from 'final-form'
 
 
-export const asyncBackendValidator = (payload) => {
+export const handleAsyncValidationErrors = (payload) => {
     const status = get(payload, 'response.status', 500)
     if (status === 400) {
         const errors = get(payload, 'response.data.data.errors')

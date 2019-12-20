@@ -3,33 +3,38 @@ import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 import {connect} from 'react-redux'
 import pick from 'lodash-es/pick'
-import isError from 'lodash-es/isError'
+import map from 'lodash-es/map'
+import get from 'lodash-es/get'
+import every from 'lodash-es/every'
 
 import {
-    BigButtonSubmit,
+    BigButton,
     Input,
     FileInput,
 } from '@jibrelcom/ui'
 import KYCLayout from 'layouts/KYCLayout'
 
-import style from './style.scss'
 import {FormProps} from '../FormProps'
 import {checkEmptyFields} from '../checkEmptyFieldsValidator'
-import {asyncBackendValidator} from 'pages/KYC/Company/steps/asyncBackendValidator'
+import style from './style.scss'
+import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
 
 
 const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (props) => {
-    const {backLabel, backHandler, nextLabel, nextHandler, formValues, uploadDocument, submit} = props
+    const {
+        backLabel, backHandler, nextLabel, nextHandler,
+        formValues, uploadDocument, submit,
+        commercialRegister, shareholderRegister, articlesOfIncorporation,
+    } = props
 
     const initialValues = pick(formValues, [
         'companyName', 'tradingName', 'dateOfIncorporation', 'placeOfIncorporation',
     ])
 
-    const {
-        commercialRegister,
-        shareholderRegister,
-        articlesOfIncorporation,
-    } = formValues
+    const isAllFilesUploaded = every(map(
+        [commercialRegister, shareholderRegister, articlesOfIncorporation],
+        (field)=> get(field, 'id')
+    ))
 
     const i18n = useI18n()
     return (
@@ -42,7 +47,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
                 validate={checkEmptyFields}
-                render={({hasValidationErrors, submitErrors,  handleSubmit}) => (
+                render={({hasValidationErrors, handleSubmit, submitting}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
                         <Input
                             name='companyName'
@@ -70,6 +75,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             name='commercialRegister'
                             label={'Commercial Register'}
                             placeholder={'PNG, PDF, JPG'}
+                            value={commercialRegister}
                             onChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
                             fileName={commercialRegister ? commercialRegister.fileName : ''}
                             fileSize={commercialRegister ? commercialRegister.fileSize : 0}
@@ -80,7 +86,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             name='shareholderRegister'
                             label={'Shareholder Register'}
                             placeholder={'PNG, PDF, JPG'}
-                            onChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
+                            onChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
                             fileName={shareholderRegister ? shareholderRegister.fileName : ''}
                             fileSize={shareholderRegister ? shareholderRegister.fileSize : 0}
                             isLoading={shareholderRegister ? shareholderRegister.isLoading : false}
@@ -97,9 +103,9 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             error={articlesOfIncorporation ? articlesOfIncorporation.error : ''}
                         />
 
-                        <BigButtonSubmit disabled={hasValidationErrors}>
+                        <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors}>
                             {nextLabel}
-                        </BigButtonSubmit>
+                        </BigButton>
                     </form>
                 )}
             />
@@ -107,15 +113,21 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
     )
 }
 
-const mapState = ({kycOrganization}) => ({formValues: kycOrganization.values})
+const mapState = ({kycOrganization, kyc}) => ({
+    formValues: kycOrganization.values,
+
+    // File upload fields with extra structure
+    commercialRegister: kyc.fields.commercialRegister,
+    shareholderRegister: kyc.fields.shareholderRegister,
+    articlesOfIncorporation: kyc.fields.articlesOfIncorporation,
+})
 
 const mapDispatch = ({kyc, kycOrganizationValidate}) => ({
     uploadDocument: kyc.uploadDocument,
     submit: (callback) => (values) =>
         kycOrganizationValidate.validate({step: 0, ...values})
-            .then(({ payload }) => isError(payload)
-                ? asyncBackendValidator(payload)
-                : callback()),
+            .then(callback)
+            .catch(handleAsyncValidationErrors),
 })
 
 export const CompanyInformationForm = connect(mapState, mapDispatch)(CompanyInformationFormComponent)

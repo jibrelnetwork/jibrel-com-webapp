@@ -34,11 +34,9 @@ export const kyc = createModel({
 
         console.log(file, fieldName)
 
-        const { data } = await axios.post('/v1/kyc/document', formData, {
+        const { data: { data } } = await axios.post('/v1/kyc/document', formData, {
           headers: { 'content-type': 'multipart/form-data' }
         })
-
-        throw new Error('hello')
 
         this.setDocument({
           id: data.id,
