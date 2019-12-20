@@ -8,9 +8,10 @@ import { RouterDependencies } from '../types'
 
 import { UserStatus } from 'store/types'
 
-const NEXT_ROUTE = {
-  [UserStatus.EMAIL_UNVERIFIED]: 'EmailVerification',
-  [UserStatus.PHONE_UNVERIFIED]: 'VerifyPhone',
+const NEXT_ROUTES = {
+  [UserStatus.EMAIL_UNVERIFIED]: ['EmailVerification'],
+  [UserStatus.PHONE_UNVERIFIED]: ['VerifyPhone', 'VerifyPhoneCode'],
+  [UserStatus.KYC_UNSET]: ['KYC'],
 }
 
 const isValidVerificationStep: ActivationFnFactory = (
@@ -21,13 +22,13 @@ const isValidVerificationStep: ActivationFnFactory = (
     const { store } = dependencies
     const { user } = store.getState()
 
-    const nextRoute = NEXT_ROUTE[user.status]
+    const nextRoutes = NEXT_ROUTES[user.status]
     const toRoute = toState.name.split('.')[0]
 
-    if (nextRoute !== toRoute) {
+    if (nextRoutes && !nextRoutes.includes(toRoute)) {
       return Promise.reject({
         redirect: {
-          name: nextRoute,
+          name: nextRoutes[0],
           params: {
             lang: user.languageCode,
           },
