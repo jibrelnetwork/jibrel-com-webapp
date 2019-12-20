@@ -1,10 +1,25 @@
 export enum KYCIndividualStatus {
-  empty,
   personal,
   residency,
   income,
-  submitted,
 }
+
+export interface Document {
+  id?: string;
+  error?: string;
+  fileName?: string;
+  fileSize?: number;
+  isLoading?: boolean;
+}
+
+export interface Documents {
+  [fieldName: string]: Document | undefined;
+}
+
+export type UploadDocumentHandler = (document: {
+  file: File | void;
+  fieldName: string;
+}) => Promise<string | void>
 
 export interface PersonalValues {
   firstName: string;
@@ -20,9 +35,9 @@ export interface PersonalValues {
 
 export interface ResidencyValues {
   streetAddress: string;
-  apartment: string;
+  apartment?: string;
   city: string;
-  postCode: string;
+  postCode?: string;
   country: string;
   proofOfAddressDocument: string;
 }
@@ -103,9 +118,14 @@ export interface IncomeValues {
   occupationOther?: string;
   incomeSource: IncomeSource;
   incomeSourceOther?: string;
+  terms: boolean;
 }
 
 export interface KYCIndividualValues extends Partial<PersonalValues>, Partial<ResidencyValues>, Partial<IncomeValues> {}
+
+export type KYCState = {
+  documents: Documents;
+}
 
 export type KYCIndividualState = {
   status: KYCIndividualStatus;
@@ -113,7 +133,8 @@ export type KYCIndividualState = {
 }
 
 export enum KYCStatus {
-  unverified = 'unverified',
-  verified = 'verified',
-  advanced = 'advanced',
+  NONE = 'NONE',
+  REVIEW = 'REVIEW',
+  REJECTED = 'REJECTED',
+  VERIFIED = 'VERIFIED',
 }

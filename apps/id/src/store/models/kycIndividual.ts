@@ -1,60 +1,99 @@
-import { createModel } from '@rematch/core'
+import { actions } from 'redux-router5'
 
 import {
+  createModel,
+  ModelConfig,
+} from '@rematch/core'
+
+import { RootState } from 'store'
+
+import axios from '../axios'
+
+import {
+  FormSubmitResult,
+} from '../types/form'
+
+import {
+  KYCIndividualState,
   KYCIndividualStatus,
   KYCIndividualValues,
-  KYCIndividualState,
 } from '../types/kyc'
 
-export const KYC_INDIVIDUAL_SEQUENCE = [
-  KYCIndividualStatus.personal,
-  KYCIndividualStatus.residency,
-  KYCIndividualStatus.income,
-  KYCIndividualStatus.submitted,
-]
-
-export const kycIndividual = createModel({
+export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCIndividualState>({
   state: {
-    status: KYCIndividualStatus.empty,
+    status: KYCIndividualStatus.personal,
     values: {},
   },
-  effects: () => ({
-    next (payload, rootState): void {
-      const { status: initialStatus } = rootState.kycIndividual
+  effects: (dispatch) => ({
+    goBack (_: void, rootState: RootState): void {
+      switch(rootState.kycIndividual.status) {
+        case KYCIndividualStatus.residency: {
+          this.setStatus(KYCIndividualStatus.personal)
 
-      const initialStatusIndex = KYC_INDIVIDUAL_SEQUENCE.indexOf(initialStatus)
+          return
+        }
 
-      if (initialStatusIndex < 0) {
-        this.setStatus(KYC_INDIVIDUAL_SEQUENCE[0])
-      } else if (initialStatusIndex < KYC_INDIVIDUAL_SEQUENCE.length - 1) {
-        this.setStatus(KYC_INDIVIDUAL_SEQUENCE[initialStatusIndex + 1])
-      } else {
-        this.setStatus(initialStatus)
+        case KYCIndividualStatus.income: {
+          this.setStatus(KYCIndividualStatus.residency)
+
+          return
+        }
+
+        default: {
+          dispatch(actions.navigateTo('KYC'))
+
+          return
+        }
       }
     },
-    prev (payload, rootState): void {
-      const { status: initialStatus } = rootState.kycIndividual
+    async submit (
+      values: Partial<KYCIndividualValues>,
+      rootState: RootState,
+    ): FormSubmitResult<KYCIndividualValues> {
+      try {
+        await axios.post('/v1/kyc/individual/validate', values)
 
-      const initialStatusIndex = KYC_INDIVIDUAL_SEQUENCE.indexOf(initialStatus)
+        this.setValues({
+          ...rootState.kycIndividual.values,
+          ...values,
+        })
 
-      if (initialStatusIndex < 0) {
-        this.setStatus(KYC_INDIVIDUAL_SEQUENCE[0])
-      } else if (initialStatusIndex > 0) {
-        this.setStatus(KYC_INDIVIDUAL_SEQUENCE[initialStatusIndex - 1])
-      } else {
-        this.setStatus(initialStatus)
+        switch(rootState.kycIndividual.status) {
+          case KYCIndividualStatus.personal: {
+            this.setStatus(KYCIndividualStatus.residency)
+  
+            return
+          }
+
+          case KYCIndividualStatus.residency: {
+            this.setStatus(KYCIndividualStatus.income)
+  
+            return
+          }
+  
+          case KYCIndividualStatus.income: {
+            return this.sendForm()
+          }
+  
+          default:
+            return
+        }
+      } catch (error) {
+        console.error(error)
       }
     },
-    addValues (payload, rootState): void {
-      const { values: initialValues } = rootState.kycIndividual
-
-      this.setValues({
-        ...initialValues,
-        ...payload,
-      })
+    async sendForm (
+      _: void,
+      rootState: RootState,
+    ): FormSubmitResult<KYCIndividualValues> {
+      try {
+        await axios.post('/v1/kyc/individual', rootState.kycIndividual.values)
+      } catch (error) {
+        console.error(error)
+      }
     },
-    clearValues (): void {
-      this.setValues({})
+    changeStatus (payload: KYCIndividualStatus): void {
+      this.setStatus(payload)
     },
   }),
   reducers: {

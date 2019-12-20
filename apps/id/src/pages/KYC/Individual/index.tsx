@@ -1,132 +1,89 @@
 import React from 'react'
-import noop from 'lodash-es/noop'
 import { connect } from 'react-redux'
-import { SubmissionErrors } from 'final-form'
-
-import {
-  Input,
-  BigButton,
-  FileInput,
-} from '@jibrelcom/ui'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
 
 import {
   Form,
+  FormRenderProps,
 } from 'react-final-form'
 
-import axios from 'store/axios'
 import KYCLayout from 'layouts/KYCLayout'
-import CountrySelect from 'components/CountrySelect'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { useI18n } from 'app/i18n'
-import { PersonalValues } from 'store/types/kyc'
+import { I18n } from '@lingui/core'
+import { FormSubmit } from 'store/types/form'
 
 import {
-  RootState,
+  PersonalValues,
+  KYCIndividualValues,
+  KYCIndividualStatus,
+} from 'store/types/kyc'
+
+import {
   Dispatch,
+  RootState,
 } from 'store'
 
-import style from './style.scss'
+import {
+  IncomeForm,
+  PersonalForm,
+  ResidencyForm,
+} from './steps'
 
 export interface KYCIndividualProps {
-  uploadDocument: (file: File, name: string) => void;
-  onSubmitSuccess: (fields: PersonalValues) => undefined;
-  initialValues: PersonalValues | {};
-  fields: object;
+  goBack: () => void;
+  submit: FormSubmit<KYCIndividualValues>;
+  values: PersonalValues;
+  status: KYCIndividualStatus;
 }
 
-function asyncValidation (values: PersonalValues): Promise<SubmissionErrors | undefined | void> {
-  return axios.post('/v1/kyc/individual/validate', values)
+const getTitle = (i18n: I18n, status: KYCIndividualStatus): string | undefined => {
+  switch(status) {
+    case KYCIndividualStatus.personal:
+      return i18n._('KYC.Personal.section.personal.title')
+
+    case KYCIndividualStatus.residency:
+      return 'Current Residential Address'
+
+    case KYCIndividualStatus.income:
+      return 'Declaration of Source of Funds'
+
+    default:
+      return undefined
+  }
 }
 
 const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
-  fields,
-  initialValues = {},
-  uploadDocument,
-  onSubmitSuccess = noop,
+  goBack,
+  submit,
+  values,
+  status,
 }) => {
-  const handleFormSubmit = (values: PersonalValues): Promise<SubmissionErrors | undefined | void> =>
-    asyncValidation(values)
-      .then((errors) => errors
-        ? errors
-        : onSubmitSuccess(values)
-      )
   const i18n = useI18n()
-
-  console.log(fields)
 
   return (
     <KYCLayout
-      title={i18n._('KYC.Personal.section.personal.title')}
-      backHandler={console.log}
-      backLabel='BACK TO START'
+      backHandler={goBack}
+      title={getTitle(i18n, status)}
+      backLabel={(status === KYCIndividualStatus.personal) ? 'Back to start' : 'Previous'}
     >
       <div className={grid.grid}>
         <Form
-          initialValues={initialValues}
-          onSubmit={handleFormSubmit}
-          render={({
-            handleSubmit,
-          }): React.ReactNode => {
-            const i18n = useI18n()
+          onSubmit={submit}
+          initialValues={values}
+          render={(formProps: FormRenderProps): React.ReactNode => {
+            switch(status) {
+              case KYCIndividualStatus.personal:
+                return <PersonalForm form={formProps} />
 
-            return (
-              <form onSubmit={handleSubmit} className={grid.column}>
-                <Input
-                  label={i18n._('KYC.Personal.input.firstName.title')}
-                  name='firstName'
-                />
-                <Input
-                  label={i18n._('KYC.Personal.input.lastName.title')}
-                  name='lastName'
-                />
-                <Input
-                  label={i18n._('KYC.Personal.input.middleName.title')}
-                  name='middleName'
-                />
-                <Input
-                  label={i18n._('KYC.Personal.input.alias.title')}
-                  name='alias'
-                />
-                <Input
-                  label={i18n._('KYC.Personal.input.birthDate.title')}
-                  name='birthDate'
-                  placeholder='DD/MM/YYYY'
-                />
-                <CountrySelect
-                  label={i18n._('KYC.Personal.input.nationality.title')}
-                  name='nationality'
-                  placeholder={i18n._('KYC.Personal.input.nationality.placeholder')}
-                />
-                <h3 className={style.groupTitle}>
-                  {i18n._('KYC.Personal.section.passport.title')}
-                </h3>
-                <Input
-                  label={i18n._('KYC.Personal.input.passportNumber.title')}
-                  name='passportNumber'
-                />
-                <Input
-                  label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
-                  name='passportExpirationDate'
-                  placeholder='DD/MM/YYYY'
-                />
-                <FileInput
-                  onChange={(file: File) => uploadDocument({ file, fieldName: 'passportDocument' })}
-                  fileName={fields.passportDocument ? fields.passportDocument.fileName : ''}
-                  fileSize={fields.passportDocument ? fields.passportDocument.fileSize : 0}
-                  isLoading={fields.passportDocument ? fields.passportDocument.isLoading : false}
-                  error={fields.passportDocument ? fields.passportDocument.error : ''}
-                  label={i18n._('KYC.Personal.input.passportFrontPage.title')}
-                  name='passportDocument'
-                  placeholder='PNG, PDF, JPG'
-                />
-                <BigButton
-                  type='submit'
-                  className={style.submit}
-                >
-                  {i18n._('KYC.form.action.next')}
-                </BigButton>
-              </form>
-            )
+              case KYCIndividualStatus.residency:
+                return <ResidencyForm form={formProps} />
+
+              case KYCIndividualStatus.income:
+                return <IncomeForm form={formProps} />
+
+              default:
+                return null
+            }
           }}
         />
       </div>
@@ -136,14 +93,11 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
 
 export default connect(
   (state: RootState) => ({
-    initialValues: state.kycIndividual.values,
-    fields: state.kyc.fields,
+    status: state.kycIndividual.status,
+    values: state.kycIndividual.values,
   }),
   (dispatch: Dispatch) => ({
-    uploadDocument: dispatch.kyc.uploadDocument,
-    onSubmitSuccess: (values: PersonalValues): void => {
-      dispatch.kycIndividual.addValues(values)
-      dispatch.kycIndividual.next()
-    }
+    goBack: dispatch.kycIndividual.goBack,
+    submit: dispatch.kycIndividual.submit,
   }),
 )(KYCIndividual)

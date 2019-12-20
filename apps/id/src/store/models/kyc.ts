@@ -1,25 +1,26 @@
-import axios from '../axios'
 import { createModel } from '@rematch/core'
 
-export enum KYCStatus {
-  NONE = 'NONE',
-  REVIEW = 'REVIEW',
-  REJECTED = 'REJECTED',
-  VERIFIED = 'VERIFIED',
-}
+import axios from '../axios'
+
+import {
+  Document,
+  KYCState,
+  KYCStatus,
+} from '../types/kyc'
 
 export const kyc = createModel({
   state: {
     status: KYCStatus.NONE,
-    fields: {
-      passportDocument: null,
-    },
+    documents: {},
   },
   effects: () => ({
     async uploadDocument ({
       file,
       fieldName,
-    }): Promise<void> {
+    }: {
+      file: File | void;
+      fieldName: string;
+    }): Promise<string | void> {
       try {
         if (!file) {
           this.removeDocument(fieldName)
@@ -28,76 +29,73 @@ export const kyc = createModel({
         }
 
         this.setDocumentLoading(fieldName)
-
         const formData = new FormData()
         formData.append('file', file)
 
-        console.log(file, fieldName)
-
         const { data: { data } } = await axios.post('/v1/kyc/document', formData, {
-          headers: { 'content-type': 'multipart/form-data' }
+          headers: {
+            'content-type': 'multipart/form-data',
+          },
         })
 
         this.setDocument({
-          id: data.id,
-          name: fieldName,
-          fileName: file.name,
-          fileSize: file.size,
+          fieldName,
+          data: {
+            id: data.id,
+            fileName: file.name,
+            fileSize: file.size,
+          },
         })
 
-        return
+        return data.id
       } catch (error) {
         console.error(error)
 
         this.setDocument({
-          id: null,
-          name: fieldName,
-          value: file.name,
-          error: 'Upload error',
+          fieldName,
+          data: {
+            id: undefined,
+            fileName: undefined,
+            fileSize: undefined,
+            error: 'Upload error',
+          },
         })
       }
     },
   }),
   reducers: {
-    removeDocument: (state, name) => ({
+    removeDocument: (state: KYCState, fieldName: string): KYCState => ({
       ...state,
-      fields: {
-        ...state.fields,
-        [name]: null,
+      documents: {
+        ...state.documents,
+        [fieldName]: undefined,
       },
     }),
-    setDocumentLoading: (state, name) => {
-      console.log('setDocumentLoading', state.fields[name])
-
-      return {
-        ...state,
-        fields: {
-          ...state.fields,
-          [name]: {
-            ...(state.fields[name] || {}),
-            isLoading: true,
-          },
-        },
-      }
-    },
-    setDocument: (state, {
-      id,
-      name,
-      error,
-      fileName,
-      fileSize,
-    }) => ({
+    setDocumentLoading: (state: KYCState, fieldName: string): KYCState => ({
       ...state,
-      fields: {
-        ...state.fields,
-        [name]: {
-          id,
-          error,
-          fileName,
-          fileSize,
+      documents: {
+        ...state.documents,
+        [fieldName]: {
+          ...(state.documents[fieldName] || {}),
+          isLoading: true,
+        },
+      },
+    }),
+    setDocument: (state: KYCState, {
+      fieldName,
+      data,
+    }: {
+      fieldName: string;
+      data: Document;
+    }): KYCState => ({
+      ...state,
+      documents: {
+        ...state.documents,
+        [fieldName]: {
+          ...data,
           isLoading: false,
         },
-      }
+      },
     }),
   },
 })

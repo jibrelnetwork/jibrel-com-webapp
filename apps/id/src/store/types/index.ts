@@ -1,9 +1,12 @@
 export {
   UserStatus,
   UserState,
+  UserLimit,
   UserLimits,
   Profile,
   LoginFormFields,
+  ResetPasswordFormFields,
+  ForgotPasswordFormFields,
   EmailVerificationFormFields,
   SignUpFormFields,
   ResetPasswordFormFields,
@@ -15,3 +18,21 @@ export {
   FormSubmit,
   FormErrors,
 } from './form'
+
+export {
+  Phone,
+  PhoneVerificationStatus,
+  PhoneVerificationState,
+  PhoneAPINumberFields,
+  PhoneConfirmationVariant,
+  PhoneAPIPinFields,
+} from './phone'
+
+export {
+  KYCStatus
+} from './kyc'
+
+export {
+  APIResponse,
+  APIFormErrors
+} from './api'
