@@ -1,4 +1,5 @@
 import React from 'react'
+import cc from 'classcat'
 import { connect } from 'react-redux'
 import { FormRenderProps } from 'react-final-form'
 
@@ -9,6 +10,7 @@ import {
 } from '@jibrelcom/ui'
 
 import CountrySelect from 'components/CountrySelect'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { useI18n } from 'app/i18n'
 
 import {
@@ -49,7 +51,7 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
   return (
     <form
       onSubmit={form.handleSubmit}
-      className={style.form}
+      className={cc([grid.column, style.form])}
     >
       <Input
         label={i18n._('KYC.Personal.input.firstName.title')}

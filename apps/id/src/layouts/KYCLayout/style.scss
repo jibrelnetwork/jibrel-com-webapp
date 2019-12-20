@@ -8,22 +8,6 @@
   width: $column-s-4;
 }
 
-.step {
-  width: $column-s-4;
-
-  @include screen('>xsmall') {
-    width: $column-m-5;
-  }
-
-  @include screen('>small') {
-    width: $column-m-4;
-  }
-
-  @include screen('>medium') {
-    width: $column-l-8;
-  }
-}
-
 .back {
   height: 24px;
 }

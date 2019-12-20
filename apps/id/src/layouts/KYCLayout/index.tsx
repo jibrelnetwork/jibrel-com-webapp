@@ -1,7 +1,5 @@
 import React from 'react'
-import cc from 'classcat'
 import noop from 'lodash-es/noop'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { LinkButton } from '@jibrelcom/ui'
 import { LinkButtonVariant } from '@jibrelcom/ui/src/LinkButton/types'
 
@@ -27,34 +25,22 @@ const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
 
   return (
     <ProfileLayout>
-      <div className={grid.grid}>
-        <h1
-          className={cc([
-            grid.column,
-            style.title,
-          ])}
-        >
-          {i18n._('KYC.Personal.title')}
-        </h1>
-        <div
-          className={cc([
-            grid.column,
-            style.step,
-          ])}
-        >
-          <LinkButton
-            onClick={backHandler}
-            className={style.back}
-            variant={backLabel ? LinkButtonVariant.prev : undefined}
-          >
-            {backLabel}
-          </LinkButton>
-          <h2 className={style.subtitle}>
-            {title}
-          </h2>
-          {children}
-        </div>
-      </div>
+      <h1
+        className={style.title}
+      >
+        {i18n._('KYC.Personal.title')}
+      </h1>
+      <LinkButton
+        onClick={backHandler}
+        className={style.back}
+        variant={backLabel ? LinkButtonVariant.prev : undefined}
+      >
+        {backLabel}
+      </LinkButton>
+      <h2 className={style.subtitle}>
+        {title}
+      </h2>
+      {children}
     </ProfileLayout>
   )
 }

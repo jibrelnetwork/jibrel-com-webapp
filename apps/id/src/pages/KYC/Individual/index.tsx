@@ -7,6 +7,7 @@ import {
 } from 'react-final-form'
 
 import KYCLayout from 'layouts/KYCLayout'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { useI18n } from 'app/i18n'
 import { I18n } from '@lingui/core'
 import { FormSubmit } from 'store/types/form'
@@ -63,27 +64,29 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
     <KYCLayout
       backHandler={goBack}
       title={getTitle(i18n, status)}
-      backLabel='BACK TO START'
+      backLabel={(status === KYCIndividualStatus.personal) ? 'Back to start' : 'Previous'}
     >
-      <Form
-        onSubmit={submit}
-        initialValues={values}
-        render={(formProps: FormRenderProps): React.ReactNode => {
-          switch(status) {
-            case KYCIndividualStatus.personal:
-              return <PersonalForm form={formProps} />
+      <div className={grid.grid}>
+        <Form
+          onSubmit={submit}
+          initialValues={values}
+          render={(formProps: FormRenderProps): React.ReactNode => {
+            switch(status) {
+              case KYCIndividualStatus.personal:
+                return <PersonalForm form={formProps} />
 
-            case KYCIndividualStatus.residency:
-              return <ResidencyForm form={formProps} />
+              case KYCIndividualStatus.residency:
+                return <ResidencyForm form={formProps} />
 
-            case KYCIndividualStatus.income:
-              return <IncomeForm form={formProps} />
+              case KYCIndividualStatus.income:
+                return <IncomeForm form={formProps} />
 
-            default:
-              return null
-          }
-        }}
-      />
+              default:
+                return null
+            }
+          }}
+        />
+      </div>
     </KYCLayout>
   )
 }

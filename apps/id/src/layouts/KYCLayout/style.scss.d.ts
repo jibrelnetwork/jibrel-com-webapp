@@ -4,7 +4,6 @@ declare namespace StyleScssModule {
     centered: string;
     column: string;
     grid: string;
-    step: string;
     subtitle: string;
     title: string;
   }
