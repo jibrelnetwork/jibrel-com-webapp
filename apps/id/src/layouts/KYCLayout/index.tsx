@@ -13,14 +13,14 @@ import ProfileLayout from '../ProfileLayout'
 export interface KYCLayoutProps {
   backHandler?: () => void;
   children: React.ReactNode;
-  title: string;
+  title?: string;
   backLabel?: string;
 }
 
 const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
   backHandler = noop,
   children,
-  title,
+  title = '',
   backLabel = '',
 }) => {
   const i18n = useI18n()

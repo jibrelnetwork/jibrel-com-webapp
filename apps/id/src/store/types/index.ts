@@ -4,6 +4,8 @@ export {
   UserLimits,
   Profile,
   LoginFormFields,
+  ResetPasswordFormFields,
+  ForgotPasswordFormFields,
   EmailVerificationFormFields,
   SignUpFormValues,
 } from './user'

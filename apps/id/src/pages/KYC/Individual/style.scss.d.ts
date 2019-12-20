@@ -2,6 +2,7 @@ declare namespace StyleScssModule {
   export interface IStyleScss {
     centered: string;
     column: string;
+    form: string;
     grid: string;
     "group-title": string;
     groupTitle: string;

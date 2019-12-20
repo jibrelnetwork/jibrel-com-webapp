@@ -13,7 +13,7 @@ import {
 } from '../FieldWrapper'
 
 export interface FileInputProps {
-  onChange: (file: File | void) => void;
+  onFileChange: (file: File | void) => void;
   label: string;
   error?: string;
   message?: string;
@@ -82,7 +82,7 @@ const getFileSize = (bytes: number): string => {
 
 const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
   const {
-    onChange,
+    onFileChange,
     error,
     label,
     fileSize,
@@ -98,7 +98,7 @@ const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
     e.preventDefault()
 
     if (fileName) {
-      onChange(undefined)
+      onFileChange(undefined)
     }
 
     e.stopPropagation()
@@ -108,7 +108,7 @@ const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
     const target = e.target as HTMLInputElement
     const file: File | void = target.files ? target.files[0] : undefined
 
-    onChange(file)
+    onFileChange(file)
   }
 
   return (
