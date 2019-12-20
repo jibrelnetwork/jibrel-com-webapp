@@ -13,9 +13,11 @@ import { I18n } from '@lingui/core'
 import { FormSubmit } from 'store/types/form'
 
 import {
+  Documents,
   PersonalValues,
   KYCIndividualValues,
   KYCIndividualStatus,
+  UploadDocumentHandler,
 } from 'store/types/kyc'
 
 import {
@@ -31,7 +33,9 @@ import {
 
 export interface KYCIndividualProps {
   goBack: () => void;
+  uploadDocument: UploadDocumentHandler;
   submit: FormSubmit<KYCIndividualValues>;
+  documents: Documents;
   values: PersonalValues;
   status: KYCIndividualStatus;
 }
@@ -55,8 +59,10 @@ const getTitle = (i18n: I18n, status: KYCIndividualStatus): string | undefined =
 const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
   goBack,
   submit,
+  uploadDocument,
   values,
   status,
+  documents,
 }) => {
   const i18n = useI18n()
 
@@ -73,13 +79,25 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
           render={(formProps: FormRenderProps): React.ReactNode => {
             switch(status) {
               case KYCIndividualStatus.personal:
-                return <PersonalForm form={formProps} />
+                return (
+                  <PersonalForm
+                    formProps={formProps}
+                    uploadDocument={uploadDocument}
+                    documents={documents}
+                  />
+                )
 
               case KYCIndividualStatus.residency:
-                return <ResidencyForm form={formProps} />
+                return (
+                  <ResidencyForm
+                    formProps={formProps}
+                    uploadDocument={uploadDocument}
+                    documents={documents}
+                  />
+                )
 
               case KYCIndividualStatus.income:
-                return <IncomeForm form={formProps} />
+                return <IncomeForm formProps={formProps} />
 
               default:
                 return null
@@ -93,11 +111,13 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
 
 export default connect(
   (state: RootState) => ({
+    documents: state.kyc.documents,
     status: state.kycIndividual.status,
     values: state.kycIndividual.values,
   }),
   (dispatch: Dispatch) => ({
     goBack: dispatch.kycIndividual.goBack,
     submit: dispatch.kycIndividual.submit,
+    uploadDocument: dispatch.kyc.uploadDocument,
   }),
 )(KYCIndividual)

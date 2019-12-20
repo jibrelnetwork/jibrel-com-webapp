@@ -50,6 +50,8 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
       values: Partial<KYCIndividualValues>,
       rootState: RootState,
     ): FormSubmitResult<KYCIndividualValues> {
+      console.log('values', values)
+
       try {
         await axios.post('/v1/kyc/individual/validate', values)
 

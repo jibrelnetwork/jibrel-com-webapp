@@ -1,15 +1,15 @@
 import React from 'react'
 import cc from 'classcat'
-import { connect } from 'react-redux'
 import { FormRenderProps } from 'react-final-form'
 
 import {
   Input,
-  BigButton,
   FileInput,
+  BigButton,
 } from '@jibrelcom/ui'
 
 import CountrySelect from 'components/CountrySelect'
+import isRequired from 'utils/validators/isRequired'
 import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { useI18n } from 'app/i18n'
 
@@ -19,62 +19,58 @@ import {
   UploadDocumentHandler,
 } from 'store/types/kyc'
 
-import {
-  Dispatch,
-  RootState,
-} from 'store'
-
 import style from '../../style.scss'
 
 export interface ResidencyFormProps {
   uploadDocument: UploadDocumentHandler;
-  form: FormRenderProps<KYCIndividualValues>;
+  formProps: FormRenderProps<KYCIndividualValues>;
   documents: Documents;
 }
 
 const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
   uploadDocument,
-  form,
+  formProps,
   documents,
 }) => {
   const i18n = useI18n()
 
   const handlePassportChange = async (file: File | void): Promise<void> => {
-    const fieldName = 'proofOfAddressDocument'
-    const id = await uploadDocument({ file, fieldName })
-
-    if (id) {
-      form.form.change(fieldName, id)
-    }
+    await uploadDocument({ file, fieldName: 'proofOfAddressDocument' })
   }
 
   return (
     <form
-      onSubmit={form.handleSubmit}
+      onSubmit={formProps.handleSubmit}
       className={cc([grid.column, style.form])}
     >
       <Input
+        validate={isRequired({ i18n })}
         name='streetAddress'
         label='Street Address'
       />
       <Input
+        validate={isRequired({ i18n })}
         name='apartment'
         label='Apartment, Unit or Suite (Optional)'
       />
       <Input
+        validate={isRequired({ i18n })}
         name='city'
         label='City'
       />
       <Input
+        validate={isRequired({ i18n })}
         name='postCode'
         label='Post Code (Optional)'
       />
       <CountrySelect
+        validate={isRequired({ i18n })}
         name='country'
         label='Country'
         placeholder='select country'
       />
       <FileInput
+        validate={isRequired({ i18n })}
         onFileChange={handlePassportChange}
         placeholder='PNG, PDF, JPG'
         name='proofOfAddressDocument'
@@ -91,11 +87,4 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
   )
 }
 
-export default connect(
-  (state: RootState) => ({
-    documents: state.kyc.documents,
-  }),
-  (dispatch: Dispatch) => ({
-    uploadDocument: dispatch.kyc.uploadDocument,
-  }),
-)(ResidencyForm)
+export default ResidencyForm
