@@ -1,24 +1,42 @@
 import React from 'react'
 import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
-import {FieldArray} from 'react-final-form-arrays'
-import arrayMutators from 'final-form-arrays'
-import isEqual from 'lodash-es/isEqual'
+import {connect} from 'react-redux'
+import pick from 'lodash-es/pick'
+import map from 'lodash-es/map'
+import get from 'lodash-es/get'
+import every from 'lodash-es/every'
 
 import {
-    BigButtonSubmit,
-    LinkButton,
+    BigButton,
+    Input,
+    FileInput,
 } from '@jibrelcom/ui'
-
 import KYCLayout from 'layouts/KYCLayout'
+
 import {FormProps} from '../FormProps'
-import {BeneficiaryFields} from './BeneficiaryFields'
+import {checkEmptyFields} from '../checkEmptyFieldsValidator'
+import style from './style.scss'
+import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
 
-const initialBeneficiaries = [{}]
 
-export const CompanyInformationForm: React.FunctionComponent<FormProps> = ({backLabel, backHandler, nextLabel, nextHandler}) => {
+const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (props) => {
+    const {
+        backLabel, backHandler, nextLabel, nextHandler,
+        formValues, uploadDocument, submit,
+        commercialRegister, shareholderRegister, articlesOfIncorporation,
+    } = props
+
+    const initialValues = pick(formValues, [
+        'companyName', 'tradingName', 'dateOfIncorporation', 'placeOfIncorporation',
+    ])
+
+    const isAllFilesUploaded = every(map(
+        [commercialRegister, shareholderRegister, articlesOfIncorporation],
+        (field)=> get(field, 'id')
+    ))
+
     const i18n = useI18n()
-    const initialValues = {}
     return (
         <KYCLayout
             title={i18n._('KYC.Company.section.company.title')}
@@ -27,39 +45,89 @@ export const CompanyInformationForm: React.FunctionComponent<FormProps> = ({back
         >
             <Form
                 initialValues={initialValues}
-                mutators={{...arrayMutators}}
-                onSubmit={nextHandler}
-                render={({
-                             handleSubmit,
-                             form: {
-                                 mutators: {push}
-                             },
-                         }) => (
-                    <form onSubmit={handleSubmit}>
-                        <FieldArray name="beneficiary" isEqual={isEqual} initialValue={initialBeneficiaries}>
-                            {({fields}) =>
-                                fields.map((name, index) => (
-                                    <BeneficiaryFields isPrimary={index===0} key={name} index={index}>
-                                        {index !== 0 &&
-                                        <LinkButton type="button" onClick={() => fields.remove(index)}>
-                                          Remove Beneficiary
-                                        </LinkButton>
-                                        }
-                                    </BeneficiaryFields>
-                                ))
-                            }
-                        </FieldArray>
+                onSubmit={submit(nextHandler)}
+                validate={checkEmptyFields}
+                render={({hasValidationErrors, handleSubmit, submitting}) => (
+                    <form onSubmit={handleSubmit} className={style.step}>
+                        <Input
+                            name='companyName'
+                            label={'Company Name'}
+                        />
+                        <Input
+                            name='tradingName'
+                            label={'Trading Name'}
+                        />
+                        <Input
+                            name='dateOfIncorporation'
+                            label={'Date of Incorporation'}
+                            placeholder={'DD/MM/YYYY'}
+                        />
+                        <Input
+                            name='placeOfIncorporation'
+                            label={'Place of Incorporation'}
+                        />
 
-                        <LinkButton type="button" onClick={() => push('beneficiary', undefined)}>
-                            + ADD MORE BENEFICIARIES
-                        </LinkButton>
+                        <h3 className={style.groupTitle}>
+                            {'Company Documentation'}
+                        </h3>
 
-                        <BigButtonSubmit>
+                        <FileInput
+                            name='commercialRegister'
+                            label={'Commercial Register'}
+                            placeholder={'PNG, PDF, JPG'}
+                            value={commercialRegister}
+                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
+                            fileName={get(commercialRegister, 'fileName', '')}
+                            fileSize={get(commercialRegister, 'fileSize', 0)}
+                            isLoading={get(commercialRegister, 'isLoading', false)}
+                            error={get(commercialRegister, 'error', '')}
+                        />
+                        <FileInput
+                            name='shareholderRegister'
+                            label={'Shareholder Register'}
+                            placeholder={'PNG, PDF, JPG'}
+                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
+                            fileName={get(shareholderRegister, 'fileName', '')}
+                            fileSize={get(shareholderRegister, 'fileSize', 0)}
+                            isLoading={get(shareholderRegister, 'isLoading', false)}
+                            error={get(shareholderRegister, 'error', '')}
+                        />
+                        <FileInput
+                            name='articlesOfIncorporation'
+                            label={'Article of Incorporation'}
+                            placeholder={'PNG, PDF, JPG'}
+                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'articlesOfIncorporation'})}
+                            fileName={get(articlesOfIncorporation, 'fileName', '')}
+                            fileSize={get(articlesOfIncorporation, 'fileSize', 0)}
+                            isLoading={get(articlesOfIncorporation, 'isLoading', false)}
+                            error={get(articlesOfIncorporation, 'error', '')}
+                        />
+
+                        <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors}>
                             {nextLabel}
-                        </BigButtonSubmit>
+                        </BigButton>
                     </form>
                 )}
             />
         </KYCLayout>
     )
 }
+
+const mapState = ({kycOrganization, kyc}) => ({
+    formValues: kycOrganization.values,
+
+    // File upload fields with extra structure
+    commercialRegister: kyc.documents.commercialRegister,
+    shareholderRegister: kyc.documents.shareholderRegister,
+    articlesOfIncorporation: kyc.documents.articlesOfIncorporation,
+})
+
+const mapDispatch = ({kyc, kycOrganizationValidate}) => ({
+    uploadDocument: kyc.uploadDocument,
+    submit: (callback) => (values) =>
+        kycOrganizationValidate.validate({step: 0, ...values})
+            .then(callback)
+            .catch(handleAsyncValidationErrors),
+})
+
+export const CompanyInformationForm = connect(mapState, mapDispatch)(CompanyInformationFormComponent)
