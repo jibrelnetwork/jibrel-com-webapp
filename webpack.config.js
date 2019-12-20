@@ -307,7 +307,7 @@ const create = (dirname) => {
         PUBLIC_URL: PATHS.PUBLIC_URL,
         GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
         HOST_CMS: process.env.NODE_ENV === 'production'
-          ? '//{{ .Env.FRONTEND_ROOT_DOMAIN_NAME \'jibel.com\' }}'
+          ? '//{{ default .Env.FRONTEND_ROOT_DOMAIN_NAME "jibrel.com" }}'
           : `//${process.env.FRONTEND_ROOT_DOMAIN_NAME}`
       }),
 
