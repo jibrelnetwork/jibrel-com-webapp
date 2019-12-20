@@ -5,6 +5,8 @@ export enum UserStatus {
   ANONYMOUS = 'ANONYMOUS',
   EMAIL_UNVERIFIED = 'EMAIL_UNVERIFIED',
   PHONE_UNVERIFIED = 'PHONE_UNVERIFIED',
+  KYC_UNSET = 'KYC_UNSET',
+  KYC_UNVERIFIED = 'KYC_UNVERIFIED',
   VERIFIED = 'VERIFIED',
   BANNED = 'BANNED',
 }
@@ -43,7 +45,7 @@ export interface Profile {
   kycStatus: KYCStatus;
 }
 
-export interface SignUpFormValues {
+export interface SignUpFormFields {
   firstName: string;
   lastName: string;
   email: string;

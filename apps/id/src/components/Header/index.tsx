@@ -5,7 +5,7 @@ import { connect } from 'react-redux'
 import { Logo } from '@jibrelcom/ui'
 import { LogoColor } from '@jibrelcom/ui/src/Logo/types'
 
-import { UserStatus } from 'store/types/user'
+import { UserStatus } from 'store/types'
 
 import {
   Dispatch,
