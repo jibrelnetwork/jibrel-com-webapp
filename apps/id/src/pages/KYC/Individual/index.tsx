@@ -8,10 +8,10 @@ import {
   BigButton,
   FileInput,
 } from '@jibrelcom/ui'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 
 import {
   Form,
-  FormRenderProps,
 } from 'react-final-form'
 
 import axios from 'store/axios'
@@ -60,74 +60,76 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
       backHandler={console.log}
       backLabel='BACK TO START'
     >
-      <Form
-        initialValues={initialValues}
-        onSubmit={handleFormSubmit}
-        render={({
-          handleSubmit,
-        }): React.ReactNode => {
-          const i18n = useI18n()
+      <div className={grid.grid}>
+        <Form
+          initialValues={initialValues}
+          onSubmit={handleFormSubmit}
+          render={({
+            handleSubmit,
+          }): React.ReactNode => {
+            const i18n = useI18n()
 
-          return (
-            <form onSubmit={handleSubmit}>
-              <Input
-                label={i18n._('KYC.Personal.input.firstName.title')}
-                name='firstName'
-              />
-              <Input
-                label={i18n._('KYC.Personal.input.lastName.title')}
-                name='lastName'
-              />
-              <Input
-                label={i18n._('KYC.Personal.input.middleName.title')}
-                name='middleName'
-              />
-              <Input
-                label={i18n._('KYC.Personal.input.alias.title')}
-                name='alias'
-              />
-              <Input
-                label={i18n._('KYC.Personal.input.birthDate.title')}
-                name='birthDate'
-                placeholder='DD/MM/YYYY'
-              />
-              <CountrySelect
-                label={i18n._('KYC.Personal.input.nationality.title')}
-                name='nationality'
-                placeholder={i18n._('KYC.Personal.input.nationality.placeholder')}
-              />
-              <h3 className={style.groupTitle}>
-                {i18n._('KYC.Personal.section.passport.title')}
-              </h3>
-              <Input
-                label={i18n._('KYC.Personal.input.passportNumber.title')}
-                name='passportNumber'
-              />
-              <Input
-                label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
-                name='passportExpirationDate'
-                placeholder='DD/MM/YYYY'
-              />
-              <FileInput
-                onChange={(file: File) => uploadDocument({ file, fieldName: 'passportDocument' })}
-                fileName={fields.passportDocument ? fields.passportDocument.fileName : ''}
-                fileSize={fields.passportDocument ? fields.passportDocument.fileSize : 0}
-                isLoading={fields.passportDocument ? fields.passportDocument.isLoading : false}
-                error={fields.passportDocument ? fields.passportDocument.error : ''}
-                label={i18n._('KYC.Personal.input.passportFrontPage.title')}
-                name='passportDocument'
-                placeholder='PNG, PDF, JPG'
-              />
-              <BigButton
-                type='submit'
-                className={style.submit}
-              >
-                {i18n._('KYC.form.action.next')}
-              </BigButton>
-            </form>
-          )
-        }}
-      />
+            return (
+              <form onSubmit={handleSubmit} className={grid.column}>
+                <Input
+                  label={i18n._('KYC.Personal.input.firstName.title')}
+                  name='firstName'
+                />
+                <Input
+                  label={i18n._('KYC.Personal.input.lastName.title')}
+                  name='lastName'
+                />
+                <Input
+                  label={i18n._('KYC.Personal.input.middleName.title')}
+                  name='middleName'
+                />
+                <Input
+                  label={i18n._('KYC.Personal.input.alias.title')}
+                  name='alias'
+                />
+                <Input
+                  label={i18n._('KYC.Personal.input.birthDate.title')}
+                  name='birthDate'
+                  placeholder='DD/MM/YYYY'
+                />
+                <CountrySelect
+                  label={i18n._('KYC.Personal.input.nationality.title')}
+                  name='nationality'
+                  placeholder={i18n._('KYC.Personal.input.nationality.placeholder')}
+                />
+                <h3 className={style.groupTitle}>
+                  {i18n._('KYC.Personal.section.passport.title')}
+                </h3>
+                <Input
+                  label={i18n._('KYC.Personal.input.passportNumber.title')}
+                  name='passportNumber'
+                />
+                <Input
+                  label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
+                  name='passportExpirationDate'
+                  placeholder='DD/MM/YYYY'
+                />
+                <FileInput
+                  onChange={(file: File) => uploadDocument({ file, fieldName: 'passportDocument' })}
+                  fileName={fields.passportDocument ? fields.passportDocument.fileName : ''}
+                  fileSize={fields.passportDocument ? fields.passportDocument.fileSize : 0}
+                  isLoading={fields.passportDocument ? fields.passportDocument.isLoading : false}
+                  error={fields.passportDocument ? fields.passportDocument.error : ''}
+                  label={i18n._('KYC.Personal.input.passportFrontPage.title')}
+                  name='passportDocument'
+                  placeholder='PNG, PDF, JPG'
+                />
+                <BigButton
+                  type='submit'
+                  className={style.submit}
+                >
+                  {i18n._('KYC.form.action.next')}
+                </BigButton>
+              </form>
+            )
+          }}
+        />
+      </div>
     </KYCLayout>
   )
 }

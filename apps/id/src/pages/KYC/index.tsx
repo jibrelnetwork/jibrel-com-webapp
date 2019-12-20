@@ -1,4 +1,5 @@
 import React, { useState } from 'react'
+import cc from 'classcat'
 
 import KYCLayout from 'layouts/KYCLayout'
 
@@ -9,14 +10,15 @@ import {
   Info,
   Button,
 } from './components'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 
 const KYC: React.FunctionComponent = () => {
   const [kycType, setKYCType] = useState(KYCType.empty)
 
   return (
     <KYCLayout title='What type of investor are you?' >
-      <div className={style.main}>
-        <div className={style.buttons}>
+      <div className={cc([style.main, grid.grid])}>
+        <div className={cc([style.buttons, grid.column])}>
           <Button
             setKYCType={setKYCType}
             type={KYCType.individual}
@@ -32,7 +34,9 @@ const KYC: React.FunctionComponent = () => {
             isActive={kycType === KYCType.organizational}
           />
         </div>
-        <Info type={kycType} />
+        <div className={grid.column}>
+          <Info type={kycType} />
+        </div>
       </div>
     </KYCLayout>
   )
