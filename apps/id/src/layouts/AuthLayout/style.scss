@@ -1,13 +1,12 @@
+@import '~@jibrelcom/ui/src/theme';
+
 .layout {
-
-}
-
-.header {
-  z-index: 1;
-  position: relative;
-  height: 96px;
 }
 
 .content {
-  margin-top: -96px;
+  margin-top: -80px;
+
+  @include screen(">small") {
+    margin-top: -96px;
+  }
 }
