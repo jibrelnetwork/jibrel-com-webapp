@@ -19,6 +19,12 @@ import {checkEmptyFields} from '../checkEmptyFieldsValidator'
 import style from './style.scss'
 import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
 
+const emptyFileField = {
+    fileName: '',
+    fileSize: 0,
+    isLoading: false,
+    error: ''
+}
 
 const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (props) => {
     const {
@@ -75,32 +81,22 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             name='commercialRegister'
                             label={'Commercial Register'}
                             placeholder={'PNG, PDF, JPG'}
-                            value={commercialRegister}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
-                            fileName={get(commercialRegister, 'fileName', '')}
-                            fileSize={get(commercialRegister, 'fileSize', 0)}
-                            isLoading={get(commercialRegister, 'isLoading', false)}
-                            error={get(commercialRegister, 'error', '')}
+                            {...(commercialRegister || emptyFileField)}
                         />
                         <FileInput
                             name='shareholderRegister'
                             label={'Shareholder Register'}
                             placeholder={'PNG, PDF, JPG'}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
-                            fileName={get(shareholderRegister, 'fileName', '')}
-                            fileSize={get(shareholderRegister, 'fileSize', 0)}
-                            isLoading={get(shareholderRegister, 'isLoading', false)}
-                            error={get(shareholderRegister, 'error', '')}
+                            {...(shareholderRegister || emptyFileField)}
                         />
                         <FileInput
                             name='articlesOfIncorporation'
                             label={'Article of Incorporation'}
                             placeholder={'PNG, PDF, JPG'}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'articlesOfIncorporation'})}
-                            fileName={get(articlesOfIncorporation, 'fileName', '')}
-                            fileSize={get(articlesOfIncorporation, 'fileSize', 0)}
-                            isLoading={get(articlesOfIncorporation, 'isLoading', false)}
-                            error={get(articlesOfIncorporation, 'error', '')}
+                            {...(articlesOfIncorporation || emptyFileField)}
                         />
 
                         <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors}>
