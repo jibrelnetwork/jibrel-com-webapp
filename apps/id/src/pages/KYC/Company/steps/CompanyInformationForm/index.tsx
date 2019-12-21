@@ -99,7 +99,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             {...(articlesOfIncorporation || emptyFileField)}
                         />
 
-                        <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors}>
+                        <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors} className={style.submit}>
                             {nextLabel}
                         </BigButton>
                     </form>
