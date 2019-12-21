@@ -14,6 +14,7 @@ import style from './style.scss'
 import grid from '@jibrelcom/ui/src/theme/grid.scss'
 
 import settings from 'app/settings'
+import { useLanguageCode } from 'app/i18n'
 
 export interface HeaderProps {
   logout?: () => void;
@@ -23,13 +24,12 @@ export interface HeaderProps {
 
 const Header: React.FunctionComponent<HeaderProps> = ({
   logout = undefined,
-  className,
   isAuthenticated = false,
-  ...props
 }) => {
+  const languageCode = useLanguageCode()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
-  const handleClickButton = () => {
+  const handleClickButton = (): void => {
     const nextIsMenuOpen = !isMenuOpen
     document.body.setAttribute('data-scroll', nextIsMenuOpen ? '0' : '1')
     setIsMenuOpen(nextIsMenuOpen)
@@ -47,7 +47,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
       >
         <div className='navbar__wrapper common__centered'>
           <nav className='navbar__content'>
-            <a href={`${settings.HOST_CMS}/`} className="navbar__logo-link">
+            <a href={`${settings.HOST_CMS}/${languageCode}`} className="navbar__logo-link">
               <img className="navbar__logo navbar__logo--black" src={`${settings.HOST_CMS}/img/ic_logo_colored_32.svg`} />
               <img className="navbar__logo navbar__logo--white" src={`${settings.HOST_CMS}/img/ic_logo_colored_32_white.svg`} />
             </a>
