@@ -24,3 +24,8 @@
 .submit {
   margin: 64px 0;
 }
+
+.submit-error {
+  @include font-body-s;
+  color: #DC3632;
+}

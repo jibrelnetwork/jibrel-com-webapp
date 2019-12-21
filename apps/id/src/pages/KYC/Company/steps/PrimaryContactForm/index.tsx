@@ -45,7 +45,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
-                render={({handleSubmit}) => (
+                render={({handleSubmit, submitError}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
 
                         <h3 className={style.groupTitle}>
@@ -150,6 +150,8 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             {...(get(documents, `passportDocument`,  emptyFileField))}
                             validate={isRequired({i18n})}
                         />
+
+                        {submitError && <div className={style.submitError}>{submitError}</div>}
 
                         <BigButtonSubmit className={style.submit}>
                             {nextLabel}

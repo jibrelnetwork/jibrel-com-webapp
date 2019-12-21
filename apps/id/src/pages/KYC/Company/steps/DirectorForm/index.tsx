@@ -35,6 +35,7 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                 onSubmit={submit(nextHandler)}
                 render={({
                              handleSubmit,
+                             submitError,
                              form: {
                                  mutators: {push}
                              },
@@ -59,6 +60,8 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                         <LinkButton type="button" onClick={() => push('directors', undefined)}>
                             + ADD MORE DIRECTORS
                         </LinkButton>
+
+                        {submitError && <div className={style.submitError}>{submitError}</div>}
 
                         <BigButtonSubmit className={style.submit}>
                             {nextLabel}

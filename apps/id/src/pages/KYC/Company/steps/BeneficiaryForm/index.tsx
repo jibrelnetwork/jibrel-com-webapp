@@ -35,6 +35,7 @@ export const BeneficiaryFormComponent: React.FunctionComponent<FormProps> = ({ba
                 onSubmit={submit(nextHandler)}
                 render={({
                              handleSubmit,
+                             submitError,
                              form: {
                                  mutators: {push}
                              },
@@ -61,6 +62,8 @@ export const BeneficiaryFormComponent: React.FunctionComponent<FormProps> = ({ba
                         <LinkButton type="button" onClick={() => push('beneficiary', undefined)}>
                             + ADD MORE BENEFICIARIES
                         </LinkButton>
+
+                        {submitError && <div className={style.submitError}>{submitError}</div>}
 
                         <BigButtonSubmit className={style.submit}>
                             {nextLabel}

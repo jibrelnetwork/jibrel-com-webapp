@@ -59,7 +59,7 @@ export const handleAsyncValidationErrors = (payload) => {
         }, {})
     } else {
         return {
-            [FORM_ERROR]: 'There vas an error during form submission',
+            [FORM_ERROR]: 'There was an error submitting your form',
         }
     }
 }

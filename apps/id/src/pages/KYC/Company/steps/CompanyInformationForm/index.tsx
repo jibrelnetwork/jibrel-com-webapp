@@ -44,7 +44,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
-                render={({handleSubmit}) => (
+                render={({handleSubmit, submitError}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
                         <Input
                             name='companyName'
@@ -97,6 +97,8 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
                             validate={isRequired({i18n})}
                         />
+
+                        {submitError && <div className={style.submitError}>{submitError}</div>}
 
                         <BigButtonSubmit className={style.submit}>
                             {nextLabel}

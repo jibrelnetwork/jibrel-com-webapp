@@ -33,7 +33,7 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
-                render={({handleSubmit, values: {haveCompanyAddressPrincipal}}) => (
+                render={({handleSubmit, submitError, values: {haveCompanyAddressPrincipal}}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
                         <Input
                             name='companyAddressRegistered.streetAddress'
@@ -95,6 +95,9 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
                                 />
                             </section>
                         )}
+
+                        {submitError && <div className={style.submitError}>{submitError}</div>}
+
                         <BigButtonSubmit className={style.submit}>
                             {nextLabel}
                         </BigButtonSubmit>
