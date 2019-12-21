@@ -1,4 +1,5 @@
 import React from 'react'
+import cc from 'classcat'
 import { FormRenderProps } from 'react-final-form'
 
 import {
@@ -8,30 +9,33 @@ import {
 } from '@jibrelcom/ui'
 
 import isRequired from 'utils/validators/isRequired'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { useI18n } from 'app/i18n'
 import { KYCIndividualValues } from 'store/types/kyc'
 
 import style from '../../style.scss'
 
 export interface IncomeFormProps {
-  form: FormRenderProps<KYCIndividualValues>;
+  formProps: FormRenderProps<KYCIndividualValues>;
 }
 
 const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
-  form,
+  formProps,
 }) => {
   const i18n = useI18n()
 
   return (
     <form
-      onSubmit={form.handleSubmit}
-      className={style.form}
+      onSubmit={formProps.handleSubmit}
+      className={cc([grid.column, style.form])}
     >
       <Input
+        validate={isRequired({ i18n })}
         name='occupation'
         label='Profession'
       />
       <Input
+        validate={isRequired({ i18n })}
         name='incomeSource'
         label='Primary Source of Income'
       />
