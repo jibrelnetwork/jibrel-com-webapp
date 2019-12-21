@@ -3,12 +3,10 @@ import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 import {connect} from 'react-redux'
 import pick from 'lodash-es/pick'
-import map from 'lodash-es/map'
 import get from 'lodash-es/get'
-import every from 'lodash-es/every'
 
 import {
-    BigButton,
+    BigButtonSubmit,
     Input,
     FileInput,
 } from '@jibrelcom/ui'
@@ -23,24 +21,18 @@ const emptyFileField = {
     fileName: '',
     fileSize: 0,
     isLoading: false,
-    error: ''
+    error: '',
 }
 
 const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (props) => {
     const {
         backLabel, backHandler, nextLabel, nextHandler,
-        formValues, uploadDocument, submit,
-        commercialRegister, shareholderRegister, articlesOfIncorporation,
+        formValues, uploadDocument, submit, documents,
     } = props
 
     const initialValues = pick(formValues, [
         'companyName', 'tradingName', 'dateOfIncorporation', 'placeOfIncorporation',
     ])
-
-    const isAllFilesUploaded = every(map(
-        [commercialRegister, shareholderRegister, articlesOfIncorporation],
-        (field)=> get(field, 'id')
-    ))
 
     const i18n = useI18n()
     return (
@@ -52,7 +44,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
-                render={({hasValidationErrors, handleSubmit, submitting}) => (
+                render={({handleSubmit}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
                         <Input
                             name='companyName'
@@ -85,26 +77,30 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             label={'Commercial Register'}
                             placeholder={'PNG, PDF, JPG'}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
-                            {...(commercialRegister || emptyFileField)}
+                            {...(get(documents, 'commercialRegister', emptyFileField))}
+
+                            validate={isRequired({i18n})}
                         />
                         <FileInput
                             name='shareholderRegister'
                             label={'Shareholder Register'}
                             placeholder={'PNG, PDF, JPG'}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
-                            {...(shareholderRegister || emptyFileField)}
+                            {...(get(documents, 'shareholderRegister', emptyFileField))}
+                            validate={isRequired({i18n})}
                         />
                         <FileInput
                             name='articlesOfIncorporation'
                             label={'Article of Incorporation'}
                             placeholder={'PNG, PDF, JPG'}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'articlesOfIncorporation'})}
-                            {...(articlesOfIncorporation || emptyFileField)}
+                            {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
+                            validate={isRequired({i18n})}
                         />
 
-                        <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors} className={style.submit}>
+                        <BigButtonSubmit className={style.submit}>
                             {nextLabel}
-                        </BigButton>
+                        </BigButtonSubmit>
                     </form>
                 )}
             />
@@ -114,11 +110,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
 
 const mapState = ({kycOrganization, kyc}) => ({
     formValues: kycOrganization.values,
-
-    // File upload fields with extra structure
-    commercialRegister: kyc.documents.commercialRegister,
-    shareholderRegister: kyc.documents.shareholderRegister,
-    articlesOfIncorporation: kyc.documents.articlesOfIncorporation,
+    documents: kyc.documents,
 })
 
 const mapDispatch = ({kyc, kycOrganizationValidate}) => ({

@@ -29,7 +29,7 @@ const Company: React.FunctionComponent = () => {
     }
 
     // Fixme: initial 0 step
-    const [currentStepNumber, setStep] = useState(2)
+    const [currentStepNumber, setStep] = useState(3)
 
     const backHandler = currentStepNumber === 0
         ? () => router.navigate('KYC')

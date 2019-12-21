@@ -3,7 +3,7 @@ import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 
 import {
-    BigButton,
+    BigButtonSubmit,
     Input,
     FileInput,
 } from '@jibrelcom/ui'
@@ -16,6 +16,7 @@ import {handleAsyncValidationErrors} from 'pages/KYC/Company/steps/handleAsyncVa
 import {connect} from 'react-redux'
 import {CountrySelect} from 'components'
 import isRequired from 'utils/validators/isRequired'
+import get from 'lodash-es/get'
 
 const emptyFileField = {
     fileName: '',
@@ -27,12 +28,8 @@ const emptyFileField = {
 export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (props) => {
     const {
         backLabel, backHandler, nextLabel, nextHandler,
-        formValues, uploadDocument, submit,
-        passportDocument, proofOfAddressDocument,
+        formValues, uploadDocument, submit, documents,
     } = props
-
-    const passport = passportDocument || emptyFileField
-    const proofOfAddress = proofOfAddressDocument || emptyFileField
 
     const initialValues = pick(formValues, [
         'companyName', 'tradingName', 'dateOfIncorporation', 'placeOfIncorporation',
@@ -48,7 +45,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
-                render={({hasValidationErrors, handleSubmit, errors, submitting}) => (
+                render={({handleSubmit}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
 
                         <h3 className={style.groupTitle}>
@@ -127,7 +124,8 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             label={'Proof of Address (Utility Bill, Bank Statement)'}
                             placeholder={'PNG, PDF, JPG'}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'proofOfAddressDocument'})}
-                            {...proofOfAddress}
+                            {...(get(documents, `proofOfAddressDocument`,  emptyFileField))}
+                            validate={isRequired({i18n})}
                         />
 
                         <h3 className={style.groupTitle}>
@@ -149,13 +147,13 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             label={'Passport Front Page'}
                             placeholder={'PNG, PDF, JPG'}
                             onFileChange={(file: File) => uploadDocument({file, fieldName: 'passportDocument'})}
-                            {...passport}
+                            {...(get(documents, `passportDocument`,  emptyFileField))}
+                            validate={isRequired({i18n})}
                         />
 
-                        <BigButton isLoading={submitting} isDisabled={!passport.id || !proofOfAddress.id || hasValidationErrors}
-                                   className={style.submit}>
+                        <BigButtonSubmit className={style.submit}>
                             {nextLabel}
-                        </BigButton>
+                        </BigButtonSubmit>
                     </form>
                 )}
             />
@@ -168,8 +166,7 @@ const mapState = ({kycOrganization, kyc}) => ({
     formValues: kycOrganization.values,
 
     // File upload fields with extra structure
-    passportDocument: kyc.documents.passportDocument,
-    proofOfAddressDocument: kyc.documents.proofOfAddressDocument,
+    documents: kyc.documents,
 })
 
 const mapDispatch = ({kyc, kycOrganizationValidate}) => ({

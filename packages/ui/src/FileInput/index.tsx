@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import cc from 'classcat'
 
 import Icon from '../Icon'
@@ -7,7 +7,7 @@ import inputStyle from '../Input/style.scss'
 import MessageWrapper from '../FieldWrapper/MessageWrapper'
 import { MessageType } from '../FieldWrapper/types'
 
-import { 
+import {
   withField,
   withFieldUX,
 } from '../FieldWrapper'
@@ -89,6 +89,9 @@ const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
     fileName,
     className,
     placeholder,
+    onChange,
+    value,
+    id,
     isLoading = false,
     isDisabled = false,
     ...otherProps
@@ -110,6 +113,9 @@ const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
 
     onFileChange(file)
   }
+
+  // Fixme: Preserve raw "value" prop
+  useEffect(() => onChange(id), [id])
 
   return (
       <MessageWrapper {...getMessage(props)}>
