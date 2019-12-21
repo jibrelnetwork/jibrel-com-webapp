@@ -1,19 +1,8 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    bar: string;
-    button: string;
-    fetching: string;
-    good: string;
-    icon: string;
-    indicator: string;
-    input: string;
-    label: string;
-    loading: string;
-    normal: string;
-    padding: string;
-    password: string;
-    strong: string;
-    weak: string;
+    code: string;
+    invisible: string;
+    mask: string;
   }
 }
 

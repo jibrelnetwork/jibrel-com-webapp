@@ -12,7 +12,7 @@ const instance = axios.create({
   withCredentials: true,
 })
 
-axios.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
   return response
 }, function (error) {
   if (error.response && error.response.status === 400) {

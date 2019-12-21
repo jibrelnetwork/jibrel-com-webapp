@@ -1,0 +1,16 @@
+.code {
+  font-family: monospace;
+  letter-spacing: 4px;
+}
+
+.mask {
+  position: absolute;
+  left: 16px;
+  right: 16px;
+  bottom: 10px;
+  pointer-events: none;
+}
+
+.invisible {
+  opacity: 0;
+}

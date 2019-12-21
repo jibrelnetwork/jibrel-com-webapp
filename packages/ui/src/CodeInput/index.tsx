@@ -1,19 +1,27 @@
 import React from 'react'
 import cc from 'classcat'
-import MaskedInput from 'react-text-mask'
 
-import style from '../Input/style.scss'
+import inputStyle from '../Input/style.scss'
+import style from './style.scss'
 
-import { 
+import {
   withField,
   withFieldUX,
   withMessage,
 } from '../FieldWrapper'
 
-export interface CodeInputProps {
+export interface CodeInputProps extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
   label?: string;
   className?: string;
   hasError?: boolean;
+}
+
+const getMaskLength = (value: string | number | string[] | undefined): number => {
+  if (!value) {
+    return 6
+  }
+
+  return Math.max(6 - value.toString().length, 0)
 }
 
 const CodeInput: React.FunctionComponent<CodeInputProps> = ({
@@ -22,32 +30,34 @@ const CodeInput: React.FunctionComponent<CodeInputProps> = ({
   hasError = false,
   ...props
 }) => {
+  const mask = '_'.repeat(
+    getMaskLength(props.value)
+  )
+
   return (
     <label
       className={cc([
-        style.input,
-        style.code,
-        hasError && style.error,
+        inputStyle.wrapper,
+        hasError && inputStyle.error,
         className,
       ])}
     >
-      <MaskedInput
-        mask={[/\d/, /\d/, /\d/, /\d/, /\d/, /\d/]}
-        showMask
+      <input
         {...props}
-        render={(ref, inputProps): React.ReactNode => (
-          <input
-            {...inputProps}
-            ref={ref}
-            className={cc([
-              style.field,
-              style.mask,
-            ])}
-          />
-        )}
+        className={cc([
+          inputStyle.input,
+          style.code,
+        ])}
       />
-      <div className={style.frame} />
-      <p className={style.label}>{label}</p>
+      <div className={cc([
+        inputStyle.input,
+        style.code,
+        style.mask,
+      ])}>
+        <span className={style.invisible}>{props.value}</span><span>{mask}</span>
+      </div>
+      <div className={inputStyle.border} />
+      <p className={inputStyle.label}>{label}</p>
     </label>
   )
 }

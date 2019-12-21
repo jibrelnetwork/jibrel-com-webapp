@@ -1,7 +1,7 @@
 import React from 'react'
 import cc from 'classcat'
 
-import inputStyle from '../Input/style.scss'
+import { InputBase } from '../Input'
 import style from './style.scss'
 import { GenericFieldProps } from '../FieldWrapper/types'
 import {
@@ -36,9 +36,6 @@ const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> =
   ccc,
   className,
   label = 'Phone Number',
-  name,
-  hasError = false,
-  isDisabled = false,
   ...props
 }) => {
   return (
@@ -51,27 +48,11 @@ const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> =
       <span className={style.ccc}>
         {ccc}
       </span>
-      <label className={cc([inputStyle.input, hasError && inputStyle.error, className])}>
-        <input
-          {...props}
-          name={name}
-          type='text'
-          className={cc([
-            inputStyle.field,
-            style.input,
-          ])}
-          disabled={isDisabled}
-        />
-        <div className={inputStyle.frame} />
-        <p
-          className={cc([
-            inputStyle.label,
-            style.label,
-          ])}
-        >
-          {label}
-        </p>
-      </label>
+      <InputBase
+        label={label}
+        classNames={style}
+        {...props}
+      />
     </div>
   )
 }

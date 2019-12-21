@@ -3,7 +3,7 @@ import cc from 'classcat'
 
 import style from './style.scss'
 
-import { 
+import {
   withField,
   withFieldUX,
   withMessage,
@@ -13,15 +13,21 @@ export interface InputProps {
   type?: string;
   label: string;
   className?: string;
+  classNames?: {
+    wrapper?: string;
+    input?: string;
+    label?: string;
+  };
   inputClassName?: string;
   labelClassName?: string;
   hasError?: boolean;
   isDisabled?: boolean;
 }
 
-const Input: React.FunctionComponent<InputProps> = ({
+export const InputBase: React.FunctionComponent<InputProps> = ({
   label,
   className,
+  classNames = {},
   inputClassName,
   labelClassName,
   type = 'text',
@@ -30,21 +36,28 @@ const Input: React.FunctionComponent<InputProps> = ({
   ...props
 }) => {
   return (
-    <label className={cc([style.input, hasError && style.error, className])}>
+    <label className={cc([
+      style.wrapper,
+      hasError && style.error,
+      classNames.wrapper,
+      className,
+    ])}>
       <input
         {...props}
         name={name}
         type={type}
         className={cc([
-          style.field,
+          style.input,
+          classNames.input,
           inputClassName,
         ])}
         disabled={isDisabled}
       />
-      <div className={style.frame} />
+      <div className={style.border} />
       <p
         className={cc([
           style.label,
+          classNames.label,
           labelClassName,
         ])}
       >
@@ -54,4 +67,4 @@ const Input: React.FunctionComponent<InputProps> = ({
   )
 }
 
-export default withField(withFieldUX(React.memo(withMessage(Input))))
+export default withField(withFieldUX(React.memo(withMessage(InputBase))))
