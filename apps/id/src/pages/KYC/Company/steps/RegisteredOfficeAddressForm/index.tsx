@@ -12,11 +12,10 @@ import {
 import KYCLayout from 'layouts/KYCLayout'
 import isRequired from 'utils/validators/isRequired'
 import CountrySelect from 'components/CountrySelect'
+
 import {FormProps} from '../FormProps'
 import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
-
-
-import style from './style.scss'
+import style from '../style.scss'
 
 
 export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormProps> = ({backLabel, backHandler, nextLabel, nextHandler, formValues, submit}) => {

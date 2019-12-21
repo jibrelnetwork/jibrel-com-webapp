@@ -1,6 +1,9 @@
 import React from 'react'
 import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
+import get from 'lodash-es/get'
+import {connect} from 'react-redux'
+import pick from 'lodash-es/pick'
 
 import {
     BigButtonSubmit,
@@ -9,14 +12,12 @@ import {
 } from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
-import {FormProps} from '../FormProps'
-import pick from 'lodash-es/pick'
-import style from 'pages/KYC/Company/steps/CompanyInformationForm/style.scss'
-import {handleAsyncValidationErrors} from 'pages/KYC/Company/steps/handleAsyncValidationErrors'
-import {connect} from 'react-redux'
 import {CountrySelect} from 'components'
+import {FormProps} from '../FormProps'
 import isRequired from 'utils/validators/isRequired'
-import get from 'lodash-es/get'
+
+import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
+import style from '../style.scss'
 
 const emptyFileField = {
     fileName: '',
@@ -166,8 +167,6 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
 
 const mapState = ({kycOrganization, kyc}) => ({
     formValues: kycOrganization.values,
-
-    // File upload fields with extra structure
     documents: kyc.documents,
 })
 

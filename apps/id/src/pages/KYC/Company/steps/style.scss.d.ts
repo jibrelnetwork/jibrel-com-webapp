@@ -10,6 +10,9 @@ declare namespace StyleScssModule {
     groupTitle: string;
     step: string;
     submit: string;
+    "submit-error": string;
+    submitError: string;
+    subtitle: string;
     title: string;
   }
 }

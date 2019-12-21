@@ -5,11 +5,11 @@ import {
     FileInput,
     Icon,
 } from '@jibrelcom/ui'
-import style from './style.scss'
 import CountrySelect from 'components/CountrySelect'
 import isRequired from 'utils/validators/isRequired'
 import {useI18n} from 'app/i18n'
 
+import style from '../style.scss'
 
 interface BeneficiaryFieldsProps {
     isPrimary: boolean;

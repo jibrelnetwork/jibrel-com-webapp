@@ -4,6 +4,7 @@ import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 import arrayMutators from 'final-form-arrays'
 import {FieldArray} from 'react-final-form-arrays'
+import {connect} from 'react-redux'
 
 import {
     BigButtonSubmit,
@@ -11,11 +12,9 @@ import {
 } from '@jibrelcom/ui'
 
 import {FormProps} from '../FormProps'
-
+import style from '../style.scss'
+import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
 import {BeneficiaryFields} from './BeneficiaryFields'
-import style from './style.scss'
-import {handleAsyncValidationErrors} from 'pages/KYC/Company/steps/handleAsyncValidationErrors'
-import {connect} from 'react-redux'
 
 const initialBeneficiaries = [{}]
 

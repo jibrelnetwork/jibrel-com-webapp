@@ -1,6 +1,9 @@
 import React from 'react'
 import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
+import arrayMutators from 'final-form-arrays'
+import {FieldArray} from 'react-final-form-arrays'
+import {connect} from 'react-redux'
 
 import {
     BigButtonSubmit,
@@ -8,13 +11,12 @@ import {
 } from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
+
 import {FormProps} from '../FormProps'
-import arrayMutators from 'final-form-arrays'
-import style from './style.scss'
-import {FieldArray} from 'react-final-form-arrays'
-import {DirectorFields} from './DirectorFields'
+import style from '../style.scss'
 import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
-import {connect} from 'react-redux'
+
+import {DirectorFields} from './DirectorFields'
 
 
 const initialDocuments = ['']

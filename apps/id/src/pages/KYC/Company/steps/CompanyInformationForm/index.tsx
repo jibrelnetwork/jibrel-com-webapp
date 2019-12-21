@@ -11,11 +11,11 @@ import {
     FileInput,
 } from '@jibrelcom/ui'
 import KYCLayout from 'layouts/KYCLayout'
+import isRequired from 'utils/validators/isRequired'
 
 import {FormProps} from '../FormProps'
-import style from './style.scss'
+import style from '../style.scss'
 import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
-import isRequired from 'utils/validators/isRequired'
 
 const emptyFileField = {
     fileName: '',
