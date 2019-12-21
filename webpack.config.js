@@ -306,12 +306,15 @@ const create = (dirname) => {
         NODE_ENV: process.env.NODE_ENV,
         PUBLIC_URL: PATHS.PUBLIC_URL,
         GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
+        HOST_CMS: process.env.NODE_ENV === 'production'
+          ? '//{{ default .Env.FRONTEND_ROOT_DOMAIN_NAME "jibrel.com" }}'
+          : `//${process.env.FRONTEND_ROOT_DOMAIN_NAME}`
       }),
 
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'process.env.BUILD_NUMBER': process.env.BUILD_NUMBER || 'dev',
-        'process.env.DOMAIN': JSON.stringify(process.env.DOMAIN),
+        'process.env.FRONTEND_ROOT_DOMAIN_NAME': JSON.stringify(process.env.FRONTEND_ROOT_DOMAIN_NAME),
         'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL),
         '__DEV__': isEnvDevelopment,
         '__PROD__': isEnvProduction,

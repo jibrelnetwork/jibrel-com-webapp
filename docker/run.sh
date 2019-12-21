@@ -20,7 +20,10 @@ else
     dockerize \
         -template /etc/nginx/nginx.tpl.conf:/etc/nginx/nginx.conf \
         -template /etc/nginx/include.d/headers.tpl.conf:/etc/nginx/include.d/headers.conf \
-        -template /app/id/settings.js:/app/id/settings.js
+        -template /app/company/index.html:/app/company/index.html \
+        -template /app/id/settings.js:/app/id/settings.js \
+        -template /app/id/index.html:/app/id/index.html \
+        -template /app/investor/index.html:/app/investor/index.html
 
     /usr/sbin/nginx
 fi
