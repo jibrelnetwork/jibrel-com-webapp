@@ -15,9 +15,9 @@ import {
 import KYCLayout from 'layouts/KYCLayout'
 
 import {FormProps} from '../FormProps'
-import {checkEmptyFields} from '../checkEmptyFieldsValidator'
 import style from './style.scss'
 import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
+import isRequired from 'utils/validators/isRequired'
 
 const emptyFileField = {
     fileName: '',
@@ -52,25 +52,28 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
-                validate={checkEmptyFields}
                 render={({hasValidationErrors, handleSubmit, submitting}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
                         <Input
                             name='companyName'
                             label={'Company Name'}
+                            validate={isRequired({i18n})}
                         />
                         <Input
                             name='tradingName'
                             label={'Trading Name'}
+                            validate={isRequired({i18n})}
                         />
                         <Input
                             name='dateOfIncorporation'
                             label={'Date of Incorporation'}
                             placeholder={'DD/MM/YYYY'}
+                            validate={isRequired({i18n})}
                         />
                         <Input
                             name='placeOfIncorporation'
                             label={'Place of Incorporation'}
+                            validate={isRequired({i18n})}
                         />
 
                         <h3 className={style.groupTitle}>
