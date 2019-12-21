@@ -61,7 +61,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
             <h3 className={style.groupTitle}>Current Residential Address</h3>
             <Input
                 name={`beneficiaries[${index}].phoneNumber`}
-                label="Primary Telephone (Optional)"
+                label="Primary Telephone"
             />
             <Input
                 name={`beneficiaries[${index}].email`}

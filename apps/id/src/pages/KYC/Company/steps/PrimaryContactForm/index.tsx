@@ -169,10 +169,12 @@ const mapState = ({kycOrganization, kyc}) => ({
     documents: kyc.documents,
 })
 
-const mapDispatch = ({kyc, kycOrganizationValidate}) => ({
+const mapDispatch = ({kyc, kycOrganization, kycOrganizationValidate}) => ({
     uploadDocument: kyc.uploadDocument,
     submit: (callback) => (values) =>
-        kycOrganizationValidate.validate({step: 2, ...values})
+        kycOrganizationValidate
+            .validate({step: 2, ...values})
+            .then(() => kycOrganization.addValues(values))
             .then(callback)
             .catch(handleAsyncValidationErrors),
 })

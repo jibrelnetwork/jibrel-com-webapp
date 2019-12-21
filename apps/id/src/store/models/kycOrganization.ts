@@ -20,14 +20,6 @@ const initialFormValues = {
         country: '',
     },
 
-    companyAddressPrincipal: {
-        streetAddress: '',
-        apartment: '',
-        city: '',
-        postCode: '',
-        country: '',
-    },
-
     beneficiaries: [
         {
             fullName: '',
@@ -50,26 +42,19 @@ const initialFormValues = {
         },
     ],
 
-    directors: [
-        '',
-    ],
+    directors: [{
+        fullName: '',
+    }],
 }
 
 export const kycOrganization = createModel({
     state: {
         values: initialFormValues,
     },
-    effects: ({kycOrganization}) => ({
-
-        addValues: (payload) =>
-            this.setValues({
-                ...kycOrganization.values,
-                ...payload,
-            }),
-
-        submit: async () => axios.post('/v1/kyc/organization', kycOrganization.values),
+    effects: () => ({
+        submit: async (_, { kycOrganization }) => axios.post('/v1/kyc/organization', kycOrganization.values),
     }),
     reducers: {
-        setValues: (state, values) => ({ ...state, values }),
+        addValues: (state, values) => ({ ...state, values: {...state.values, ...values } }),
     },
 })

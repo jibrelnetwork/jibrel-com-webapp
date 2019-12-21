@@ -20,16 +20,13 @@ const PROCESS_STEPS = [
     DirectorForm,
 ]
 
-const submit = () => console.log('Form submit')
-
 const Company: React.FunctionComponent = () => {
 
     const fieldValues = {
 
     }
 
-    // Fixme: initial 0 step
-    const [currentStepNumber, setStep] = useState(4)
+    const [currentStepNumber, setStep] = useState(0)
 
     const backHandler = currentStepNumber === 0
         ? () => router.navigate('KYC')
@@ -44,7 +41,11 @@ const Company: React.FunctionComponent = () => {
         : 'NEXT'
 
     const nextHandler = currentStepNumber === size(PROCESS_STEPS) - 1
-        ? submit
+        ? () => {
+            console.log('Successfully submitted Company KYC. Navigating to Success screen.')
+            //TODO: Implement real navigation
+            // router.navigate('KYC/success')
+        }
         : () => setStep(currentStepNumber + 1)
 
     const Form = get(PROCESS_STEPS, currentStepNumber)

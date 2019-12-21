@@ -110,9 +110,11 @@ const mapState = ({kycOrganization}) => ({
     formValues: kycOrganization.values,
 })
 
-const mapDispatch = ({kycOrganizationValidate}) => ({
+const mapDispatch = ({kycOrganization, kycOrganizationValidate}) => ({
     submit: (callback) => (values) =>
-        kycOrganizationValidate.validate({step: 1, ...values})
+        kycOrganizationValidate
+            .validate({step: 1, ...values})
+            .then(() => kycOrganization.addValues(values))
             .then(callback)
             .catch(handleAsyncValidationErrors),
 })
