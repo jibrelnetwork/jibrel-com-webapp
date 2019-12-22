@@ -5,9 +5,9 @@ import Icon from '../Icon'
 import style from './style.scss'
 import inputStyle from '../Input/style.scss'
 import MessageWrapper from '../FieldWrapper/MessageWrapper'
-import { MessageType } from '../FieldWrapper/types'
+import { MessageType } from '../FieldWrapper'
 
-import { 
+import {
   withField,
   withFieldUX,
 } from '../FieldWrapper'
@@ -116,7 +116,7 @@ const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
         <label
           className={cc([
             style.input,
-            inputStyle.input,
+            inputStyle.wrapper,
             error && style.error,
             fileName && style.active,
             isLoading && style.loading,
@@ -134,7 +134,7 @@ const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
           <div className={style.name}>{fileName}</div>
           <div className={style.placeholder}>{fileName ? '' : placeholder}</div>
           <div className={style.size}>{fileSize ? getFileSize(fileSize) : 'Max size 10 MB' }</div>
-          <div className={inputStyle.frame} />
+          <div className={inputStyle.border} />
           <div className={style.border} />
           <p
             className={cc([
