@@ -10,9 +10,5 @@
 
 .back {
   height: 24px;
-}
-
-.subtitle {
-  @include font-h2-l;
-  padding: 24px 0;
+  margin-bottom: 24px;
 }

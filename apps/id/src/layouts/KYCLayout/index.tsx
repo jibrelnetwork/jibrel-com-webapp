@@ -11,14 +11,12 @@ import ProfileLayout from '../ProfileLayout'
 export interface KYCLayoutProps {
   backHandler?: () => void;
   children: React.ReactNode;
-  title?: string;
   backLabel?: string;
 }
 
 const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
   backHandler = noop,
   children,
-  title = '',
   backLabel = '',
 }) => {
   const i18n = useI18n()
@@ -28,7 +26,7 @@ const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
       <h1
         className={style.title}
       >
-        {i18n._('KYC.Personal.title')}
+        {i18n._('KYC.title')}
       </h1>
       <LinkButton
         onClick={backHandler}
@@ -37,9 +35,6 @@ const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
       >
         {backLabel}
       </LinkButton>
-      <h2 className={style.subtitle}>
-        {title}
-      </h2>
       {children}
     </ProfileLayout>
   )

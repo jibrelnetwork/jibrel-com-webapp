@@ -2,14 +2,17 @@
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
 .button {
+  flex: 1 0 auto;
   position: relative;
-  display: inline-block;
-  width: 360px;
+  display: flex;
+  width: 100%;
+  flex-direction: column;
   padding: 16px;
   background: $color-white;
   border: none;
   border-radius: 12px;
   text-align: left;
+  margin: 0 0 16px;
 
   &::after {
     position: absolute;
@@ -31,10 +34,6 @@
     .icon {
       @include icon-color($color-blue);
     }
-  }
-
-  &:not(:first-child) {
-    margin-left: 24px;
   }
 
   .icon {
