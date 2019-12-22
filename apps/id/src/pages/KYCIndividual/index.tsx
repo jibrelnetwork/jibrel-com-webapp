@@ -30,6 +30,7 @@ import {
   PersonalForm,
   ResidencyForm,
 } from './steps'
+import style from './style.scss'
 
 export interface KYCIndividualProps {
   goBack: () => void;
@@ -69,10 +70,10 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
   return (
     <KYCLayout
       backHandler={goBack}
-      title={getTitle(i18n, status)}
       backLabel={(status === KYCIndividualStatus.personal) ? 'Back to start' : 'Previous'}
     >
       <div className={grid.grid}>
+        <h2 className={`${grid.column} ${style.title}`}>{getTitle(i18n, status)}</h2>
         <Form
           onSubmit={submit}
           initialValues={values}

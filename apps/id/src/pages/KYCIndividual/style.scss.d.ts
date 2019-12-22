@@ -6,9 +6,6 @@ declare namespace StyleScssModule {
     grid: string;
     "group-title": string;
     groupTitle: string;
-    step: string;
-    "step-title": string;
-    stepTitle: string;
     submit: string;
     title: string;
   }

@@ -11,13 +11,27 @@ import axios from '../axios'
 
 import {
   FormSubmitResult,
-} from '../types/form'
+} from 'store/types'
 
 import {
   KYCIndividualState,
   KYCIndividualStatus,
   KYCIndividualValues,
 } from '../types/kyc'
+
+const getStep = (status: KYCIndividualStatus): number => {
+  switch (status) {
+    case KYCIndividualStatus.personal: {
+      return 0
+    }
+    case KYCIndividualStatus.residency: {
+      return 1
+    }
+    case KYCIndividualStatus.income: {
+      return 2
+    }
+  }
+}
 
 export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCIndividualState>({
   state: {
@@ -50,10 +64,14 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
       values: Partial<KYCIndividualValues>,
       rootState: RootState,
     ): FormSubmitResult<KYCIndividualValues> {
-      console.log('values', values)
-
       try {
-        await axios.post('/v1/kyc/individual/validate', values)
+        await axios.post(
+          '/v1/kyc/individual/validate',
+          {
+            step: getStep(rootState.kycIndividual.status),
+            ...values,
+          },
+        )
 
         this.setValues({
           ...rootState.kycIndividual.values,
@@ -63,25 +81,39 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
         switch(rootState.kycIndividual.status) {
           case KYCIndividualStatus.personal: {
             this.setStatus(KYCIndividualStatus.residency)
-  
+
             return
           }
 
           case KYCIndividualStatus.residency: {
             this.setStatus(KYCIndividualStatus.income)
-  
+
             return
           }
-  
+
           case KYCIndividualStatus.income: {
             return this.sendForm()
           }
-  
+
           default:
             return
         }
       } catch (error) {
-        console.error(error)
+        if (!error.response) {
+          throw error
+        }
+
+        const { status } = error.response
+        if (status === 400) {
+          console.log(error.formValidation)
+          return error.formValidation
+        }
+
+        if (status === 409) {
+          window.location.reload()
+        }
+
+        throw error
       }
     },
     async sendForm (
@@ -89,7 +121,11 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
       rootState: RootState,
     ): FormSubmitResult<KYCIndividualValues> {
       try {
-        await axios.post('/v1/kyc/individual', rootState.kycIndividual.values)
+        await axios.post('/v1/kyc/individual', {
+          ...rootState.kycIndividual.values,
+          amlAgreed: rootState.kycIndividual.values.terms,
+          uboConfirmed: rootState.kycIndividual.values.terms,
+        })
       } catch (error) {
         console.error(error)
       }
