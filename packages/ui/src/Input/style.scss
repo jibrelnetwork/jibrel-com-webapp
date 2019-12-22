@@ -54,6 +54,10 @@
   border: none;
   padding: 0;
 
+  &::placeholder {
+    color: $color-black-40;
+  }
+
   &:focus {
     ~ .border {
       border-color: $color-blue;
