@@ -133,8 +133,7 @@ export type KYCIndividualState = {
 }
 
 export enum KYCStatus {
-  NONE = 'NONE',
-  REVIEW = 'REVIEW',
-  REJECTED = 'REJECTED',
-  VERIFIED = 'VERIFIED',
+  pending = 'pending',
+  verified = 'verified',
+  unverified = 'unverified',
 }
