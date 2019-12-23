@@ -8,7 +8,7 @@ import settings from 'app/settings'
 const NEXT_ROUTES = {
   [UserStatus.EMAIL_UNVERIFIED]: ['EmailVerification'],
   [UserStatus.PHONE_UNVERIFIED]: ['VerifyPhone', 'VerifyPhoneCode'],
-  [UserStatus.KYC_UNSET]: ['KYC'],
+  [UserStatus.KYC_UNSET]: ['KYC', 'KYCIndividual', 'KYCCompany'],
   [UserStatus.KYC_PENDING]: ['KYCSuccess'],
 }
 
