@@ -117,7 +117,7 @@ const mapDispatch = ({kycOrganizationValidate, kycOrganization}) => ({
     submit: (callback) => (values) =>
         kycOrganizationValidate
             .validate({step: 4, ...values, amlAgreed: values.terms, uboConfirmed: values.terms})
-            .then(() => kycOrganization.addValues(values))
+            .then(() => kycOrganization.addValues({...values, amlAgreed: values.terms, uboConfirmed: values.terms}))
             .then(kycOrganization.submit)
             .then(callback)
             .catch(handleAsyncValidationErrors),
