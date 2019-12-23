@@ -8,9 +8,12 @@ import {connect} from 'react-redux'
 import {
     BigButtonSubmit,
     LinkButton,
+    Checkbox,
 } from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
+import isRequired from 'utils/validators/isRequired'
+import settings from 'app/settings'
 
 import {FormProps} from '../FormProps'
 import style from '../style.scss'
@@ -39,7 +42,7 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                              handleSubmit,
                              submitError,
                              form: {
-                                 mutators: {push}
+                                 mutators: {push},
                              },
                          }) => (
                     <form onSubmit={handleSubmit} className={style.step}>
@@ -50,7 +53,7 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                             {({fields}) =>
                                 fields.map((name, index) => (
                                     <DirectorFields
-                                        isPrimary={index===0}
+                                        isPrimary={index === 0}
                                         key={name}
                                         index={index}
                                         deleteHandler={() => fields.remove(index)}
@@ -59,9 +62,40 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                             }
                         </FieldArray>
 
-                        <LinkButton type="button" onClick={() => push('directors', undefined)}>
+                        <LinkButton className={style.addLink} type="button"
+                                    onClick={() => push('directors', undefined)}>
                             + ADD MORE DIRECTORS
                         </LinkButton>
+
+                        <Checkbox
+                            name='terms'
+                            validate={isRequired({i18n})}
+                        >
+                            {/* FIXME: list of documents differs from figma*/}
+                            {/*<span>*/}
+                            {/*  I agree to Jibrel’s <a*/}
+                            {/*    href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}*/}
+                            {/*    target='_blank'*/}
+                            {/*>Terms and Conditions</a>, <a*/}
+                            {/*    href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}*/}
+                            {/*    target='_blank'*/}
+                            {/*>Privacy Policy</a> and <a*/}
+                            {/*    href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}*/}
+                            {/*    target='_blank'*/}
+                            {/*>*/}
+                            {/*    Risk Disclosures*/}
+                            {/*  </a>.*/}
+                            {/*</span>*/}
+
+                            <span>
+                              I agree to Jibrel’s <a
+                                href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}
+                                target='_blank'
+                            >
+                                Risk Disclosures
+                              </a>.
+                            </span>
+                        </Checkbox>
 
                         {submitError && <div className={style.submitError}>{submitError}</div>}
 
@@ -82,7 +116,7 @@ const mapState = ({kycOrganization}) => ({
 const mapDispatch = ({kycOrganizationValidate, kycOrganization}) => ({
     submit: (callback) => (values) =>
         kycOrganizationValidate
-            .validate({step: 4, ...values})
+            .validate({step: 4, ...values, amlAgreed: values.terms, uboConfirmed: values.terms})
             .then(() => kycOrganization.addValues(values))
             .then(kycOrganization.submit)
             .then(callback)
