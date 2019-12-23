@@ -1,4 +1,6 @@
 import React from 'react'
+import cc from 'classcat'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 import {connect} from 'react-redux'
@@ -29,6 +31,13 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
             backHandler={backHandler}
             backLabel={backLabel}
         >
+          <div
+            className={cc([
+              grid.grid,
+              style.address,
+              style.background,
+            ])}
+          >
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
@@ -103,6 +112,7 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
                     </form>
                 )}
             />
+          </div>
         </KYCLayout>
     )
 }

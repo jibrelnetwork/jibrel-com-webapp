@@ -18,10 +18,10 @@
 }
 
 .step {
-  width: $column-l-5;
+  width: $column-s-4;
 
   @include screen('>xsmall') {
-    width: $column-s-4;
+    width: $column-m-5;
   }
 
   @include screen('>small') {
@@ -54,4 +54,33 @@
 .submit-error {
   @include font-body-s;
   color: #DC3632;
+}
+
+.background {
+  background-size: 50%;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: top right;
+
+  @include screen('>small') {
+    &.company {
+      background-image: url('../../../../public/images/pic_kyc_company.svg');
+    }
+
+    &.address {
+      background-image: url('../../../../public/images/pic_kyc_geo.svg');
+    }
+
+    &.contact {
+      background-image: url('../../../../public/images/pic_kyc_man.svg');
+    }
+
+    &.beneficiary {
+      background-image: url('../../../../public/images/pic_kyc_plus.svg');
+    }
+
+    &.director {
+      background-image: url('../../../../public/images/pic_kyc_docs.svg');
+    }
+  }
 }

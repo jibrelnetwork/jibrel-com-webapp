@@ -1,4 +1,7 @@
 import React from 'react'
+import cc from 'classcat'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
+import { I18n } from '@lingui/core'
 import { connect } from 'react-redux'
 
 import {
@@ -7,9 +10,7 @@ import {
 } from 'react-final-form'
 
 import KYCLayout from 'layouts/KYCLayout'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { useI18n } from 'app/i18n'
-import { I18n } from '@lingui/core'
 import { FormSubmit } from 'store/types/form'
 
 import {
@@ -25,12 +26,13 @@ import {
   RootState,
 } from 'store'
 
+import style from './style.scss'
+
 import {
   IncomeForm,
   PersonalForm,
   ResidencyForm,
 } from './steps'
-import style from './style.scss'
 
 export interface KYCIndividualProps {
   goBack: () => void;
@@ -72,7 +74,13 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
       backHandler={goBack}
       backLabel={(status === KYCIndividualStatus.personal) ? 'Back to start' : 'Previous'}
     >
-      <div className={grid.grid}>
+      <div
+        className={cc([
+          grid.grid,
+          style[status],
+          style.background,
+        ])}
+      >
         <h2 className={`${grid.column} ${style.title}`}>{getTitle(i18n, status)}</h2>
         <Form
           onSubmit={submit}
