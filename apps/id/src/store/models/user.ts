@@ -3,6 +3,7 @@ import { FORM_ERROR } from 'final-form'
 import { createModel, ModelConfig } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
+import settings from 'app/settings'
 import { RootState } from 'store'
 import { LanguageCode } from 'data/languages'
 
@@ -76,7 +77,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
       if (profile.isPhoneConfirmed) {
         if (profile.kycStatus === KYCStatus.verified) {
           this.setStatus(UserStatus.VERIFIED)
-          dispatch(routerActions.navigateTo('Account'))
+          window.location.href = `${settings.HOST_CMS}/${profile.language}`
         } else {
           this.setStatus(UserStatus.KYC_UNSET)
         }
