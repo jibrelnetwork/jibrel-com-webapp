@@ -1,76 +1,29 @@
-import React, { useEffect } from 'react'
+import React, { useState } from 'react'
 import cc from 'classcat'
 
 import Icon from '../Icon'
 import style from './style.scss'
 import inputStyle from '../Input/style.scss'
-import MessageWrapper from '../FieldWrapper/MessageWrapper'
-import { MessageType } from '../FieldWrapper/types'
+import { withMessage } from '../FieldWrapper'
 
-import {
-  withField,
-  withFieldUX,
-} from '../FieldWrapper'
+import { withFieldUX } from '../FieldWrapper'
+import { Field } from 'react-final-form'
 
 export interface FileInputProps {
-  onFileChange: (file: File | void) => void;
+  onUpload: (file: File) => Promise<string>;
+  onSetUploadError: (err: string | undefined) => void;
+  accept?: string;
   label: string;
-  error?: string;
+  hasError?: boolean;
   message?: string;
-  fileName?: string;
   className?: string;
   placeholder?: string;
-  messageType?: MessageType;
-  fileSize?: number;
-  isLoading?: boolean;
   isDisabled?: boolean;
+  value: string;
+  onChange: (id: string | void) => void;
 }
 
 const KILO = 1024
-
-const getMessage = ({
-  error,
-  message,
-  fileName,
-  messageType,
-  isLoading,
-}: FileInputProps): {
-  message: string | undefined;
-  messageType: MessageType | undefined;
-} => {
-  if (message && messageType) {
-    return {
-      message,
-      messageType,
-    }
-  }
-
-  if (isLoading) {
-    return {
-      message: 'Uploading...',
-      messageType: MessageType.info,
-    }
-  }
-
-  if (error) {
-    return {
-      message: error,
-      messageType: MessageType.error,
-    }
-  }
-
-  if (fileName) {
-    return {
-      message: 'Uploaded',
-      messageType: MessageType.success,
-    }
-  }
-
-  return {
-    message: undefined,
-    messageType: undefined,
-  }
-}
 
 const getFileSize = (bytes: number): string => {
   const kBytes = (bytes / KILO)
@@ -80,28 +33,47 @@ const getFileSize = (bytes: number): string => {
     : `${(kBytes / KILO).toFixed(1)} MB`
 }
 
-const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
-  const {
-    onFileChange,
-    error,
-    label,
-    fileSize,
-    fileName,
-    className,
-    placeholder,
-    onChange,
-    value,
-    id,
-    isLoading = false,
-    isDisabled = false,
-    ...otherProps
-  } = props
+// FIXME: add types
+const withFileField = (
+  FileInputComponent,
+) => {
+  const WithFileFieldWrapper = (props) => {
+    const [error, setError] = useState()
+
+    return (
+      <Field
+        {...props}
+        component={FileInputComponent}
+        onSetUploadError={setError}
+        error={error}
+      />
+    )
+  }
+
+  return WithFileFieldWrapper
+}
+
+const FileInput: React.FunctionComponent<FileInputProps> = ({
+  onUpload,
+  onSetUploadError,
+  accept = 'image/png,image/jpg,image/jpeg,.pdf',
+  hasError = false,
+  label,
+  className,
+  placeholder,
+  isDisabled = false,
+  value,
+  onChange,
+  ...props
+}) => {
+  const [isLoading, setIsLoading] = useState(false)
+  const [file, setFile] = useState<File>()
 
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault()
 
-    if (fileName) {
-      onFileChange(undefined)
+    if (value) {
+      onChange(undefined)
     }
 
     e.stopPropagation()
@@ -111,58 +83,69 @@ const FileInput: React.FunctionComponent<FileInputProps> = (props) => {
     const target = e.target as HTMLInputElement
     const file: File | void = target.files ? target.files[0] : undefined
 
-    onFileChange(file)
+    if (file) {
+      setFile(file)
+      onSetUploadError(undefined)
+      onChange(undefined)
+      setIsLoading(true)
+      onUpload(file)
+        .then((id) => {
+          onChange(id)
+          setIsLoading(false)
+        })
+        .catch(() => {
+          onSetUploadError('Error uploading file')
+          onChange(undefined)
+          setIsLoading(false)
+        })
+    }
   }
 
-  // Fixme: Preserve raw "value" prop
-  useEffect(() => onChange(id), [id])
-
   return (
-      <MessageWrapper {...getMessage(props)}>
-        <label
-          className={cc([
-            style.input,
-            inputStyle.input,
-            error && style.error,
-            fileName && style.active,
-            isLoading && style.loading,
-            className,
-          ])}
-        >
-          <input
-            {...otherProps}
-            onChange={handleChange}
-            className={style.field}
-            type='file'
-            accept='image/png,image/jpg,image/jpeg,.pdf'
-            disabled={isDisabled || isLoading}
-          />
-          <div className={style.name}>{fileName}</div>
-          <div className={style.placeholder}>{fileName ? '' : placeholder}</div>
-          <div className={style.size}>{fileSize ? getFileSize(fileSize) : 'Max size 10 MB' }</div>
-          <div className={inputStyle.frame} />
-          <div className={style.border} />
-          <p
-            className={cc([
-              style.label,
-              inputStyle.label,
-            ])}
-          >
-            {label}
-          </p>
-          <button
-            onClick={handleClick}
-            className={style.button}
-            type='button'
-          >
-            <Icon
-              className={style.icon}
-              name={`ic_${fileName ? 'close' : 'add'}_24`}
-            />
-          </button>
-        </label>
-      </MessageWrapper>
+    <label
+      className={cc([
+        style.input,
+        inputStyle.wrapper,
+        hasError && style.error,
+        file && style.active,
+        isLoading && style.loading,
+        className,
+      ])}
+    >
+      <input
+        {...props}
+        onChange={handleChange}
+        className={style.field}
+        type='file'
+        accept={accept}
+        disabled={isDisabled || isLoading}
+        key={value}
+      />
+      <div className={style.name}>{value && file && file.name}</div>
+      <div className={style.placeholder}>{value ? '' : placeholder}</div>
+      <div className={style.size}>{(value && file && file.size) ? getFileSize(file.size) : 'Max size 10 MB' }</div>
+      <div className={inputStyle.border} />
+      <div className={style.border} />
+      <p
+        className={cc([
+          style.label,
+          inputStyle.label,
+        ])}
+      >
+        {label}
+      </p>
+      <button
+        onClick={handleClick}
+        className={style.button}
+        type='button'
+      >
+        <Icon
+          className={style.icon}
+          name={`ic_${value ? 'close' : 'add'}_24`}
+        />
+      </button>
+    </label>
   )
 }
 
-export default withField(withFieldUX(FileInput))
+export default withFileField(withFieldUX(withMessage(FileInput)))

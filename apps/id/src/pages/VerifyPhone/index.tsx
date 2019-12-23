@@ -22,6 +22,7 @@ import { FormSubmitResult, PhoneAPINumberFields } from 'store/types'
 
 import style from './style.scss'
 import { Dispatch } from 'store'
+import { AuthLayout } from 'layouts'
 
 const VERIFY_PHONE_INITIAL_VALUES: PhoneAPINumberFields = {
   country: 'us',
@@ -76,16 +77,18 @@ const VerifyPhone: React.FunctionComponent<VerifyPhoneProps> = ({
   onSubmit,
 }) => {
   return (
-    <div className={authStyle.main}>
-      <Form
-        onSubmit={(values: PhoneAPINumberFields): FormSubmitResult<PhoneAPINumberFields> => onSubmit({
-          ...values,
-          countryCode: COUNTRIES_INDEX[values.country].ccc,
-        })}
-        render={VerifyPhoneForm}
-        initialValues={VERIFY_PHONE_INITIAL_VALUES}
-      />
-    </div>
+    <AuthLayout>
+      <div className={authStyle.main}>
+        <Form
+          onSubmit={(values: PhoneAPINumberFields): FormSubmitResult<PhoneAPINumberFields> => onSubmit({
+            ...values,
+            countryCode: COUNTRIES_INDEX[values.country].ccc,
+          })}
+          render={VerifyPhoneForm}
+          initialValues={VERIFY_PHONE_INITIAL_VALUES}
+        />
+      </div>
+    </AuthLayout>
   )
 }
 

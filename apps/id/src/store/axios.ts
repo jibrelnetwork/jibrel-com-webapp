@@ -1,5 +1,7 @@
 import axios from 'axios'
 import mapValues from 'lodash-es/mapValues'
+import isString from 'lodash-es/isString'
+import get from 'lodash-es/get'
 import { FORM_ERROR } from 'final-form'
 
 import settings from 'app/settings'
@@ -12,13 +14,16 @@ const instance = axios.create({
   withCredentials: true,
 })
 
-axios.interceptors.response.use(function (response) {
+instance.interceptors.response.use(function (response) {
   return response
 }, function (error) {
   if (error.response && error.response.status === 400) {
+    const errors = get(error.response, 'data.errors') || get(error.response, 'data.data.errors') || {}
     error.formValidation = mapValues(
-      error.response.data.errors,
-      (e) => e[0].message,
+      errors,
+      (e) => isString(e[0])
+        ? e[0]
+        : e[0].message,
     )
 
     if (error.formValidation[API_FORM_ERROR]) {

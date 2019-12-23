@@ -2,6 +2,7 @@ import React from 'react'
 import cc from 'classcat'
 import { Icon } from '@jibrelcom/ui'
 
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import style from './style.scss'
 import { KYCType } from '../../types'
 

@@ -5,7 +5,7 @@ import { FormRenderProps } from 'react-final-form'
 import {
   Input,
   FileInput,
-  BigButton,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
 
 import CountrySelect from 'components/CountrySelect'
@@ -30,13 +30,8 @@ export interface PersonalFormProps {
 const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
   uploadDocument,
   formProps,
-  documents,
 }) => {
   const i18n = useI18n()
-
-  const handlePassportChange = async (file: File | void): Promise<void> => {
-    await uploadDocument({ file, fieldName: 'passportDocument' })
-  }
 
   return (
     <form
@@ -54,12 +49,10 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
         name='lastName'
       />
       <Input
-        validate={isRequired({ i18n })}
         name='middleName'
         label='Middle Name (Optional)'
       />
       <Input
-        validate={isRequired({ i18n })}
         name='alias'
         label='Alias (Optional)'
       />
@@ -67,7 +60,7 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
         validate={isRequired({ i18n })}
         label={i18n._('KYC.Personal.input.birthDate.title')}
         name='birthDate'
-        placeholder='DD/MM/YYYY'
+        placeholder='YYYY-MM-DD'
       />
       <CountrySelect
         validate={isRequired({ i18n })}
@@ -86,22 +79,21 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
       <Input
         validate={isRequired({ i18n })}
         label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
-        placeholder='DD/MM/YYYY'
+        placeholder='YYYY-MM-DD'
         name='passportExpirationDate'
       />
       <FileInput
-        onFileChange={handlePassportChange}
+        validate={isRequired({ i18n })}
+        onUpload={uploadDocument}
         label={i18n._('KYC.Personal.input.passportFrontPage.title')}
         name='passportDocument'
         placeholder='PNG, PDF, JPG'
-        {...(documents.passportDocument || {})}
       />
-      <BigButton
-        type='submit'
+      <BigButtonSubmit
         className={style.submit}
       >
         {i18n._('KYC.form.action.next')}
-      </BigButton>
+      </BigButtonSubmit>
     </form>
   )
 }

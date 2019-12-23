@@ -1,16 +1,8 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    centered: string;
-    column: string;
-    form: string;
-    grid: string;
-    "group-title": string;
-    groupTitle: string;
-    step: string;
-    "step-title": string;
-    stepTitle: string;
-    submit: string;
-    title: string;
+    code: string;
+    invisible: string;
+    mask: string;
   }
 }
 

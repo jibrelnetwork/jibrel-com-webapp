@@ -49,7 +49,10 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'EmailVerification',
     path: '/email-verification',
-    canActivate: isLoggedIn,
+    canActivate: composeActivations([
+      isLoggedIn,
+      isValidVerificationStep,
+    ]),
   },
 
   {

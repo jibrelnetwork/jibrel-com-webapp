@@ -1,17 +1,24 @@
 import React from 'react'
 import cc from 'classcat'
 
-import Input from '../Input'
+import { InputBase } from '../Input'
 import style from './style.scss'
 import { GenericFieldProps } from '../FieldWrapper/types'
+import {
+  withField,
+  withFieldUX,
+  withMessage,
+} from '../FieldWrapper'
 
 export interface PhoneInputProps {
   ccc: string;
   label?: string;
   className?: string;
+  hasError?: boolean;
+  isDisabled?: boolean;
 }
 
-export const clearPhoneNumber = (ccc: string) => (phoneNumber: string): string => {
+export const clearPhoneNumber = ({ ccc }: PhoneInputProps) => (phoneNumber: string): string => {
   if (!phoneNumber) {
     return phoneNumber
   }
@@ -41,15 +48,15 @@ const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> =
       <span className={style.ccc}>
         {ccc}
       </span>
-      <Input
-        {...props}
+      <InputBase
         label={label}
-        inputClassName={style.input}
-        labelClassName={style.label}
-        parse={clearPhoneNumber(ccc)}
+        classNames={style}
+        {...props}
       />
     </div>
   )
 }
 
-export default React.memo(PhoneInput)
+export default withField(withFieldUX(React.memo(withMessage(PhoneInput))), {
+  parse: clearPhoneNumber,
+})

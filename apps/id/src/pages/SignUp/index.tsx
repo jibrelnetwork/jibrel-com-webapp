@@ -31,6 +31,7 @@ import {
 
 import app from '../../app.scss'
 import signup from './signup.scss'
+import settings from 'app/settings'
 
 const SIGNUP_INITIAL_VALUES: SignUpFormFields = {
   firstName: '',
@@ -93,10 +94,11 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
       >
         <span>I agree to Jibrel's</span>
         <a
-          href='#'
+          href={`${settings.HOST_CMS}/docs/en/legal-and-compliance.pdf`}
+          target='_blank'
           className={signup.terms}
         >
-          Terms and Conditions and Privacy Policy
+          AML & Compliance Policy
         </a>
       </Checkbox>
       <BigButtonSubmit

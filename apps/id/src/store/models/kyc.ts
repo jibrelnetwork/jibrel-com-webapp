@@ -14,53 +14,17 @@ export const kyc = createModel({
     documents: {},
   },
   effects: () => ({
-    async uploadDocument ({
-      file,
-      fieldName,
-    }: {
-      file: File | void;
-      fieldName: string;
-    }): Promise<string | void> {
-      try {
-        if (!file) {
-          this.removeDocument(fieldName)
+    async uploadDocument (file: File): Promise<string> {
+      const formData = new FormData()
+      formData.append('file', file)
 
-          return
-        }
+      const { data: { data } } = await axios.post('/v1/kyc/document', formData, {
+        headers: {
+          'content-type': 'multipart/form-data',
+        },
+      })
 
-        this.setDocumentLoading(fieldName)
-        const formData = new FormData()
-        formData.append('file', file)
-
-        const { data: { data } } = await axios.post('/v1/kyc/document', formData, {
-          headers: {
-            'content-type': 'multipart/form-data',
-          },
-        })
-
-        this.setDocument({
-          fieldName,
-          data: {
-            id: data.id,
-            fileName: file.name,
-            fileSize: file.size,
-          },
-        })
-
-        return data.id
-      } catch (error) {
-        console.error(error)
-
-        this.setDocument({
-          fieldName,
-          data: {
-            id: undefined,
-            fileName: undefined,
-            fileSize: undefined,
-            error: 'Upload error',
-          },
-        })
-      }
+      return data.id
     },
   }),
   reducers: {

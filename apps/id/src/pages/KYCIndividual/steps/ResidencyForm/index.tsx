@@ -5,7 +5,7 @@ import { FormRenderProps } from 'react-final-form'
 import {
   Input,
   FileInput,
-  BigButton,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
 
 import CountrySelect from 'components/CountrySelect'
@@ -34,10 +34,6 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
 }) => {
   const i18n = useI18n()
 
-  const handlePassportChange = async (file: File | void): Promise<void> => {
-    await uploadDocument({ file, fieldName: 'proofOfAddressDocument' })
-  }
-
   return (
     <form
       onSubmit={formProps.handleSubmit}
@@ -49,7 +45,6 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
         label='Street Address'
       />
       <Input
-        validate={isRequired({ i18n })}
         name='apartment'
         label='Apartment, Unit or Suite (Optional)'
       />
@@ -59,7 +54,6 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
         label='City'
       />
       <Input
-        validate={isRequired({ i18n })}
         name='postCode'
         label='Post Code (Optional)'
       />
@@ -71,18 +65,17 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
       />
       <FileInput
         validate={isRequired({ i18n })}
-        onFileChange={handlePassportChange}
+        onUpload={uploadDocument}
         placeholder='PNG, PDF, JPG'
         name='proofOfAddressDocument'
         label='Proof of Address (Utility Bill, Bank Statements)'
         {...(documents.proofOfAddressDocument || {})}
       />
-      <BigButton
-        type='submit'
+      <BigButtonSubmit
         className={style.submit}
       >
         {i18n._('KYC.form.action.next')}
-      </BigButton>
+      </BigButtonSubmit>
     </form>
   )
 }
