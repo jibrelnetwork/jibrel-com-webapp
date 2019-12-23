@@ -9,6 +9,7 @@ import { withField, withFieldUX, withMessage } from '../FieldWrapper'
 import Icon from '../Icon'
 
 export interface SelectProps {
+  name: string;
   label: string;
   placeholder?: string;
   defaultValue?: string;
