@@ -13,7 +13,6 @@
 .centered {
   @include margin-horizontal(24px);
   display: flex;
-  flex-direction: column;
 
   @include screen(">xsmall") {
     @include margin-horizontal(32px);

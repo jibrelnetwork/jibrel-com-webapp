@@ -42,6 +42,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           'navbar',
           '--black',
           grid.centered,
+          style.main,
         ])}
         data-is-open={isMenuOpen ? '1' : '0'}
       >
