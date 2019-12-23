@@ -307,7 +307,7 @@ const create = (dirname) => {
         PUBLIC_URL: PATHS.PUBLIC_URL,
         GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
         HOST_CMS: process.env.NODE_ENV === 'production'
-          ? '//{{ default .Env.FRONTEND_ROOT_DOMAIN_NAME "jibrel.com" }}'
+          ? '//{{ default .Env.FRONTEND_ROOT_DOMAIN_NAME \"jibrel.com\" }}'
           : `//${process.env.FRONTEND_ROOT_DOMAIN_NAME}`
       }),
 
@@ -369,7 +369,10 @@ const create = (dirname) => {
       isEnvProduction &&
       new CompressionPlugin({
         threshold: 1024,
-        exclude: /\.map$/,
+        exclude: [
+          /\.map$/,
+          /index\.html$/,
+        ],
         algorithm(input, compressionOptions, callback) {
           return zopfli.gzip(input, compressionOptions, callback)
         },
