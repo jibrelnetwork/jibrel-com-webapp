@@ -3,7 +3,6 @@ import { FORM_ERROR } from 'final-form'
 import { createModel, ModelConfig } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
-import settings from 'app/settings'
 import { RootState } from 'store'
 import { LanguageCode } from 'data/languages'
 
@@ -74,21 +73,16 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
       this.setProfileData(profile)
       this.setLanguageCode(profile.language)
 
-      if (profile.isPhoneConfirmed) {
-        if (profile.kycStatus === KYCStatus.verified) {
-          this.setStatus(UserStatus.VERIFIED)
-          window.location.href = `${settings.HOST_CMS}/${profile.language}`
-        } else {
-          this.setStatus(UserStatus.KYC_UNSET)
-        }
+      if (profile.kycStatus === KYCStatus.pending) {
+        this.setStatus(UserStatus.KYC_PENDING)
+      } else if (profile.kycStatus === KYCStatus.verified) {
+        this.setStatus(UserStatus.VERIFIED)
+      } else if (profile.isPhoneConfirmed) {
+        this.setStatus(UserStatus.KYC_UNSET)
       } else if (profile.isEmailConfirmed) {
         this.setStatus(UserStatus.PHONE_UNVERIFIED)
       } else if (profile.uuid) {
         this.setStatus(UserStatus.EMAIL_UNVERIFIED)
-      }
-
-      if (profile.kycStatus === KYCStatus.pending) {
-        dispatch(routerActions.navigateTo('KYCSuccess'))
       }
     },
     async signUp ({
