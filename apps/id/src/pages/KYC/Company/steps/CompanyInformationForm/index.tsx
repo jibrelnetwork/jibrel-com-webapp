@@ -59,7 +59,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                         <Input
                             name='dateOfIncorporation'
                             label={'Date of Incorporation'}
-                            placeholder={'DD/MM/YYYY'}
+                            placeholder={'YYYY-MM-DD'}
                             validate={isRequired({i18n})}
                         />
                         <Input
@@ -76,7 +76,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             name='commercialRegister'
                             label={'Commercial Register'}
                             placeholder={'PNG, PDF, JPG'}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
+                            onUpload={uploadDocument}
                             {...(get(documents, 'commercialRegister', emptyFileField))}
 
                             validate={isRequired({i18n})}
@@ -85,7 +85,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             name='shareholderRegister'
                             label={'Shareholder Register'}
                             placeholder={'PNG, PDF, JPG'}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
+                            onUpload={uploadDocument}
                             {...(get(documents, 'shareholderRegister', emptyFileField))}
                             validate={isRequired({i18n})}
                         />
@@ -93,7 +93,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             name='articlesOfIncorporation'
                             label={'Article of Incorporation'}
                             placeholder={'PNG, PDF, JPG'}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'articlesOfIncorporation'})}
+                            onUpload={uploadDocument}
                             {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
                             validate={isRequired({i18n})}
                         />

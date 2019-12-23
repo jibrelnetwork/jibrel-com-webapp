@@ -69,7 +69,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                         <Input
                             name='birthDate'
                             label={'Date of Birth'}
-                            placeholder={'DD/MM/YYYY'}
+                            placeholder={'YYYY-MM-DD'}
                             validate={isRequired({i18n})}
                         />
                         <CountrySelect
@@ -124,7 +124,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             name='proofOfAddressDocument'
                             label={'Proof of Address (Utility Bill, Bank Statement)'}
                             placeholder={'PNG, PDF, JPG'}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'proofOfAddressDocument'})}
+                            onUpload={uploadDocument}
                             {...(get(documents, `proofOfAddressDocument`,  emptyFileField))}
                             validate={isRequired({i18n})}
                         />
@@ -140,15 +140,15 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                         <Input
                             name='passportExpirationDate'
                             label={'Passport Expiration Date'}
-                            placeholder={'DD/MM/YYYY'}
+                            placeholder={'YYYY-MM-DD'}
                             validate={isRequired({i18n})}
                         />
                         <FileInput
                             name='passportDocument'
                             label={'Passport Front Page'}
                             placeholder={'PNG, PDF, JPG'}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'passportDocument'})}
-                            {...(get(documents, `passportDocument`,  emptyFileField))}
+                            onUpload={uploadDocument}
+                            {...(get(documents, 'passportDocument',  emptyFileField))}
                             validate={isRequired({i18n})}
                         />
 

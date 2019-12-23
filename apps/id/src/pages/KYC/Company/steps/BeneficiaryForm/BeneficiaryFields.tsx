@@ -47,7 +47,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
             <Input
                 name={`beneficiaries[${index}].birthDate`}
                 label="Date of Birth"
-                placeholder="DD/MM/YYYY"
+                placeholder="YYYY-MM-DD"
                 validate={isRequired({i18n})}
             />
             <CountrySelect
@@ -95,7 +95,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
                 name={`beneficiaries[${index}].proofOfAddressDocument`}
                 label={'Proof of Address (Utility Bill, Bank Statements)'}
                 placeholder={'PNG, PDF, JPG'}
-                onFileChange={(file: File) => uploadDocument({file, fieldName: `beneficiaries[${index}].proofOfAddressDocument`})}
+                onUpload={uploadDocument}
                 {...(get(documents, `beneficiaries[${index}].proofOfAddressDocument`,  emptyFileField))}
                 validate={isRequired({i18n})}
             />
@@ -110,14 +110,14 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
             <Input
                 name={`beneficiaries[${index}].passportExpirationDate`}
                 label="Passport Expiration Date"
-                placeholder="DD/MM/YYYY"
+                placeholder="YYYY-MM-DD"
                 validate={isRequired({i18n})}
             />
             <FileInput
                 name={`beneficiaries[${index}].passportDocument`}
                 label={'Passport Front Page'}
                 placeholder={'PNG, PDF, JPG'}
-                onFileChange={(file: File) => uploadDocument({file, fieldName: `beneficiaries[${index}].passportDocument`})}
+                onUpload={uploadDocument}
                 {...(get(documents, `beneficiaries[${index}].passportDocument`,  emptyFileField))}
                 validate={isRequired({i18n})}
             />
