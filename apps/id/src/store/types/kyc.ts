@@ -1,7 +1,7 @@
 export enum KYCIndividualStatus {
-  personal,
-  residency,
-  income,
+  personal = 'personal',
+  residency = 'residency',
+  income = 'income',
 }
 
 export interface Document {

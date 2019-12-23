@@ -1,4 +1,6 @@
 import React from 'react'
+import cc from 'classcat'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 import {connect} from 'react-redux'
@@ -41,6 +43,13 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
             backHandler={backHandler}
             backLabel={backLabel}
         >
+          <div
+            className={cc([
+              grid.grid,
+              style.company,
+              style.background,
+            ])}
+          >
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
@@ -106,6 +115,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                     </form>
                 )}
             />
+          </div>
         </KYCLayout>
     )
 }

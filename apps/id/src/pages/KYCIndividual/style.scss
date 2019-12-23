@@ -27,6 +27,27 @@
   }
 }
 
+.background {
+  background-size: 50%;
+  background-image: none;
+  background-repeat: no-repeat;
+  background-position: top right;
+
+  @include screen('>small') {
+    &.personal {
+      background-image: url('../../public/images/pic_kyc_man.svg');
+    }
+
+    &.residency {
+      background-image: url('../../public/images/pic_kyc_geo.svg');
+    }
+
+    &.income {
+      background-image: url('../../public/images/pic_kyc_docs.svg');
+    }
+  }
+}
+
 .submit {
   max-width: 360px;
   margin: 64px 0;

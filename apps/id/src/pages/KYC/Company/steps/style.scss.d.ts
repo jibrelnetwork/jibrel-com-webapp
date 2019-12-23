@@ -4,9 +4,15 @@ declare namespace StyleScssModule {
     addLink: string;
     "additional-title": string;
     additionalTitle: string;
+    address: string;
+    background: string;
+    beneficiary: string;
     caption: string;
     centered: string;
     column: string;
+    company: string;
+    contact: string;
+    director: string;
     grid: string;
     "group-title": string;
     groupTitle: string;

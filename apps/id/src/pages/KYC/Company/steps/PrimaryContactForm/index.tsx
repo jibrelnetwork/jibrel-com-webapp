@@ -1,4 +1,6 @@
 import React from 'react'
+import cc from 'classcat'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 import get from 'lodash-es/get'
@@ -43,6 +45,13 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
             backHandler={backHandler}
             backLabel={backLabel}
         >
+          <div
+            className={cc([
+              grid.grid,
+              style.contact,
+              style.background,
+            ])}
+          >
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
@@ -125,7 +134,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             label={'Proof of Address (Utility Bill, Bank Statement)'}
                             placeholder={'PNG, PDF, JPG'}
                             onUpload={uploadDocument}
-                            {...(get(documents, `proofOfAddressDocument`,  emptyFileField))}
+                            {...(get(documents, 'proofOfAddressDocument',  emptyFileField))}
                             validate={isRequired({i18n})}
                         />
 
@@ -160,6 +169,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                     </form>
                 )}
             />
+          </div>
         </KYCLayout>
     )
 }
