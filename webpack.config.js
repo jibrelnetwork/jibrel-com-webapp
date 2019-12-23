@@ -369,7 +369,10 @@ const create = (dirname) => {
       isEnvProduction &&
       new CompressionPlugin({
         threshold: 1024,
-        exclude: /\.map$/,
+        exclude: [
+          /\.map$/,
+          /index\.html$/,
+        ],
         algorithm(input, compressionOptions, callback) {
           return zopfli.gzip(input, compressionOptions, callback)
         },
