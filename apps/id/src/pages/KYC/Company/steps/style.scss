@@ -1,5 +1,22 @@
 @import '~@jibrelcom/ui/src/index.scss';
 
+.title {
+  @include font-h2-l;
+  padding: 24px 0;
+  flex: 1;
+}
+
+.subtitle {
+  @include font-h2-l;
+  padding: 24px 0;
+}
+
+.caption {
+  @include font-caption;
+  color: rgba(8, 30, 57, 0.6);
+  margin-bottom: 30px;
+}
+
 .step {
   width: $column-l-5;
 
@@ -16,6 +33,11 @@
   }
 }
 
+.additional-title {
+  display: flex;
+  align-items: center;
+}
+
 .group-title {
   @include font-h3-s;
   padding: 8px 0 24px;
@@ -23,4 +45,9 @@
 
 .submit {
   margin: 64px 0;
+}
+
+.submit-error {
+  @include font-body-s;
+  color: #DC3632;
 }

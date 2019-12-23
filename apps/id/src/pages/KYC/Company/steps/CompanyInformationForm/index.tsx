@@ -3,38 +3,36 @@ import {useI18n} from 'app/i18n'
 import {Form} from 'react-final-form'
 import {connect} from 'react-redux'
 import pick from 'lodash-es/pick'
-import map from 'lodash-es/map'
 import get from 'lodash-es/get'
-import every from 'lodash-es/every'
 
 import {
-    BigButton,
+    BigButtonSubmit,
     Input,
     FileInput,
 } from '@jibrelcom/ui'
 import KYCLayout from 'layouts/KYCLayout'
+import isRequired from 'utils/validators/isRequired'
 
 import {FormProps} from '../FormProps'
-import {checkEmptyFields} from '../checkEmptyFieldsValidator'
-import style from './style.scss'
+import style from '../style.scss'
 import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
 
+const emptyFileField = {
+    fileName: '',
+    fileSize: 0,
+    isLoading: false,
+    error: '',
+}
 
 const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (props) => {
     const {
         backLabel, backHandler, nextLabel, nextHandler,
-        formValues, uploadDocument, submit,
-        commercialRegister, shareholderRegister, articlesOfIncorporation,
+        formValues, uploadDocument, submit, documents,
     } = props
 
     const initialValues = pick(formValues, [
         'companyName', 'tradingName', 'dateOfIncorporation', 'placeOfIncorporation',
     ])
-
-    const isAllFilesUploaded = every(map(
-        [commercialRegister, shareholderRegister, articlesOfIncorporation],
-        (field)=> get(field, 'id')
-    ))
 
     const i18n = useI18n()
     return (
@@ -46,25 +44,28 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
             <Form
                 initialValues={initialValues}
                 onSubmit={submit(nextHandler)}
-                validate={checkEmptyFields}
-                render={({hasValidationErrors, handleSubmit, submitting}) => (
+                render={({handleSubmit, submitError}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
                         <Input
                             name='companyName'
                             label={'Company Name'}
+                            validate={isRequired({i18n})}
                         />
                         <Input
                             name='tradingName'
                             label={'Trading Name'}
+                            validate={isRequired({i18n})}
                         />
                         <Input
                             name='dateOfIncorporation'
                             label={'Date of Incorporation'}
-                            placeholder={'DD/MM/YYYY'}
+                            placeholder={'YYYY-MM-DD'}
+                            validate={isRequired({i18n})}
                         />
                         <Input
                             name='placeOfIncorporation'
                             label={'Place of Incorporation'}
+                            validate={isRequired({i18n})}
                         />
 
                         <h3 className={style.groupTitle}>
@@ -75,37 +76,33 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             name='commercialRegister'
                             label={'Commercial Register'}
                             placeholder={'PNG, PDF, JPG'}
-                            value={commercialRegister}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'commercialRegister'})}
-                            fileName={get(commercialRegister, 'fileName', '')}
-                            fileSize={get(commercialRegister, 'fileSize', 0)}
-                            isLoading={get(commercialRegister, 'isLoading', false)}
-                            error={get(commercialRegister, 'error', '')}
+                            onUpload={uploadDocument}
+                            {...(get(documents, 'commercialRegister', emptyFileField))}
+
+                            validate={isRequired({i18n})}
                         />
                         <FileInput
                             name='shareholderRegister'
                             label={'Shareholder Register'}
                             placeholder={'PNG, PDF, JPG'}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'shareholderRegister'})}
-                            fileName={get(shareholderRegister, 'fileName', '')}
-                            fileSize={get(shareholderRegister, 'fileSize', 0)}
-                            isLoading={get(shareholderRegister, 'isLoading', false)}
-                            error={get(shareholderRegister, 'error', '')}
+                            onUpload={uploadDocument}
+                            {...(get(documents, 'shareholderRegister', emptyFileField))}
+                            validate={isRequired({i18n})}
                         />
                         <FileInput
                             name='articlesOfIncorporation'
                             label={'Article of Incorporation'}
                             placeholder={'PNG, PDF, JPG'}
-                            onFileChange={(file: File) => uploadDocument({file, fieldName: 'articlesOfIncorporation'})}
-                            fileName={get(articlesOfIncorporation, 'fileName', '')}
-                            fileSize={get(articlesOfIncorporation, 'fileSize', 0)}
-                            isLoading={get(articlesOfIncorporation, 'isLoading', false)}
-                            error={get(articlesOfIncorporation, 'error', '')}
+                            onUpload={uploadDocument}
+                            {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
+                            validate={isRequired({i18n})}
                         />
 
-                        <BigButton isLoading={submitting} isDisabled={!isAllFilesUploaded || hasValidationErrors}>
+                        {submitError && <div className={style.submitError}>{submitError}</div>}
+
+                        <BigButtonSubmit className={style.submit}>
                             {nextLabel}
-                        </BigButton>
+                        </BigButtonSubmit>
                     </form>
                 )}
             />
@@ -115,17 +112,15 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
 
 const mapState = ({kycOrganization, kyc}) => ({
     formValues: kycOrganization.values,
-
-    // File upload fields with extra structure
-    commercialRegister: kyc.documents.commercialRegister,
-    shareholderRegister: kyc.documents.shareholderRegister,
-    articlesOfIncorporation: kyc.documents.articlesOfIncorporation,
+    documents: kyc.documents,
 })
 
-const mapDispatch = ({kyc, kycOrganizationValidate}) => ({
+const mapDispatch = ({kyc, kycOrganization, kycOrganizationValidate}) => ({
     uploadDocument: kyc.uploadDocument,
     submit: (callback) => (values) =>
-        kycOrganizationValidate.validate({step: 0, ...values})
+        kycOrganizationValidate
+            .validate({step: 0, ...values})
+            .then(() => kycOrganization.addValues(values))
             .then(callback)
             .catch(handleAsyncValidationErrors),
 })

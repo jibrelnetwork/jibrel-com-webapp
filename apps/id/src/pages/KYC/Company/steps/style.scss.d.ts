@@ -1,5 +1,8 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
+    "additional-title": string;
+    additionalTitle: string;
+    caption: string;
     centered: string;
     column: string;
     grid: string;
@@ -7,6 +10,10 @@ declare namespace StyleScssModule {
     groupTitle: string;
     step: string;
     submit: string;
+    "submit-error": string;
+    submitError: string;
+    subtitle: string;
+    title: string;
   }
 }
 

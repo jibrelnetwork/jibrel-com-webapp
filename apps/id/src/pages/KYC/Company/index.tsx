@@ -1,6 +1,7 @@
 import React, {useState} from 'react'
 import get from 'lodash-es/get'
 import size from 'lodash-es/size'
+import {router} from 'app/router'
 
 import {
     CompanyInformationForm,
@@ -19,8 +20,6 @@ const PROCESS_STEPS = [
     DirectorForm,
 ]
 
-const submit = () => console.log('Form submit')
-
 const Company: React.FunctionComponent = () => {
 
     const fieldValues = {
@@ -30,7 +29,7 @@ const Company: React.FunctionComponent = () => {
     const [currentStepNumber, setStep] = useState(0)
 
     const backHandler = currentStepNumber === 0
-        ? () => console.log('Back to start')
+        ? () => router.navigate('KYC')
         : () => setStep(currentStepNumber - 1)
 
     const backLabel = currentStepNumber === 0
@@ -42,11 +41,12 @@ const Company: React.FunctionComponent = () => {
         : 'NEXT'
 
     const nextHandler = currentStepNumber === size(PROCESS_STEPS) - 1
-        ? submit
-        : (formValues: any) => {
-            setStep(currentStepNumber + 1)
-            console.log('Step submitted:', formValues)
+        ? () => {
+            console.log('Successfully submitted Company KYC. Navigating to Success screen.')
+            //TODO: Implement real navigation
+            // router.navigate('KYC/success')
         }
+        : () => setStep(currentStepNumber + 1)
 
     const Form = get(PROCESS_STEPS, currentStepNumber)
 
