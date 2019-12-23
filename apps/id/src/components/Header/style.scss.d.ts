@@ -1,12 +1,10 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    action: string;
     centered: string;
     chromeframe: string;
     column: string;
     grid: string;
     header: string;
-    logo: string;
     main: string;
   }
 }
