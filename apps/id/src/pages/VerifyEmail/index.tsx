@@ -73,7 +73,7 @@ const VerifyEmailInfo: React.FunctionComponent<VerifyEmailInfoProps> = ({
         >
           Close
         </a>
-        <span>If you have any questions, please get in touch with our </span><br />
+        <span>If you have any questions, please get in touch with our </span>
         <a className={style.support} href='#'>Support team.</a>
       </div>
     )}
