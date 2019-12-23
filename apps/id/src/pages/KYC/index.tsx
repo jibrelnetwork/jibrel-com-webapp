@@ -11,6 +11,8 @@ import style from './style.scss'
 import { KYCType } from './types'
 
 import { Button } from './components'
+import settings from 'app/settings'
+import { useLanguageCode } from 'app/i18n'
 
 interface KYCProps {
   goTo: (name: string, params?: object) => void;
@@ -19,6 +21,7 @@ interface KYCProps {
 const KYC: React.FunctionComponent<KYCProps> = ({
   goTo,
 }) => {
+  const languageCode = useLanguageCode()
   const [kycType, setKYCType] = useState(KYCType.empty)
 
   return (
@@ -72,6 +75,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               <p>
                 If you have any questions, please contact our <a
                   href='mailto:support@jibrel.com'
+                  style={{ whiteSpace: 'nowrap' }}
                 >
                   Support Team
                 </a>.
@@ -96,7 +100,9 @@ const KYC: React.FunctionComponent<KYCProps> = ({
           </div>
           <div className={`${style.button} ${grid.column}`}>
             <BigButton
-              onClick={(): void => goTo('Login', { lang: 'en' })}
+              onClick={(): void => {
+                window.location.href = `${settings.HOST_CMS}/${languageCode}`
+              }}
               variant={BigButtonVariant.secondary}
               className={style.action}
             >

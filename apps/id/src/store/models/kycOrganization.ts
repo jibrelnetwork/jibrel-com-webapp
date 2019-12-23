@@ -45,6 +45,9 @@ const initialFormValues = {
     directors: [{
         fullName: '',
     }],
+
+    amlAgreed: false,
+    uboConfirmed: false,
 }
 
 export const kycOrganization = createModel({
