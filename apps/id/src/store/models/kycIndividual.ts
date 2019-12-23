@@ -126,6 +126,7 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
           amlAgreed: rootState.kycIndividual.values.terms,
           uboConfirmed: rootState.kycIndividual.values.terms,
         })
+            .then(() => dispatch(actions.navigateTo('KYCSuccess')))
       } catch (error) {
         console.error(error)
       }
