@@ -1,5 +1,7 @@
 import React from 'react'
 import { Field } from 'react-final-form'
+import mapValues from 'lodash-es/mapValues'
+import isFunction from 'lodash-es/isFunction'
 
 import { GenericFieldProps, GenericFieldRenderProps } from './types'
 
@@ -9,7 +11,11 @@ export const withField = <P extends React.PropsWithoutRef<JSX.IntrinsicElements[
 ): React.FunctionComponent<P & GenericFieldProps> => {
   const WithFinalFormFieldWrapper: React.FunctionComponent<P & GenericFieldProps> = (props) => (
     <Field
-      {...staticProps}
+      {...mapValues(staticProps, (staticProp) =>
+        isFunction(staticProp)
+          ? staticProp(props)
+          : staticProp
+      )}
       {...props}
       component={Component}
     />

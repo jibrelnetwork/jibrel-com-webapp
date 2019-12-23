@@ -1,0 +1,78 @@
+@import '~@jibrelcom/ui/src/theme';
+
+.title {
+  @include font-h2-l;
+  margin-bottom: 24px;
+  width: 100%;
+}
+
+.choice {
+  padding-bottom: 48px;
+}
+
+.button {
+  display: flex;
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-m-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-3;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-4;
+  }
+}
+
+.info {
+  font-size: 18px;
+  line-height: 140%;
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-m-8;
+  }
+
+  @include screen('>small') {
+    width: $column-m-5;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-5;
+  }
+
+  &-content {
+    p {
+      margin-bottom: 16px;
+    }
+
+    ul {
+      li {
+        position: relative;
+        padding-left: 24px;
+        margin-bottom: 24px;
+
+        &::before {
+          position: absolute;
+          top: 0;
+          left: 0;
+          font-size: 18px;
+          line-height: 140%;
+          color: $color-black-30;
+          content: "•";
+        }
+      }
+    }
+  }
+}
+
+.actions {
+  padding-bottom: 48px;
+}
+
+.action {
+  margin-bottom: 16px;
+}

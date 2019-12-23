@@ -1,5 +1,6 @@
 @import '../theme/colors';
 @import '../utils/scss/ellipsis';
+@import '../utils/scss/iconColor';
 
 .button {
   box-sizing: border-box;
@@ -31,7 +32,13 @@
   }
 }
 
+.left {
+  transform: rotate(180deg);
+}
+
 .icon {
+  @include icon-color($color-blue);
+
   flex: 0 0 auto;
   width: 24px;
   color: $color-blue;

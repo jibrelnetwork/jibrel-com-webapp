@@ -1,0 +1,14 @@
+@import '~@jibrelcom/ui/src/index.scss';
+
+.title {
+  @include font-h1-l;
+  padding-top: 64px;
+  padding-bottom: 32px;
+  flex-shrink: 1;
+  width: $column-s-4;
+}
+
+.back {
+  height: 24px;
+  margin-bottom: 24px;
+}

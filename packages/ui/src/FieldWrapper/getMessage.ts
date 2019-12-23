@@ -1,20 +1,29 @@
 import { FieldMetaState } from 'react-final-form'
-import { MessageType, GenericFieldValue } from './types'
+import { GenericFieldValue, MessageType } from './types'
 
 export const getMessage = ({
   meta,
   hint,
   success,
+  error,
   isDependencyChanged = false,
 }: {
   meta: FieldMetaState<GenericFieldValue>;
   hint?: string;
   success?: string;
+  error?: string;
   isDependencyChanged?: boolean;
 }): {
   messageType: MessageType | void;
   message: string | void;
 } => {
+  if (error) {
+    return {
+      messageType: MessageType.error,
+      message: error,
+    }
+  }
+
   if (!meta) {
     return {
       messageType: undefined,

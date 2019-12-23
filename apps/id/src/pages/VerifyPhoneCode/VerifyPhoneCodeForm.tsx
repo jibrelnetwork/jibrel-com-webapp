@@ -13,7 +13,7 @@ import { RootState } from 'store'
 
 // FIXME: use i18n
 const isCodeFilled = (value: string): string | undefined =>
-  value.replace('_', '').length !== 6
+  !value || value.replace('_', '').length !== 6
     ? 'Please, fill the code'
     : undefined
 

@@ -3,31 +3,35 @@
 
 $standard-field-padding: 16px;
 $password-field-padding: 48px;
-$indicator-field-padding: 140px;
+$indicator-field-padding: 124px;
 
 .password {
   position: relative;
 
+  .label,
   .input {
-    padding-right: $password-field-padding;
+    margin-right: $password-field-padding;
   }
 
   &.padding {
+    .label,
     .input {
-      padding-right: $indicator-field-padding;
+      margin-right: $indicator-field-padding;
     }
   }
 
   [dir=rtl] & {
+    .label,
     .input {
-      padding-left: $password-field-padding;
-      padding-right: $standard-field-padding;
+      margin-left: $password-field-padding;
+      margin-right: $standard-field-padding;
     }
 
     &.padding {
+      .label,
       .input {
-        padding-left: $indicator-field-padding;
-        padding-right: $standard-field-padding;
+        margin-left: $indicator-field-padding;
+        margin-right: $standard-field-padding;
       }
     }
   }

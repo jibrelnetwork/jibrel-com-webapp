@@ -1,5 +1,6 @@
-import { Route } from 'router5'
 import composeActivations from './utils/composeActivations'
+import { RouteEnhanced } from './types'
+
 import {
   redirectLang,
   isLoggedIn,
@@ -9,7 +10,7 @@ import {
 
 const ROUTER_ROOT = ''
 
-export const routes: Route[] = [
+export const routes: RouteEnhanced[] = [
   {
     name: 'Account',
     path: '/',
@@ -109,58 +110,70 @@ export const routes: Route[] = [
   {
     name: 'KYC',
     path: '/kyc',
-  },
-  {
-    name: 'KYCInvestor',
-    path: '/kyc/investor',
+    canActivate: isLoggedIn,
+    // onActivate: get kyc status from backend
+    // canActivate: if kyc status is "not submitted", then true
+    //    else redirect to CMS
+    /*
     children: [
       {
-        name: 'Personal',
-        path: '/personal',
+        name: 'Individual',
+        path: '/individual',
+        children: [
+          {
+            name: 'Residency',
+            path: '/residency',
+          },
+          {
+            name: 'Income',
+            path: '/income',
+          },
+          {
+            name: 'Status',
+            path: '/status',
+          },
+        ],
       },
       {
-        name: 'Residency',
-        path: '/residency',
-      },
-      {
-        name: 'Income',
-        path: '/income',
-      },
-      {
-        name: 'Status',
-        path: '/status',
+        name: 'Company',
+        path: '/company',
+        children: [
+          {
+            name: 'Office',
+            path: '/office',
+          },
+          {
+            name: 'Contact',
+            path: '/contact',
+          },
+          {
+            name: 'Beneficiary',
+            path: '/beneficiary',
+          },
+          {
+            name: 'Director',
+            path: '/director',
+          },
+          {
+            name: 'Status',
+            path: '/status',
+          },
+        ],
       },
     ],
+    */
   },
+
+  {
+    name: 'KYCIndividual',
+    path: '/kyc/individual',
+    canActivate: isLoggedIn,
+  },
+
   {
     name: 'KYCCompany',
     path: '/kyc/company',
-    children: [
-      {
-        name: 'Information',
-        path: '/information',
-      },
-      {
-        name: 'Office',
-        path: '/office',
-      },
-      {
-        name: 'Contact',
-        path: '/contact',
-      },
-      {
-        name: 'Beneficiary',
-        path: '/beneficiary',
-      },
-      {
-        name: 'Director',
-        path: '/director',
-      },
-      {
-        name: 'Status',
-        path: '/status',
-      },
-    ],
+    canActivate: isLoggedIn,
   },
 ].map((route) => ({
   ...route,
