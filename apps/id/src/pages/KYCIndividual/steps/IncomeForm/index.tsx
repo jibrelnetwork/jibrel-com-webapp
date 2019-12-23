@@ -3,18 +3,20 @@ import cc from 'classcat'
 import { FormRenderProps } from 'react-final-form'
 
 import {
-  Input,
   Checkbox,
+  OtherSelect,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
+import settings from 'app/settings'
+import OCCUPATIONS from 'data/occupations.json'
+import INCOME_SOURCES from 'data/incomeSources.json'
 import isRequired from 'utils/validators/isRequired'
 import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { useI18n } from 'app/i18n'
 import { KYCIndividualValues } from 'store/types/kyc'
 
 import style from '../../style.scss'
-import settings from 'app/settings'
 
 export interface IncomeFormProps {
   formProps: FormRenderProps<KYCIndividualValues>;
@@ -30,13 +32,17 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
       onSubmit={formProps.handleSubmit}
       className={cc([grid.column, style.form])}
     >
-      <Input
+      <OtherSelect
         validate={isRequired({ i18n })}
+        inputValidate={isRequired({ i18n })}
+        options={OCCUPATIONS}
         name='occupation'
         label='Profession'
       />
-      <Input
+      <OtherSelect
         validate={isRequired({ i18n })}
+        inputValidate={isRequired({ i18n })}
+        options={INCOME_SOURCES}
         name='incomeSource'
         label='Primary Source of Income'
       />

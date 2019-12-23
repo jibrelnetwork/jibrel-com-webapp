@@ -19,6 +19,8 @@ import {
   KYCIndividualValues,
 } from '../types/kyc'
 
+const OTHER_VALUE = 'other'
+
 const getStep = (status: KYCIndividualStatus): number => {
   switch (status) {
     case KYCIndividualStatus.personal: {
@@ -32,6 +34,15 @@ const getStep = (status: KYCIndividualStatus): number => {
     }
   }
 }
+
+const getOtherValues = (values: Partial<KYCIndividualValues>): Partial<KYCIndividualValues> => ({
+  occupation: (values.occupation !== OTHER_VALUE)
+    ? values.occupation
+    : values.occupationOther,
+  incomeSource: (values.incomeSource !== OTHER_VALUE)
+    ? values.incomeSource
+    : values.incomeSourceOther,
+})
 
 export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCIndividualState>({
   state: {
@@ -77,6 +88,7 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
             step: getStep(rootState.kycIndividual.status),
             ...values,
             ...checkboxes,
+            ...getOtherValues(values),
           },
         )
 
@@ -127,11 +139,14 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
       _: void,
       rootState: RootState,
     ): FormSubmitResult<KYCIndividualValues> {
+      const { values } = rootState.kycIndividual
+
       try {
         await axios.post('/v1/kyc/individual', {
-          ...rootState.kycIndividual.values,
-          amlAgreed: rootState.kycIndividual.values.terms,
-          uboConfirmed: rootState.kycIndividual.values.terms,
+          ...values,
+          ...getOtherValues(values),
+          amlAgreed: values.terms,
+          uboConfirmed: values.terms,
         })
             .then(() => dispatch(actions.navigateTo('KYCSuccess')))
       } catch (error) {

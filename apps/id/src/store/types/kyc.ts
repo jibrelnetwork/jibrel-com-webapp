@@ -103,7 +103,7 @@ export enum Occupation {
   warehouse = 'warehouse',
 }
 
-enum IncomeSource {
+export enum IncomeSource {
   other = 'other',
 
   primary_occupation = 'primary_occupation',
@@ -114,9 +114,9 @@ enum IncomeSource {
 /* eslint-enable @typescript-eslint/camelcase */
 
 export interface IncomeValues {
-  occupation: Occupation;
+  occupation: string;
   occupationOther?: string;
-  incomeSource: IncomeSource;
+  incomeSource: string;
   incomeSourceOther?: string;
   terms: boolean;
 }
