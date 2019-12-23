@@ -169,10 +169,14 @@ export const routes: RouteEnhanced[] = [
     path: '/kyc/individual',
     canActivate: isLoggedIn,
   },
-
   {
     name: 'KYCCompany',
     path: '/kyc/company',
+    canActivate: isLoggedIn,
+  },
+  {
+    name: 'KYCSuccess',
+    path: '/kyc/success',
     canActivate: isLoggedIn,
   },
 ].map((route) => ({

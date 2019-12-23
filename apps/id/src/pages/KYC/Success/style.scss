@@ -1,0 +1,62 @@
+@import '~@jibrelcom/ui/src/index.scss';
+
+
+.background {
+  background-image: url('./pic_hourglass_360.svg');
+  background-repeat: no-repeat;
+  background-position: right;
+}
+
+.title {
+  @include font-h1-l;
+  padding-top: 64px;
+  padding-bottom: 80px;
+  flex-shrink: 1;
+  width: $column-s-4;
+}
+
+.content {
+
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-s-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-4;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-5;
+  }
+
+  margin-bottom: 64px;
+}
+
+
+.subtitle {
+  @include font-h2-l;
+  margin-bottom: 24px;
+  color: #0DA37B;
+}
+
+.article {
+  @include font-body-l;
+}
+
+.submit {
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-s-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-3;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-4;
+  }
+}

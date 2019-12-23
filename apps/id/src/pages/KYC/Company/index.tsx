@@ -41,11 +41,7 @@ const Company: React.FunctionComponent = () => {
         : 'NEXT'
 
     const nextHandler = currentStepNumber === size(PROCESS_STEPS) - 1
-        ? () => {
-            console.log('Successfully submitted Company KYC. Navigating to Success screen.')
-            //TODO: Implement real navigation
-            // router.navigate('KYC/success')
-        }
+        ? () => router.navigate('KYCSuccess')
         : () => setStep(currentStepNumber + 1)
 
     const Form = get(PROCESS_STEPS, currentStepNumber)
