@@ -57,9 +57,11 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                 onSubmit={submit(nextHandler)}
                 render={({handleSubmit, submitError}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
-
+                        <h2 className={style.title}>
+                            Primary Contact
+                        </h2>
                         <h3 className={style.groupTitle}>
-                            {'Personal Information'}
+                            Personal Information
                         </h3>
                         <Input
                             name='firstName'

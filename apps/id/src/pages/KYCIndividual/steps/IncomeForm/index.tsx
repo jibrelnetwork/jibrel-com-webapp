@@ -32,6 +32,9 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
       onSubmit={formProps.handleSubmit}
       className={cc([grid.column, style.form])}
     >
+      <h2 className={style.title}>
+        Declaration of Source of Funds
+      </h2>
       <OtherSelect
         validate={isRequired({ i18n })}
         inputValidate={isRequired({ i18n })}

@@ -55,6 +55,9 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                 onSubmit={submit(nextHandler)}
                 render={({handleSubmit, submitError}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
+                        <h2 className={style.title}>
+                          Company Information
+                        </h2>
                         <Input
                             name='companyName'
                             label={'Company Name'}

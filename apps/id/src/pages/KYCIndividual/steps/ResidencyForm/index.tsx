@@ -39,6 +39,9 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
       onSubmit={formProps.handleSubmit}
       className={cc([grid.column, style.form])}
     >
+      <h2 className={style.title}>
+        Current Residential Address
+      </h2>
       <Input
         validate={isRequired({ i18n })}
         name='streetAddress'
