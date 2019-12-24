@@ -35,12 +35,24 @@ const Footer: React.FunctionComponent = () => {
           <h2 className="footer__navigation-section-title">Legal</h2>
           <ul className="footer__navigation-list">
             <li className="footer__navigation-item">
-              <a href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`} target="_blank" className="footer__navigation-link">Risk
-                Disclosures</a>
+              <a
+                href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__navigation-link"
+              >
+                Risk Disclosures
+              </a>
             </li>
             <li className="footer__navigation-item">
-              <a href={`${settings.HOST_CMS}/docs/en/legal-and-compliance.pdf`} target="_blank" className="footer__navigation-link">AML &
-                Compliance</a>
+              <a
+                href={`${settings.HOST_CMS}/docs/en/terms-and-conditions.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__navigation-link"
+              >
+                Terms and Conditions
+              </a>
             </li>
           </ul>
         </section>
