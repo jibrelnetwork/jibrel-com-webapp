@@ -77,7 +77,7 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                         </LinkButton>
 
                         <Checkbox
-                            name='terms'
+                            name='isAgreedRisks'
                             validate={isRequired({i18n})}
                         >
                             {/* FIXME: list of documents differs from figma*/}
@@ -126,8 +126,8 @@ const mapState = ({kycOrganization}) => ({
 const mapDispatch = ({kycOrganizationValidate, kycOrganization}) => ({
     submit: (callback) => (values) =>
         kycOrganizationValidate
-            .validate({step: 4, ...values, amlAgreed: values.terms, uboConfirmed: values.terms})
-            .then(() => kycOrganization.addValues({...values, amlAgreed: values.terms, uboConfirmed: values.terms}))
+            .validate({step: 4, ...values})
+            .then(() => kycOrganization.addValues(values))
             .then(kycOrganization.submit)
             .then(callback)
             .catch(handleAsyncValidationErrors),
