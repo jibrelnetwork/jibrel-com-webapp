@@ -1,10 +1,14 @@
 declare namespace AuthScssModule {
   export interface IAuthScss {
     action: string;
+    centered: string;
+    chromeframe: string;
+    column: string;
     error: string;
     field: string;
     fields: string;
     form: string;
+    grid: string;
     main: string;
     submit: string;
     switch: string;

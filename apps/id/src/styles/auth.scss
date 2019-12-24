@@ -1,23 +1,29 @@
-@import '../node_modules/@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/theme';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
 
 .main {
-  display: flex;
+  @include flex-column-center;
+
   min-width: 100vw;
   min-height: 100vh;
   padding-top: 96px;
-  flex-direction: column;
-  align-items: center;
-  justify-content: center;
   background-color: $color-blue-5;
+
+  form {
+    width: 100%;
+  }
 }
 
 .form {
   width: 100%;
-  max-width: 440px;
-  margin: 40px;
   padding: 40px;
-  border-radius: 12px;
+  margin: 40px auto;
   background-color: $color-white;
+
+  @include screen('>xsmall') {
+    max-width: 440px;
+    border-radius: 12px;
+  }
 }
 
 .title {
