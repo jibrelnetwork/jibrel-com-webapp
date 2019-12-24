@@ -11,6 +11,7 @@ import {
     BigButtonSubmit,
     Input,
     FileInput,
+  HistoricDateInput,
 } from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
@@ -77,10 +78,9 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             name='middleName'
                             label={'Middle Name (Optional)'}
                         />
-                        <Input
+                        <HistoricDateInput
                             name='birthDate'
                             label={'Date of Birth'}
-                            placeholder={'YYYY-MM-DD'}
                             validate={isRequired({i18n})}
                         />
                         <CountrySelect
@@ -148,10 +148,9 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             label={'Passport Number'}
                             validate={isRequired({i18n})}
                         />
-                        <Input
+                        <HistoricDateInput
                             name='passportExpirationDate'
                             label={'Passport Expiration Date'}
-                            placeholder={'YYYY-MM-DD'}
                             validate={isRequired({i18n})}
                         />
                         <FileInput

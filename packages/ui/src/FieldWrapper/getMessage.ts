@@ -52,7 +52,7 @@ export const getMessage = ({
     }
   }
 
-  if (!meta.error && hint) {
+  if (hint) {
     return {
       messageType: MessageType.info,
       message: hint,

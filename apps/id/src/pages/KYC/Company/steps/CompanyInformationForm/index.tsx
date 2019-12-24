@@ -8,9 +8,10 @@ import pick from 'lodash-es/pick'
 import get from 'lodash-es/get'
 
 import {
-    BigButtonSubmit,
-    Input,
-    FileInput,
+  BigButtonSubmit,
+  Input,
+  FileInput,
+  HistoricDateInput,
 } from '@jibrelcom/ui'
 import KYCLayout from 'layouts/KYCLayout'
 import isRequired from 'utils/validators/isRequired'
@@ -68,10 +69,9 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = (pro
                             label={'Trading Name'}
                             validate={isRequired({i18n})}
                         />
-                        <Input
+                        <HistoricDateInput
                             name='dateOfIncorporation'
                             label={'Date of Incorporation'}
-                            placeholder={'YYYY-MM-DD'}
                             validate={isRequired({i18n})}
                         />
                         <Input
