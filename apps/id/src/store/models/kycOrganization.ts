@@ -46,8 +46,7 @@ const initialFormValues = {
         fullName: '',
     }],
 
-    amlAgreed: false,
-    uboConfirmed: false,
+    isAgreedDocuments: false,
 }
 
 export const kycOrganization = createModel({
