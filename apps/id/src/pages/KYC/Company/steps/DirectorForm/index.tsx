@@ -55,6 +55,9 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                              },
                          }) => (
                     <form onSubmit={handleSubmit} className={style.step}>
+                        <h2 className={style.title}>
+                            Director
+                        </h2>
                         <div className={style.caption}>
                             {'Please insert full legal names of members of the board of directors.'}
                         </div>

@@ -38,6 +38,9 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
       onSubmit={formProps.handleSubmit}
       className={cc([grid.column, style.form])}
     >
+      <h2 className={style.title}>
+        {i18n._('KYC.Personal.section.personal.title')}
+      </h2>
       <Input
         validate={isRequired({ i18n })}
         label={i18n._('KYC.Personal.input.firstName.title')}

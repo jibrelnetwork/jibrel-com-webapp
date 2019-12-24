@@ -49,6 +49,9 @@ export const BeneficiaryFormComponent: React.FunctionComponent<FormProps> = ({ba
                              },
                          }) => (
                     <form onSubmit={handleSubmit} className={style.step}>
+                        <h2 className={style.title}>
+                          Beneficiary
+                        </h2>
                         <div className={style.caption}>
                             {'Any natural person who owns or controls, directly or indirectly, 25% or more of the shares or voting rights in the organization.'}
                         </div>

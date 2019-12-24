@@ -1,7 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
 import grid from '@jibrelcom/ui/src/theme/grid.scss'
-import { I18n } from '@lingui/core'
 import { connect } from 'react-redux'
 
 import {
@@ -10,7 +9,6 @@ import {
 } from 'react-final-form'
 
 import KYCLayout from 'layouts/KYCLayout'
-import { useI18n } from 'app/i18n'
 import { FormSubmit } from 'store/types/form'
 
 import {
@@ -43,22 +41,6 @@ export interface KYCIndividualProps {
   status: KYCIndividualStatus;
 }
 
-const getTitle = (i18n: I18n, status: KYCIndividualStatus): string | undefined => {
-  switch(status) {
-    case KYCIndividualStatus.personal:
-      return i18n._('KYC.Personal.section.personal.title')
-
-    case KYCIndividualStatus.residency:
-      return 'Current Residential Address'
-
-    case KYCIndividualStatus.income:
-      return 'Declaration of Source of Funds'
-
-    default:
-      return undefined
-  }
-}
-
 const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
   goBack,
   submit,
@@ -66,57 +48,52 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
   values,
   status,
   documents,
-}) => {
-  const i18n = useI18n()
-
-  return (
-    <KYCLayout
-      backHandler={goBack}
-      backLabel={(status === KYCIndividualStatus.personal) ? 'Back to start' : 'Previous'}
+}) => (
+  <KYCLayout
+    backHandler={goBack}
+    backLabel={(status === KYCIndividualStatus.personal) ? 'Back to start' : 'Previous'}
+  >
+    <div
+      className={cc([
+        grid.grid,
+        style[status],
+        style.background,
+      ])}
     >
-      <div
-        className={cc([
-          grid.grid,
-          style[status],
-          style.background,
-        ])}
-      >
-        <h2 className={`${grid.column} ${style.title}`}>{getTitle(i18n, status)}</h2>
-        <Form
-          onSubmit={submit}
-          initialValues={values}
-          render={(formProps: FormRenderProps): React.ReactNode => {
-            switch(status) {
-              case KYCIndividualStatus.personal:
-                return (
-                  <PersonalForm
-                    formProps={formProps}
-                    uploadDocument={uploadDocument}
-                    documents={documents}
-                  />
-                )
+      <Form
+        onSubmit={submit}
+        initialValues={values}
+        render={(formProps: FormRenderProps): React.ReactNode => {
+          switch(status) {
+            case KYCIndividualStatus.personal:
+              return (
+                <PersonalForm
+                  formProps={formProps}
+                  uploadDocument={uploadDocument}
+                  documents={documents}
+                />
+              )
 
-              case KYCIndividualStatus.residency:
-                return (
-                  <ResidencyForm
-                    formProps={formProps}
-                    uploadDocument={uploadDocument}
-                    documents={documents}
-                  />
-                )
+            case KYCIndividualStatus.residency:
+              return (
+                <ResidencyForm
+                  formProps={formProps}
+                  uploadDocument={uploadDocument}
+                  documents={documents}
+                />
+              )
 
-              case KYCIndividualStatus.income:
-                return <IncomeForm formProps={formProps} />
+            case KYCIndividualStatus.income:
+              return <IncomeForm formProps={formProps} />
 
-              default:
-                return null
-            }
-          }}
-        />
-      </div>
-    </KYCLayout>
-  )
-}
+            default:
+              return null
+          }
+        }}
+      />
+    </div>
+  </KYCLayout>
+)
 
 export default connect(
   (state: RootState) => ({

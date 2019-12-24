@@ -43,6 +43,9 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
                 onSubmit={submit(nextHandler)}
                 render={({handleSubmit, submitError, values: {haveCompanyAddressPrincipal}}) => (
                     <form onSubmit={handleSubmit} className={style.step}>
+                        <h2 className={style.title}>
+                          Registered Office Address
+                        </h2>
                         <Input
                             name='companyAddressRegistered.streetAddress'
                             label={'Street Address'}
