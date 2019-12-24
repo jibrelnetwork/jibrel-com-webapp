@@ -13,6 +13,8 @@ import {
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
+import auth from 'styles/auth.scss'
+import settings from 'app/settings'
 import AuthLayout from 'layouts/AuthLayout'
 import InternalLink from 'components/InternalLink'
 import { Dispatch } from 'store'
@@ -29,9 +31,7 @@ import {
   isStrongPassword,
 } from 'utils/validators'
 
-import app from '../../app.scss'
-import signup from './signup.scss'
-import settings from 'app/settings'
+import style from './style.scss'
 
 const SIGNUP_INITIAL_VALUES: SignUpFormFields = {
   firstName: '',
@@ -56,10 +56,10 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
   return (
     <form
       onSubmit={handleSubmit}
-      className={app.form}
+      className={auth.form}
     >
-      <h2 className={app.title}>Sign Up</h2>
-      <div className={app.fields}>
+      <h2 className={auth.title}>Sign Up</h2>
+      <div className={auth.fields}>
         <Input
           name='firstName'
           label='First Name'
@@ -94,23 +94,24 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
       >
         <span>I agree to Jibrel's</span>
         <a
+          className={style.terms}
           href={`${settings.HOST_CMS}/docs/en/legal-and-compliance.pdf`}
           target='_blank'
-          className={signup.terms}
+          rel='noopener noreferrer'
         >
           AML & Compliance Policy
         </a>
       </Checkbox>
       <BigButtonSubmit
-        className={signup.submit}
+        className={style.submit}
       >
         Create Account
       </BigButtonSubmit>
-      <div className={signup.signin}>
+      <div className={style.signin}>
         <span>Already have a Jibrel account?</span>
         <InternalLink
           name='Login'
-          className={signup.action}
+          className={style.action}
         >
           SIGN IN
         </InternalLink>
@@ -128,7 +129,7 @@ const SignUp: React.FunctionComponent<SignUpProps> = ({
 }) => {
   return (
     <AuthLayout>
-      <div className={signup.main}>
+      <div className={auth.main}>
         <Form
           onSubmit={onSubmit}
           render={SignUpForm}

@@ -4,11 +4,14 @@
 .main {
   position: relative;
   width: 100%;
-  max-width: 440px;
-  margin: 40px;
   padding: 40px;
-  border-radius: 12px;
+  margin: 40px auto;
   background-color: $color-white;
+
+  @include screen('>xsmall') {
+    max-width: 440px;
+    border-radius: 12px;
+  }
 }
 
 .icon {
