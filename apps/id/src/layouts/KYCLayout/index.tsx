@@ -23,9 +23,7 @@ const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
 
   return (
     <ProfileLayout>
-      <h1
-        className={style.title}
-      >
+      <h1 className={style.title}>
         {i18n._('KYC.title')}
       </h1>
       <LinkButton
