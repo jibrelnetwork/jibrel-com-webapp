@@ -61,7 +61,7 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
       >
         <Icon
           className={style.icon}
-          name={`ic_visibility_${isOpen ? 'off' : 'on'}_24`}
+          name={`ic_visibility_${isOpen ? 'on' : 'off'}_24`}
         />
       </button>
     </div>
