@@ -47,7 +47,7 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
         label='Primary Source of Income'
       />
       <Checkbox
-        name='terms'
+        name='isAgreedRisks'
         validate={isRequired({ i18n })}
       >
         <span>

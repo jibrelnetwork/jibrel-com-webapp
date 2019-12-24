@@ -76,21 +76,11 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
       rootState: RootState,
     ): FormSubmitResult<KYCIndividualValues> {
       try {
-        const checkboxes = values.terms
-          ? {
-            amlAgreed: values.terms,
-            uboConfirmed: values.terms,
-          }
-          : {}
-        await axios.post(
-          '/v1/kyc/individual/validate',
-          {
-            step: getStep(rootState.kycIndividual.status),
-            ...values,
-            ...checkboxes,
-            ...getOtherValues(values),
-          },
-        )
+        await axios.post('/v1/kyc/individual/validate', {
+          step: getStep(rootState.kycIndividual.status),
+          ...values,
+          ...getOtherValues(values),
+        })
 
         this.setValues({
           ...rootState.kycIndividual.values,
@@ -145,10 +135,7 @@ export const kycIndividual: ModelConfig<KYCIndividualState> = createModel<KYCInd
         await axios.post('/v1/kyc/individual', {
           ...values,
           ...getOtherValues(values),
-          amlAgreed: values.terms,
-          uboConfirmed: values.terms,
-        })
-            .then(() => dispatch(actions.navigateTo('KYCSuccess')))
+        }).then(() => dispatch(actions.navigateTo('KYCSuccess')))
       } catch (error) {
         console.error(error)
       }
