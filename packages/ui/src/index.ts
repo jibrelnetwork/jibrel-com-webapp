@@ -1,6 +1,7 @@
 export { default as Icon } from './Icon'
 export { default as Logo } from './Logo'
 export { default as Input } from './Input'
+export { default as HistoricDateInput } from './HistoricDateInput'
 export { default as Loader } from './Loader'
 export { default as Checkbox } from './Checkbox'
 export { default as CodeInput } from './CodeInput'

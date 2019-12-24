@@ -3,6 +3,7 @@ import get from 'lodash-es/get'
 import {
     Input,
     FileInput,
+    HistoricDateInput,
     Icon,
 } from '@jibrelcom/ui'
 import CountrySelect from 'components/CountrySelect'
@@ -44,10 +45,9 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
                 label="Full Legal Name"
                 validate={isRequired({i18n})}
             />
-            <Input
+            <HistoricDateInput
                 name={`beneficiaries[${index}].birthDate`}
                 label="Date of Birth"
-                placeholder="YYYY-MM-DD"
                 validate={isRequired({i18n})}
             />
             <CountrySelect
@@ -107,10 +107,9 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
                 label="Passport Number"
                 validate={isRequired({i18n})}
             />
-            <Input
+            <HistoricDateInput
                 name={`beneficiaries[${index}].passportExpirationDate`}
                 label="Passport Expiration Date"
-                placeholder="YYYY-MM-DD"
                 validate={isRequired({i18n})}
             />
             <FileInput

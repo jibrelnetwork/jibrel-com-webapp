@@ -5,6 +5,7 @@ import { FormRenderProps } from 'react-final-form'
 import {
   Input,
   FileInput,
+  HistoricDateInput,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
@@ -59,11 +60,10 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
         name='alias'
         label='Alias (Optional)'
       />
-      <Input
+      <HistoricDateInput
         validate={isRequired({ i18n })}
         label={i18n._('KYC.Personal.input.birthDate.title')}
         name='birthDate'
-        placeholder='YYYY-MM-DD'
       />
       <CountrySelect
         validate={isRequired({ i18n })}
@@ -79,10 +79,9 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
         label={i18n._('KYC.Personal.input.passportNumber.title')}
         name='passportNumber'
       />
-      <Input
+      <HistoricDateInput
         validate={isRequired({ i18n })}
         label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
-        placeholder='YYYY-MM-DD'
         name='passportExpirationDate'
       />
       <FileInput
