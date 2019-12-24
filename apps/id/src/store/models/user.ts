@@ -85,25 +85,14 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
         this.setStatus(UserStatus.EMAIL_UNVERIFIED)
       }
     },
-    async signUp ({
-      firstName,
-      lastName,
-      email,
-      password,
-      terms,
-    }: SignUpFormFields, rootState): FormSubmitResult<SignUpFormFields> {
+    async signUp (values: SignUpFormFields, rootState): FormSubmitResult<SignUpFormFields> {
       const language = rootState.user.languageCode
 
       try {
         const { data } = await axios
           .post('/v1/auth/registration', {
-            firstName,
-            lastName,
-            email,
-            password,
+            ...values,
             language,
-            isAgreedTerms: terms,
-            isAgreedPrivacyPolicy: terms,
           })
 
         this.setProfile(data.data)

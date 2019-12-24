@@ -38,7 +38,7 @@ const SIGNUP_INITIAL_VALUES: SignUpFormFields = {
   lastName: '',
   email: '',
   password: '',
-  terms: false,
+  isAgreedDocuments: false,
 }
 
 const handleChangeScore = (change: (
@@ -89,17 +89,17 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
         />
       </div>
       <Checkbox
-        name='terms'
+        name='isAgreedDocuments'
         validate={isRequired({ i18n })}
       >
         <span>I agree to Jibrel's</span>
         <a
-          href={`${settings.HOST_CMS}/docs/en/legal-and-compliance.pdf`}
+          href={`${settings.HOST_CMS}/docs/en/terms-and-conditions.pdf`}
           target='_blank'
           className={signup.terms}
         >
-          AML & Compliance Policy
-        </a>
+          Terms and Conditions
+        </a>.
       </Checkbox>
       <BigButtonSubmit
         className={signup.submit}

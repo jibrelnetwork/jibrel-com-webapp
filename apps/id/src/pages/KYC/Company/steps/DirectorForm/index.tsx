@@ -80,7 +80,7 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({backL
                         </LinkButton>
 
                         <Checkbox
-                            name='isAgreedRisks'
+                            name='isAgreedDocuments'
                             validate={isRequired({i18n})}
                         >
                             {/* FIXME: list of documents differs from figma*/}
