@@ -50,7 +50,7 @@ export interface SignUpFormFields {
   lastName: string;
   email: string;
   password: string;
-  terms: boolean;
+  isAgreedDocuments: boolean;
 }
 
 export interface LoginFormFields {
