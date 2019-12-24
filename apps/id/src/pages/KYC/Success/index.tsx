@@ -25,7 +25,7 @@ const KYCSuccess: React.FunctionComponent = () => {
             {'We\'re Verifying Your Identity'}
           </h2>
           <article className={style.article}>
-            {'This will take from 1 to 5 business days. Once we have verified your details, you will receive a confirmation via email. Meanwhile, you can view the investment opportunities on Jibrel.'}
+            {'This will take from 1 to 3 business days. Once we have verified your details, you will receive a confirmation via email. Meanwhile, you can view the investment opportunities on Jibrel.'}
           </article>
         </div>
 
