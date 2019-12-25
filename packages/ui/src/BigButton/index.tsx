@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cc from 'classcat'
 
 import Loader from '../Loader'
@@ -16,31 +16,53 @@ export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicEleme
 }
 
 const BigButton: React.FunctionComponent<BigButtonProps> = ({
+  onMouseEnter,
+  onMouseLeave,
   variant = BigButtonVariant.main,
   className,
   isLoading = false,
   isDisabled = false,
   children,
   ...props
-}) => (
-  <button
-    {...props}
-    className={cc([
-      style.button,
-      style[variant],
-      isLoading && style.loading,
-      className,
-    ])}
-    disabled={isDisabled}
-  >
-    {!isLoading ? children : (
-      <Loader
-        color={LoaderColor.white}
-        hoverColor={LoaderColor.blue}
-      />
-    )}
-  </button>
-)
+}) => {
+  const [isHovered, setIsHovered] = useState(false)
+
+  const handleMouseEnter = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    setIsHovered(true)
+
+    if (onMouseEnter) {
+      onMouseEnter(e)
+    }
+  }
+
+  const handleMouseLeave = (e: React.MouseEvent<HTMLButtonElement, MouseEvent>): void => {
+    setIsHovered(false)
+
+    if (onMouseLeave) {
+      onMouseLeave(e)
+    }
+  }
+
+  return (
+    <button
+      {...props}
+      onMouseEnter={handleMouseEnter}
+      onMouseLeave={handleMouseLeave}
+      className={cc([
+        style.button,
+        style[variant],
+        isLoading && style.loading,
+        className,
+      ])}
+      disabled={isDisabled}
+    >
+      {!isLoading
+        ? children
+        : <Loader color={isHovered ? LoaderColor.blue : LoaderColor.white} />
+      }
+    </button>
+  )
+}
 
 export default React.memo(BigButton)
 

@@ -19,18 +19,6 @@
   &.white > .dot {
     background-color: $color-white;
   }
-
-  &.hover-blue:hover > .dot {
-    background-color: $color-blue;
-  }
-
-  &.hover-gray:hover > .dot {
-    background-color: $color-black-60;
-  }
-
-  &.hover-white:hover > .dot {
-    background-color: $color-white;
-  }
 }
 
 .dot {

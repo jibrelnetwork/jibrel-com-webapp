@@ -5,12 +5,6 @@ declare namespace StyleScssModule {
     first: string;
     firstDotAnimation: string;
     gray: string;
-    "hover-blue": string;
-    "hover-gray": string;
-    "hover-white": string;
-    hoverBlue: string;
-    hoverGray: string;
-    hoverWhite: string;
     loader: string;
     second: string;
     secondDotAnimation: string;
