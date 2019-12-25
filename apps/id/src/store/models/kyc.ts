@@ -1,4 +1,5 @@
 import { createModel } from '@rematch/core'
+import get from 'lodash-es/get'
 
 import axios from '../axios'
 
@@ -15,16 +16,37 @@ export const kyc = createModel({
   },
   effects: () => ({
     async uploadDocument (file: File): Promise<string> {
-      const formData = new FormData()
-      formData.append('file', file)
+      try {
+        const formData = new FormData()
+        formData.append('file', file)
 
-      const { data: { data } } = await axios.post('/v1/kyc/document', formData, {
-        headers: {
-          'content-type': 'multipart/form-data',
-        },
-      })
+        const {data: {data}} = await axios.post('/v1/kyc/document', formData, {
+          headers: {
+            'content-type': 'multipart/form-data',
+          },
+        })
 
-      return data.id
+        return data.id
+      } catch (error) {
+        const { response } = error
+
+        // FIXME: Errors should be translated
+        if (!response) {
+          throw Error('No connection')
+        }
+
+        const { status, data } = response
+
+        if (status === 413) {
+          throw Error('File too large')
+        }
+
+        if (status === 400) {
+          throw Error(get(data, 'errors.file[0].message', 'Upload error'))
+        }
+
+        throw Error('Upload error')
+      }
     },
   }),
   reducers: {
