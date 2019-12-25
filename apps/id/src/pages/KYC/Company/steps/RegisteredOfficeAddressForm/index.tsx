@@ -125,13 +125,17 @@ const mapState = ({kycOrganization}) => ({
     formValues: kycOrganization.values,
 })
 
-const mapDispatch = ({kycOrganization, kycOrganizationValidate}) => ({
+const mapDispatch = ({kycOrganization}) => ({
     submit: (callback) => (values) =>
-        kycOrganizationValidate
+        kycOrganization
             .validate({step: 1, ...values})
-            .then(() => kycOrganization.addValues(values))
-            .then(callback)
-            .catch(handleAsyncValidationErrors),
+            .then(errors => {
+                if (errors) {
+                    return errors
+                }
+
+                return kycOrganization.addValues(values).then(callback)
+            }),
 })
 
 export const RegisteredOfficeAddressForm = connect(mapState, mapDispatch)(RegisteredOfficeAddressFormComponent)
