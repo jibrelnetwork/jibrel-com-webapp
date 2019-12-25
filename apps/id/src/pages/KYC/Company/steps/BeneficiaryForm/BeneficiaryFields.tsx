@@ -46,6 +46,10 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
                 validate={isRequired({i18n})}
             />
             <Input
+                name={`beneficiaries[${index}].middleName`}
+                label='Middle Name (Optional)'
+            />
+            <Input
                 name={`beneficiaries[${index}].lastName`}
                 label='Last Name'
                 validate={isRequired({i18n})}

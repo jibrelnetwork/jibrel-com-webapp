@@ -6,17 +6,26 @@ export const getMessage = ({
   hint,
   success,
   error,
+  progress,
   isDependencyChanged = false,
 }: {
   meta: FieldMetaState<GenericFieldValue>;
   hint?: string;
   success?: string;
   error?: string;
+  progress?: string;
   isDependencyChanged?: boolean;
 }): {
   messageType: MessageType | void;
   message: string | void;
 } => {
+  if (progress) {
+    return {
+      messageType: MessageType.info,
+      message: progress,
+    }
+  }
+
   if (error) {
     return {
       messageType: MessageType.error,
