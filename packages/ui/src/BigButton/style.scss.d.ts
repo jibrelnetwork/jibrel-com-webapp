@@ -1,9 +1,20 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
+    blue: string;
     button: string;
+    dot: string;
+    first: string;
+    firstDotAnimation: string;
+    gray: string;
+    loader: string;
     loading: string;
     main: string;
+    second: string;
+    secondDotAnimation: string;
     secondary: string;
+    third: string;
+    thirdDotAnimation: string;
+    white: string;
   }
 }
 

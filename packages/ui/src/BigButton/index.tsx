@@ -1,10 +1,9 @@
 import React from 'react'
 import cc from 'classcat'
 
-import Loader from '../Loader'
 import style from './style.scss'
+import loader from '../Loader/style.scss'
 import { BigButtonVariant } from './types'
-import { LoaderColor } from '../Loader/types'
 import { withSubmitButtonUX } from '../FieldWrapper'
 
 export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
@@ -22,25 +21,32 @@ const BigButton: React.FunctionComponent<BigButtonProps> = ({
   isDisabled = false,
   children,
   ...props
-}) => (
-  <button
-    {...props}
-    className={cc([
-      style.button,
-      style[variant],
-      isLoading && style.loading,
-      className,
-    ])}
-    disabled={isDisabled}
-  >
-    {!isLoading ? children : (
-      <Loader
-        color={LoaderColor.white}
-        hoverColor={LoaderColor.blue}
-      />
-    )}
-  </button>
-)
+}) => {
+  return (
+    <button
+      {...props}
+      className={cc([
+        style.button,
+        style[variant],
+        isLoading && style.loading,
+        className,
+      ])}
+      disabled={isDisabled}
+    >
+      {!isLoading ? children : (
+        <div
+          className={cc([
+            style.loader,
+            loader.loader,
+          ])}>
+          <div className={cc([style.dot, loader.dot, loader.first])} />
+          <div className={cc([style.dot, loader.dot, loader.second])} />
+          <div className={cc([style.dot, loader.dot, loader.third])} />
+        </div>
+      )}
+    </button>
+  )
+}
 
 export default React.memo(BigButton)
 

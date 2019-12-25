@@ -4,6 +4,7 @@ build
 /reports
 **/locales/_build/
 **/locales/*/messages.js
+**/.DS_Store
 
 # Logs
 logs
