@@ -12,6 +12,7 @@ import { Field } from 'react-final-form'
 export interface FileInputProps {
   onUpload: (file: File) => Promise<string>;
   onSetUploadError: (err: string | undefined) => void;
+  onSetUploadProgress: (isLoading: boolean) => void;
   accept?: string;
   label: string;
   hasError?: boolean;
@@ -21,6 +22,11 @@ export interface FileInputProps {
   isDisabled?: boolean;
   value: string;
   onChange: (id: string | void) => void;
+}
+
+type FileLike = File | {
+  name: string;
+  size: number;
 }
 
 const KILO = 1024
@@ -39,13 +45,17 @@ const withFileField = (
 ) => {
   const WithFileFieldWrapper = (props) => {
     const [error, setError] = useState()
+    const [isLoading, setIsLoading] = useState(false)
 
+    // FIXME: should translate messages
     return (
       <Field
         {...props}
         component={FileInputComponent}
         onSetUploadError={setError}
+        onSetUploadProgress={setIsLoading}
         error={error}
+        progress={isLoading ? 'Uploading...' : undefined}
       />
     )
   }
@@ -56,6 +66,7 @@ const withFileField = (
 const FileInput: React.FunctionComponent<FileInputProps> = ({
   onUpload,
   onSetUploadError,
+  onSetUploadProgress,
   accept = 'image/png,image/jpg,image/jpeg,.pdf',
   hasError = false,
   label,
@@ -67,7 +78,11 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({
   ...props
 }) => {
   const [isLoading, setIsLoading] = useState(false)
-  const [file, setFile] = useState<File>()
+  const [file, setFile] = useState<FileLike | void>(
+    value
+      ? { name: value, size: 0 }
+      : undefined
+  )
 
   const handleClick = (e: React.MouseEvent): void => {
     e.preventDefault()
@@ -88,15 +103,18 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({
       onSetUploadError(undefined)
       onChange(undefined)
       setIsLoading(true)
+      onSetUploadProgress(true)
       onUpload(file)
         .then((id) => {
           onChange(id)
           setIsLoading(false)
+          onSetUploadProgress(false)
         })
-        .catch(() => {
-          onSetUploadError('Error uploading file')
+        .catch((err) => {
+          onSetUploadError(err.message)
           onChange(undefined)
           setIsLoading(false)
+          onSetUploadProgress(false)
         })
     }
   }

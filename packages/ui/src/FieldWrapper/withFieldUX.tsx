@@ -18,6 +18,7 @@ export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
     hint,
     success,
     error,
+    progress,
     ...props
   }) => {
     const { submitting } = useFormState({
@@ -31,6 +32,7 @@ export const withFieldUX = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
       hint,
       success,
       error,
+      progress,
     })
 
     return <Component
