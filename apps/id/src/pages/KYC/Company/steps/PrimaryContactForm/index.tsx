@@ -181,14 +181,18 @@ const mapState = ({kycOrganization, kyc}) => ({
     documents: kyc.documents,
 })
 
-const mapDispatch = ({kyc, kycOrganization, kycOrganizationValidate}) => ({
+const mapDispatch = ({kyc, kycOrganization}) => ({
     uploadDocument: kyc.uploadDocument,
     submit: (callback) => (values) =>
-        kycOrganizationValidate
+        kycOrganization
             .validate({step: 2, ...values})
-            .then(() => kycOrganization.addValues(values))
-            .then(callback)
-            .catch(handleAsyncValidationErrors),
+            .then(errors => {
+                if (errors) {
+                    return errors
+                }
+
+                return kycOrganization.addValues(values).then(callback)
+            }),
 })
 
 export const PrimaryContactForm = connect(mapState, mapDispatch)(PrimaryContactFormComponent)
