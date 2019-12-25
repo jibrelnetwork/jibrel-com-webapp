@@ -19,7 +19,6 @@ import settings from 'app/settings'
 
 import {FormProps} from '../FormProps'
 import style from '../style.scss'
-import {handleAsyncValidationErrors} from '../handleAsyncValidationErrors'
 
 import {DirectorFields} from './DirectorFields'
 
@@ -135,7 +134,9 @@ const mapDispatch = ({kycOrganization}) => ({
                     return errors
                 }
 
-                return kycOrganization.addValues(values).then(callback)
+                return kycOrganization.addValues(values)
+                  .then(() => kycOrganization.submit())
+                  .then(callback)
             }),
 })
 
