@@ -41,8 +41,17 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
 
             <h3 className={style.groupTitle}>Personal Information</h3>
             <Input
-                name={`beneficiaries[${index}].fullName`}
-                label="Full Legal Name"
+                name={`beneficiaries[${index}].firstName`}
+                label='First Name'
+                validate={isRequired({i18n})}
+            />
+            <Input
+                name={`beneficiaries[${index}].middleName`}
+                label='Middle Name (Optional)'
+            />
+            <Input
+                name={`beneficiaries[${index}].lastName`}
+                label='Last Name'
                 validate={isRequired({i18n})}
             />
             <HistoricDateInput

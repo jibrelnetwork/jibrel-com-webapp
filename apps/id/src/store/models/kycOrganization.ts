@@ -22,7 +22,9 @@ const initialFormValues = {
 
     beneficiaries: [
         {
-            fullName: '',
+            firstName: '',
+            middleName: '',
+            lastName: '',
             birthDate: '',
             nationality: '',
             email: '',
