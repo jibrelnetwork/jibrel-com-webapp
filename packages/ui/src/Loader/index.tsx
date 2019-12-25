@@ -5,18 +5,18 @@ import style from './style.scss'
 import { LoaderColor } from './types'
 
 export interface LoaderProps {
-  color?: LoaderColor;
   className?: string;
+  color?: LoaderColor | void;
 }
 
 const Loader: React.FunctionComponent<LoaderProps> = ({
-  color = LoaderColor.blue,
+  color,
   className,
 }) => (
   <div
     className={cc([
       style.loader,
-      style[color],
+      color && style[color],
       className,
     ])}>
     <div className={cc([style.dot, style.first])} />
