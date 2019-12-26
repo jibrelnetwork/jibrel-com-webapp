@@ -3,6 +3,7 @@ import get from 'lodash-es/get'
 import {
     Input,
     FileInput,
+    PhoneNumberInput,
     HistoricDateInput,
     Icon,
 } from '@jibrelcom/ui'
@@ -68,9 +69,9 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
 
 
             <h3 className={style.groupTitle}>Current Residential Address</h3>
-            <Input
+            <PhoneNumberInput
+                validate={isRequired({i18n})}
                 name={`beneficiaries[${index}].phoneNumber`}
-                label="Primary Telephone"
             />
             <Input
                 name={`beneficiaries[${index}].email`}

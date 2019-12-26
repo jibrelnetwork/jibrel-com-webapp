@@ -11,6 +11,7 @@ export { default as LinkButton } from './LinkButton'
 export { default as OtherSelect } from './OtherSelect'
 export { default as SmallButton } from './SmallButton'
 export { default as PasswordInput } from './PasswordInput'
+export { default as PhoneNumberInput } from './PhoneNumberInput'
 export { default as Select } from './Select'
 
 export {
