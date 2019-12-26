@@ -12,7 +12,7 @@ const NEXT_ROUTES: { [key: string]: string[] } = {
   [UserStatus.VERIFIED]: ['Invest'],
 }
 
-const isValidVerificationStep: ActivationFnFactory = (
+const checkNextPageAvailable: ActivationFnFactory = (
   router: Router,
   dependencies: RouterDependencies,
 ) =>
@@ -37,4 +37,4 @@ const isValidVerificationStep: ActivationFnFactory = (
     return Promise.resolve(true)
   }
 
-export default isValidVerificationStep
+export default checkNextPageAvailable

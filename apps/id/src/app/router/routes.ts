@@ -4,7 +4,7 @@ import { RouteEnhanced } from './types'
 import {
   redirectLang,
   isLoggedIn,
-  isValidVerificationStep,
+  checkNextPageAvailable,
   verifyPhone,
 } from './activations'
 
@@ -16,7 +16,7 @@ export const routes: RouteEnhanced[] = [
     path: '/',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
   {
@@ -34,7 +34,7 @@ export const routes: RouteEnhanced[] = [
     path: '/:lang/login',
     canActivate: composeActivations([
       redirectLang,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
 
@@ -48,7 +48,7 @@ export const routes: RouteEnhanced[] = [
     path: '/:lang/signup',
     canActivate: composeActivations([
       redirectLang,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
 
@@ -62,7 +62,7 @@ export const routes: RouteEnhanced[] = [
     path: '/:lang/forgot',
     canActivate: composeActivations([
       redirectLang,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
 
@@ -76,7 +76,7 @@ export const routes: RouteEnhanced[] = [
     path: '/:lang/reset?:token',
     canActivate: composeActivations([
       redirectLang,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
 
@@ -85,7 +85,7 @@ export const routes: RouteEnhanced[] = [
     path: '/email-verification',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
 
@@ -94,7 +94,7 @@ export const routes: RouteEnhanced[] = [
     path: '/verify/email?:token',
     canActivate: composeActivations([
       redirectLang,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
 
@@ -103,7 +103,7 @@ export const routes: RouteEnhanced[] = [
     path: '/verify/phone',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
       verifyPhone,
     ]),
   },
@@ -112,7 +112,7 @@ export const routes: RouteEnhanced[] = [
     path: '/verify/phone/code',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
       verifyPhone,
     ]),
   },
@@ -122,7 +122,7 @@ export const routes: RouteEnhanced[] = [
     path: '/kyc',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
     // onActivate: get kyc status from backend
     // canActivate: if kyc status is "not submitted", then true
@@ -182,7 +182,7 @@ export const routes: RouteEnhanced[] = [
     path: '/kyc/individual',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
   {
@@ -190,7 +190,7 @@ export const routes: RouteEnhanced[] = [
     path: '/kyc/company',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
   {
@@ -198,7 +198,7 @@ export const routes: RouteEnhanced[] = [
     path: '/kyc/success',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
   {
@@ -206,7 +206,7 @@ export const routes: RouteEnhanced[] = [
     path: '/invest',
     canActivate: composeActivations([
       isLoggedIn,
-      isValidVerificationStep,
+      checkNextPageAvailable,
     ]),
   },
 ].map((route) => ({
