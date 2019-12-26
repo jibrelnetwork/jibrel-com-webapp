@@ -186,7 +186,18 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'KYCSuccess',
     path: '/kyc/success',
-    canActivate: isLoggedIn,
+    canActivate: composeActivations([
+      isLoggedIn,
+      isValidVerificationStep,
+    ]),
+  },
+  {
+    name: 'Invest',
+    path: '/invest',
+    canActivate: composeActivations([
+      isLoggedIn,
+      isValidVerificationStep,
+    ]),
   },
 ].map((route) => ({
   ...route,
