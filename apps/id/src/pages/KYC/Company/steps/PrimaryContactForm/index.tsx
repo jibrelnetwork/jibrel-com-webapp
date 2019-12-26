@@ -11,6 +11,7 @@ import {
     BigButtonSubmit,
     Input,
     FileInput,
+    PhoneNumberInput,
   HistoricDateInput,
 } from '@jibrelcom/ui'
 
@@ -94,12 +95,8 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                             {'Current Residential Address'}
                         </h3>
 
-                        <Input
+                        <PhoneNumberInput
                             name='phoneNumber'
-                            label={'Primary Telephone'}
-                            validate={isRequired({i18n})}
-                            // FIXME: So is it optional or not?
-                            // label={'Primary Telephone (Optional)'}
                         />
                         <Input
                             name='email'
