@@ -70,6 +70,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
 
             <h3 className={style.groupTitle}>Current Residential Address</h3>
             <PhoneNumberInput
+                validate={isRequired({i18n})}
                 name={`beneficiaries[${index}].phoneNumber`}
             />
             <Input

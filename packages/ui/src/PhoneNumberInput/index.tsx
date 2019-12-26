@@ -20,7 +20,7 @@ const parse = () => (value: string | void): string | void => value
 
 const PhoneNumberInput: React.FunctionComponent<GenericFieldProps & PhoneNumberInputProps> = ({
   className,
-  label = 'Primary Telephone (Optional)',
+  label = 'Primary Telephone',
   ...props
 }) => {
   return (

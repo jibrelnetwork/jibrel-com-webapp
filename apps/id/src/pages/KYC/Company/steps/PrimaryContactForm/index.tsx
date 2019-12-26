@@ -96,6 +96,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                         </h3>
 
                         <PhoneNumberInput
+                            validate={isRequired({i18n})}
                             name='phoneNumber'
                         />
                         <Input
