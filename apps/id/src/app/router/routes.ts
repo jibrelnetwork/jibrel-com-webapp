@@ -32,7 +32,10 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'Login',
     path: '/:lang/login',
-    canActivate: redirectLang,
+    canActivate: composeActivations([
+      redirectLang,
+      isValidVerificationStep,
+    ]),
   },
 
   {
@@ -43,14 +46,8 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'SignUp',
     path: '/:lang/signup',
-    canActivate: redirectLang,
-  },
-
-  {
-    name: 'EmailVerification',
-    path: '/email-verification',
     canActivate: composeActivations([
-      isLoggedIn,
+      redirectLang,
       isValidVerificationStep,
     ]),
   },
@@ -63,7 +60,10 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'Forgot',
     path: '/:lang/forgot',
-    canActivate: redirectLang,
+    canActivate: composeActivations([
+      redirectLang,
+      isValidVerificationStep,
+    ]),
   },
 
   {
@@ -74,18 +74,28 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'Reset',
     path: '/:lang/reset?:token',
-    canActivate: redirectLang,
+    canActivate: composeActivations([
+      redirectLang,
+      isValidVerificationStep,
+    ]),
   },
 
   {
-    name: 'redirect!VerifyEmail',
-    path: '/verify/email?:token',
-    canActivate: redirectLang,
+    name: 'EmailVerification',
+    path: '/email-verification',
+    canActivate: composeActivations([
+      isLoggedIn,
+      isValidVerificationStep,
+    ]),
   },
+
   {
     name: 'VerifyEmail',
-    path: '/:lang/verify/email?:token',
-    canActivate: redirectLang,
+    path: '/verify/email?:token',
+    canActivate: composeActivations([
+      redirectLang,
+      isValidVerificationStep,
+    ]),
   },
 
   {
