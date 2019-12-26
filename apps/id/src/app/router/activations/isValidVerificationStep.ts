@@ -3,13 +3,13 @@ import { ActivationFnFactory, Router, State } from 'router5'
 import { RouterDependencies } from '../types'
 
 import { UserStatus } from 'store/types'
-import settings from 'app/settings'
 
-const NEXT_ROUTES = {
+const NEXT_ROUTES: { [key: string]: string[] } = {
   [UserStatus.EMAIL_UNVERIFIED]: ['EmailVerification'],
   [UserStatus.PHONE_UNVERIFIED]: ['VerifyPhone', 'VerifyPhoneCode'],
   [UserStatus.KYC_UNSET]: ['KYC', 'KYCIndividual', 'KYCCompany'],
   [UserStatus.KYC_PENDING]: ['KYCSuccess'],
+  [UserStatus.VERIFIED]: ['Invest'],
 }
 
 const isValidVerificationStep: ActivationFnFactory = (
@@ -20,13 +20,8 @@ const isValidVerificationStep: ActivationFnFactory = (
     const { store } = dependencies
     const { user } = store.getState()
 
-    const nextRoutes = NEXT_ROUTES[user.status]
+    const nextRoutes: string[] | void = user.status ? NEXT_ROUTES[user.status] : undefined
     const toRoute = toState.name.split('.')[0]
-
-    if (user.status === UserStatus.VERIFIED) {
-      window.location.href = `${settings.HOST_CMS}/${user.languageCode}`
-      return Promise.resolve(true)
-    }
 
     if (nextRoutes && !nextRoutes.includes(toRoute)) {
       return Promise.reject({
