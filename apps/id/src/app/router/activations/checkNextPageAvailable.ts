@@ -5,14 +5,14 @@ import { RouterDependencies } from '../types'
 import { UserStatus } from 'store/types'
 
 const NEXT_ROUTES: { [key: string]: string[] } = {
-  [UserStatus.EMAIL_UNVERIFIED]: ['EmailVerification'],
+  [UserStatus.EMAIL_UNVERIFIED]: ['EmailVerification', 'VerifyEmail'],
   [UserStatus.PHONE_UNVERIFIED]: ['VerifyPhone', 'VerifyPhoneCode'],
   [UserStatus.KYC_UNSET]: ['KYC', 'KYCIndividual', 'KYCCompany'],
   [UserStatus.KYC_PENDING]: ['KYCSuccess'],
   [UserStatus.VERIFIED]: ['Invest'],
 }
 
-const isValidVerificationStep: ActivationFnFactory = (
+const checkNextPageAvailable: ActivationFnFactory = (
   router: Router,
   dependencies: RouterDependencies,
 ) =>
@@ -37,4 +37,4 @@ const isValidVerificationStep: ActivationFnFactory = (
     return Promise.resolve(true)
   }
 
-export default isValidVerificationStep
+export default checkNextPageAvailable
