@@ -26,13 +26,15 @@ const KYCLayout: React.FunctionComponent<KYCLayoutProps> = ({
       <h1 className={style.title}>
         {i18n._('KYC.title')}
       </h1>
-      <LinkButton
-        onClick={backHandler}
-        className={style.back}
-        variant={backLabel ? LinkButtonVariant.prev : undefined}
-      >
-        {backLabel}
-      </LinkButton>
+      {!backLabel ? (<span className={style.back} />) : (
+        <LinkButton
+          onClick={backHandler}
+          className={style.back}
+          variant={LinkButtonVariant.prev}
+        >
+          {backLabel}
+        </LinkButton>
+      )}
       {children}
     </ProfileLayout>
   )
