@@ -41,6 +41,7 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
         options={OCCUPATIONS}
         name='occupation'
         label='Profession'
+        placeholder='select profession'
       />
       <OtherSelect
         validate={isRequired({ i18n })}
@@ -48,6 +49,7 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
         options={INCOME_SOURCES}
         name='incomeSource'
         label='Primary Source of Income'
+        placeholder='select source of income'
       />
       <Checkbox
         name='isAgreedDocuments'
