@@ -1,6 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
-import { centered } from '@jibrelcom/ui/src/theme/grid.scss'
+import { centered } from '@jibrelcom/ui/src/Grid/grid.scss'
 
 import {
   Footer,

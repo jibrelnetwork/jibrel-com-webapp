@@ -2,7 +2,7 @@ import React from 'react'
 
 import cc from 'classcat'
 
-import grid from '../theme/grid.scss'
+import grid from './grid.scss'
 import example from './example.scss'
 
 export default () => (
