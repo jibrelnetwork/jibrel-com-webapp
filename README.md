@@ -20,3 +20,52 @@ Required server run environment variables:
     - Example for production: `jibrel.com` 
 - `CSP_MANIFEST_SRC` = `manifest-src` part for Content-Security-Policy header. See [manifest-src on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/manifest-src) for details.
     - Example for production: `jibrel.com` 
+
+### nginx proxy config
+
+```
+server {
+    listen       80;
+    server_name  jibrelcom.local;
+    location / {
+        proxy_pass http://jibrelcom.develop.jdev.network;
+    }
+}
+
+server {
+    listen       80;
+    server_name  id.jibrelcom.local;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+
+server {
+    listen       80;
+    server_name  api.jibrelcom.local;
+
+    location / {
+        add_header 'Access-Control-Allow-Origin' 'http://id.jibrelcom.local' always;
+
+        proxy_set_header 'Origin' 'http://id.jibrelcom.develop.jdev.network';
+        proxy_hide_header 'Access-Control-Allow-Origin';
+        proxy_cookie_domain '.jibrelcom.develop.jdev.network' '.jibrelcom.local';
+        proxy_cookie_domain jibrelcom.develop.jdev.network jibrelcom.local;
+        proxy_pass https://api.jibrelcom.develop.jdev.network;
+    }
+}
+```
+
+### /etc/hosts updates
+
+```
+...
+
+127.0.0.1    jibrelcom.local
+127.0.0.1    api.jibrelcom.local
+127.0.0.1    id.jibrelcom.local
+```
