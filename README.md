@@ -29,10 +29,22 @@ server {
 
 server {
     listen       80;
+    server_name  investor.jibrelcom.local;
+
+    location / {
+        proxy_pass http://localhost:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+
+server {
+    listen       80;
     server_name  api.jibrelcom.local;
 
     location / {
-        add_header 'Access-Control-Allow-Origin' 'http://id.jibrelcom.local' always;
+        add_header 'Access-Control-Allow-Origin' $http_origin always;
 
         proxy_set_header 'Origin' 'http://id.jibrelcom.develop.jdev.network';
         proxy_hide_header 'Access-Control-Allow-Origin';
@@ -51,6 +63,7 @@ server {
 127.0.0.1    jibrelcom.local
 127.0.0.1    api.jibrelcom.local
 127.0.0.1    id.jibrelcom.local
+127.0.0.1    investor.jibrelcom.local
 ```
 
 ## Deployment
