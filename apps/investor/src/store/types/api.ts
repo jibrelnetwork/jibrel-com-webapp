@@ -1,5 +1,4 @@
-export type API_FORM_ERROR = 'non_field_error'
-export const API_FORM_ERROR: API_FORM_ERROR = 'non_field_error'
+import { API_FORM_ERROR } from '@jibrelcom/forms'
 
 export type APIResponse<Data> = {
   data: Data;

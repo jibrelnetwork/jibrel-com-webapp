@@ -8,6 +8,8 @@
     "apps/investor/src/**/*.tsx",
     "packages/ui/src/**/*.ts",
     "packages/ui/src/**/*.tsx",
+    "packages/forms/src/**/*.ts",
+    "packages/forms/src/**/*.tsx",
     "packages/router/src/**/*.ts",
     "packages/router/src/**/*.tsx",
     "packages/languages/src/**/*.ts",
