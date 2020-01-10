@@ -17,37 +17,11 @@
 
 .button {
   display: flex;
-  width: $column-s-4;
-
-  @include screen('>xsmall') {
-    width: $column-m-4;
-  }
-
-  @include screen('>small') {
-    width: $column-m-3;
-  }
-
-  @include screen('>medium') {
-    width: $column-l-4;
-  }
 }
 
 .info {
   font-size: 18px;
   line-height: 140%;
-  width: $column-s-4;
-
-  @include screen('>xsmall') {
-    width: $column-m-8;
-  }
-
-  @include screen('>small') {
-    width: $column-m-5;
-  }
-
-  @include screen('>medium') {
-    width: $column-l-5;
-  }
 
   &-content {
     p {

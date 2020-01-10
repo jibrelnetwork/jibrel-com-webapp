@@ -12,7 +12,7 @@ import settings from 'app/settings'
 import OCCUPATIONS from 'data/occupations.json'
 import INCOME_SOURCES from 'data/incomeSources.json'
 import isRequired from 'utils/validators/isRequired'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
+import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { useI18n } from 'app/i18n'
 import { KYCIndividualValues } from 'store/types/kyc'
 

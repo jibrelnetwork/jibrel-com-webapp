@@ -11,7 +11,7 @@ import {
 
 import style from './style.scss'
 
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
+import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 
 import settings from 'app/settings'
 import { useLanguageCode } from 'app/i18n'
