@@ -1,10 +1,11 @@
 import React from 'react'
 import ReactDOM from 'react-dom'
 
-const MOUNT_NODE = document.getElementById('app')
+// settings should be initialized before everything else in the app
+import './app/settings'
 
-const App: React.FunctionComponent = () => (
-  <code>investor application</code>
-)
+import App from './App'
+
+const MOUNT_NODE = document.getElementById('app')
 
 ReactDOM.render(<App />, MOUNT_NODE)
