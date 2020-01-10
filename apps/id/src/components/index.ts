@@ -1,8 +1,6 @@
-export { default as Link } from './Link'
 export { default as Footer } from './Footer'
 export { default as Header } from './Header'
 export { default as Countdown } from './Countdown'
-export { default as InternalLink } from './InternalLink'
 export { default as CountrySelect } from './CountrySelect'
 export { default as ResponseLoader } from './ResponseLoader'
 export { default as UserActionInfo } from './UserActionInfo'

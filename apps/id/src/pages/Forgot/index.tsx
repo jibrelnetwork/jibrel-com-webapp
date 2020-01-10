@@ -11,6 +11,7 @@ import {
 import {
   Input,
   Loader,
+  InternalLink,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
@@ -18,16 +19,12 @@ import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
 import isRequired from 'utils/validators/isRequired'
 import { Dispatch } from 'store'
+import { UserActionInfo } from 'components'
 
 import {
   FormSubmit,
   ForgotPasswordFormFields,
 } from 'store/types'
-
-import {
-  InternalLink,
-  UserActionInfo,
-} from 'components'
 
 import style from './style.scss'
 

@@ -1,6 +1,7 @@
 import React from 'react'
 import { Form } from 'react-final-form'
 import { connect } from 'react-redux'
+import { InternalLink } from '@jibrelcom/ui'
 
 import style from './style.scss'
 import authStyle from '../../styles/auth.scss'
@@ -12,7 +13,6 @@ import {
 } from 'store/types'
 import VerifyPhoneCodeForm from './VerifyPhoneCodeForm'
 import LockedActions from './LockedActions'
-import InternalLink from 'components/InternalLink'
 
 interface VerifyPhoneCodeProps {
   status: PhoneVerificationStatus;

@@ -10,13 +10,13 @@ import {
 
 import {
   Input,
+  InternalLink,
   PasswordInput,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
 import style from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
-import InternalLink from 'components/InternalLink'
 import isRequired from 'utils/validators/isRequired'
 import { Dispatch } from 'store'
 

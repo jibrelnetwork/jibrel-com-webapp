@@ -10,6 +10,7 @@ import {
 import {
   Input,
   Checkbox,
+  InternalLink,
   PasswordInput,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
@@ -17,7 +18,6 @@ import {
 import auth from 'styles/auth.scss'
 import settings from 'app/settings'
 import AuthLayout from 'layouts/AuthLayout'
-import InternalLink from 'components/InternalLink'
 import { Dispatch } from 'store'
 import { checkPasswordStrength } from 'utils/forms'
 

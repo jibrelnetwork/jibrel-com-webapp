@@ -10,6 +10,7 @@
     "classcat": "~4.0.2",
     "include-media": "~1.4.9",
     "lodash-es": "~4.17.15",
+    "react-router5": "^7.1.0",
     "react-text-mask": "~5.4.3"
   },
   "devDependencies": {

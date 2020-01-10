@@ -1,7 +1,7 @@
 import React from 'react'
 import cc from 'classcat'
 
-import style from '@jibrelcom/ui/src/LinkButton/style.scss'
+import style from '../LinkButton/style.scss'
 
 export interface LinkProps extends React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
   className?: string;

@@ -2,7 +2,7 @@ import React from 'react'
 import cc from 'classcat'
 import { Link } from 'react-router5'
 
-import style from '@jibrelcom/ui/src/LinkButton/style.scss'
+import style from '../LinkButton/style.scss'
 
 export interface InternalLinkProps extends React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
   params?: object;
