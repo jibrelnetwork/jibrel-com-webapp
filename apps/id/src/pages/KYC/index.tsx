@@ -1,18 +1,17 @@
 import React, { useState } from 'react'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { connect } from 'react-redux'
 import { actions } from 'redux-router5'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { BigButton } from '@jibrelcom/ui'
+import { useLanguageCode } from '@jibrelcom/languages'
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
+import settings from 'app/settings'
 import KYCLayout from 'layouts/KYCLayout'
 
 import style from './style.scss'
 import { KYCType } from './types'
-
 import { Button } from './components'
-import settings from 'app/settings'
-import { useLanguageCode } from 'app/i18n'
 
 interface KYCProps {
   goTo: (name: string, params?: object) => void;

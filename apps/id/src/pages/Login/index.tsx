@@ -1,6 +1,7 @@
 import React from 'react'
 import cc from 'classcat'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/languages'
 
 import {
   Form,
@@ -18,7 +19,6 @@ import AuthLayout from 'layouts/AuthLayout'
 import InternalLink from 'components/InternalLink'
 import isRequired from 'utils/validators/isRequired'
 import { Dispatch } from 'store'
-import { useI18n } from 'app/i18n'
 
 import {
   FormSubmit,

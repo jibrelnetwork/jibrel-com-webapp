@@ -1,48 +1,46 @@
 import { Router, State } from 'router5'
 import transitionPath from 'router5-transition-path'
-
-import {
-  RouteEnhanced,
-  RouterDependencies,
-} from '../types'
 import { MiddlewareFactory } from 'router5/types/types/router'
 
-type RouteMap = {
-  [name: string]: RouteEnhanced;
+import { RouteEnhanced } from '../types'
+
+type RouteMap<D> = {
+  [name: string]: RouteEnhanced<D>;
 }
 
-const routesToMap = (
-  routes: RouteEnhanced[],
+function routesToMap<D> (
+  routes: RouteEnhanced<D>[],
   prefix?: string,
-): RouteMap =>
-  routes.reduce(
-    (memo: RouteMap, route) => {
-      const name = prefix
-        ? `${prefix}.${route.name}`
-        : route.name
+): RouteMap<D> {
+  return routes.reduce((
+    memo: RouteMap<D>,
+    route: RouteEnhanced<D>,
+  ) => {
+    const name = prefix
+      ? `${prefix}.${route.name}`
+      : route.name
 
-      memo[name] = route
-      if (route.children) {
-        Object.assign(
-          memo,
-          routesToMap(route.children, name),
-        )
-      }
+    memo[name] = route
 
-      return memo
-    },
-    {},
-  )
+    if (route.children) {
+      Object.assign(
+        memo,
+        routesToMap(route.children, name),
+      )
+    }
 
+    return memo
+  }, {})
+}
 
-export const onRouteActivateMiddleware = (
-  routes: RouteEnhanced[],
-): MiddlewareFactory => {
+export function onRouteActivateMiddleware<D> (
+  routes: RouteEnhanced<D>[],
+): MiddlewareFactory {
   const routesMap = routesToMap(routes)
 
   return (
     router: Router,
-    dependencies: RouterDependencies,
+    dependencies: D,
   ) => (
     toState: State,
     fromState: State,

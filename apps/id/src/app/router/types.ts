@@ -1,4 +1,5 @@
 import { Route } from 'router5'
+
 import { Store } from 'store'
 
 export interface RouteEnhanced extends Route {

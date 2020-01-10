@@ -1,6 +1,7 @@
 import React from 'react'
 import { I18n } from '@lingui/core'
-import { LanguageMeta } from '../../data/languages'
+
+import { LanguageMeta } from '../data/languages'
 
 export interface I18nContextProps {
   languageCode: string;

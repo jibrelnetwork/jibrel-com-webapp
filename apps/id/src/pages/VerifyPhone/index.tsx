@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/languages'
 
 import {
   PhoneInput,
@@ -11,11 +12,9 @@ import {
   FormRenderProps,
 } from 'react-final-form'
 
-
 import authStyle from 'styles/auth.scss'
 import CountrySelect from 'components/CountrySelect'
 import COUNTRIES_INDEX from 'components/CountrySelect/countries/index.json'
-import { useI18n } from 'app/i18n'
 import { isRequired } from 'utils/validators'
 
 import { FormSubmitResult, PhoneAPINumberFields } from 'store/types'

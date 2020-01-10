@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/languages'
 import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
@@ -17,7 +18,6 @@ import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
 import isRequired from 'utils/validators/isRequired'
 import { Dispatch } from 'store'
-import { useI18n } from 'app/i18n'
 
 import {
   FormSubmit,

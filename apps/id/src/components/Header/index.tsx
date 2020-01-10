@@ -1,7 +1,10 @@
 import React, { useState } from 'react'
 import cc from 'classcat'
+import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { connect } from 'react-redux'
+import { useLanguageCode } from '@jibrelcom/languages'
 
+import settings from 'app/settings'
 import { UserStatus } from 'store/types'
 
 import {
@@ -10,11 +13,6 @@ import {
 } from 'store'
 
 import style from './style.scss'
-
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
-
-import settings from 'app/settings'
-import { useLanguageCode } from 'app/i18n'
 
 export interface HeaderProps {
   logout?: () => void;

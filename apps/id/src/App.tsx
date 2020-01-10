@@ -2,9 +2,12 @@ import React, { useState } from 'react'
 import { RouterProvider } from 'react-router5'
 import { Provider as ReduxProvider } from 'react-redux'
 
+import {
+  I18nProvider,
+  LanguageCode,
+} from '@jibrelcom/languages'
+
 import { router } from './app/router'
-import { I18nProvider } from './app/i18n'
-import { LanguageCode } from './data/languages'
 import locales from './locales'
 import store from './store'
 import Pages from './pages'

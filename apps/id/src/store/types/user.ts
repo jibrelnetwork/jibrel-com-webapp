@@ -1,4 +1,5 @@
-import { LanguageCode } from 'data/languages'
+import { LanguageCode } from '@jibrelcom/languages'
+
 import { KYCStatus } from './kyc'
 
 export enum UserStatus {

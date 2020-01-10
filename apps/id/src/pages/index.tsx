@@ -1,9 +1,13 @@
 import React from 'react'
-import { useI18n, useLanguage } from 'app/i18n'
-import { useRouteNode } from 'react-router5'
-import { Helmet } from 'react-helmet'
 import get from 'lodash-es/get'
 import { constants } from 'router5'
+import { Helmet } from 'react-helmet'
+import { useRouteNode } from 'react-router5'
+
+import {
+  useI18n,
+  useLanguage,
+} from '@jibrelcom/languages'
 
 import * as pagesAvailable from './available'
 

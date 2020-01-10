@@ -1,4 +1,4 @@
-import { LanguageCode } from '../data/languages'
+import { LanguageCode } from '@jibrelcom/languages'
 
 export default {
   [LanguageCode.en]: (): Promise<object> =>

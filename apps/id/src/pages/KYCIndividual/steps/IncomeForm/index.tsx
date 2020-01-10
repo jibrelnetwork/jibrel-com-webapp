@@ -1,5 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
+import { useI18n } from '@jibrelcom/languages'
 import { FormRenderProps } from 'react-final-form'
 
 import {
@@ -13,7 +14,6 @@ import OCCUPATIONS from 'data/occupations.json'
 import INCOME_SOURCES from 'data/incomeSources.json'
 import isRequired from 'utils/validators/isRequired'
 import grid from '@jibrelcom/ui/src/theme/grid.scss'
-import { useI18n } from 'app/i18n'
 import { KYCIndividualValues } from 'store/types/kyc'
 
 import style from '../../style.scss'

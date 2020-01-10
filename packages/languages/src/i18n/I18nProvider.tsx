@@ -1,12 +1,17 @@
 import React from 'react'
-import {
-  I18nProvider as LinguiI18nProvider,
-  I18n as LinguiI18nConsumer,
-} from '@lingui/react'
 import { Catalog } from '@lingui/core'
 
+import {
+  I18n as LinguiI18nConsumer,
+  I18nProvider as LinguiI18nProvider,
+} from '@lingui/react'
+
 import { I18nContext } from './I18nContext'
-import { LANGUAGES, LanguageCode } from '../../data/languages'
+
+import {
+  LANGUAGES,
+  LanguageCode,
+} from '../data/languages'
 
 export interface I18nProviderProps {
   languageCode: LanguageCode;

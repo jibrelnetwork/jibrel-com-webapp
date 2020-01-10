@@ -1,60 +1,19 @@
-import { ActivationFn, ActivationFnFactory, Router, State } from 'router5'
-import { RouterDependencies } from 'app/router/types'
-import { isPromise } from '@jibrelcom/ui'
-import noop from 'lodash-es/noop'
+import composeActivations from '@jibrelcom/router/src/utils/composeActivations'
 
-const promiseActivation = (
-  activation: ActivationFn,
-  toState: State,
-  fromState: State,
-): Promise<boolean | void> => {
-  let resolve = noop
-  let reject = noop
+import {
+  State,
+  Router,
+  ActivationFnFactory,
+} from 'router5'
 
-  const p = new Promise<boolean | void>((res, rej) => {
-    resolve = res
-    reject = rej
-  })
+import { RouterDependencies } from '../types'
 
-  const done = (err: any, state: State): void => {
-    if (err) {
-      return reject(err)
-    }
-    if (state) {
-      return resolve(state)
-    }
-    return resolve(true)
-  }
-
-  const result = activation(toState, fromState, done)
-
-  if (isPromise(result)) {
-    resolve()
-    return result
-  }
-
-  return p
-}
-
-
-const composeActivations = (
-  activations: ActivationFnFactory[],
-) => (
+const compose = (items: ActivationFnFactory[]): (
   router: Router,
   dependencies: RouterDependencies,
-) => async (
+) => (
   toState: State,
   fromState: State,
-): Promise<boolean> => {
-  for (let i = 0; i < activations.length; i++) {
-    const activation = activations[i](router, dependencies)
-    const result = await promiseActivation(activation, toState, fromState)
-    if (result === false) {
-      return false
-    }
-  }
+) => Promise<boolean> => composeActivations<RouterDependencies>(items)
 
-  return true
-}
-
-export default composeActivations
+export default compose

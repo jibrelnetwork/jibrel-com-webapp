@@ -1,9 +1,8 @@
 import React from 'react'
 import noop from 'lodash-es/noop'
 import { LinkButton } from '@jibrelcom/ui'
+import { useI18n } from '@jibrelcom/languages'
 import { LinkButtonVariant } from '@jibrelcom/ui/src/LinkButton/types'
-
-import { useI18n } from 'app/i18n'
 
 import style from './style.scss'
 import ProfileLayout from '../ProfileLayout'

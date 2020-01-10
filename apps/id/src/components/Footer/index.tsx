@@ -1,9 +1,8 @@
 import React from 'react'
-
 import grid from '@jibrelcom/ui/src/theme/grid.scss'
+import { useLanguageCode } from '@jibrelcom/languages'
 
 import settings from 'app/settings'
-import { useLanguageCode } from 'app/i18n'
 
 const Footer: React.FunctionComponent = () => {
   const languageCode = useLanguageCode()

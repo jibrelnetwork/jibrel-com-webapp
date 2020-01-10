@@ -10,6 +10,8 @@
   },
   "dependencies": {
     "@jibrelcom/ui": "0.0.1",
+    "@jibrelcom/router": "0.0.1",
+    "@jibrelcom/languages": "0.0.1",
     "@lingui/core": "~2.9.0",
     "@lingui/react": "~2.9.0",
     "@rematch/core": "~1.3.0",
