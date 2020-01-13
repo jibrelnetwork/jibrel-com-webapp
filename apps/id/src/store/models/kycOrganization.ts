@@ -1,8 +1,8 @@
 import {createModel} from '@rematch/core'
 import { FORM_ERROR } from 'final-form'
+import { API_FORM_ERROR } from '@jibrelcom/forms'
 
 import axios from '../axios'
-import { API_FORM_ERROR } from '../types/api'
 
 const initialFormValues = {
     companyName: '',

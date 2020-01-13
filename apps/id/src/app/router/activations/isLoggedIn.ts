@@ -1,12 +1,13 @@
+import { DEFAULT_LANGUAGE_CODE } from '@jibrelcom/i18n'
+
 import {
   ActivationFnFactory,
   Router,
 } from 'router5'
 
-import { RouterDependencies } from '../types'
-
-import { DEFAULT_LANGUAGE_CODE } from 'data/languages'
 import { UserStatus } from 'store/types'
+
+import { RouterDependencies } from '../types'
 
 const isLoggedIn: ActivationFnFactory = (
   router: Router,

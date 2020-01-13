@@ -1,6 +1,7 @@
 import React from 'react'
 import cc from 'classcat'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
   Form,
@@ -9,16 +10,15 @@ import {
 
 import {
   Input,
+  InternalLink,
   PasswordInput,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
 import style from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
-import InternalLink from 'components/InternalLink'
 import isRequired from 'utils/validators/isRequired'
 import { Dispatch } from 'store'
-import { useI18n } from 'app/i18n'
 
 import {
   FormSubmit,

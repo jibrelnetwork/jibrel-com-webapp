@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
 import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
@@ -10,6 +11,7 @@ import {
 import {
   Input,
   Loader,
+  InternalLink,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
@@ -17,17 +19,12 @@ import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
 import isRequired from 'utils/validators/isRequired'
 import { Dispatch } from 'store'
-import { useI18n } from 'app/i18n'
+import { UserActionInfo } from 'components'
 
 import {
   FormSubmit,
   ForgotPasswordFormFields,
 } from 'store/types'
-
-import {
-  InternalLink,
-  UserActionInfo,
-} from 'components'
 
 import style from './style.scss'
 

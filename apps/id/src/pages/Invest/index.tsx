@@ -2,11 +2,11 @@ import React from 'react'
 import cc from 'classcat'
 import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { BigButton } from '@jibrelcom/ui'
+import { useLanguageCode } from '@jibrelcom/i18n'
 
 import settings from 'app/settings'
 import ProfileLayout from 'layouts/ProfileLayout'
 import heroImage from 'public/images/pic_hero_invest_process.svg'
-import { useLanguageCode } from 'app/i18n'
 
 import style from './style.scss'
 

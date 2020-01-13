@@ -6,6 +6,9 @@ WORKDIR /app
 ARG NODE_ENV
 ENV NODE_ENV $NODE_ENV
 COPY lerna.json package*.json ./
+COPY packages/forms/package*.json ./packages/forms/
+COPY packages/i18n/package*.json ./packages/i18n/
+COPY packages/router/package*.json ./packages/router/
 COPY packages/ui/package*.json ./packages/ui/
 COPY apps/id/package*.json ./apps/id/
 COPY apps/investor/package*.json ./apps/investor/

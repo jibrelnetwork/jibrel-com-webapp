@@ -5,8 +5,6 @@ export {
   UserLimits,
   Profile,
   LoginFormFields,
-  ResetPasswordFormFields,
-  ForgotPasswordFormFields,
   EmailVerificationFormFields,
   SignUpFormFields,
   ResetPasswordFormFields,

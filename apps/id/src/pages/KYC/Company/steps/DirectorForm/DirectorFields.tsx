@@ -1,11 +1,12 @@
 import React from 'react'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
     Input,
     Icon,
 } from '@jibrelcom/ui'
+
 import isRequired from 'utils/validators/isRequired'
-import {useI18n} from 'app/i18n'
 
 import style from '../style.scss'
 

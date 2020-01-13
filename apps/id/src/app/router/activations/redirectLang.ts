@@ -1,5 +1,6 @@
 import includes from 'lodash-es/includes'
 import get from 'lodash-es/get'
+
 import {
   ActivationFnFactory,
   Router,
@@ -9,7 +10,7 @@ import {
 import {
   DEFAULT_LANGUAGE_CODE,
   LANGUAGE_CODE_LIST,
-} from 'data/languages'
+} from '@jibrelcom/i18n'
 
 import { RouterDependencies } from '../types'
 

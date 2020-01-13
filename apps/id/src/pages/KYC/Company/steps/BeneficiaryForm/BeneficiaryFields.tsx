@@ -1,5 +1,7 @@
 import React from 'react'
 import get from 'lodash-es/get'
+import { useI18n } from '@jibrelcom/i18n'
+
 import {
     Input,
     FileInput,
@@ -7,9 +9,9 @@ import {
     HistoricDateInput,
     Icon,
 } from '@jibrelcom/ui'
+
 import CountrySelect from 'components/CountrySelect'
 import isRequired from 'utils/validators/isRequired'
-import {useI18n} from 'app/i18n'
 
 import style from '../style.scss'
 

@@ -1,11 +1,8 @@
 import React from 'react'
-
-import {
-  BigButton,
-} from '@jibrelcom/ui'
+import { BigButton } from '@jibrelcom/ui'
+import { useLanguageCode } from '@jibrelcom/i18n'
 
 import settings from 'app/settings'
-import { useLanguageCode } from 'app/i18n'
 import ProfileLayout from 'layouts/ProfileLayout'
 
 import style from './style.scss'

@@ -1,5 +1,6 @@
 import React from 'react'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
   Form,
@@ -9,6 +10,7 @@ import {
 import {
   Input,
   Checkbox,
+  InternalLink,
   PasswordInput,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
@@ -16,9 +18,7 @@ import {
 import auth from 'styles/auth.scss'
 import settings from 'app/settings'
 import AuthLayout from 'layouts/AuthLayout'
-import InternalLink from 'components/InternalLink'
 import { Dispatch } from 'store'
-import { useI18n } from 'app/i18n'
 import { checkPasswordStrength } from 'utils/forms'
 
 import {

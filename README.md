@@ -2,6 +2,70 @@
 
 Private applications and pages for Jibrel Startup Investments Platform.
 
+## Development
+
+### nginx proxy config
+
+```
+server {
+    listen       80;
+    server_name  jibrelcom.local;
+    location / {
+        proxy_pass https://jibrelcom.develop.jdev.network;
+    }
+}
+
+server {
+    listen       80;
+    server_name  id.jibrelcom.local;
+
+    location / {
+        proxy_pass http://localhost:3000;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+
+server {
+    listen       80;
+    server_name  investor.jibrelcom.local;
+
+    location / {
+        proxy_pass http://localhost:3001;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
+    }
+}
+
+server {
+    listen       80;
+    server_name  api.jibrelcom.local;
+
+    location / {
+        add_header 'Access-Control-Allow-Origin' $http_origin always;
+
+        proxy_set_header 'Origin' 'http://id.jibrelcom.develop.jdev.network';
+        proxy_hide_header 'Access-Control-Allow-Origin';
+        proxy_cookie_domain '.jibrelcom.develop.jdev.network' '.jibrelcom.local';
+        proxy_cookie_domain jibrelcom.develop.jdev.network jibrelcom.local;
+        proxy_pass https://api.jibrelcom.develop.jdev.network;
+    }
+}
+```
+
+### /etc/hosts updates
+
+```
+...
+
+127.0.0.1    jibrelcom.local
+127.0.0.1    api.jibrelcom.local
+127.0.0.1    id.jibrelcom.local
+127.0.0.1    investor.jibrelcom.local
+```
+
 ## Deployment
 
 Required server run environment variables:
