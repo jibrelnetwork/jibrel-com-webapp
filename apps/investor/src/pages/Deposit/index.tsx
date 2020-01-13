@@ -7,9 +7,7 @@ interface DepositProps {
 }
 
 const Deposit: React.FunctionComponent<DepositProps> = () => {
-  return (
-    <CoreLayout>Deposit</CoreLayout>
-  )
+  return <CoreLayout>Deposit</CoreLayout>
 }
 
 export default Deposit
