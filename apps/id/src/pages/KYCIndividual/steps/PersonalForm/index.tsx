@@ -1,5 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
+import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { useI18n } from '@jibrelcom/languages'
 import { FormRenderProps } from 'react-final-form'
 
@@ -12,7 +13,6 @@ import {
 
 import CountrySelect from 'components/CountrySelect'
 import isRequired from 'utils/validators/isRequired'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
 
 import {
   Documents,

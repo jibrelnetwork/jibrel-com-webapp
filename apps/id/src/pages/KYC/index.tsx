@@ -1,10 +1,13 @@
 import React, { useState } from 'react'
-import grid from '@jibrelcom/ui/src/theme/grid.scss'
 import { connect } from 'react-redux'
 import { actions } from 'redux-router5'
-import { BigButton } from '@jibrelcom/ui'
 import { useLanguageCode } from '@jibrelcom/languages'
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
+
+import {
+  Grid,
+  BigButton,
+} from '@jibrelcom/ui'
 
 import settings from 'app/settings'
 import KYCLayout from 'layouts/KYCLayout'
@@ -25,9 +28,15 @@ const KYC: React.FunctionComponent<KYCProps> = ({
 
   return (
     <KYCLayout>
-      <div className={`${grid.grid} ${style.choice}`}>
-        <h2 className={`${style.title} ${grid.column}`}>What type of investor are you?</h2>
-        <div className={`${style.button} ${grid.column}`}>
+      <Grid.Container className={style.choice}>
+        <Grid.Item className={style.title} component='h2'>What type of investor are you?</Grid.Item>
+        <Grid.Item
+          className={style.button}
+          xs={4}
+          s={4}
+          m={3}
+          l={4}
+        >
           <Button
             setKYCType={setKYCType}
             type={KYCType.individual}
@@ -35,8 +44,14 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             description='Use an individual account if you want to invest on behalf of yourself.'
             isActive={kycType === KYCType.individual}
           />
-        </div>
-        <div className={`${style.button} ${grid.column}`}>
+        </Grid.Item>
+        <Grid.Item
+          className={style.button}
+          xs={4}
+          s={4}
+          m={3}
+          l={4}
+        >
           <Button
             setKYCType={setKYCType}
             type={KYCType.organizational}
@@ -44,9 +59,15 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             description='Use an organizational account if you will invest on behalf of an accredited organization.'
             isActive={kycType === KYCType.organizational}
           />
-        </div>
+        </Grid.Item>
         {kycType !== KYCType.empty && (
-          <div className={`${style.info} ${style.column}`}>
+          <Grid.Item
+            className={style.info}
+            xs={4}
+            s={8}
+            m={5}
+            l={5}
+          >
             <h3 className={style.title}>Required Data</h3>
             <div className={style.infoContent}>
               <p>
@@ -80,12 +101,18 @@ const KYC: React.FunctionComponent<KYCProps> = ({
                 </a>.
               </p>
             </div>
-          </div>
+          </Grid.Item>
         )}
-      </div>
+      </Grid.Container>
       {kycType !== KYCType.empty && (
-        <div className={`${grid.grid} ${style.actions}`}>
-          <div className={`${style.button} ${grid.column}`}>
+        <Grid.Container className={style.actions}>
+          <Grid.Item
+            className={style.button}
+            xs={4}
+            s={4}
+            m={3}
+            l={4}
+          >
             <BigButton
               onClick={(): void => goTo((kycType === KYCType.individual)
                 ? 'KYCIndividual'
@@ -96,8 +123,14 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             >
               Start
             </BigButton>
-          </div>
-          <div className={`${style.button} ${grid.column}`}>
+          </Grid.Item>
+          <Grid.Item
+            className={style.button}
+            xs={4}
+            s={4}
+            m={3}
+            l={4}
+          >
             <BigButton
               onClick={(): void => {
                 window.location.href = `${settings.HOST_CMS}/${languageCode}`
@@ -107,8 +140,8 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             >
               Back to Main
             </BigButton>
-          </div>
-        </div>
+          </Grid.Item>
+        </Grid.Container>
       )}
     </KYCLayout>
   )
