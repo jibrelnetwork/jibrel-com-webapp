@@ -1,6 +1,6 @@
 import React from 'react'
 
-import grid from '../theme/grid.scss'
+import grid from '../Grid/grid.scss'
 
 export interface FooterProps {
   cmsURL: string;

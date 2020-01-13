@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import cc from 'classcat'
 
 import style from './style.scss'
-import grid from '../theme/grid.scss'
+import grid from '../Grid/grid.scss'
 
 export interface HeaderProps {
   logout?: () => void;
