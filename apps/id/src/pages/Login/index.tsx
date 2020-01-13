@@ -1,7 +1,7 @@
 import React from 'react'
 import cc from 'classcat'
 import { connect } from 'react-redux'
-import { useI18n } from '@jibrelcom/languages'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
   Form,

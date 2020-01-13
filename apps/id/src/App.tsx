@@ -5,7 +5,7 @@ import { Provider as ReduxProvider } from 'react-redux'
 import {
   I18nProvider,
   LanguageCode,
-} from '@jibrelcom/languages'
+} from '@jibrelcom/i18n'
 
 import { router } from './app/router'
 import locales from './locales'

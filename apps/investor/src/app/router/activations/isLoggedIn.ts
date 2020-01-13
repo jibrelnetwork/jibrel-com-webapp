@@ -1,4 +1,4 @@
-import { DEFAULT_LANGUAGE_CODE } from '@jibrelcom/languages'
+import { DEFAULT_LANGUAGE_CODE } from '@jibrelcom/i18n'
 
 import {
   Router,

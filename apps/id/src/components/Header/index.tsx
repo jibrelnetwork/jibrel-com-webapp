@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Header } from '@jibrelcom/ui'
-import { useLanguageCode } from '@jibrelcom/languages'
+import { useLanguageCode } from '@jibrelcom/i18n'
 
 import settings from 'app/settings'
 import { UserStatus } from 'store/types'

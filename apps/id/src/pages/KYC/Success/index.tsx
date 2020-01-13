@@ -1,6 +1,6 @@
 import React from 'react'
 import { BigButton } from '@jibrelcom/ui'
-import { useLanguageCode } from '@jibrelcom/languages'
+import { useLanguageCode } from '@jibrelcom/i18n'
 
 import settings from 'app/settings'
 import ProfileLayout from 'layouts/ProfileLayout'

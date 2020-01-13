@@ -4,7 +4,7 @@ import { createModel, ModelConfig } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
 import { RootState } from 'store'
-import { LanguageCode } from '@jibrelcom/languages'
+import { LanguageCode } from '@jibrelcom/i18n'
 
 import axios from '../axios'
 import getUserLimits from './getUserLimits'

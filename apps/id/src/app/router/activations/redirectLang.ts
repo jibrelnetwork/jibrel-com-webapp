@@ -10,7 +10,7 @@ import {
 import {
   DEFAULT_LANGUAGE_CODE,
   LANGUAGE_CODE_LIST,
-} from '@jibrelcom/languages'
+} from '@jibrelcom/i18n'
 
 import { RouterDependencies } from '../types'
 

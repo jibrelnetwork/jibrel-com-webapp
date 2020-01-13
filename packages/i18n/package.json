@@ -1,5 +1,5 @@
 {
-  "name": "@jibrelcom/languages",
+  "name": "@jibrelcom/i18n",
   "version": "0.0.1",
   "private": true,
   "main": "./src/index.ts",

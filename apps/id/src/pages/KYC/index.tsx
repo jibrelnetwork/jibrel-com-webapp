@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'redux-router5'
-import { useLanguageCode } from '@jibrelcom/languages'
+import { useLanguageCode } from '@jibrelcom/i18n'
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import {

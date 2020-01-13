@@ -1,7 +1,7 @@
 import Cookies from 'js-cookie'
 import get from 'lodash-es/get'
 import includes from 'lodash-es/includes'
-import { LANGUAGE_CODE_LIST } from '@jibrelcom/languages'
+import { LANGUAGE_CODE_LIST } from '@jibrelcom/i18n'
 import { MiddlewareFactory } from 'router5/types/types/router'
 
 export const setLangCookie: MiddlewareFactory = () => (

@@ -3,7 +3,7 @@ import cc from 'classcat'
 import bigButtonStyle from '@jibrelcom/ui/src/BigButton/style.scss'
 import { Link } from 'react-router5'
 import { connect } from 'react-redux'
-import { useI18n } from '@jibrelcom/languages'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
   Form,

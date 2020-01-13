@@ -7,7 +7,7 @@ import { useRouteNode } from 'react-router5'
 import {
   useI18n,
   useLanguage,
-} from '@jibrelcom/languages'
+} from '@jibrelcom/i18n'
 
 import * as pagesAvailable from './available'
 

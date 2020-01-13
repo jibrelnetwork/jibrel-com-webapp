@@ -1,6 +1,6 @@
 import React from 'react'
 import get from 'lodash-es/get'
-import { useI18n } from '@jibrelcom/languages'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
     Input,

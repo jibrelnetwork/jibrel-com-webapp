@@ -1,4 +1,4 @@
-import { LanguageCode } from '@jibrelcom/languages'
+import { LanguageCode } from '@jibrelcom/i18n'
 
 export enum UserStatus {
   ANONYMOUS = 'ANONYMOUS',

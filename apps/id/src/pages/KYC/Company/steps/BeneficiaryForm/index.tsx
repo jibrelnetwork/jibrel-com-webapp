@@ -6,7 +6,7 @@ import {Form} from 'react-final-form'
 import arrayMutators from 'final-form-arrays'
 import {FieldArray} from 'react-final-form-arrays'
 import {connect} from 'react-redux'
-import { useI18n } from '@jibrelcom/languages'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
     BigButtonSubmit,

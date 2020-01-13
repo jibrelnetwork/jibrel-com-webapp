@@ -11,7 +11,7 @@ server {
     listen       80;
     server_name  jibrelcom.local;
     location / {
-        proxy_pass http://jibrelcom.develop.jdev.network;
+        proxy_pass https://jibrelcom.develop.jdev.network;
     }
 }
 
