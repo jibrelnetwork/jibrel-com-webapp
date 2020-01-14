@@ -39,22 +39,8 @@ interface KYCData {
   country: string;
 }
 
-interface OfferData {
-  id: string;
-  name: string;
-  deadline: string;
-  roundSize: string;
-  valuation: string;
-  fundingRound: string;
-  offeredEquity: string;
-  pricePerShare: string;
-  typeOfSecurity: string;
-  minimumInvestment: string;
-}
-
 interface InvestState {
   kycData: KYCData | void;
-  offerData: OfferData | void;
 }
 
 async function getKYCData(id: string): Promise<KYCData | void> {
@@ -69,25 +55,6 @@ async function getKYCData(id: string): Promise<KYCData | void> {
     city: 'Al Maryah Island',
     postCode: 'PO Box 111999',
     country: 'Abu Dhabi, UAE',
-  })
-}
-
-async function getOfferData(id: string): Promise<OfferData | void> {
-  if (!id) {
-    return Promise.resolve(undefined)
-  }
-
-  return Promise.resolve({
-    id: 'startupId',
-    name: 'Startup Name',
-    offeredEquity: '20%',
-    pricePerShare: '$30',
-    roundSize: '$400,000',
-    valuation: '$2,000,000',
-    fundingRound: 'Seed Round',
-    minimumInvestment: '$1,000',
-    deadline: 'November 1st, 2019',
-    typeOfSecurity: 'Common Shares',
   })
 }
 
@@ -130,7 +97,6 @@ class Invest extends Component<InvestProps, InvestState> {
 
     this.state = {
       kycData: undefined,
-      offerData: undefined,
     }
   }
 
@@ -139,7 +105,6 @@ class Invest extends Component<InvestProps, InvestState> {
 
     this.setState({
       kycData: await getKYCData(slug),
-      offerData: await getOfferData(slug),
     })
   }
 
@@ -159,7 +124,7 @@ class Invest extends Component<InvestProps, InvestState> {
           </Link>
         </div>
         <h1 className={style.title}>{`Invest to ${startupName}`}</h1>
-        <DealTerms />
+        <DealTerms slug={slug} />
         <div>To continue, you need to sign the Subscription Agreement by electronic signature. Before you do this, please enter your Subscription Amount</div>
         <CustomerData />
         <Form
