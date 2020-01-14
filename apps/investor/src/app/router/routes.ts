@@ -9,6 +9,12 @@ export const routes: RouteEnhanced[] = [
     path: '/deposit',
     canActivate: isLoggedIn,
   },
+
+  {
+    name: 'Invest',
+    path: '/invest/:slug',
+    canActivate: isLoggedIn,
+  },
 ].map((route) => ({
   ...route,
   path: ROUTER_ROOT + route.path,

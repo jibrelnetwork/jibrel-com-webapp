@@ -1,0 +1,38 @@
+@import '~@jibrelcom/ui/src/index';
+
+.title {
+  @include font-h1-xs;
+  width: $column-s-4;
+  padding-top: 0;
+  padding-bottom: 32px;
+  flex-shrink: 1;
+
+  @include screen('>xsmall') {
+    @include font-h1-s;
+  }
+
+  @include screen('>small') {
+    @include font-h1-m;
+  }
+
+  @include screen('>medium') {
+    @include font-h1-l;
+  }
+}
+
+.back {
+  @include flex-row-center;
+
+  height: 24px;
+  margin-right: auto;
+  margin-bottom: 24px;
+}
+
+.icon {
+  @include icon-color($color-blue);
+
+  flex: 0 0 auto;
+  width: 24px;
+  margin-right: 8px;
+  transform: rotate(180deg);
+}
