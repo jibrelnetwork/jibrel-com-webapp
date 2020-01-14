@@ -4,34 +4,31 @@
 @import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/flex';
 
-.title {
-  @include font-h2-s;
-
-  width: 100%;
-  padding-bottom: 24px;
-
-  @include screen('>small') {
-    @include font-h2-l;
-  }
-}
-
 .data {
   @include flex-row;
 
-  padding: 30px 24px 0 24px;
-  margin-bottom: 64px;
+  width: 100%;
+  padding: 16px 24px;
   flex-wrap: wrap;
   background-color: $color-blue-5;
 
   &.loading {
     @include flex-column-center;
-    min-height: 170px;
+    min-height: 184px;
   }
 }
 
 .item {
-  width: $column-l-4;
-  margin-bottom: 30px;
+  width: $column-s-4;
+  margin: 16px 0;
+
+  @include screen('>xsmall') {
+    width: $column-s-2;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-4;
+  }
 }
 
 .label {
