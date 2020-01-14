@@ -11,7 +11,18 @@ export interface DealTermsData {
   deadline: number | Date;
 }
 
+export interface Customer {
+  name: string;
+  streetAddress: string;
+  apartment: string;
+  city: string;
+  postCode: string;
+  country: string;
+}
+
 export interface InvestState {
+  customerData: Customer | void;
   dealTermsData: DealTermsData | void;
   isDealTermsLoading: boolean;
+  isCustomerDataLoading: boolean;
 }

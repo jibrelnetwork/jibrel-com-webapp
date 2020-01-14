@@ -1,0 +1,31 @@
+@import '~@jibrelcom/ui/src/Grid/grid';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+.data {
+  width: $column-s-4;
+  margin-top: 32px;
+  flex-wrap: wrap;
+
+  &.loading {
+    @include flex-column-center;
+
+    min-height: 244px;
+  }
+
+  @include screen('>xsmall') {
+    width: $column-s-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-5;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-5;
+  }
+}
+
+.item {
+  margin-bottom: 30px;
+}
