@@ -19,6 +19,8 @@ export { default as PasswordInput } from './PasswordInput'
 export { default as PhoneNumberInput } from './PhoneNumberInput'
 export { default as Select } from './Select'
 
+export { LoaderColor } from './Loader/types'
+
 export {
   BigButtonSubmit,
   default as BigButton,

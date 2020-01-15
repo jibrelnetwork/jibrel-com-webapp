@@ -1,5 +1,48 @@
-@import '~@jibrelcom/ui/src/index';
+@import '~@jibrelcom/ui/src/Grid/grid';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
 
 .title {
-  
+  @include font-h2-s;
+
+  width: 100%;
+  padding-bottom: 24px;
+
+  @include screen('>small') {
+    @include font-h2-l;
+  }
+}
+
+.data {
+  @include flex-row;
+
+  padding: 30px 24px 0 24px;
+  margin-bottom: 64px;
+  flex-wrap: wrap;
+  background-color: $color-blue-5;
+
+  &.loading {
+    @include flex-column-center;
+    min-height: 170px;
+  }
+}
+
+.item {
+  width: $column-l-4;
+  margin-bottom: 30px;
+}
+
+.label {
+  font-size: 12px;
+  line-height: 140%;
+  color: $color-black-60;
+}
+
+.value {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  color: $color-black;
 }
