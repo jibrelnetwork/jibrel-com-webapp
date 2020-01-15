@@ -26,7 +26,7 @@ export interface UserLimits {
 
 export interface UserState {
   status: UserStatus | void;
-  languageCode: string | void;
+  languageCode: LanguageCode;
   profile: Profile | void;
   limits: UserLimits | void;
 }
