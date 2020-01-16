@@ -6,6 +6,8 @@ import {
   isLoggedIn,
   checkNextPageAvailable,
   verifyPhone,
+  checkKYCPending,
+  checkKYCSubmitted,
 } from './activations'
 
 const ROUTER_ROOT = ''
@@ -26,12 +28,12 @@ export const routes: RouteEnhanced[] = [
 
   {
     name: 'redirect!Login',
-    path: '/login',
+    path: '/login?:next&:slug',
     canActivate: redirectLang,
   },
   {
     name: 'Login',
-    path: '/:lang/login',
+    path: '/:lang/login?:next&:slug',
     canActivate: composeActivations([
       redirectLang,
       checkNextPageAvailable,
@@ -123,6 +125,7 @@ export const routes: RouteEnhanced[] = [
     canActivate: composeActivations([
       isLoggedIn,
       checkNextPageAvailable,
+      checkKYCSubmitted,
     ]),
     // onActivate: get kyc status from backend
     // canActivate: if kyc status is "not submitted", then true
@@ -185,6 +188,7 @@ export const routes: RouteEnhanced[] = [
       checkNextPageAvailable,
     ]),
   },
+
   {
     name: 'KYCCompany',
     path: '/kyc/company',
@@ -193,20 +197,24 @@ export const routes: RouteEnhanced[] = [
       checkNextPageAvailable,
     ]),
   },
+
   {
     name: 'KYCSuccess',
     path: '/kyc/success',
     canActivate: composeActivations([
       isLoggedIn,
       checkNextPageAvailable,
+      checkKYCPending,
     ]),
   },
+
   {
     name: 'Invest',
     path: '/invest',
     canActivate: composeActivations([
       isLoggedIn,
       checkNextPageAvailable,
+      checkKYCSubmitted,
     ]),
   },
 ].map((route) => ({

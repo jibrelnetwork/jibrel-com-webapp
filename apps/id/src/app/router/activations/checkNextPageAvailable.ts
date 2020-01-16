@@ -1,8 +1,12 @@
-import { ActivationFnFactory, Router, State } from 'router5'
-
-import { RouterDependencies } from '../types'
+import {
+  State,
+  Router,
+  ActivationFnFactory,
+} from 'router5'
 
 import { UserStatus } from 'store/types'
+
+import { RouterDependencies } from '../types'
 
 const NEXT_ROUTES: { [key: string]: string[] } = {
   [UserStatus.EMAIL_UNVERIFIED]: ['EmailVerification', 'VerifyEmail'],
@@ -16,7 +20,7 @@ const checkNextPageAvailable: ActivationFnFactory = (
   router: Router,
   dependencies: RouterDependencies,
 ) =>
-  (toState: State): Promise<boolean> => {
+  (toState: State, fromState: State): Promise<boolean> => {
     const { store } = dependencies
     const { user } = store.getState()
 
@@ -29,6 +33,7 @@ const checkNextPageAvailable: ActivationFnFactory = (
           name: nextRoutes[0],
           params: {
             lang: user.languageCode,
+            ...((fromState || toState).params),
           },
         }
       })
