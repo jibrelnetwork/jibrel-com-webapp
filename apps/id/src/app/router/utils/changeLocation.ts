@@ -1,24 +1,24 @@
 import settings from 'app/settings'
 
-import { AvailableSources } from './checkRedirectParams'
+import { AvailableNextPages } from './checkRedirectParams'
 
-const SOURCE_MAP = {
-  [AvailableSources.main]: `//${settings.FRONTEND_ROOT_DOMAIN_NAME}/en/companies`,
-  [AvailableSources.invest]: `//investor.${settings.FRONTEND_ROOT_DOMAIN_NAME}/invest`,
-  [AvailableSources.portfolio]: `//investor.${settings.FRONTEND_ROOT_DOMAIN_NAME}/portfolio`,
+const NEXT_PAGES_MAP = {
+  [AvailableNextPages.main]: `//${settings.FRONTEND_ROOT_DOMAIN_NAME}/en/companies`,
+  [AvailableNextPages.invest]: `//investor.${settings.FRONTEND_ROOT_DOMAIN_NAME}/invest`,
+  [AvailableNextPages.portfolio]: `//investor.${settings.FRONTEND_ROOT_DOMAIN_NAME}/portfolio`,
 }
 
 export default function changeLocation({
-  source,
+  next,
   slug,
 }: Record<string, any>): boolean {
-  const sourceURL = SOURCE_MAP[source]
+  const nextPageURL = NEXT_PAGES_MAP[next]
 
-  if (!sourceURL) {
+  if (!nextPageURL) {
     return false
   }
 
-  window.location.href = `${sourceURL}/${slug}`
+  window.location.href = `${nextPageURL}/${slug}`
 
   return true
 }

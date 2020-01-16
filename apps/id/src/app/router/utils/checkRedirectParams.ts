@@ -16,17 +16,17 @@ const AVAILABLE_SLUGS = [
   'addenda',
 ]
 
-const AVAILABLE_SOURCES = [
+const AVAILABLE_NEXT_PAGES = [
   'main',
   'invest',
   'portfolio',
 ]
 
 export default function checkRedirectParams({
-  source,
+  next,
   slug,
 }: Record<string, any>): boolean {
-  if (source && !AVAILABLE_SOURCES.includes(source)) {
+  if (next && !AVAILABLE_NEXT_PAGES.includes(next)) {
     return false
   } else if (slug && !AVAILABLE_SLUGS.includes(slug)) {
     return false

@@ -28,12 +28,12 @@ export const routes: RouteEnhanced[] = [
 
   {
     name: 'redirect!Login',
-    path: '/login?:source&:slug',
+    path: '/login?:next&:slug',
     canActivate: redirectLang,
   },
   {
     name: 'Login',
-    path: '/:lang/login?:source&:slug',
+    path: '/:lang/login?:next&:slug',
     canActivate: composeActivations([
       redirectLang,
       checkNextPageAvailable,
