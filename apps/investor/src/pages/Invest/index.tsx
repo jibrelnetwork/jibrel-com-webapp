@@ -10,7 +10,6 @@ import {
 import {
   Icon,
   Link,
-  Input,
   LinkButton,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
@@ -37,12 +36,11 @@ const InvestForm = ({ handleSubmit }: FormRenderProps): React.ReactNode => {
   return (
     <form onSubmit={handleSubmit}>
       <div className={style.form}>
-        <InvestmentInput />
-        <Input
-          validate={isRequired({ i18n })}
-          label=''
-          name='amount'
-          maxLength={256}
+        <h2 className={style.subtitle}>{i18n._('Invest.form.amount.title')}</h2>
+        <InvestmentInput
+            validate={isRequired({ i18n })}
+            name='amount'
+            maxLength={256}
         />
       </div>
       <LinkButton

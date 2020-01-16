@@ -1,7 +1,8 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
+    border: string;
+    cross: string;
     input: string;
-    label: string;
     symbol: string;
     wrapper: string;
   }
