@@ -21,6 +21,7 @@ import {
 } from 'utils/formatters'
 
 import style from './style.scss'
+import investStyle from '../../style.scss'
 
 export interface DealTermsProps {
   getDealTerms: (id: string) => void;
@@ -83,12 +84,12 @@ class DealTerms extends Component<DealTermsProps> {
 
     return (
       <>
-        <h2 className={style.title}>Deal Terms</h2>
+        <h2 className={investStyle.subtitle}>Deal Terms</h2>
         <div className={cc([style.data, isDealTermsLoading && style.loading])}>
           {!data || isDealTermsLoading ? <Loader color={LoaderColor.gray} /> : data.map(item => (
             <div className={style.item} key={item.key}>
-              <div className={style.label}>{item.key}</div>
-              <div className={style.value}>{item.value}</div>
+              <div className={investStyle.label}>{item.key}</div>
+              <div className={investStyle.value}>{item.value}</div>
             </div>
           ))}
         </div>
