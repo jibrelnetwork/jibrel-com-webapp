@@ -1,10 +1,10 @@
 import mapValues from 'lodash-es/mapValues'
 import { FORM_ERROR } from 'final-form'
+import { DEFAULT_LANGUAGE_CODE } from '@jibrelcom/i18n'
 import { createModel, ModelConfig } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
 import { RootState } from 'store'
-import { LanguageCode } from '@jibrelcom/i18n'
 
 import axios from '../axios'
 import getUserLimits from './getUserLimits'
@@ -27,7 +27,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
     profile: undefined,
     limits: undefined,
     status: undefined,
-    languageCode: LanguageCode.en,
+    languageCode: DEFAULT_LANGUAGE_CODE,
   },
   effects: (dispatch) => ({
     async updateLimits (): Promise<void> {

@@ -1,3 +1,5 @@
 export { default as Invest } from './Invest'
 export { default as Deposit } from './Deposit'
+export { default as Pending } from './Pending'
 export { default as NotFound } from './NotFound'
+export { default as Unverified } from './Unverified'
