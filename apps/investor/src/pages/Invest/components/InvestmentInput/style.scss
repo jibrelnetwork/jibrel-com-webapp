@@ -1,0 +1,89 @@
+@import '~@jibrelcom/ui/src/theme/colors';
+
+.wrapper {
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  height: 64px;
+  cursor: text;
+  font-size: 18px;
+  line-height: 140%;
+  overflow: hidden;
+
+  &:hover {
+    .border {
+      border-color: $color-blue-40;
+    }
+
+    .symbol {
+      color: $color-blue-40;
+    }
+  }
+}
+
+.border {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  border: 1px solid $color-black-30;
+  border-radius: 4px;
+  pointer-events: none;
+  transition:
+          border-color 0.2s ease-in-out,
+          border-width 0.2s ease-in-out;
+}
+
+.symbol {
+  position: absolute;
+  left: 16px;
+  top: 23px;
+  width: 11px;
+  margin-right: 4px;
+  line-height: 17px;
+  color: $color-black-60;
+  order: 0;
+  transition: color 0.2s ease-in-out;
+}
+
+.input {
+  order: 1;
+  width: 100%;
+  height: 100%;
+  padding: 19px 56px 20px 31px;
+  font-size: 18px;
+  line-height: 25px;
+  background-color: transparent;
+  border: none;
+  caret-color: $color-blue;
+
+  &::placeholder {
+    color: $color-black-40;
+  }
+
+  &:focus {
+    ~ .symbol {
+      color: $color-blue;
+    }
+
+    ~ .border {
+      border-color: $color-blue;
+      border-width: 2px;
+    }
+
+    &:not([value=""]) ~ .cross {
+      opacity: 1;
+    }
+  }
+}
+
+.cross {
+  opacity: 0;
+  position: absolute;
+  right: 16px;
+  top: 20px;
+  padding: 0;
+  border: none;
+  cursor: pointer;
+}
