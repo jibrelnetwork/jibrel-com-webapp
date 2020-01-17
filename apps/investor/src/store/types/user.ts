@@ -1,13 +1,9 @@
 import { LanguageCode } from '@jibrelcom/i18n'
 
 export enum UserStatus {
-  ANONYMOUS = 'ANONYMOUS',
-  EMAIL_UNVERIFIED = 'EMAIL_UNVERIFIED',
-  PHONE_UNVERIFIED = 'PHONE_UNVERIFIED',
-  KYC_UNSET = 'KYC_UNSET',
-  KYC_PENDING = 'KYC_PENDING',
-  VERIFIED = 'VERIFIED',
-  BANNED = 'BANNED',
+  pending = 'pending',
+  verified = 'verified',
+  unverified = 'unverified',
 }
 
 export interface UserState {
@@ -20,8 +16,8 @@ export interface Profile {
   uuid: string;
   userEmail: string;
   userName?: string;
-  kycStatus: string;
   userPhone?: string;
+  kycStatus: UserStatus;
   language: LanguageCode;
   isAgreedTerms: boolean;
   isEmailConfirmed: boolean;

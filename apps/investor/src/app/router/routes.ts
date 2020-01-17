@@ -1,18 +1,32 @@
+import composeActivations from './utils/composeActivations'
 import { RouteEnhanced } from './types'
-import { isLoggedIn } from './activations'
+
+import {
+  isLoggedIn,
+  checkKYCStatus,
+} from './activations'
 
 const ROUTER_ROOT = ''
 
 export const routes: RouteEnhanced[] = [
   {
-    name: 'Deposit',
-    path: '/deposit',
+    name: 'Invest',
+    path: '/invest/:slug',
+    canActivate: composeActivations([
+      isLoggedIn,
+      checkKYCStatus,
+    ]),
+  },
+
+  {
+    name: 'Pending',
+    path: '/pending',
     canActivate: isLoggedIn,
   },
 
   {
-    name: 'Invest',
-    path: '/invest/:slug',
+    name: 'Unverified',
+    path: '/unverified',
     canActivate: isLoggedIn,
   },
 ].map((route) => ({

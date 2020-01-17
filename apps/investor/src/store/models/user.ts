@@ -48,10 +48,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
 
       this.setProfileData(profile)
       this.setLanguageCode(profile.language)
-
-      if (profile.kycStatus === 'verified') {
-        this.setStatus(UserStatus.VERIFIED)
-      }
+      this.setStatus(UserStatus[profile.kycStatus])
     },
     async logout (_: void, rootState: RootState): Promise<void> {
       await axios.post('/v1/auth/logout')
