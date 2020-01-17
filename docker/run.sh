@@ -23,6 +23,7 @@ else
         -template /app/company/index.html:/app/company/index.html \
         -template /app/id/settings.js:/app/id/settings.js \
         -template /app/id/index.html:/app/id/index.html \
+        -template /app/investor/settings.js:/app/investor/settings.js \
         -template /app/investor/index.html:/app/investor/index.html
 
     /usr/sbin/nginx
