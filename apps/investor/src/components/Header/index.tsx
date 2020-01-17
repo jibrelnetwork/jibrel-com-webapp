@@ -4,7 +4,6 @@ import { Header } from '@jibrelcom/ui'
 import { useLanguageCode } from '@jibrelcom/i18n'
 
 import settings from 'app/settings'
-import { UserStatus } from 'store/types'
 
 import {
   Dispatch,
@@ -35,7 +34,7 @@ const HeaderEnhanced: React.FunctionComponent<HeaderProps> = ({
 
 export default connect(
   (state: RootState) => ({
-    isAuthenticated: state.user.status ? (state.user.status !== UserStatus.ANONYMOUS) : false,
+    isAuthenticated: !!state.user.status || false,
   }),
   (dispatch: Dispatch) => ({
     logout: dispatch.user.logout,

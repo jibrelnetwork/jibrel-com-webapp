@@ -15,13 +15,13 @@ const checkKYCStatus: ActivationFnFactory = (
     const { store } = dependencies
     const { user } = store.getState()
 
-    if (user.status === UserStatus.PENDING) {
+    if (user.status === UserStatus.pending) {
       return Promise.reject({
         redirect: {
           name: 'Pending',
         }
       })
-    } else if (user.status !== UserStatus.VERIFIED) {
+    } else if (user.status !== UserStatus.verified) {
       return Promise.reject({
         redirect: {
           name: 'Unverified',

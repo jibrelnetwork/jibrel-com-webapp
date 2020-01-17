@@ -1,9 +1,9 @@
 import { LanguageCode } from '@jibrelcom/i18n'
 
 export enum UserStatus {
-  PENDING = 'PENDING',
-  VERIFIED = 'VERIFIED',
-  UNVERIFIED = 'UNVERIFIED',
+  pending = 'pending',
+  verified = 'verified',
+  unverified = 'unverified',
 }
 
 export interface UserState {
@@ -16,8 +16,8 @@ export interface Profile {
   uuid: string;
   userEmail: string;
   userName?: string;
-  kycStatus: string;
   userPhone?: string;
+  kycStatus: UserStatus;
   language: LanguageCode;
   isAgreedTerms: boolean;
   isEmailConfirmed: boolean;
