@@ -66,6 +66,7 @@
   display: block;
   width: $column-s-4;
   margin: 0 auto;
+  text-decoration: none;
 
   @include screen('>xsmall') {
     width: $column-m-4;
