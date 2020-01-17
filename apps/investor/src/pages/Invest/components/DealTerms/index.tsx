@@ -27,13 +27,21 @@ import {
 import style from './style.scss'
 import investStyle from '../../style.scss'
 
-export interface DealTermsProps {
-  getOfferingData: (id: string) => void;
-  offeringData: OfferingData;
+interface OwnProps {
   slug: string;
-  languageCode: LanguageCode;
-  isDealTermsLoading: boolean;
 }
+
+interface StateProps {
+  offeringData: OfferingData | void;
+  languageCode: LanguageCode;
+  isOfferingDataLoading: boolean;
+}
+
+interface DispatchProps {
+  getOfferingData: (id: string) => void;
+}
+
+export type DealTermsProps = OwnProps & StateProps & DispatchProps
 
 const SECURITY_TYPE_MAP = {
   [SecurityType.common_shares]: 'Common Shares',
@@ -77,7 +85,7 @@ class DealTerms extends Component<DealTermsProps> {
     const {
       offeringData,
       languageCode,
-      isDealTermsLoading,
+      isOfferingDataLoading,
     }: DealTermsProps = this.props
 
     const data = !offeringData ? undefined : [{
@@ -88,7 +96,7 @@ class DealTerms extends Component<DealTermsProps> {
       value: SECURITY_TYPE_MAP[offeringData.security.type],
     }, {
       key: 'Offered Equity',
-      value: `${offeringData.equity}%`,
+      value: `${offeringData.equity.split(',')[0]}%`,
     }, {
       key: 'Funding Round',
       value: FUNDING_ROUND_MAP[offeringData.round],
@@ -103,8 +111,8 @@ class DealTerms extends Component<DealTermsProps> {
     return (
       <>
         <h2 className={investStyle.subtitle}>Deal Terms</h2>
-        <div className={cc([style.data, isDealTermsLoading && style.loading])}>
-          {!data || isDealTermsLoading ? <Loader color={LoaderColor.gray} /> : data.map(item => (
+        <div className={cc([style.data, isOfferingDataLoading && style.loading])}>
+          {!data || isOfferingDataLoading ? <Loader color={LoaderColor.gray} /> : data.map(item => (
             <div className={style.item} key={item.key}>
               <div className={investStyle.label}>{item.key}</div>
               <div className={investStyle.value}>{item.value}</div>
@@ -116,8 +124,8 @@ class DealTerms extends Component<DealTermsProps> {
   }
 }
 
-export default connect(
-  (state: RootState) => ({
+export default connect<StateProps, DispatchProps, OwnProps>(
+  (state: RootState): StateProps => ({
     languageCode: state.user.languageCode,
     offeringData: state.invest.offeringData,
     isOfferingDataLoading: state.invest.isOfferingDataLoading,
