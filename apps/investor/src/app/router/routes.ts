@@ -29,6 +29,15 @@ export const routes: RouteEnhanced[] = [
     path: '/unverified',
     canActivate: isLoggedIn,
   },
+
+  {
+    name: 'Invested',
+    path: '/invested/:slug',
+    canActivate: composeActivations([
+      isLoggedIn,
+      checkKYCStatus,
+    ]),
+  },
 ].map((route) => ({
   ...route,
   path: ROUTER_ROOT + route.path,
