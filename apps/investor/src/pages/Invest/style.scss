@@ -1,0 +1,126 @@
+@import '~@jibrelcom/ui/src/Grid/grid';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+
+.title {
+  @include font-h1-xs;
+
+  width: $column-s-4;
+  padding-top: 24px;
+  padding-bottom: 32px;
+  flex-shrink: 1;
+
+  @include screen('>xsmall') {
+    @include font-h1-s;
+  }
+
+  @include screen('>small') {
+    @include font-h1-m;
+  }
+
+  @include screen('>medium') {
+    @include font-h1-l;
+  }
+}
+
+.subtitle {
+  @include font-h2-s;
+
+  width: 100%;
+  padding-bottom: 24px;
+
+  @include screen('>small') {
+    @include font-h2-l;
+  }
+}
+
+.back {
+  @include flex-row-center;
+
+  height: 24px;
+  margin-top: 64px;
+  margin-right: auto;
+}
+
+.icon {
+  @include icon-color($color-blue);
+
+  flex: 0 0 auto;
+  width: 24px;
+  margin-right: 8px;
+  transform: rotate(180deg);
+}
+
+.form {
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-s-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-5;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-5;
+  }
+}
+
+.label {
+  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 140%;
+  color: $color-black-60;
+}
+
+.value {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  color: $color-black;
+}
+
+.note,
+.agreement {
+  width: $column-s-4;
+  font-size: 24px;
+  line-height: 140%;
+  color: $color-black;
+
+  @include screen('>xsmall') {
+    width: $column-m-8;
+  }
+
+  @include screen('>small') {
+    width: $column-m-5;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-8;
+  }
+}
+
+.note {
+  margin-top: 64px;
+}
+
+.download {
+  margin-top: 36px;
+}
+
+.agreement {
+  margin-top: 32px;
+
+  span {
+    font-weight: 800;
+  }
+}
+
+.submit {
+  width: $column-l-4;
+  margin: 64px 0;
+}

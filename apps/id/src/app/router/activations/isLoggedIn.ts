@@ -1,5 +1,3 @@
-import { DEFAULT_LANGUAGE_CODE } from '@jibrelcom/i18n'
-
 import {
   ActivationFnFactory,
   Router,
@@ -27,7 +25,7 @@ const isLoggedIn: ActivationFnFactory = (
         redirect: {
           name: 'Login',
           params: {
-            lang: user.languageCode || DEFAULT_LANGUAGE_CODE,
+            lang: user.languageCode,
           },
         }
       }

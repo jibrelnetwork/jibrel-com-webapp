@@ -5,6 +5,7 @@ import {
   ModelConfig,
 } from '@rematch/core'
 
+import settings from 'app/settings'
 import { RootState } from 'store'
 
 import axios from '../axios'
@@ -47,15 +48,14 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
 
       this.setProfileData(profile)
       this.setLanguageCode(profile.language)
-
-      if (profile.kycStatus === 'verified') {
-        this.setStatus(UserStatus.VERIFIED)
-      }
+      this.setStatus(UserStatus[profile.kycStatus])
     },
     async logout (_: void, rootState: RootState): Promise<void> {
       await axios.post('/v1/auth/logout')
       this.setProfile(undefined)
-      window.location.href = `https://id.jibrel.com/${rootState.user.languageCode}/login`
+
+      const idDomain = `id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
+      window.location.href = `//${idDomain}/${rootState.user.languageCode}/login`
 
       return
     },

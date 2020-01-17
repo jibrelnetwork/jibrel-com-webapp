@@ -1,0 +1,88 @@
+@import '../Grid/grid';
+@import '../theme/fonts';
+@import '../theme/media';
+@import '../theme/colors';
+
+.main {
+  width: 100%;
+  padding-bottom: 128px;
+}
+
+.hero {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.title {
+  @include font-h1-xs;
+
+  margin: 32px auto 0;
+  text-align: center;
+
+  @include screen('>xsmall') {
+    @include font-h1-s;
+  }
+
+  @include screen('>small') {
+    @include font-h1-m;
+
+    margin-top: 48px;
+  }
+
+  @include screen('>medium') {
+    @include font-h1-l;
+
+    margin-top: 64px;
+  }
+}
+
+.text {
+  @include font-subheader-2-s;
+
+  width: $column-s-4;
+  margin: 32px auto;
+  text-align: center;
+  color: $color-black;
+
+  @include screen('>xsmall') {
+    width: $column-m-4;
+  }
+
+  @include screen('>small') {
+    @include font-subheader-2-l;
+
+    width: $column-m-6;
+    margin: 48px auto;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-6;
+    margin: 64px auto;
+  }
+}
+
+.actions {
+  width: 100%;
+}
+
+.button {
+  display: block;
+  width: $column-s-4;
+  margin: 0 auto;
+
+  &.secondary {
+    margin-top: 24px;
+  }
+
+  @include screen('>xsmall') {
+    width: $column-m-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-4;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-4;
+  }
+}

@@ -1,16 +1,12 @@
 import includes from 'lodash-es/includes'
 import get from 'lodash-es/get'
+import { LANGUAGE_CODE_LIST } from '@jibrelcom/i18n'
 
 import {
   ActivationFnFactory,
   Router,
   State,
 } from 'router5'
-
-import {
-  DEFAULT_LANGUAGE_CODE,
-  LANGUAGE_CODE_LIST,
-} from '@jibrelcom/i18n'
 
 import { RouterDependencies } from '../types'
 
@@ -38,7 +34,7 @@ export const redirectLang: ActivationFnFactory = (
           name,
           params: {
             ...toState.params,
-            lang: user.languageCode || DEFAULT_LANGUAGE_CODE,
+            lang: user.languageCode,
           }
         }
       }
