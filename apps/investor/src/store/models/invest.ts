@@ -92,6 +92,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     async sendOfferingApplication(values: InvestFormFields): FormSubmitResult<InvestFormFields> {
       const {
         id,
+        slug,
         ...form
       } = values
 
@@ -99,6 +100,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
 
         console.log(data)
+        alert(JSON.stringify(data))
 
         this.setBankAccountData(data)
       } catch (error) {
@@ -114,9 +116,8 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
           }
         } else if (status === 409) {
           dispatch(actions.navigateTo(
-            'Invested', {
-              slug: id,
-            },
+            'Invested',
+            { slug },
           ))
 
           return

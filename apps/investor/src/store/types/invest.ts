@@ -66,6 +66,7 @@ export interface InvestState {
 
 export interface InvestFormFields {
   id: string;
+  slug: string;
   amount: string;
   isSigned: boolean;
   isRiskAgreed: boolean;

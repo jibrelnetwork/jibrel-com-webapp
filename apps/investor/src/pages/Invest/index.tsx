@@ -90,6 +90,7 @@ class Invest extends Component<InvestProps> {
     const {
       sendOfferingApplication,
       slug,
+      offeringId,
     }: InvestProps = this.props
 
     const startupName: string = STARTUP_NAMES[slug]
@@ -116,8 +117,9 @@ class Invest extends Component<InvestProps> {
             render={InvestForm}
             onSubmit={sendOfferingApplication}
             initialValues={{
-              id: slug,
+              slug,
               amount: '',
+              id: offeringId,
               isAgreedRisks: true,
               isAgreedSubscription: true,
             }}
