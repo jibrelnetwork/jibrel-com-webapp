@@ -4,7 +4,7 @@ export enum AvailableSlugs {
   addenda = 'addenda',
 }
 
-export enum AvailableSources {
+export enum AvailableNextPages {
   main = 'main',
   invest = 'invest',
   portfolio = 'portfolio',
