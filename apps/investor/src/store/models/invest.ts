@@ -32,6 +32,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
   state: {
     customerData: undefined,
     offeringData: undefined,
+    bankAccountData: undefined,
     isOfferingDataLoading: true,
     isCustomerDataLoading: true,
   },
@@ -41,8 +42,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         this.setOfferingDataLoading()
 
         const { data } = await axios.get(`/v1/campaigns/company/${id}/offerings/active`)
-
-        console.log(data)
 
         this.setOfferingData(data)
       } catch (error) {
@@ -71,8 +70,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
         const { data } = await axios.get('/v1/kyc/approved')
 
-        console.log(data)
-
         this.setCustomerData(prepareCustomerData(data))
       } catch (error) {
         if (!error.response) {
@@ -92,12 +89,10 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         throw error
       }
     },
-    async sendOfferingApplication(
-      values: InvestFormFields,
-      rootState: RootState,
-    ): FormSubmitResult<InvestFormFields> {
+    async sendOfferingApplication(values: InvestFormFields): FormSubmitResult<InvestFormFields> {
       const {
         id,
+        slug,
         ...form
       } = values
 
@@ -105,6 +100,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
 
         console.log(data)
+        alert(JSON.stringify(data))
+
+        this.setBankAccountData(data)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -112,13 +110,14 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
         const { status } = error.response
 
-        if (status === 403) {
-          return handle403(rootState.user.languageCode)
+        if (status === 404) {
+          return {
+            amount: 'Offering with this id is not found',
+          }
         } else if (status === 409) {
           dispatch(actions.navigateTo(
-            'Invested', {
-              slug: id,
-            },
+            'Invested',
+            { slug },
           ))
 
           return
@@ -146,6 +145,10 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     setCustomerDataLoading: (state): InvestState => ({
       ...state,
       isCustomerDataLoading: true,
+    }),
+    setBankAccountData: (state, payload): InvestState => ({
+      ...state,
+      bankAccountData: payload,
     }),
   }
 })

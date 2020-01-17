@@ -19,7 +19,7 @@ import {
 } from 'utils/formatters'
 
 import {
-  OfferingData,
+  Offering,
   FundingRound,
   SecurityType,
 } from 'store/types/invest'
@@ -32,7 +32,7 @@ interface OwnProps {
 }
 
 interface StateProps {
-  offeringData: OfferingData | void;
+  offeringData: Offering | void;
   languageCode: LanguageCode;
   isOfferingDataLoading: boolean;
 }
@@ -96,7 +96,7 @@ class DealTerms extends Component<DealTermsProps> {
       value: SECURITY_TYPE_MAP[offeringData.security.type],
     }, {
       key: 'Offered Equity',
-      value: `${offeringData.equity.split(',')[0]}%`,
+      value: `${offeringData.equity.split('.')[0]}%`,
     }, {
       key: 'Funding Round',
       value: FUNDING_ROUND_MAP[offeringData.round],
