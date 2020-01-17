@@ -12,7 +12,7 @@ export enum FundingRound {
   d = 'd',
 }
 
-export interface OfferingSecurityData {
+export interface OfferingSecurity {
   company: {
     name: string;
   };
@@ -22,8 +22,8 @@ export interface OfferingSecurityData {
   updated_at: string;
 }
 
-export interface OfferingData {
-  security: OfferingSecurityData;
+export interface Offering {
+  security: OfferingSecurity;
   uuid: string;
   goal: string;
   status: string;
@@ -47,9 +47,19 @@ export interface Customer {
   country: string;
 }
 
+export interface BankAccount {
+  bankName: string;
+  swiftCode: string;
+  holderName: string;
+  ibanNumber: string;
+  accountNumber: string;
+  depositReferenceCode: string;
+}
+
 export interface InvestState {
   customerData: Customer | void;
-  offeringData: OfferingData | void;
+  offeringData: Offering | void;
+  bankAccountData: BankAccount | void;
   isOfferingDataLoading: boolean;
   isCustomerDataLoading: boolean;
 }

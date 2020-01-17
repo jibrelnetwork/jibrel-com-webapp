@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
 import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 
@@ -17,6 +18,17 @@ import {
 import CoreLayout from 'layouts/CoreLayout'
 import STARTUP_NAMES from 'data/startupNames.json'
 import isRequired from 'utils/validators/isRequired'
+import { FormSubmit } from 'store/types/form'
+
+import {
+  Dispatch,
+  RootState,
+} from 'store'
+
+import {
+  BankAccount,
+  InvestFormFields,
+} from 'store/types/invest'
 
 import style from './style.scss'
 
@@ -26,9 +38,20 @@ import {
   InvestmentInput,
 } from './components'
 
-export interface InvestProps {
+interface OwnProps {
   slug: string;
 }
+
+interface StateProps {
+  offeringId: string | void;
+  bankAccountData: BankAccount | void;
+}
+
+interface DispatchProps {
+  sendOfferingApplication: FormSubmit<InvestFormFields>;
+}
+
+export type InvestProps = OwnProps & StateProps & DispatchProps
 
 const InvestForm = ({ handleSubmit }: FormRenderProps): React.ReactNode => {
   const i18n = useI18n()
@@ -38,13 +61,13 @@ const InvestForm = ({ handleSubmit }: FormRenderProps): React.ReactNode => {
       <div className={style.form}>
         <h2 className={style.subtitle}>{i18n._('Invest.form.amount.title')}</h2>
         <InvestmentInput
-            validate={isRequired({ i18n })}
-            name='amount'
-            maxLength={256}
+          validate={isRequired({ i18n })}
+          name='amount'
+          maxLength={256}
         />
       </div>
       <LinkButton
-        onClick={console.log}
+        onClick={(): void => alert('subscription agreement')}
         className={style.download}
         type='button'
       >
@@ -64,7 +87,11 @@ const InvestForm = ({ handleSubmit }: FormRenderProps): React.ReactNode => {
 
 class Invest extends Component<InvestProps> {
   render(): React.ReactNode {
-    const { slug }: InvestProps = this.props
+    const {
+      sendOfferingApplication,
+      slug,
+    }: InvestProps = this.props
+
     const startupName: string = STARTUP_NAMES[slug]
 
     return (
@@ -86,8 +113,14 @@ class Invest extends Component<InvestProps> {
           </div>
           <CustomerData />
           <Form
-            onSubmit={console.log}
             render={InvestForm}
+            onSubmit={sendOfferingApplication}
+            initialValues={{
+              id: slug,
+              amount: '',
+              isAgreedRisks: true,
+              isAgreedSubscription: true,
+            }}
           />
         </div>
       </CoreLayout>
@@ -95,4 +128,12 @@ class Invest extends Component<InvestProps> {
   }
 }
 
-export default Invest
+export default connect<StateProps, DispatchProps, OwnProps>(
+  (state: RootState) => ({
+    bankAccountData: state.invest.bankAccountData,
+    offeringId: (state.invest.offeringData || {}).uuid,
+  }),
+  (dispatch: Dispatch): DispatchProps => ({
+    sendOfferingApplication: dispatch.invest.sendOfferingApplication,
+  })
+)(Invest)
