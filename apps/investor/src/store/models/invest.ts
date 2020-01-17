@@ -1,68 +1,142 @@
+import { actions } from 'redux-router5'
+import { LanguageCode } from '@jibrelcom/i18n'
+
 import {
   createModel,
   ModelConfig,
 } from '@rematch/core'
 
-import { InvestState } from '../types/invest'
+import settings from 'app/settings'
+
+import {
+  Dispatch,
+  RootState,
+} from 'store'
+
+import axios from '../axios'
+import prepareCustomerData from '../utils/prepareCustomerData'
+import { FormSubmitResult } from '../types/form'
+
+import {
+  InvestState,
+  InvestFormFields,
+} from '../types/invest'
+
+const ID_DOMAIN = `id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
+
+function handle403(lang: LanguageCode): void {
+  window.location.href = `//${ID_DOMAIN}/${lang}/login`
+}
 
 export const invest: ModelConfig<InvestState> = createModel<InvestState>({
   state: {
     customerData: undefined,
-    dealTermsData: undefined,
-    isDealTermsLoading: true,
+    offeringData: undefined,
+    isOfferingDataLoading: true,
     isCustomerDataLoading: true,
   },
-  effects: () => ({
-    async getDealTerms(id: string): Promise<void> {
-      if (!id) {
-        return Promise.resolve(undefined)
+  effects: (dispatch: Dispatch) => ({
+    async getOfferingData(id: string, rootState: RootState): Promise<void> {
+      try {
+        this.setOfferingDataLoading()
+
+        const { data } = await axios.get(`/v1/campaigns/company/${id}/offerings/active`)
+
+        console.log(data)
+
+        this.setOfferingData(data)
+      } catch (error) {
+        if (!error.response) {
+          throw error
+        }
+
+        const { status } = error.response
+
+        if (status === 403) {
+          return handle403(rootState.user.languageCode)
+        } else if (status === 409) {
+          dispatch(actions.navigateTo(
+            'Invested', {
+              slug: id,
+            },
+          ))
+        }
+
+        throw error
       }
-
-      this.setDealTermsLoading()
-
-      await new Promise(resolve => setTimeout(resolve, 3000))
-
-      this.setDealTerms({
-        id: 'startupId',
-        name: 'Startup Name',
-        pricePerShare: '$30',
-        fundingRound: 'Seed Round',
-        minimumInvestment: '$1,000',
-        typeOfSecurity: 'Common Shares',
-        roundSize: 400000,
-        offeredEquity: 20,
-        valuation: 2000000,
-        deadline: Date.now() + 2 ** 33,
-      })
     },
-    async getCustomerData(id: string): Promise<void> {
-      if (!id) {
-        return Promise.resolve(undefined)
+    async getCustomerData(_: void, rootState: RootState): Promise<void> {
+      try {
+        this.setCustomerDataLoading()
+
+        const { data } = await axios.get('/v1/kyc/approved')
+
+        console.log(data)
+
+        this.setCustomerData(prepareCustomerData(data))
+      } catch (error) {
+        if (!error.response) {
+          throw error
+        }
+
+        const { status } = error.response
+
+        if (status === 403) {
+          return handle403(rootState.user.languageCode)
+        } else if (status === 409) {
+          dispatch(actions.navigateTo('Unverified'))
+
+          return
+        }
+
+        throw error
       }
+    },
+    async sendOfferingApplication(
+      values: InvestFormFields,
+      rootState: RootState,
+    ): FormSubmitResult<InvestFormFields> {
+      const {
+        id,
+        ...form
+      } = values
 
-      this.setCustomerDataLoading()
+      try {
+        const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
 
-      await new Promise(resolve => setTimeout(resolve, 3000))
+        console.log(data)
+      } catch (error) {
+        if (!error.response) {
+          throw error
+        }
 
-      this.setCustomerData({
-        name: 'Talal Tabbaa',
-        streetAddress: 'Abu Dhabi Global Market Authorities Building',
-        apartment: 'ADGM Square',
-        city: 'Al Maryah Island',
-        postCode: 'PO Box 111999',
-        country: 'Abu Dhabi, UAE',
-      })
+        const { status } = error.response
+
+        if (status === 403) {
+          return handle403(rootState.user.languageCode)
+        } else if (status === 409) {
+          dispatch(actions.navigateTo(
+            'Invested', {
+              slug: id,
+            },
+          ))
+
+          return
+        }
+
+        throw error
+      }
     },
   }),
   reducers: {
-    setDealTerms: (state, payload): InvestState => ({
+    setOfferingData: (state, payload): InvestState => ({
       ...state,
-      dealTermsData: payload,
-      isDealTermsLoading: false,
+      offeringData: payload,
+      isOfferingDataLoading: false,
     }),
-    setDealTermsLoading: (state): InvestState => ({
+    setOfferingDataLoading: (state): InvestState => ({
       ...state,
-      isDealTermsLoading: true,
+      isOfferingDataLoading: true,
     }),
     setCustomerData: (state, payload): InvestState => ({
       ...state,

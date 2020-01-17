@@ -7,9 +7,9 @@ export enum UserStatus {
 }
 
 export interface UserState {
-  status: UserStatus | void;
-  languageCode: string | void;
   profile: Profile | void;
+  status: UserStatus | void;
+  languageCode: LanguageCode;
 }
 
 export interface Profile {

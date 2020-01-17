@@ -1,5 +1,5 @@
 export default function formatDate(
-  value: number | Date,
+  value: Date | string | number,
   languageCode = 'en-US',
   options: Intl.DateTimeFormatOptions = {},
 ): string {
@@ -10,5 +10,5 @@ export default function formatDate(
     ...options,
   })
 
-  return formatter.format(value)
+  return formatter.format(new Date(value))
 }

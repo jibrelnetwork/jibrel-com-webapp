@@ -84,7 +84,7 @@ class Invest extends Component<InvestProps> {
           <div className={style.note}>
             To continue, you need to sign the Subscription Agreement by electronic signature. Before you do this, please enter your Subscription Amount
           </div>
-          <CustomerData slug={slug} />
+          <CustomerData />
           <Form
             onSubmit={console.log}
             render={InvestForm}

@@ -3,7 +3,10 @@ import cc from 'classcat'
 import { connect } from 'react-redux'
 import { LanguageCode } from '@jibrelcom/i18n'
 
-import { DealTermsData } from 'store/types/invest'
+import {
+  Loader,
+  LoaderColor,
+} from '@jibrelcom/ui'
 
 import {
   Dispatch,
@@ -11,32 +14,55 @@ import {
 } from 'store'
 
 import {
-  Loader,
-  LoaderColor,
-} from '@jibrelcom/ui'
-
-import {
   formatDate,
   formatCurrency,
 } from 'utils/formatters'
 
+import {
+  OfferingData,
+  FundingRound,
+  SecurityType,
+} from 'store/types/invest'
+
 import style from './style.scss'
 import investStyle from '../../style.scss'
 
-export interface DealTermsProps {
-  getDealTerms: (id: string) => void;
-  dealTermsData: DealTermsData;
+interface OwnProps {
   slug: string;
+}
+
+interface StateProps {
+  offeringData: OfferingData | void;
   languageCode: LanguageCode;
-  isDealTermsLoading: boolean;
+  isOfferingDataLoading: boolean;
+}
+
+interface DispatchProps {
+  getOfferingData: (id: string) => void;
+}
+
+export type DealTermsProps = OwnProps & StateProps & DispatchProps
+
+const SECURITY_TYPE_MAP = {
+  [SecurityType.common_shares]: 'Common Shares',
+  [SecurityType.convertible_debt]: 'Convertible Promissory Note',
+}
+
+const FUNDING_ROUND_MAP = {
+  [FundingRound.angel]: 'Angel Round',
+  [FundingRound.seed]: 'Seed Round',
+  [FundingRound.a]: 'Series A',
+  [FundingRound.b]: 'Series B',
+  [FundingRound.c]: 'Series C',
+  [FundingRound.d]: 'Series D',
 }
 
 function formatAmount(
-  amount: number,
+  amount: string | number,
   languageCode: LanguageCode,
 ): string {
   return formatCurrency(
-    amount,
+    parseInt(amount.toString(), 10),
     languageCode,
     'USD', {
       minimumFractionDigits: 0,
@@ -48,45 +74,45 @@ function formatAmount(
 class DealTerms extends Component<DealTermsProps> {
   componentDidMount(): void {
     const {
-      getDealTerms,
+      getOfferingData,
       slug,
     }: DealTermsProps = this.props
 
-    getDealTerms(slug)
+    getOfferingData(slug)
   }
 
   render(): React.ReactNode {
     const {
-      dealTermsData,
+      offeringData,
       languageCode,
-      isDealTermsLoading,
+      isOfferingDataLoading,
     }: DealTermsProps = this.props
 
-    const data = !dealTermsData ? undefined : [{
+    const data = !offeringData ? undefined : [{
       key: 'Valuation',
-      value: formatAmount(dealTermsData.valuation, languageCode),
+      value: formatAmount(offeringData.valuation, languageCode),
     }, {
       key: 'Type of Security',
-      value: dealTermsData.typeOfSecurity,
+      value: SECURITY_TYPE_MAP[offeringData.security.type],
     }, {
       key: 'Offered Equity',
-      value: `${dealTermsData.offeredEquity}%`,
+      value: `${offeringData.equity.split(',')[0]}%`,
     }, {
       key: 'Funding Round',
-      value: dealTermsData.fundingRound,
+      value: FUNDING_ROUND_MAP[offeringData.round],
     }, {
       key: 'Round Size',
-      value: formatAmount(dealTermsData.roundSize, languageCode),
+      value: formatAmount(offeringData.goal, languageCode),
     }, {
       key: 'Deadline',
-      value: formatDate(dealTermsData.deadline),
+      value: formatDate(offeringData.dateEnd),
     }]
 
     return (
       <>
         <h2 className={investStyle.subtitle}>Deal Terms</h2>
-        <div className={cc([style.data, isDealTermsLoading && style.loading])}>
-          {!data || isDealTermsLoading ? <Loader color={LoaderColor.gray} /> : data.map(item => (
+        <div className={cc([style.data, isOfferingDataLoading && style.loading])}>
+          {!data || isOfferingDataLoading ? <Loader color={LoaderColor.gray} /> : data.map(item => (
             <div className={style.item} key={item.key}>
               <div className={investStyle.label}>{item.key}</div>
               <div className={investStyle.value}>{item.value}</div>
@@ -98,13 +124,13 @@ class DealTerms extends Component<DealTermsProps> {
   }
 }
 
-export default connect(
-  (state: RootState) => ({
+export default connect<StateProps, DispatchProps, OwnProps>(
+  (state: RootState): StateProps => ({
     languageCode: state.user.languageCode,
-    dealTermsData: state.invest.dealTermsData,
-    isDealTermsLoading: state.invest.isDealTermsLoading,
+    offeringData: state.invest.offeringData,
+    isOfferingDataLoading: state.invest.isOfferingDataLoading,
   }),
   (dispatch: Dispatch) => ({
-    getDealTerms: dispatch.invest.getDealTerms,
+    getOfferingData: dispatch.invest.getOfferingData,
   })
 )(DealTerms)

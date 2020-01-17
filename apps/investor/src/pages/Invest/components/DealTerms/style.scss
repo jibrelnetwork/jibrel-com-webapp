@@ -8,13 +8,13 @@
   @include flex-row;
 
   width: 100%;
+  min-height: 184px;
   padding: 16px 24px;
   flex-wrap: wrap;
   background-color: $color-blue-5;
 
   &.loading {
     @include flex-column-center;
-    min-height: 184px;
   }
 }
 

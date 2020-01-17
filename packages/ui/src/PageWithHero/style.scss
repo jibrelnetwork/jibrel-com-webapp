@@ -70,6 +70,10 @@
   width: $column-s-4;
   margin: 0 auto;
 
+  &.secondary {
+    margin-top: 24px;
+  }
+
   @include screen('>xsmall') {
     width: $column-m-4;
   }

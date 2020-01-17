@@ -18,20 +18,14 @@ import style from './style.scss'
 import investStyle from '../../style.scss'
 
 export interface CustomerDataProps {
-  getCustomerData: (id: string) => void;
+  getCustomerData: () => void;
   customerData: Customer;
-  slug: string;
   isCustomerDataLoading: boolean;
 }
 
 class CustomerData extends Component<CustomerDataProps> {
   componentDidMount(): void {
-    const {
-      getCustomerData,
-      slug,
-    }: CustomerDataProps = this.props
-
-    getCustomerData(slug)
+    this.props.getCustomerData()
   }
 
   render(): React.ReactNode {
