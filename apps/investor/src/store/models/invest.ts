@@ -33,6 +33,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     customerData: undefined,
     offeringData: undefined,
     bankAccountData: undefined,
+    subscriptionAmount: undefined,
     isOfferingDataLoading: true,
     isCustomerDataLoading: true,
   },
@@ -54,11 +55,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         if (status === 403) {
           return handle403(rootState.user.languageCode)
         } else if (status === 409) {
-          dispatch(actions.navigateTo(
-            'Invested', {
-              slug: id,
-            },
-          ))
+          dispatch(actions.navigateTo('Invested'))
         }
 
         throw error
@@ -92,17 +89,14 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     async sendOfferingApplication(values: InvestFormFields): FormSubmitResult<InvestFormFields> {
       const {
         id,
-        slug,
         ...form
       } = values
 
       try {
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
 
-        console.log(data)
-        alert(JSON.stringify(data))
-
-        this.setBankAccountData(data)
+        this.setBankAccountData(data.data)
+        this.setSubscriptionAmount(form.amount)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -115,10 +109,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
             amount: 'Offering with this id is not found',
           }
         } else if (status === 409) {
-          dispatch(actions.navigateTo(
-            'Invested',
-            { slug },
-          ))
+          dispatch(actions.navigateTo('Invested'))
 
           return
         }
@@ -149,6 +140,10 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     setBankAccountData: (state, payload): InvestState => ({
       ...state,
       bankAccountData: payload,
+    }),
+    setSubscriptionAmount: (state, payload): InvestState => ({
+      ...state,
+      subscriptionAmount: payload,
     }),
   }
 })

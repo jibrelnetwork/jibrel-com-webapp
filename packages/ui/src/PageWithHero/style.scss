@@ -5,7 +5,7 @@
 
 .main {
   width: 100%;
-  padding-bottom: 128px;
+  padding-bottom: 64px;
 }
 
 .hero {
@@ -40,7 +40,7 @@
   @include font-subheader-2-s;
 
   width: $column-s-4;
-  margin: 32px auto;
+  margin: 32px auto 0;
   text-align: center;
   color: $color-black;
 
@@ -52,17 +52,29 @@
     @include font-subheader-2-l;
 
     width: $column-m-6;
-    margin: 48px auto;
+    margin: 48px auto 0;
   }
 
   @include screen('>medium') {
     width: $column-l-6;
-    margin: 64px auto;
+    margin: 64px auto 0;
   }
+}
+
+.content {
+  width: 100%;
 }
 
 .actions {
   width: 100%;
+  margin: 32px auto;
+
+  @include screen('>small') {
+    margin: 48px auto;
+  }
+  @include screen('>medium') {
+    margin: 64px auto;
+  }
 }
 
 .button {

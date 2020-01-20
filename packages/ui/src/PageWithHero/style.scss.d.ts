@@ -4,6 +4,7 @@ declare namespace StyleScssModule {
     button: string;
     centered: string;
     column: string;
+    content: string;
     grid: string;
     hero: string;
     "l-1": string;
