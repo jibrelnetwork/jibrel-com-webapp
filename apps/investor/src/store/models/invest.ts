@@ -32,14 +32,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
   state: {
     customerData: undefined,
     offeringData: undefined,
-    bankAccountData: {
-      holderName: 'Holder name',
-      ibanNumber: '1234',
-      accountNumber: '1234',
-      bankName: 'Bank NAme',
-      swiftCode: '123',
-      depositReferenceCode: 'DEPOSIT-026-525-014',
-    },
+    bankAccountData: undefined,
     subscriptionAmount: undefined,
     isOfferingDataLoading: true,
     isCustomerDataLoading: true,
@@ -62,11 +55,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         if (status === 403) {
           return handle403(rootState.user.languageCode)
         } else if (status === 409) {
-          dispatch(actions.navigateTo(
-            'Invested', {
-              slug: id,
-            },
-          ))
+          dispatch(actions.navigateTo('Invested'))
         }
 
         throw error
@@ -100,7 +89,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     async sendOfferingApplication(values: InvestFormFields): FormSubmitResult<InvestFormFields> {
       const {
         id,
-        slug,
         ...form
       } = values
 
@@ -121,10 +109,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
             amount: 'Offering with this id is not found',
           }
         } else if (status === 409) {
-          dispatch(actions.navigateTo(
-            'Invested',
-            { slug },
-          ))
+          dispatch(actions.navigateTo('Invested'))
 
           return
         }

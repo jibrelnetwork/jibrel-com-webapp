@@ -140,7 +140,7 @@ const RisksStep: React.FunctionComponent<{
 )
 
 const SuccessStep: React.FunctionComponent<{
-  amount: number;
+  amount: number | void;
   data: BankAccount | void;
 }> = ({
   data,
@@ -159,7 +159,7 @@ const SuccessStep: React.FunctionComponent<{
         text='You have successfully subscribed! To complete your investment in Maqsam, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.'
     >
       <h2 className={style.subtitle}>Subscription Amount</h2>
-      <div className={style.amount}>{formatAmount(amount, lang)}</div>
+      <div className={style.amount}>{formatAmount(amount || 0, lang)}</div>
       <h2 className={style.subtitle}>Jibrel Bank Account Details</h2>
       <div className={style.warning}>
         <Icon
@@ -187,10 +187,6 @@ const SuccessStep: React.FunctionComponent<{
           <div className={style.item}>
             <div className={style.label}>Bank Name</div>
             <div className={style.value}>{data.bankName}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Branch Address</div>
-            <div className={style.value}>{data.depositReferenceCode}</div>
           </div>
           <div className={style.item}>
             <div className={style.label}>BIC/SWIFT Code</div>
@@ -227,7 +223,6 @@ const FormStep: React.FunctionComponent<{
       render={InvestForm}
       onSubmit={handleSubmit}
       initialValues={{
-        slug,
         amount: '',
         id: offeringId,
         isAgreedRisks: true,
@@ -301,7 +296,7 @@ class Invest extends Component<InvestProps, InvestState> {
         return (
           <SuccessStep
             data={bankAccountData}
-            amount={subscriptionAmount || 50000}
+            amount={subscriptionAmount}
           />
         )
 
