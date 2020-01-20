@@ -1,0 +1,25 @@
+@import '~@jibrelcom/ui/src/theme';
+
+.container {
+  @include font-body-s;
+  color: $color-black;
+
+  @include screen('>small') {
+    @include font-body-l;
+
+  }
+
+  > h2 {
+    @include font-h3-s;
+
+    margin-bottom: 24px;
+
+    @include screen('>small') {
+      @include font-h3-l;
+    }
+  }
+
+  > p {
+    margin-bottom: 64px;
+  }
+}

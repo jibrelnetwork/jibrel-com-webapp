@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import grid from '@jibrelcom/ui/src/Grid/grid.scss'
+import { Grid } from '@jibrelcom/ui'
 import { connect } from 'react-redux'
 
 import {
@@ -41,6 +41,8 @@ import {
   BankAccount,
   InvestFormFields,
 } from 'store/types/invest'
+
+import { RiskDisclosures } from 'components'
 
 import style from './style.scss'
 import formatAmount from './utils/formatAmount'
@@ -129,6 +131,7 @@ const RisksStep: React.FunctionComponent<{
   <>
     <BackLink slug={slug} />
     <h1 className={style.title}>Risk Disclosures</h1>
+    <RiskDisclosures />
     <BigButton
       onClick={handleClick}
       className={style.submit}
@@ -273,13 +276,19 @@ class Invest extends Component<InvestProps, InvestState> {
       offeringId,
       subscriptionAmount,
     }: InvestProps = this.props
-    
+
     switch (this.state.currentStep) {
       case InvestStep.RISKS:
         return (
-          <RisksStep
+          <Grid.Item
+            component={RisksStep}
             handleClick={this.agreeWithRisks}
             slug={slug}
+            xs={4}
+            s={8}
+            m={5}
+            l={8}
+            xl={8}
           />
         )
 
@@ -308,9 +317,9 @@ class Invest extends Component<InvestProps, InvestState> {
   render(): React.ReactNode {
     return (
       <CoreLayout>
-        <div className={grid.grid}>
+        <Grid.Container>
           {this.renderCurrentStep()}
-        </div>
+        </Grid.Container>
       </CoreLayout>
     )
   }
