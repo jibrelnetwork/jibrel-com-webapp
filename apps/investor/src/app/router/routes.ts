@@ -32,7 +32,7 @@ export const routes: RouteEnhanced[] = [
 
   {
     name: 'Invested',
-    path: '/invested/:slug',
+    path: '/invested',
     canActivate: composeActivations([
       isLoggedIn,
       checkKYCStatus,

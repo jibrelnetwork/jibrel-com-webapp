@@ -1,13 +1,17 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
     agreement: string;
+    amount: string;
     back: string;
     centered: string;
     column: string;
+    details: string;
     download: string;
+    exclamation: string;
     form: string;
     grid: string;
     icon: string;
+    item: string;
     "l-1": string;
     "l-10": string;
     "l-11": string;
@@ -70,6 +74,7 @@ declare namespace StyleScssModule {
     subtitle: string;
     title: string;
     value: string;
+    warning: string;
     "xl-1": string;
     "xl-10": string;
     "xl-11": string;

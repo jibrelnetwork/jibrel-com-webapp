@@ -7,6 +7,7 @@ import BigButton from '../BigButton'
 import { BigButtonVariant } from '../BigButton/types'
 
 export interface PageWithHero {
+  children: React.ReactNode;
   text: string;
   title: string;
   imgSrc: string;
@@ -17,6 +18,7 @@ export interface PageWithHero {
 }
 
 const PageWithHero: React.FunctionComponent<PageWithHero> = ({
+  children,
   href,
   text,
   title,
@@ -34,6 +36,11 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
     <img src={imgSrc} className={style.hero} />
     <h1 className={style.title}>{title}</h1>
     <div className={style.text}>{text}</div>
+    {children && (
+      <div className={style.content}>
+        <div className={style.text}>{children}</div>
+      </div>
+    )}
     <div className={style.actions}>
       <a
         href={href}

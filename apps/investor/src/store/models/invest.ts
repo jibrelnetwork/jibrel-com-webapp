@@ -32,7 +32,15 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
   state: {
     customerData: undefined,
     offeringData: undefined,
-    bankAccountData: undefined,
+    bankAccountData: {
+      holderName: 'Holder name',
+      ibanNumber: '1234',
+      accountNumber: '1234',
+      bankName: 'Bank NAme',
+      swiftCode: '123',
+      depositReferenceCode: 'DEPOSIT-026-525-014',
+    },
+    subscriptionAmount: undefined,
     isOfferingDataLoading: true,
     isCustomerDataLoading: true,
   },
@@ -99,10 +107,8 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
       try {
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
 
-        console.log(data)
-        alert(JSON.stringify(data))
-
-        this.setBankAccountData(data)
+        this.setBankAccountData(data.data)
+        this.setSubscriptionAmount(form.amount)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -149,6 +155,10 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     setBankAccountData: (state, payload): InvestState => ({
       ...state,
       bankAccountData: payload,
+    }),
+    setSubscriptionAmount: (state, payload): InvestState => ({
+      ...state,
+      subscriptionAmount: payload,
     }),
   }
 })
