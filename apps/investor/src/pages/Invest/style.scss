@@ -39,6 +39,7 @@
 
 .back {
   @include flex-row-center;
+  justify-content: flex-start;
 
   height: 24px;
   margin-top: 64px;
