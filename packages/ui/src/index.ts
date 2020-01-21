@@ -19,6 +19,7 @@ export { default as PageWithHero } from './PageWithHero'
 export { default as PasswordInput } from './PasswordInput'
 export { default as PhoneNumberInput } from './PhoneNumberInput'
 export { default as Select } from './Select'
+export { default as ErrorToast } from './ErrorToast'
 
 export { LoaderColor } from './Loader/types'
 

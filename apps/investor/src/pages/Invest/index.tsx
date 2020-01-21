@@ -1,11 +1,14 @@
 import React, { Component } from 'react'
-import { Grid } from '@jibrelcom/ui'
 import { connect } from 'react-redux'
+import isEmpty from 'lodash-es/isEmpty'
 
 import {
   useI18n,
+  I18nContext,
   useLanguageCode,
 } from '@jibrelcom/i18n'
+
+import { FORM_ERROR } from 'final-form'
 
 import {
   Form,
@@ -13,12 +16,14 @@ import {
 } from 'react-final-form'
 
 import {
+  Grid,
   Icon,
   Link,
   BigButton,
   LinkButton,
   PageWithHero,
   BigButtonSubmit,
+  ErrorToast,
 } from '@jibrelcom/ui'
 
 import settings from 'app/settings'
@@ -75,35 +80,63 @@ interface InvestState {
   currentStep: InvestStep;
 }
 
-const InvestForm = ({ handleSubmit }: FormRenderProps): React.ReactNode => {
+const InvestForm = ({
+  handleSubmit,
+  submitErrors
+}: FormRenderProps): React.ReactNode => {
   const i18n = useI18n()
 
   return (
-    <form onSubmit={handleSubmit}>
-      <div className={style.form}>
-        <h2 className={style.subtitle}>{i18n._('Invest.form.amount.title')}</h2>
-        <InvestmentInput
-          validate={isRequired({ i18n })}
-          name='amount'
-          maxLength={256}
-        />
+    <>
+      <form onSubmit={handleSubmit}>
+        <div className={style.form}>
+          <h2 className={style.subtitle}>{i18n._('Invest.form.amount.title')}</h2>
+          <InvestmentInput
+            validate={isRequired({ i18n })}
+            name='amount'
+            maxLength={256}
+          />
+        </div>
+        <LinkButton
+          onClick={window.print}
+          className={style.download}
+          type='button'
+        >
+          Download subscription agreement
+        </LinkButton>
+        <p className={style.agreement}>
+          By clicking <span>
+            Accept and Sign
+          </span>, I understand and agree that this is a legal representation of my handwritten signature/initials.
+        </p>
+        <Grid.Item
+          className={style.submit}
+          xs={4}
+          s={4}
+          m={4}
+          l={3}
+          xl={4}
+        >
+          <BigButtonSubmit>
+            Accept and Sign
+          </BigButtonSubmit>
+        </Grid.Item>
+      </form>
+      <div className={style.error}>
+        {submitErrors && submitErrors[FORM_ERROR] && (
+          <Grid.Item
+            component={ErrorToast}
+            xl={8}
+            l={8}
+            m={4}
+            s={4}
+            xs={4}
+          >
+            {submitErrors[FORM_ERROR]}
+          </Grid.Item>
+        )}
       </div>
-      <LinkButton
-        onClick={window.print}
-        className={style.download}
-        type='button'
-      >
-        Download subscription agreement
-      </LinkButton>
-      <p className={style.agreement}>
-        By clicking <span>
-          Accept and Sign
-        </span>, I understand and agree that this is a legal representation of my handwritten signature/initials.
-      </p>
-      <BigButtonSubmit className={style.submit}>
-        Accept and Sign
-      </BigButtonSubmit>
-    </form>
+    </>
   )
 }
 
@@ -127,20 +160,49 @@ const RisksStep: React.FunctionComponent<{
 }> = ({
   handleClick,
   slug,
-}) => (
-  <>
-    <BackLink slug={slug} />
-    <h1 className={style.title}>Risk Disclosures</h1>
-    <RiskDisclosures />
-    <BigButton
-      onClick={handleClick}
-      className={style.submit}
-      type='button'
-    >
-      I agree
-    </BigButton>
-  </>
-)
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <>
+      <Grid.Container>
+        <Grid.Item
+          xs={4}
+          s={8}
+          m={5}
+          l={8}
+          xl={8}
+        >
+          <BackLink slug={slug} />
+          <h1 className={style.title}>{i18n._('RiskDisclosures.title')}</h1>
+          <p className={style.riskAnnotation}>
+            {i18n._('RiskDisclosures.subtitleAnnotation')}
+          </p>
+          <RiskDisclosures />
+          <p className={`${style.riskAnnotation} ${style.noMargin}`}>
+            {i18n._('RiskDisclosures.agreeButton.description')}
+          </p>
+        </Grid.Item>
+      </Grid.Container>
+      <Grid.Container className={style.submit}>
+        <Grid.Item
+          xs={4}
+          s={4}
+          m={3}
+          l={4}
+          xl={4}
+        >
+          <BigButton
+            onClick={handleClick}
+            type='button'
+          >
+            I agree
+          </BigButton>
+        </Grid.Item>
+      </Grid.Container>
+    </>
+  )
+}
 
 const SuccessStep: React.FunctionComponent<{
   amount: number | void;
@@ -244,6 +306,8 @@ class Invest extends Component<InvestProps, InvestState> {
     }
   }
 
+  static contextType = I18nContext
+
   componentDidMount(): void {
     const {
       getOfferingData,
@@ -258,15 +322,21 @@ class Invest extends Component<InvestProps, InvestState> {
   })
 
   handleSubmit = async (values: InvestFormFields): FormSubmitResult<InvestFormFields> => {
-    const errors = await this.props.sendOfferingApplication(values)
+    try {
+      const errors = await this.props.sendOfferingApplication(values)
 
-    if (errors) {
-      return errors
+      if (!isEmpty(errors)) {
+        return { [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.' }
+      }
+
+      this.setState({
+        currentStep: InvestStep.SUCCESS,
+      })
+    } catch (error) {
+      return {
+        [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.'
+      }
     }
-
-    this.setState({
-      currentStep: InvestStep.SUCCESS,
-    })
   }
 
   renderCurrentStep = (): React.ReactNode => {
@@ -280,15 +350,9 @@ class Invest extends Component<InvestProps, InvestState> {
     switch (this.state.currentStep) {
       case InvestStep.RISKS:
         return (
-          <Grid.Item
-            component={RisksStep}
+          <RisksStep
             handleClick={this.agreeWithRisks}
             slug={slug}
-            xs={4}
-            s={8}
-            m={5}
-            l={8}
-            xl={8}
           />
         )
 
@@ -317,9 +381,7 @@ class Invest extends Component<InvestProps, InvestState> {
   render(): React.ReactNode {
     return (
       <CoreLayout>
-        <Grid.Container>
-          {this.renderCurrentStep()}
-        </Grid.Container>
+        {this.renderCurrentStep()}
       </CoreLayout>
     )
   }
