@@ -143,10 +143,12 @@ const RisksStep: React.FunctionComponent<{
 )
 
 const SuccessStep: React.FunctionComponent<{
-  amount: number | void;
   data: BankAccount | void;
+  slug: string;
+  amount: number | void;
 }> = ({
   data,
+  slug,
   amount,
 }) => {
   const lang = useLanguageCode()
@@ -159,7 +161,7 @@ const SuccessStep: React.FunctionComponent<{
       href='javascript: window.print()'
       secondaryButtonLabel='BACK TO STARTUPS'
       title='You Have Successfully Subscribed'
-      text='You have successfully subscribed! To complete your investment in Maqsam, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.'
+      text={`You have successfully subscribed! To complete your investment in ${STARTUP_NAMES[slug]}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
     >
       <h2 className={style.subtitle}>Subscription Amount</h2>
       <div className={style.amount}>{formatAmount(amount || 0, lang)}</div>
@@ -253,9 +255,12 @@ class Invest extends Component<InvestProps, InvestState> {
     getOfferingData(slug)
   }
 
-  agreeWithRisks = (): void => this.setState({
-    currentStep: InvestStep.FORM,
-  })
+  setCurrentStep = (currentStep: InvestStep): void => {
+    this.setState({ currentStep })
+    window.scrollTo(0, 0)
+  }
+
+  agreeWithRisks = (): void => this.setCurrentStep(InvestStep.FORM)
 
   handleSubmit = async (values: InvestFormFields): FormSubmitResult<InvestFormFields> => {
     const errors = await this.props.sendOfferingApplication(values)
@@ -264,9 +269,7 @@ class Invest extends Component<InvestProps, InvestState> {
       return errors
     }
 
-    this.setState({
-      currentStep: InvestStep.SUCCESS,
-    })
+    this.setCurrentStep(InvestStep.SUCCESS)
   }
 
   renderCurrentStep = (): React.ReactNode => {
@@ -305,6 +308,7 @@ class Invest extends Component<InvestProps, InvestState> {
         return (
           <SuccessStep
             data={bankAccountData}
+            slug={slug}
             amount={subscriptionAmount}
           />
         )
