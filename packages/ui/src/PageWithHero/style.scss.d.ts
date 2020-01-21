@@ -3,6 +3,7 @@ declare namespace StyleScssModule {
     actions: string;
     button: string;
     centered: string;
+    children: string;
     column: string;
     content: string;
     grid: string;

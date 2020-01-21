@@ -9,6 +9,10 @@
   @include screen(">small") {
     height: 96px;
   }
+
+  @media print {
+    display: none;
+  }
 }
 
 .main {

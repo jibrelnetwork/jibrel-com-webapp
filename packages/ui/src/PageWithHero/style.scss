@@ -36,7 +36,8 @@
   }
 }
 
-.text {
+.text,
+.children {
   @include font-subheader-2-s;
 
   width: $column-s-4;
@@ -96,5 +97,14 @@
 
   @include screen('>medium') {
     width: $column-l-4;
+  }
+}
+
+.hero,
+.title,
+.text,
+.actions {
+  @media print {
+    display: none;
   }
 }

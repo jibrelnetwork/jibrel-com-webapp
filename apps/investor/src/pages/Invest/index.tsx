@@ -89,7 +89,7 @@ const InvestForm = ({ handleSubmit }: FormRenderProps): React.ReactNode => {
         />
       </div>
       <LinkButton
-        onClick={(): void => alert('subscription agreement')}
+        onClick={window.print}
         className={style.download}
         type='button'
       >
@@ -153,13 +153,13 @@ const SuccessStep: React.FunctionComponent<{
 
   return (
     <PageWithHero
-        imgSrc={heroImage}
-        secondaryHref={settings.HOST_CMS}
-        href='#'
-        buttonLabel='Download Details'
-        secondaryButtonLabel='BACK TO STARTUPS'
-        title='You Have Successfully Subscribed'
-        text='You have successfully subscribed! To complete your investment in Maqsam, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.'
+      imgSrc={heroImage}
+      secondaryHref={settings.HOST_CMS}
+      buttonLabel='Download Details'
+      href='javascript: window.print()'
+      secondaryButtonLabel='BACK TO STARTUPS'
+      title='You Have Successfully Subscribed'
+      text='You have successfully subscribed! To complete your investment in Maqsam, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.'
     >
       <h2 className={style.subtitle}>Subscription Amount</h2>
       <div className={style.amount}>{formatAmount(amount || 0, lang)}</div>
