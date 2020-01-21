@@ -3,7 +3,10 @@ export default function formatPercents(
   languageCode = 'en-US',
   options: Intl.NumberFormatOptions = {},
 ): string {
-  const formatter = new Intl.NumberFormat(languageCode, options)
+  const formatter = new Intl.NumberFormat(languageCode, {
+    style: 'percent',
+    ...options,
+  })
 
-  return `${formatter.format(parseInt(value.toString(), 10))}%`
+  return formatter.format((parseInt(value.toString(), 10) || 0) / 100)
 }
