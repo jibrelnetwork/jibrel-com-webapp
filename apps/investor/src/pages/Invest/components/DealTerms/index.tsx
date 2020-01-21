@@ -9,7 +9,11 @@ import {
 } from '@jibrelcom/ui'
 
 import { RootState } from 'store'
-import { formatDate } from 'utils/formatters'
+
+import {
+  formatDate,
+  formatPercents,
+} from 'utils/formatters'
 
 import {
   Offering,
@@ -60,7 +64,7 @@ const DealTerms: React.FunctionComponent<DealTermsProps> = ({
     value: SECURITY_TYPE_MAP[offeringData.security.type],
   }, {
     key: 'Offered Equity',
-    value: `${offeringData.equity.split('.')[0]}%`,
+    value: formatPercents(offeringData.equity),
   }, {
     key: 'Funding Round',
     value: FUNDING_ROUND_MAP[offeringData.round],
