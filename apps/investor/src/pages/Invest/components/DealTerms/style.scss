@@ -17,6 +17,10 @@
   &.loading {
     @include flex-column-center;
   }
+
+  @media print {
+    padding: 0;
+  }
 }
 
 .item {

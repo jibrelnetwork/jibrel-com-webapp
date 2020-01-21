@@ -38,7 +38,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
     <div className={style.text}>{text}</div>
     {children && (
       <div className={style.content}>
-        <div className={style.text}>{children}</div>
+        <div className={style.children}>{children}</div>
       </div>
     )}
     <div className={style.actions}>
