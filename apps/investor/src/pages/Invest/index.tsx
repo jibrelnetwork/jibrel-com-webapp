@@ -22,6 +22,7 @@ import {
 } from '@jibrelcom/ui'
 
 import settings from 'app/settings'
+import NotFound from 'pages/NotFound'
 import CoreLayout from 'layouts/CoreLayout'
 import STARTUP_NAMES from 'data/startupNames.json'
 import isRequired from 'utils/validators/isRequired'
@@ -62,6 +63,7 @@ interface StateProps {
   offeringId: string | void;
   bankAccountData: BankAccount | void;
   subscriptionAmount: number | void;
+  isOfferingDataLoading: boolean;
 }
 
 interface DispatchProps {
@@ -143,9 +145,9 @@ const RisksStep: React.FunctionComponent<{
 )
 
 const SuccessStep: React.FunctionComponent<{
-  data: BankAccount | void;
+  data: BankAccount;
   slug: string;
-  amount: number | void;
+  amount: number;
 }> = ({
   data,
   slug,
@@ -164,7 +166,7 @@ const SuccessStep: React.FunctionComponent<{
       text={`You have successfully subscribed! To complete your investment in ${STARTUP_NAMES[slug]}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
     >
       <h2 className={style.subtitle}>Subscription Amount</h2>
-      <div className={style.amount}>{formatAmount(amount || 0, lang)}</div>
+      <div className={style.amount}>{formatAmount(amount, lang)}</div>
       <h2 className={style.subtitle}>Jibrel Bank Account Details</h2>
       <div className={style.warning}>
         <Icon
@@ -175,34 +177,32 @@ const SuccessStep: React.FunctionComponent<{
           Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
         </span>
       </div>
-      {data && (
-        <div className={style.details}>
-          <div className={style.item}>
-            <div className={style.label}>Bank Account Holder Name</div>
-            <div className={style.value}>{data.holderName}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>IBAN</div>
-            <div className={style.value}>{data.ibanNumber}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Account Number</div>
-            <div className={style.value}>{data.accountNumber}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Bank Name</div>
-            <div className={style.value}>{data.bankName}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>BIC/SWIFT Code</div>
-            <div className={style.value}>{data.swiftCode}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Deposit Order ID</div>
-            <div className={style.value}>{data.depositReferenceCode}</div>
-          </div>
+      <div className={style.details}>
+        <div className={style.item}>
+          <div className={style.label}>Bank Account Holder Name</div>
+          <div className={style.value}>{data.holderName}</div>
         </div>
-      )}
+        <div className={style.item}>
+          <div className={style.label}>IBAN</div>
+          <div className={style.value}>{data.ibanNumber}</div>
+        </div>
+        <div className={style.item}>
+          <div className={style.label}>Account Number</div>
+          <div className={style.value}>{data.accountNumber}</div>
+        </div>
+        <div className={style.item}>
+          <div className={style.label}>Bank Name</div>
+          <div className={style.value}>{data.bankName}</div>
+        </div>
+        <div className={style.item}>
+          <div className={style.label}>BIC/SWIFT Code</div>
+          <div className={style.value}>{data.swiftCode}</div>
+        </div>
+        <div className={style.item}>
+          <div className={style.label}>Deposit Order ID</div>
+          <div className={style.value}>{data.depositReferenceCode}</div>
+        </div>
+      </div>
     </PageWithHero>
   )
 }
@@ -280,6 +280,10 @@ class Invest extends Component<InvestProps, InvestState> {
       subscriptionAmount,
     }: InvestProps = this.props
 
+    if (!offeringId) {
+      return <NotFound />
+    }
+
     switch (this.state.currentStep) {
       case InvestStep.RISKS:
         return (
@@ -305,13 +309,13 @@ class Invest extends Component<InvestProps, InvestState> {
         )
 
       case InvestStep.SUCCESS:
-        return (
+        return (bankAccountData && subscriptionAmount) ? (
           <SuccessStep
             data={bankAccountData}
             slug={slug}
             amount={subscriptionAmount}
           />
-        )
+        ) : <NotFound />
 
       default:
         return null
@@ -319,6 +323,10 @@ class Invest extends Component<InvestProps, InvestState> {
   }
 
   render(): React.ReactNode {
+    if (this.props.isOfferingDataLoading) {
+      return null
+    }
+
     return (
       <CoreLayout>
         <Grid.Container>
@@ -330,11 +338,21 @@ class Invest extends Component<InvestProps, InvestState> {
 }
 
 export default connect<StateProps, DispatchProps, OwnProps>(
-  (state: RootState) => ({
-    bankAccountData: state.invest.bankAccountData,
-    offeringId: (state.invest.offeringData || {}).uuid,
-    subscriptionAmount: state.invest.subscriptionAmount,
-  }),
+  (state: RootState) => {
+    const {
+      offeringData,
+      bankAccountData,
+      subscriptionAmount,
+      isOfferingDataLoading,
+    } = state.invest
+
+    return {
+      bankAccountData,
+      isOfferingDataLoading,
+      offeringId: (offeringData || {}).uuid,
+      subscriptionAmount: subscriptionAmount,
+    }
+  },
   (dispatch: Dispatch): DispatchProps => ({
     getOfferingData: dispatch.invest.getOfferingData,
     sendOfferingApplication: dispatch.invest.sendOfferingApplication,

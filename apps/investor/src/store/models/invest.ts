@@ -54,6 +54,10 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
         if (status === 403) {
           return handle403(rootState.user.languageCode)
+        } else if (status === 404) {
+          this.setOfferingData(undefined)
+
+          return
         } else if (status === 409) {
           dispatch(actions.navigateTo('Invested'))
         }
@@ -105,9 +109,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         const { status } = error.response
 
         if (status === 404) {
-          return {
-            amount: 'Offering with this id is not found',
-          }
+          this.setBankAccountData(undefined)
+
+          return
         } else if (status === 409) {
           dispatch(actions.navigateTo('Invested'))
 
