@@ -8,5 +8,5 @@ export default function formatPercents(
     ...options,
   })
 
-  return formatter.format(parseInt(value.toString(), 10))
+  return formatter.format(parseFloat(value.toString()))
 }
