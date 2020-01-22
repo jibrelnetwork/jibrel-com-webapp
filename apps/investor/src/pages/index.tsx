@@ -9,7 +9,15 @@ import {
   useLanguage,
 } from '@jibrelcom/i18n'
 
+import CoreLayout from 'layouts/CoreLayout'
+
 import * as pagesAvailable from './available'
+
+const NotFound: React.FunctionComponent = ({ ...props }) => (
+  <CoreLayout>
+    <pagesAvailable.NotFound {...props} />
+  </CoreLayout>
+)
 
 const Pages: React.FunctionComponent = () => {
   const i18n = useI18n()
@@ -24,7 +32,7 @@ const Pages: React.FunctionComponent = () => {
   }
 
   const Page: React.ComponentClass | void = route.name === constants.UNKNOWN_ROUTE
-    ? pagesAvailable.NotFound
+    ? NotFound
     : get(pagesAvailable, route.name)
 
   if (!Page) {
