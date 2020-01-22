@@ -9,6 +9,7 @@
     "lingui:compile": "npx lingui compile"
   },
   "dependencies": {
+    "@jibrelcom/countries": "0.0.1",
     "@jibrelcom/ui": "0.0.1",
     "@jibrelcom/forms": "0.0.1",
     "@jibrelcom/router": "0.0.1",
