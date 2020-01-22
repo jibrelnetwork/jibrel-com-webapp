@@ -362,21 +362,24 @@ class Invest extends Component<InvestProps, InvestState> {
 
       case InvestStep.FORM:
         return (
-          <FormStep
-            handleSubmit={this.handleSubmit}
-            slug={slug}
-            offeringId={offeringId}
-          />
+          <Grid.Container>
+            <FormStep
+              handleSubmit={this.handleSubmit}
+              slug={slug}
+              offeringId={offeringId}
+            />
+          </Grid.Container>
         )
 
       case InvestStep.SUCCESS:
         return (bankAccountData && subscriptionAmount) ? (
-          <SuccessStep
-            data={bankAccountData}
-            slug={slug}
-            amount={subscriptionAmount}
-          />
-        ) : <NotFound />
+          <Grid.Container>
+            <SuccessStep
+              data={bankAccountData}
+              slug={slug}amount={subscriptionAmount}
+            />
+          </Grid.Container>
+        ): <NotFound />
 
       default:
         return null

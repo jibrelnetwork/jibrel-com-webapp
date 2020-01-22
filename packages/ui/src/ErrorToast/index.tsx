@@ -4,7 +4,7 @@ import cc from 'classcat'
 import style from './style.scss'
 
 interface ErrorToastProps {
-  children: string | React.ReactNode;
+  children: React.ReactNode;
   className?: string;
 }
 
