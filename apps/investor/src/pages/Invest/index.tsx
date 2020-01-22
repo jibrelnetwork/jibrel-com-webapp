@@ -149,7 +149,7 @@ const BackLink: React.FunctionComponent<{
       className={style.icon}
       name='ic_arrow_right_24'
     />
-    <Link href={`//jibrel.com/en/companies/${slug}`}>
+    <Link href={`${settings.HOST_CMS}/en/companies/${slug}`}>
       {`Back to ${STARTUP_NAMES[slug]}`}
     </Link>
   </div>
