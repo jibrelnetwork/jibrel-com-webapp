@@ -13,9 +13,10 @@ interface RiskDisclosuresProps {
 const RiskDisclosures: React.FunctionComponent<RiskDisclosuresProps> = ({ className }) => {
   const language = useLanguageCode()
 
-  return (
-      <article className={cc([style.container, className])} dangerouslySetInnerHTML={{ __html: templates[language] }} />
-  )
+  return <article
+    className={cc([style.container, className])}
+    dangerouslySetInnerHTML={{ __html: templates[language] }}
+  />
 }
 
 export default React.memo(RiskDisclosures)

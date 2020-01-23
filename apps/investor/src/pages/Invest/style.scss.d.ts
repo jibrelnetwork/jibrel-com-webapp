@@ -7,6 +7,7 @@ declare namespace StyleScssModule {
     column: string;
     details: string;
     download: string;
+    error: string;
     exclamation: string;
     form: string;
     grid: string;
@@ -53,7 +54,11 @@ declare namespace StyleScssModule {
     m6: string;
     m7: string;
     m8: string;
+    "no-margin": string;
+    noMargin: string;
     note: string;
+    "risk-annotation": string;
+    riskAnnotation: string;
     "s-1": string;
     "s-2": string;
     "s-3": string;
