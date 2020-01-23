@@ -1,11 +1,14 @@
 import React from 'react'
+import { NotFound } from '@jibrelcom/ui'
 
+import settings from 'app/settings'
 import ProfileLayout from 'layouts/ProfileLayout'
 
-const NotFound: React.FunctionComponent = () => (
+const NotFoundEnhanced: React.FunctionComponent = () => (
   <ProfileLayout>
-    <h1>404 Not Found</h1>
+    <NotFound href={settings.HOST_CMS} />
   </ProfileLayout>
 )
 
-export default NotFound
+export default NotFoundEnhanced
+

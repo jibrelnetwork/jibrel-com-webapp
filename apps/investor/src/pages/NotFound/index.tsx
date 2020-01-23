@@ -1,10 +1,10 @@
 import React from 'react'
+import { NotFound } from '@jibrelcom/ui'
 
+import settings from 'app/settings'
 
-const NotFound: React.FunctionComponent = () => (
-    <>
-      <h1>404 Not Found</h1>
-    </>
+const NotFoundEnhanced: React.FunctionComponent = () => (
+  <NotFound href={settings.HOST_CMS} />
 )
 
-export default NotFound
+export default NotFoundEnhanced
