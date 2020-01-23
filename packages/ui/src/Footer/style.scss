@@ -1,5 +1,12 @@
+@import '../theme';
+
 .footer {
   padding-top: 24px;
+  flex-direction: column;
+
+  @include screen(">medium") {
+    flex-direction: row;
+  }
 
   @media print {
     display: none;
