@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import cc from 'classcat'
+import COUNTRIES_TITLES from '@jibrelcom/countries/src/en.common.json'
 import { connect } from 'react-redux'
 
 import { Customer } from 'store/types/invest'
@@ -55,7 +56,7 @@ class CustomerData extends Component<CustomerDataProps> {
                 <p>{customerData.apartment}</p>
                 <p>{customerData.city}</p>
                 <p>{customerData.postCode}</p>
-                <p>{customerData.country}</p>
+                <p>{COUNTRIES_TITLES[`ref.country.${customerData.country}`]}</p>
               </div>
             </div>
           </>

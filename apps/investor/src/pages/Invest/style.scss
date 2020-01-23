@@ -26,6 +26,18 @@
   }
 }
 
+.risk-annotation {
+  @include font-subheader-2-s;
+
+  margin-bottom: 16px;
+
+  @include screen('>small') {
+    @include font-subheader-2-l;
+
+    margin-bottom: 24px;
+  }
+}
+
 .subtitle {
   @include font-h2-s;
 
@@ -122,8 +134,18 @@
 }
 
 .submit {
-  width: $column-l-4;
-  margin: 64px 0;
+  @include flex-row-center;
+  margin: 32px 0;
+
+  @include screen('>xsmall') {
+    margin: 48px 0;
+  }
+
+  @include screen('>small') {
+    justify-content: flex-start;
+
+    margin: 64px 0;
+  }
 }
 
 .amount {
@@ -176,11 +198,24 @@
   }
 }
 
+.no-margin {
+  margin: 0;
+}
+
+.error {
+  @include flex-row-center;
+
+  position: fixed; // old browsers fallback
+  position: sticky;
+  bottom: 20px;
+}
+
 .back,
 .note,
 .download,
 .agreement,
-.submit {
+.submit,
+.error {
   @media print {
     display: none;
   }

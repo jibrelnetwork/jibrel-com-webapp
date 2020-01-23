@@ -1,4 +1,5 @@
 import React from 'react'
+import COUNTRIES_INDEX from '@jibrelcom/countries/src/index.json'
 import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
 
@@ -14,7 +15,6 @@ import {
 
 import authStyle from 'styles/auth.scss'
 import CountrySelect from 'components/CountrySelect'
-import COUNTRIES_INDEX from 'components/CountrySelect/countries/index.json'
 import { isRequired } from 'utils/validators'
 
 import { FormSubmitResult, PhoneAPINumberFields } from 'store/types'
