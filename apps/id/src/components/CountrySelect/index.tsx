@@ -1,9 +1,8 @@
 import React from 'react'
+import COUNTRIES_INDEX from '@jibrelcom/countries/src/index.json'
+import COUNTRIES_ORDER from '@jibrelcom/countries/src/order/en.json'
+import COUNTRIES_TITLES from '@jibrelcom/countries/src/en.common.json'
 import { Select } from '@jibrelcom/ui'
-
-import COUNTRIES_INDEX from './countries/index.json'
-import COUNTRIES_ORDER from './countries/order/en.json'
-import COUNTRIES_TITLES from './countries/en.common.json'
 
 type CountrySelectProps = Omit<React.ComponentProps<typeof Select.Select>, 'children'>
 const isWindowsSystem = navigator.platform.startsWith('Win')
