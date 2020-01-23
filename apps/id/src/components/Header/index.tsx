@@ -4,7 +4,6 @@ import { Header } from '@jibrelcom/ui'
 import { useLanguageCode } from '@jibrelcom/i18n'
 
 import settings from 'app/settings'
-import { UserStatus } from 'store/types'
 
 import {
   Dispatch,
@@ -12,13 +11,13 @@ import {
 } from 'store'
 
 export interface HeaderProps {
-  logout?: () => void;
+  logout: () => void;
   className?: string;
   isAuthenticated?: boolean;
 }
 
 const HeaderEnhanced: React.FunctionComponent<HeaderProps> = ({
-  logout = undefined,
+  logout,
   isAuthenticated = false,
 }) => {
   const languageCode = useLanguageCode()
@@ -26,8 +25,8 @@ const HeaderEnhanced: React.FunctionComponent<HeaderProps> = ({
   return (
     <Header
       logout={logout}
+      lang={languageCode}
       cmsURL={settings.HOST_CMS}
-      languageCode={languageCode}
       isAuthenticated={isAuthenticated}
     />
   )
@@ -35,7 +34,7 @@ const HeaderEnhanced: React.FunctionComponent<HeaderProps> = ({
 
 export default connect(
   (state: RootState) => ({
-    isAuthenticated: state.user.status ? (state.user.status !== UserStatus.ANONYMOUS) : false,
+    isAuthenticated: !!state.user.status,
   }),
   (dispatch: Dispatch) => ({
     logout: dispatch.user.logout,
