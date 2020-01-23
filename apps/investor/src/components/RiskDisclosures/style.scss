@@ -6,10 +6,49 @@
 
   @include screen('>small') {
     @include font-body-l;
-
   }
 
-  > h2 {
+  > :global(.h1-header) {
+    @include font-h1-xs;
+
+    padding-top: 24px;
+    padding-bottom: 32px;
+
+    @include screen('>xsmall') {
+      @include font-h1-s;
+    }
+
+    @include screen('>small') {
+      @include font-h1-m;
+    }
+
+    @include screen('>medium') {
+      @include font-h1-l;
+    }
+  }
+
+  > :global(.subheader-2) {
+    @include font-subheader-2-s;
+    margin-bottom: 24px;
+
+    @include screen('>small') {
+      @include font-subheader-2-l;
+    }
+  }
+
+  > :global(.h2-header) {
+    @include font-h2-s;
+
+    margin-bottom: 16px;
+
+    @include screen('>small') {
+      @include font-h2-l;
+
+      margin-bottom: 24px;
+    }
+  }
+
+  > :global(.h3-header) {
     @include font-h3-s;
 
     margin-bottom: 24px;
@@ -19,7 +58,11 @@
     }
   }
 
-  > p {
+  > :global(.body) {
     margin-bottom: 64px;
+
+    &:last-child {
+      margin-bottom: 0;
+    }
   }
 }
