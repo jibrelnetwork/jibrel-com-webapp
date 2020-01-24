@@ -5,12 +5,10 @@ import { useI18n } from '@jibrelcom/i18n'
 import { FormRenderProps } from 'react-final-form'
 
 import {
-  Checkbox,
   OtherSelect,
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
-import settings from 'app/settings'
 import OCCUPATIONS from 'data/occupations.json'
 import INCOME_SOURCES from 'data/incomeSources.json'
 import isRequired from 'utils/validators/isRequired'
@@ -51,22 +49,7 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
         label='Primary Source of Income'
         placeholder='select source of income'
       />
-      <Checkbox
-        name='isAgreedDocuments'
-        validate={isRequired({ i18n })}
-      >
-        <span>
-          I agree to Jibrel’s <a
-            href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}
-            target='_blank'
-          >
-            Risk Disclosures
-          </a>.
-        </span>
-      </Checkbox>
-      <BigButtonSubmit
-        className={style.submit}
-      >
+      <BigButtonSubmit className={style.submit}>
         Finish
       </BigButtonSubmit>
     </form>

@@ -118,7 +118,6 @@ export interface IncomeValues {
   occupationOther?: string;
   incomeSource: string;
   incomeSourceOther?: string;
-  isAgreedDocuments: boolean;
 }
 
 export interface KYCIndividualValues extends Partial<PersonalValues>, Partial<ResidencyValues>, Partial<IncomeValues> {}
