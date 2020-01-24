@@ -1,7 +1,6 @@
-
 export interface FormProps {
-    backLabel: string;
-    backHandler: () => undefined;
-    nextLabel: string;
-    nextHandler: (fields: []) => undefined;
+  backHandler: () => undefined;
+  nextHandler: (fields: []) => undefined;
+  backLabel: string;
+  nextLabel: string;
 }
