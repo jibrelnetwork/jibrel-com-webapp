@@ -11,8 +11,8 @@
   > :global(.h1-header) {
     @include font-h1-xs;
 
-    padding-top: 24px;
-    padding-bottom: 32px;
+    margin-top: 24px;
+    margin-bottom: 32px;
 
     @include screen('>xsmall') {
       @include font-h1-s;
@@ -29,6 +29,7 @@
 
   > :global(.subheader-2) {
     @include font-subheader-2-s;
+    margin-top: 24px;
     margin-bottom: 24px;
 
     @include screen('>small') {
@@ -39,11 +40,13 @@
   > :global(.h2-header) {
     @include font-h2-s;
 
+    margin-top: 48px;
     margin-bottom: 16px;
 
     @include screen('>small') {
       @include font-h2-l;
 
+      margin-top: 64px;
       margin-bottom: 24px;
     }
   }
@@ -51,6 +54,7 @@
   > :global(.h3-header) {
     @include font-h3-s;
 
+    margin-top: 64px;
     margin-bottom: 24px;
 
     @include screen('>small') {
@@ -59,7 +63,13 @@
   }
 
   > :global(.body) {
-    margin-bottom: 64px;
+    margin-top: 21px;
+    margin-bottom: 21px;
+
+    @include screen('>small') {
+      margin-top: 21px;
+      margin-bottom: 21px;
+    }
 
     &:last-child {
       margin-bottom: 0;

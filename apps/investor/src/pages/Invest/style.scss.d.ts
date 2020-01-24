@@ -54,8 +54,6 @@ declare namespace StyleScssModule {
     m6: string;
     m7: string;
     m8: string;
-    "no-margin": string;
-    noMargin: string;
     note: string;
     "risk-annotation": string;
     riskAnnotation: string;
