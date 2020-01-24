@@ -1,6 +1,9 @@
 import React, { Component } from 'react'
-import { connect } from 'react-redux'
+import cc from 'classcat'
 import isEmpty from 'lodash-es/isEmpty'
+import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
+import { connect } from 'react-redux'
+import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import {
   useI18n,
@@ -206,54 +209,74 @@ const SuccessStep: React.FunctionComponent<{
   const lang = useLanguageCode()
 
   return (
-    <PageWithHero
-      imgSrc={heroImage}
-      secondaryHref={settings.HOST_CMS}
-      buttonLabel='Download Details'
-      href='javascript: window.print()'
-      secondaryButtonLabel='BACK TO STARTUPS'
-      title='You Have Successfully Subscribed'
-      text={`You have successfully subscribed! To complete your investment in ${STARTUP_NAMES[slug]}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
-    >
-      <h2 className={style.subtitle}>Subscription Amount</h2>
-      <div className={style.amount}>{formatAmount(amount, lang)}</div>
-      <h2 className={style.subtitle}>Jibrel Bank Account Details</h2>
-      <div className={style.warning}>
-        <Icon
-          name='ic_exclamation_24'
-          className={style.exclamation}
-        />
-        <span>
-          Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
-        </span>
+    <>
+      <PageWithHero
+        imgSrc={heroImage}
+        className={style.success}
+        title='You Have Successfully Subscribed'
+        text={`You have successfully subscribed! To complete your investment in ${STARTUP_NAMES[slug]}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
+      >
+        <h2 className={style.subtitle}>Subscription Amount</h2>
+        <div className={style.amount}>{formatAmount(amount, lang)}</div>
+        <h2 className={style.subtitle}>Jibrel Bank Account Details</h2>
+        <div className={style.warning}>
+          <Icon
+            name='ic_exclamation_24'
+            className={style.exclamation}
+          />
+          <span>
+            Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
+          </span>
+        </div>
+        <div className={style.details}>
+          <div className={style.item}>
+            <div className={style.label}>Bank Account Holder Name</div>
+            <div className={style.value}>{data.holderName}</div>
+          </div>
+          <div className={style.item}>
+            <div className={style.label}>IBAN</div>
+            <div className={style.value}>{data.ibanNumber}</div>
+          </div>
+          <div className={style.item}>
+            <div className={style.label}>Account Number</div>
+            <div className={style.value}>{data.accountNumber}</div>
+          </div>
+          <div className={style.item}>
+            <div className={style.label}>Bank Name</div>
+            <div className={style.value}>{data.bankName}</div>
+          </div>
+          <div className={style.item}>
+            <div className={style.label}>BIC/SWIFT Code</div>
+            <div className={style.value}>{data.swiftCode}</div>
+          </div>
+          <div className={style.item}>
+            <div className={style.label}>Deposit Order ID</div>
+            <div className={style.value}>{data.depositReferenceCode}</div>
+          </div>
+        </div>
+      </PageWithHero>
+      <div className={style.actions}>
+        <div className={pageWithHeroStyle.button}>
+          <BigButton
+            onClick={window.print}
+            type='button'
+          >
+            Download Details
+          </BigButton>
+        </div>
+        <a
+          href={settings.HOST_CMS}
+          className={cc([
+            pageWithHeroStyle.button,
+            pageWithHeroStyle.secondary,
+          ])}
+        >
+          <BigButton variant={BigButtonVariant.secondary}>
+            BACK TO STARTUPS
+          </BigButton>
+        </a>
       </div>
-      <div className={style.details}>
-        <div className={style.item}>
-          <div className={style.label}>Bank Account Holder Name</div>
-          <div className={style.value}>{data.holderName}</div>
-        </div>
-        <div className={style.item}>
-          <div className={style.label}>IBAN</div>
-          <div className={style.value}>{data.ibanNumber}</div>
-        </div>
-        <div className={style.item}>
-          <div className={style.label}>Account Number</div>
-          <div className={style.value}>{data.accountNumber}</div>
-        </div>
-        <div className={style.item}>
-          <div className={style.label}>Bank Name</div>
-          <div className={style.value}>{data.bankName}</div>
-        </div>
-        <div className={style.item}>
-          <div className={style.label}>BIC/SWIFT Code</div>
-          <div className={style.value}>{data.swiftCode}</div>
-        </div>
-        <div className={style.item}>
-          <div className={style.label}>Deposit Order ID</div>
-          <div className={style.value}>{data.depositReferenceCode}</div>
-        </div>
-      </div>
-    </PageWithHero>
+    </>
   )
 }
 
