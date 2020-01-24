@@ -49,8 +49,6 @@ const initialFormValues = {
     directors: [{
         fullName: '',
     }],
-
-    isAgreedDocuments: false,
 }
 
 const BENEFICIARIES_STEP = 3

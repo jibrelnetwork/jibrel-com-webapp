@@ -24,31 +24,3 @@ export interface Profile {
   isPhoneConfirmed?: boolean;
   isAgreedPrivacyPolicy: boolean;
 }
-
-export interface SignUpFormFields {
-  firstName: string;
-  lastName: string;
-  email: string;
-  password: string;
-  isAgreedDocuments: boolean;
-}
-
-export interface LoginFormFields {
-  email: string;
-  password: string;
-}
-
-export interface EmailVerificationFormFields {
-  email: string;
-}
-
-export interface ForgotPasswordFormFields {
-  email: string;
-}
-
-export interface ResetPasswordFormFields {
-  key: string;
-  email: string;
-  password: string;
-  passwordConfirm: string;
-}

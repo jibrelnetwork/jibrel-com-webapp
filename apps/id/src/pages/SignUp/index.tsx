@@ -92,15 +92,30 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
         name='isAgreedDocuments'
         validate={isRequired({ i18n })}
       >
-        <span>I agree to Jibrel's</span>
-        <a
-          className={style.terms}
-          href={`${settings.HOST_CMS}/docs/en/terms-and-conditions.pdf`}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Terms and Conditions
-        </a>.
+        <span>
+          I agree to Jibrel’s <a
+            className={style.terms}
+            href={`${settings.HOST_CMS}/docs/en/terms-and-conditions.pdf`}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Terms and Conditions
+          </a>, <a
+            className={style.terms}
+            href={`${settings.HOST_CMS}/docs/en/privacy-policy.pdf`}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Privacy Policy
+          </a> and <a
+            className={style.terms}
+            href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}
+            target='_blank'
+            rel='noopener noreferrer'
+          >
+            Risk Disclosures
+          </a>.
+        </span>
       </Checkbox>
       <BigButtonSubmit
         className={style.submit}
