@@ -161,49 +161,38 @@ const RisksStep: React.FunctionComponent<{
 }> = ({
   handleClick,
   slug,
-}) => {
-  const i18n = useI18n()
-
-  return (
-    <>
-      <Grid.Container>
-        <Grid.Item
-          xs={4}
-          s={8}
-          m={5}
-          l={8}
-          xl={8}
+}) => (
+  <>
+    <Grid.Container>
+      <Grid.Item
+        xs={4}
+        s={8}
+        m={5}
+        l={8}
+        xl={8}
+      >
+        <BackLink slug={slug} />
+        <RiskDisclosures />
+      </Grid.Item>
+    </Grid.Container>
+    <Grid.Container className={style.submit}>
+      <Grid.Item
+        xs={4}
+        s={4}
+        m={3}
+        l={4}
+        xl={4}
+      >
+        <BigButton
+          onClick={handleClick}
+          type='button'
         >
-          <BackLink slug={slug} />
-          <h1 className={style.title}>{i18n._('RiskDisclosures.title')}</h1>
-          <p className={style.riskAnnotation}>
-            {i18n._('RiskDisclosures.subtitleAnnotation')}
-          </p>
-          <RiskDisclosures />
-          <p className={`${style.riskAnnotation} ${style.noMargin}`}>
-            {i18n._('RiskDisclosures.agreeButton.description')}
-          </p>
-        </Grid.Item>
-      </Grid.Container>
-      <Grid.Container className={style.submit}>
-        <Grid.Item
-          xs={4}
-          s={4}
-          m={3}
-          l={4}
-          xl={4}
-        >
-          <BigButton
-            onClick={handleClick}
-            type='button'
-          >
-            I agree
-          </BigButton>
-        </Grid.Item>
-      </Grid.Container>
-    </>
-  )
-}
+          I agree
+        </BigButton>
+      </Grid.Item>
+    </Grid.Container>
+  </>
+)
 
 const SuccessStep: React.FunctionComponent<{
   data: BankAccount;
