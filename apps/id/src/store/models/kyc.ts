@@ -11,7 +11,7 @@ import {
 
 export const kyc = createModel({
   state: {
-    status: KYCStatus.NONE,
+    status: KYCStatus.unverified,
     documents: {},
   },
   effects: () => ({
