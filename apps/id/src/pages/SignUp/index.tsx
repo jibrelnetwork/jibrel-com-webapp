@@ -63,11 +63,13 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
         <Input
           name='firstName'
           label='First Name'
+          maxLength={30}
           validate={isRequired({ i18n })}
         />
         <Input
           name='lastName'
           label='Last Name'
+          maxLength={30}
           validate={isRequired({ i18n })}
         />
         <Input
