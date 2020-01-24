@@ -5,17 +5,17 @@ import style from './style.scss'
 import grid from '../Grid/grid.scss'
 
 export interface HeaderProps {
-  logout?: () => void;
+  logout: () => void;
+  lang: string;
   cmsURL: string;
   className?: string;
-  languageCode: string;
   isAuthenticated?: boolean;
 }
 
 const Header: React.FunctionComponent<HeaderProps> = ({
+  logout,
+  lang,
   cmsURL,
-  languageCode,
-  logout = undefined,
   isAuthenticated = false,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -34,14 +34,21 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           '--black',
           grid.centered,
           style.main,
+          !isAuthenticated && '--no-dropdown',
         ])}
         data-is-open={isMenuOpen ? '1' : '0'}
       >
         <div className='navbar__wrapper common__centered'>
           <nav className='navbar__content'>
-            <a href={`${cmsURL}/${languageCode}`} className="navbar__logo-link">
-              <img className="navbar__logo navbar__logo--black" src={`${cmsURL}/img/ic_logo_colored_32.svg`} />
-              <img className="navbar__logo navbar__logo--white" src={`${cmsURL}/img/ic_logo_colored_32_white.svg`} />
+            <a href={`${cmsURL}/${lang}`} className="navbar__logo-link">
+              <img
+                className="navbar__logo navbar__logo--black"
+                src={`${cmsURL}/img/ic_logo_colored_32.svg`}
+              />
+              <img
+                className="navbar__logo navbar__logo--white"
+                src={`${cmsURL}/img/ic_logo_colored_32_white.svg`}
+              />
             </a>
             <button
               className="navbar__menu-toggle"
@@ -50,20 +57,58 @@ const Header: React.FunctionComponent<HeaderProps> = ({
               Open menu
             </button>
             <div className="navbar__menu">
-              <ul className="navbar__menu-list">
-                <li className="navbar__menu-item">
-                  <a href="mailto:support@jibrel.com" className="navbar__menu-link">Support</a>
-                </li>
-                {isAuthenticated && logout && (
+              {isAuthenticated ? (
+                <>
+                  <ul className="navbar__menu-list">
+                    <li className="navbar__menu-item">
+                      <a
+                        href={`${cmsURL}/${lang}/invest`}
+                        className="navbar__menu-link"
+                      >
+                        Invest
+                      </a>
+                    </li>
+                    <li className="navbar__menu-item">
+                      <a
+                        href={`${cmsURL}/${lang}/raise`}
+                        className="navbar__menu-link"
+                      >
+                        Raise
+                      </a>
+                    </li>
+                    <li className="navbar__menu-item">
+                      <a
+                        href={`${cmsURL}/${lang}/about`}
+                        className="navbar__menu-link"
+                      >
+                        About
+                      </a>
+                    </li>
+                  </ul>
+                  <ul className="navbar__menu-list">
+                    <li className="navbar__menu-item">
+                      <a
+                        href="#"
+                        className="navbar__menu-link"
+                        onClick={logout}
+                      >
+                        Log out
+                      </a>
+                    </li>
+                  </ul>
+                </>
+              ) : (
+                <ul className="navbar__menu-list">
                   <li className="navbar__menu-item">
                     <a
-                      href="#"
+                      href="mailto:support@jibrel.com"
                       className="navbar__menu-link"
-                      onClick={logout}
-                    >Log out</a>
+                    >
+                      Support
+                    </a>
                   </li>
-                )}
-              </ul>
+                </ul>
+              )}
             </div>
           </nav>
         </div>
