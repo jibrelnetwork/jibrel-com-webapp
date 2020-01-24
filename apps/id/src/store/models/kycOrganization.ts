@@ -30,10 +30,7 @@ const initialFormValues = {
             birthDate: '',
             nationality: '',
             email: '',
-            phoneNumber: {
-                number: '',
-                status: '',
-            },
+            phoneNumber: '',
             streetAddress: '',
             apartment: '',
             city: '',
