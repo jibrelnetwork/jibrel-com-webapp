@@ -1,5 +1,5 @@
 import React from 'react'
-import { useFormState } from 'react-final-form'
+import { useForm } from 'react-final-form'
 
 const getIsDiabled = ({
   hasSubmitErrors,
@@ -31,15 +31,8 @@ export const withSubmitButtonUX = <P extends React.PropsWithoutRef<JSX.Intrinsic
       hasValidationErrors,
       dirtySinceLastSubmit,
       validating,
-    } = useFormState({
-      subscription: {
-        submitting: true,
-        hasSubmitErrors: true,
-        hasValidationErrors: true,
-        dirtySinceLastSubmit: true,
-        validating: true,
-      }
-    })
+    } = useForm().getState()
+
     const isDisabled = getIsDiabled({
       hasSubmitErrors,
       hasValidationErrors,
