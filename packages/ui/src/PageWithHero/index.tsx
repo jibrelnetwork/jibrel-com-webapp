@@ -9,10 +9,11 @@ import { BigButtonVariant } from '../BigButton/types'
 export interface PageWithHero {
   children: React.ReactNode;
   text: string;
+  href?: string;
   title: string;
   imgSrc: string;
-  href: string;
-  buttonLabel: string;
+  className?: string;
+  buttonLabel?: string;
   secondaryHref?: string;
   secondaryButtonLabel?: string;
 }
@@ -23,6 +24,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
   text,
   title,
   imgSrc,
+  className,
   buttonLabel,
   secondaryHref,
   secondaryButtonLabel,
@@ -31,6 +33,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
     className={cc([
       grid.grid,
       style.main,
+      className,
     ])}
   >
     <img src={imgSrc} className={style.hero} />
@@ -42,12 +45,14 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
       </div>
     )}
     <div className={style.actions}>
-      <a
-        href={href}
-        className={style.button}
-      >
-        <BigButton>{buttonLabel}</BigButton>
-      </a>
+      {(href && buttonLabel) && (
+        <a
+          href={href}
+          className={style.button}
+        >
+          <BigButton>{buttonLabel}</BigButton>
+        </a>
+      )}
       {(secondaryHref && secondaryButtonLabel) && (
         <a
           href={secondaryHref}

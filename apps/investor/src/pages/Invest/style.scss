@@ -216,3 +216,16 @@
     display: none;
   }
 }
+
+.success {
+  padding-bottom: 0;
+}
+
+.actions {
+  width: 100%;
+  margin-bottom: 64px;
+
+  @media print {
+    display: none;
+  }
+}

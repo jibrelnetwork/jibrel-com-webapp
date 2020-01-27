@@ -1,5 +1,6 @@
 import React from 'react'
 
+import style from './style.scss'
 import grid from '../Grid/grid.scss'
 
 export interface FooterProps {
@@ -12,7 +13,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
   languageCode,
 }) => (
   <div className={grid.centered}>
-    <footer className="footer">
+    <footer className={`${style.footer} footer`}>
       <div className="footer__company">
         <a href={`${cmsURL}/${languageCode}`} className="footer__logo-link">
           <img className="footer__logo" src={`${cmsURL}/img/ic_logo_mono_32.svg`} />
