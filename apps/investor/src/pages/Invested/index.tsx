@@ -3,7 +3,7 @@ import { PageWithHero } from '@jibrelcom/ui'
 
 import settings from 'app/settings'
 import CoreLayout from 'layouts/CoreLayout'
-import heroImage from 'public/images/pic_hero_invest_process.svg'
+import heroImage from 'public/images/pic_hero_rocket_sun.svg'
 
 const Invested: React.FunctionComponent = () => (
   <CoreLayout>

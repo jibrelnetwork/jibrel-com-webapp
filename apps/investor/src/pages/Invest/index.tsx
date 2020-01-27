@@ -33,7 +33,7 @@ import NotFound from 'pages/NotFound'
 import CoreLayout from 'layouts/CoreLayout'
 import STARTUP_NAMES from 'data/startupNames.json'
 import isRequired from 'utils/validators/isRequired'
-import heroImage from 'public/images/pic_hero_invest_process.svg'
+import heroImage from 'public/images/pic_hero_rocket_sun.svg'
 
 import {
   Dispatch,

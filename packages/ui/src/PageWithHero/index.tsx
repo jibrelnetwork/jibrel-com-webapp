@@ -7,7 +7,7 @@ import BigButton from '../BigButton'
 import { BigButtonVariant } from '../BigButton/types'
 
 export interface PageWithHero {
-  children: React.ReactNode;
+  children?: React.ReactNode;
   text: string;
   href?: string;
   title: string;
