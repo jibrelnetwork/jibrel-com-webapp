@@ -12,7 +12,7 @@ const Invested: React.FunctionComponent = () => (
       href={settings.HOST_CMS}
       buttonLabel='Back to startups'
       title='You Have Invested Already'
-      secondaryButtonLabel='Write to Support'
+      secondaryButtonLabel='Contact support'
       secondaryHref='mailto:support@jibrel.com'
       text='If you want to change the subscription amount or cancel the subscription, please, contact our Support team.'
     />

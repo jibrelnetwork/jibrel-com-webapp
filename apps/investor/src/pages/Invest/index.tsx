@@ -213,7 +213,7 @@ const SuccessStep: React.FunctionComponent<{
       <PageWithHero
         imgSrc={heroImage}
         className={style.success}
-        title='You Have Successfully Subscribed'
+        title='Subscription Submitted'
         text={`You have successfully subscribed! To complete your investment in ${STARTUP_NAMES[slug]}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
       >
         <h2 className={style.subtitle}>Subscription Amount</h2>
