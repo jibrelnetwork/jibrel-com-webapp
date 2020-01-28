@@ -4,6 +4,9 @@ declare namespace StyleScssModule {
     agreement: string;
     amount: string;
     back: string;
+    bold: string;
+    "button-description": string;
+    buttonDescription: string;
     centered: string;
     column: string;
     details: string;
@@ -74,6 +77,7 @@ declare namespace StyleScssModule {
     s6: string;
     s7: string;
     s8: string;
+    sticky: string;
     submit: string;
     subtitle: string;
     success: string;

@@ -148,6 +148,44 @@
   }
 }
 
+.button-description {
+  @include font-caption;
+  margin-top: 16px;
+  text-align: center;
+
+  @include screen('>small') {
+    margin-top: 0;
+    text-align: left;
+    text-align: start; // progressive enhancement for RTL
+  }
+
+  @include screen('>xsmall', '<small') {
+    padding: 0 25%;
+  }
+}
+
+.bold {
+  font-weight: bold;
+}
+
+.sticky {
+  position: sticky;
+  bottom: 0;
+  padding: 32px 0;
+  background-color: $color-white;
+
+  &::before {
+    content: '';
+    display: block;
+    height: 64px;
+    position: absolute;
+    top: -64px;
+    left: 0;
+    right: 0;
+    background: linear-gradient(0deg, $color-white, transparent);
+  }
+}
+
 .amount {
   margin-bottom: 64px;
   font-size: 32px;

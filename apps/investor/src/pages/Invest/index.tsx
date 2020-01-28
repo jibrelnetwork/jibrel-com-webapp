@@ -178,7 +178,7 @@ const RisksStep: React.FunctionComponent<{
         <RiskDisclosures />
       </Grid.Item>
     </Grid.Container>
-    <Grid.Container className={style.submit}>
+    <Grid.Container className={`${style.submit} ${style.sticky}`}>
       <Grid.Item
         xs={4}
         s={4}
@@ -192,6 +192,16 @@ const RisksStep: React.FunctionComponent<{
         >
           I agree
         </BigButton>
+      </Grid.Item>
+      <Grid.Item
+        xs={4}
+        s={8}
+        m={4}
+        l={4}
+        xl={4}
+        className={style.buttonDescription}
+      >
+        By pressing the <span className={style.bold}>I Agree</span> button, you acknowledge that you have read, understood and accept the risks set out above.
       </Grid.Item>
     </Grid.Container>
   </>
