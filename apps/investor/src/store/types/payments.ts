@@ -1,5 +1,3 @@
-import { JibrelBankAccount } from './user'
-
 export interface PaymentInformation {
   bankName: string;
   swiftCode: string;
@@ -8,7 +6,6 @@ export interface PaymentInformation {
 }
 
 export interface PaymentsState {
-  bankAccountData: JibrelBankAccount | void;
   paymentInformation: PaymentInformation | void;
   balance: string;
   depositAmount: string;
