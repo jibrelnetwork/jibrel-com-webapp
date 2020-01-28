@@ -24,3 +24,12 @@ export interface Profile {
   isPhoneConfirmed?: boolean;
   isAgreedPrivacyPolicy: boolean;
 }
+
+export interface JibrelBankAccount {
+  bankName: string;
+  swiftCode: string;
+  holderName: string;
+  ibanNumber: string;
+  accountNumber: string;
+  depositReferenceCode: string;
+}

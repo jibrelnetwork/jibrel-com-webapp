@@ -18,9 +18,12 @@ import {
 
 import {
   Grid,
-  Icon,
   Link,
+  Warning,
   BigButton,
+  FormTitle,
+  PageTitle,
+  PageBackLink,
   PageWithHero,
   BigButtonSubmit,
   ErrorToast,
@@ -43,11 +46,14 @@ import {
 } from 'store/types/form'
 
 import {
-  BankAccount,
   InvestFormFields,
+  JibrelBankAccount,
 } from 'store/types/invest'
 
-import { RiskDisclosures } from 'components'
+import {
+  InvestmentInput,
+  RiskDisclosures,
+} from 'components'
 
 import style from './style.scss'
 import formatAmount from './utils/formatAmount'
@@ -56,7 +62,6 @@ import { InvestStep } from './types'
 import {
   DealTerms,
   CustomerData,
-  InvestmentInput,
 } from './components'
 
 interface OwnProps {
@@ -66,7 +71,7 @@ interface OwnProps {
 interface StateProps {
   offeringId: string | void;
   startupName: string | void;
-  bankAccountData: BankAccount | void;
+  bankAccountData: JibrelBankAccount | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
 }
@@ -106,7 +111,7 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
     <>
       <form onSubmit={handleSubmit}>
         <div className={style.form}>
-          <h2 className={style.subtitle}>{i18n._('Invest.form.amount.title')}</h2>
+          <FormTitle>{i18n._('Invest.form.amount.title')}</FormTitle>
           <InvestmentInput
             validate={isRequired({ i18n })}
             name='amount'
@@ -157,15 +162,12 @@ const BackLink: React.FunctionComponent<{
   slug,
   startupName,
 }) => !startupName ? null : (
-  <div className={style.back}>
-    <Icon
-      className={style.icon}
-      name='ic_arrow_right_24'
-    />
-    <Link href={`${settings.HOST_CMS}/en/companies/${slug}`}>
-      {`Back to ${startupName}`}
-    </Link>
-  </div>
+  <PageBackLink
+    className={style.back}
+    href={`${settings.HOST_CMS}/en/companies/${slug}`}
+  >
+    {`Back to ${startupName}`}
+  </PageBackLink>
 )
 
 const RisksStep: React.FunctionComponent<{
@@ -220,7 +222,7 @@ const RisksStep: React.FunctionComponent<{
 )
 
 const SuccessStep: React.FunctionComponent<{
-  data: BankAccount;
+  data: JibrelBankAccount;
   startupName: string | void;
   amount: number;
 }> = ({
@@ -238,18 +240,12 @@ const SuccessStep: React.FunctionComponent<{
         title='Subscription Submitted'
         text={`You have successfully subscribed! To complete your investment in ${startupName}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
       >
-        <h2 className={style.subtitle}>Subscription Amount</h2>
+        <FormTitle>Subscription Amount</FormTitle>
         <div className={style.amount}>{formatAmount(amount, lang)}</div>
-        <h2 className={style.subtitle}>Jibrel Bank Account Details</h2>
-        <div className={style.warning}>
-          <Icon
-            name='ic_exclamation_24'
-            className={style.exclamation}
-          />
-          <span>
-            Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
-          </span>
-        </div>
+        <FormTitle>Jibrel Bank Account Details</FormTitle>
+        <Warning className={style.warning}>
+          Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
+        </Warning>
         <div className={style.details}>
           <div className={style.item}>
             <div className={style.label}>Bank Account Holder Name</div>
@@ -316,7 +312,7 @@ const FormStep: React.FunctionComponent<{
 }) => (
   <>
     <BackLink slug={slug} startupName={startupName} />
-    <h1 className={style.title}>{`Invest in ${startupName}`}</h1>
+    <PageTitle>{`Invest in ${startupName}`}</PageTitle>
     <DealTerms slug={slug} />
     <div className={style.note}>
       To continue, you need to sign the Subscription Agreement by electronic signature. Before you do this, please enter your Subscription Amount

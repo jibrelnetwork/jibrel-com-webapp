@@ -1,3 +1,5 @@
+import { JibrelBankAccount } from './user'
+
 export enum SecurityType {
   'common_shares' = 'common_shares',
   'convertible_debt' = 'convertible_debt',
@@ -47,20 +49,10 @@ export interface Customer {
   country: string;
 }
 
-export interface BankAccount {
-  bankName: string;
-  branchAddress?: string,
-  swiftCode: string;
-  holderName: string;
-  ibanNumber: string;
-  accountNumber: string;
-  depositReferenceCode: string;
-}
-
 export interface InvestState {
   customerData: Customer | void;
   offeringData: Offering | void;
-  bankAccountData: BankAccount | void;
+  bankAccountData: JibrelBankAccount | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
   isCustomerDataLoading: boolean;

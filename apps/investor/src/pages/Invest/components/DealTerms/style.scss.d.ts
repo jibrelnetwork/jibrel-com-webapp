@@ -29,7 +29,6 @@ declare namespace StyleScssModule {
     l7: string;
     l8: string;
     l9: string;
-    label: string;
     loading: string;
     "m-1": string;
     "m-2": string;
@@ -63,7 +62,6 @@ declare namespace StyleScssModule {
     s6: string;
     s7: string;
     s8: string;
-    value: string;
     "xl-1": string;
     "xl-10": string;
     "xl-11": string;

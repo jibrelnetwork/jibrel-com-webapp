@@ -1,20 +1,8 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    actions: string;
-    agreement: string;
-    amount: string;
-    back: string;
-    bold: string;
-    "button-description": string;
-    buttonDescription: string;
     centered: string;
     column: string;
-    details: string;
-    download: string;
-    error: string;
-    form: string;
     grid: string;
-    item: string;
     "l-1": string;
     "l-10": string;
     "l-11": string;
@@ -39,7 +27,6 @@ declare namespace StyleScssModule {
     l7: string;
     l8: string;
     l9: string;
-    label: string;
     "m-1": string;
     "m-2": string;
     "m-3": string;
@@ -56,9 +43,7 @@ declare namespace StyleScssModule {
     m6: string;
     m7: string;
     m8: string;
-    note: string;
-    "risk-annotation": string;
-    riskAnnotation: string;
+    main: string;
     "s-1": string;
     "s-2": string;
     "s-3": string;
@@ -75,11 +60,6 @@ declare namespace StyleScssModule {
     s6: string;
     s7: string;
     s8: string;
-    sticky: string;
-    submit: string;
-    success: string;
-    value: string;
-    warning: string;
     "xl-1": string;
     "xl-10": string;
     "xl-11": string;
