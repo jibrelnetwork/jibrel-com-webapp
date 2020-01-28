@@ -291,7 +291,7 @@ const FormStep: React.FunctionComponent<{
 }) => (
   <>
     <BackLink slug={slug} />
-    <h1 className={style.title}>{`Invest to ${STARTUP_NAMES[slug]}`}</h1>
+    <h1 className={style.title}>{`Invest in ${STARTUP_NAMES[slug]}`}</h1>
     <DealTerms slug={slug} />
     <div className={style.note}>
       To continue, you need to sign the Subscription Agreement by electronic signature. Before you do this, please enter your Subscription Amount
