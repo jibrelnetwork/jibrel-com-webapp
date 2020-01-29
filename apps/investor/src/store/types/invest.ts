@@ -14,6 +14,14 @@ export enum FundingRound {
   d = 'd',
 }
 
+export enum OfferingStatus {
+  pending = 'pending',
+  active = 'active',
+  clearing = 'clearing',
+  completed = 'completed',
+  canceled = 'canceled',
+}
+
 export interface OfferingSecurity {
   company: {
     name: string;
@@ -28,7 +36,7 @@ export interface Offering {
   security: OfferingSecurity;
   uuid: string;
   goal: string;
-  status: string;
+  price: string;
   equity: string;
   dateEnd: string;
   dateStart: string;
@@ -36,6 +44,7 @@ export interface Offering {
   updatedAt: string;
   valuation: string;
   round: FundingRound;
+  status: OfferingStatus;
   limitMinAmount: string;
   shares: number;
 }

@@ -11,7 +11,7 @@ import {
 } from 'store'
 
 interface StateProps {
-  balance: string;
+  balance: string | undefined;
   lang: LanguageCode;
   isBalanceLoading: boolean;
 }

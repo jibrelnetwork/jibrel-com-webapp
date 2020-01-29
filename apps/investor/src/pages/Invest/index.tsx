@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import isEmpty from 'lodash-es/isEmpty'
 import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
 import { connect } from 'react-redux'
+import { FORM_ERROR } from 'final-form'
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import {
   useI18n,
   useLanguageCode,
 } from '@jibrelcom/i18n'
-
-import { FORM_ERROR } from 'final-form'
 
 import {
   Form,
@@ -34,6 +33,8 @@ import NotFound from 'pages/NotFound'
 import CoreLayout from 'layouts/CoreLayout'
 import isRequired from 'utils/validators/isRequired'
 import heroImage from 'public/images/pic_hero_rocket_sun.svg'
+import { JibrelBankAccount } from 'store/types/user'
+import { InvestFormFields } from 'store/types/invest'
 
 import {
   Dispatch,
@@ -44,11 +45,6 @@ import {
   FormSubmit,
   FormSubmitResult,
 } from 'store/types/form'
-
-import {
-  InvestFormFields,
-  JibrelBankAccount,
-} from 'store/types/invest'
 
 import {
   InvestmentInput,

@@ -1,0 +1,13 @@
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+.title {
+  @include flex-row;
+
+  align-items: center;
+}
+
+.green {
+  margin-left: 16px;
+  color: $color-green;
+}

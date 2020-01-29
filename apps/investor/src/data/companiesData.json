@@ -1,0 +1,18 @@
+{
+  "Arabot": {
+    "logo": "https://jibrelcom-storage.s3.eu-west-1.amazonaws.com/develop/80faef5c999840a88cae55ce026b3b3c.png",
+    "colorRGB": "148, 87, 201"
+  },
+  "Maqsam": {
+    "logo": "https://jibrelcom-storage.s3.eu-west-1.amazonaws.com/develop/2a8faeeb4eb144109a739f30dbaee722.png",
+    "colorRGB": "32, 34, 43"
+  },
+  "Addenda": {
+    "logo": "https://jibrelcom-storage.s3.eu-west-1.amazonaws.com/develop/bc49b84c63c2492eb52d0ee80b974f9e.png",
+    "colorRGB": "91, 172, 147"
+  },
+  "Smart Crowd": {
+    "logo": "https://jibrelcom-storage.s3.eu-west-1.amazonaws.com/develop/497d16200bcb4a3ab59719c3be340eb1.png",
+    "colorRGB": "0, 196, 202"
+  }
+}

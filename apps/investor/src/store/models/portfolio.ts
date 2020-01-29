@@ -11,19 +11,20 @@ import { PortfolioState } from '../types/portfolio'
 
 export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState>({
   state: {
-    offerings: undefined,
+    companies: {},
+    investments: undefined,
     investedAmount: undefined,
-    isOfferingsLoading: true,
+    isInvestmentsLoading: true,
     isInvestedAmountLoading: true,
   },
   effects: () => ({
-    async getOfferings(_: void, rootState: RootState): Promise<void> {
+    async getInvestments(_: void, rootState: RootState): Promise<void> {
       try {
-        this.setOfferingsLoading()
+        this.setInvestmentsLoading()
 
         const { data } = await axios.get('/v1/investment/offerings')
 
-        this.setOfferings(data)
+        this.setInvestments(data.data)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -44,7 +45,26 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
 
         const { data } = await axios.get('/v1/investment/offerings/summary')
 
-        this.setInvestedAmount(data)
+        this.setInvestedAmount(data.total_investment)
+      } catch (error) {
+        if (!error.response) {
+          throw error
+        }
+
+        const { status } = error.response
+
+        if (status === 403) {
+          return handle403(rootState.user.languageCode)
+        }
+
+        throw error
+      }
+    },
+    async getCompanyData(id: string, rootState: RootState): Promise<void> {
+      try {
+        const { data } = await axios.get('/v1/investment/offerings/summary')
+
+        this.setCompanyData(data.total_investment)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -61,14 +81,14 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
     },
   }),
   reducers: {
-    setOfferings: (state, payload): PortfolioState => ({
+    setInvestments: (state, payload): PortfolioState => ({
       ...state,
-      offerings: payload,
-      isOfferingsLoading: false,
+      investments: payload,
+      isInvestmentsLoading: false,
     }),
-    setOfferingsLoading: (state): PortfolioState => ({
+    setInvestmentsLoading: (state): PortfolioState => ({
       ...state,
-      isOfferingsLoading: true,
+      isInvestmentsLoading: true,
     }),
     setInvestedAmount: (state, payload): PortfolioState => ({
       ...state,
@@ -78,6 +98,13 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
     setInvestedAmountLoading: (state): PortfolioState => ({
       ...state,
       isInvestedAmountLoading: true,
+    }),
+    setCompanyData: (state, payload): PortfolioState => ({
+      ...state,
+      companies: {
+        ...state.companies,
+        [payload.id]: payload,
+      },
     }),
   }
 })
