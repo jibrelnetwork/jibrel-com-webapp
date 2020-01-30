@@ -3,6 +3,7 @@ import {
   ModelConfig,
 } from '@rematch/core'
 
+import settings from 'app/settings'
 import { RootState } from 'store'
 
 import axios from '../axios'
@@ -60,24 +61,11 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
         throw error
       }
     },
-    async getCompanyData(id: string, rootState: RootState): Promise<void> {
-      try {
-        const { data } = await axios.get('/v1/investment/offerings/summary')
+    async getCompanyData(id: string): Promise<void> {
+      const cmsAPI = __DEV__ ? 'https://jibrelcom.develop.jdev.network' : settings.HOST_CMS
+      const { data } = await axios.get(`${cmsAPI}/api/v1/companies/${id}`)
 
-        this.setCompanyData(data.total_investment)
-      } catch (error) {
-        if (!error.response) {
-          throw error
-        }
-
-        const { status } = error.response
-
-        if (status === 403) {
-          return handle403(rootState.user.languageCode)
-        }
-
-        throw error
-      }
+      this.setCompanyData(data)
     },
   }),
   reducers: {

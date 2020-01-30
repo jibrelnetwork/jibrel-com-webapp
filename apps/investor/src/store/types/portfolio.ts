@@ -24,7 +24,17 @@ export interface Investment {
   isAgreedSubscription: boolean;
 }
 
-export type Companies = { [key: string]: Investment }
+export interface CompanyData {
+  logo: string;
+  slug: string;
+  title: string;
+  color: {
+    primary: string;
+    background: string;
+  };
+}
+
+export type Companies = { [key: string]: CompanyData }
 
 export interface PortfolioState {
   companies: Companies;
