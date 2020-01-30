@@ -1,7 +1,8 @@
 import React from 'react'
 import cc from 'classcat'
 
-import style from '../LinkButton/style.scss'
+import linkButtonStyle from '../LinkButton/style.scss'
+import style from './style.scss'
 
 export interface LinkProps extends React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
   className?: string;
@@ -16,11 +17,12 @@ const Link: React.FunctionComponent<LinkProps> = ({
   <a
     {...props}
     className={cc([
-      style.button,
+      linkButtonStyle.button,
+      style.link,
       className,
     ])}
   >
-    <span className={style.text}>{children}</span>
+    <span className={linkButtonStyle.text}>{children}</span>
   </a>
 )
 

@@ -36,7 +36,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
       className,
     ])}
   >
-    <img src={imgSrc} className={style.hero} />
+    <img src={imgSrc} className={style.hero} alt='' aria-hidden='true' />
     <h1 className={style.title}>{title}</h1>
     <div className={style.text}>{text}</div>
     {children && (
@@ -46,25 +46,26 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
     )}
     <div className={style.actions}>
       {(href && buttonLabel) && (
-        <a
-          href={href}
-          className={style.button}
-        >
-          <BigButton>{buttonLabel}</BigButton>
-        </a>
+        <div className={style.button}>
+          <BigButton href={href}>
+            {buttonLabel}
+          </BigButton>
+        </div>
       )}
       {(secondaryHref && secondaryButtonLabel) && (
-        <a
-          href={secondaryHref}
+        <div
           className={cc([
             style.button,
             style.secondary,
           ])}
         >
-          <BigButton variant={BigButtonVariant.secondary}>
+          <BigButton
+            href={secondaryHref}
+            variant={BigButtonVariant.secondary}
+          >
             {secondaryButtonLabel}
           </BigButton>
-        </a>
+        </div>
       )}
     </div>
   </div>

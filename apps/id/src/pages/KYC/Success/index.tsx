@@ -26,9 +26,10 @@ const KYCSuccess: React.FunctionComponent = () => {
           </article>
         </div>
 
-        <BigButton className={style.submit} onClick={(): void => {
-          window.location.href = `${settings.HOST_CMS}/${languageCode}`
-        }}>
+        <BigButton
+          className={style.submit}
+          href={`${settings.HOST_CMS}/${languageCode}`}
+        >
           Back to main
         </BigButton>
       </div>

@@ -27,12 +27,15 @@ const NotFound: React.FunctionComponent<NotFoundProps> = ({ href }) => (
       <p className={cc(['error__description', style.text])}>
         This page is missing or you assembled the link incorrectly.
       </p>
-      <a
-        href={href}
+      <div
         className={cc(['error__button', style.button])}
       >
-        <BigButton>Back to main</BigButton>
-      </a>
+        <BigButton
+          href={href}
+        >
+          Back to main
+        </BigButton>
+      </div>
     </Grid.Item>
   </Grid.Container>
 )
