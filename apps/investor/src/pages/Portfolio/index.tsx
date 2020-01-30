@@ -19,8 +19,10 @@ import {
 } from 'store'
 
 import style from './style.scss'
+import FundsCard from './components/FundsCard'
 import Investments from './components/Investments'
 import InvestedAmount from './components/InvestedAmount'
+import { FundsCardProps } from './components/FundsCard'
 
 interface StateProps {
   investments: Investment[] | undefined;
@@ -32,6 +34,17 @@ interface DispatchProps {
 }
 
 type PortfolioProps = StateProps & DispatchProps
+
+const ADD_FUNDS: FundsCardProps[] = [{
+  label: 'Deposit',
+  title: 'Wire Transfer',
+}, {
+  title: 'Crypto Trasfer',
+  isComing: true,
+}, {
+  title: 'Bank Card',
+  isComing: true,
+}]
 
 class Portfolio extends Component<PortfolioProps> {
   componentDidMount(): void {
@@ -62,7 +75,17 @@ class Portfolio extends Component<PortfolioProps> {
         </PageTitle>
         <FormTitle>Add Funds</FormTitle>
         <p className={style.description}>Top up your Jibrel account to invest into startups.</p>
+        <Grid.Container className={style.deposit}>
+          {ADD_FUNDS.map(c => <FundsCard key={c.title} {...c} />)}
+        </Grid.Container>
         <FormTitle>Withdraw</FormTitle>
+        <Grid.Container className={style.withdraw}>
+          <FundsCard
+            label='Withdraw'
+            title='Wire Transfer'
+            isDisabled
+          />
+        </Grid.Container>
       </CoreLayout>
     )
   }
