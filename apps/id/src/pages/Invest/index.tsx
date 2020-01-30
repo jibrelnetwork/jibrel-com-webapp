@@ -30,12 +30,15 @@ const Invest: React.FunctionComponent = () => {
           You are using Jibrel in early access mode. We are working hard to deliver new features ASAP. You will be the first one to know when online investments are on. So please be patient and stay tuned!
         </div>
         <div className={style.actions}>
-          <a
+          <div
             className={style.button}
-            href={`${settings.HOST_CMS}/${languageCode}`}
           >
-            <BigButton>Return to Main</BigButton>
-          </a>
+            <BigButton
+              href={`${settings.HOST_CMS}/${languageCode}`}
+            >
+              Return to Main
+            </BigButton>
+          </div>
         </div>
       </div>
     </ProfileLayout>

@@ -25,7 +25,7 @@
           .15s ease-in-out color;
 
   &:hover, &:focus, &:active {
-    text-decoration: none;
+    text-decoration: none !important;
     cursor: pointer;
   }
 }

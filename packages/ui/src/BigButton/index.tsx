@@ -7,6 +7,7 @@ import { BigButtonVariant } from './types'
 import { withSubmitButtonUX } from '../FieldWrapper'
 
 export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
+  href?: string;
   variant?: BigButtonVariant;
   className?: string;
   isLoading?: boolean;
@@ -19,12 +20,18 @@ const BigButton: React.FunctionComponent<BigButtonProps> = ({
   className,
   isLoading = false,
   isDisabled = false,
+  href,
   children,
   ...props
 }) => {
+  const Component = href === undefined
+    ? 'button'
+    : 'a'
+
   return (
-    <button
+    <Component
       {...props}
+      href={href}
       className={cc([
         style.button,
         style[variant],
@@ -44,7 +51,7 @@ const BigButton: React.FunctionComponent<BigButtonProps> = ({
           <div className={cc([style.dot, loader.dot, loader.third])} />
         </div>
       )}
-    </button>
+    </Component>
   )
 }
 
