@@ -69,8 +69,10 @@ interface OwnProps {
 interface StateProps {
   offeringId: string | void;
   bankAccountData: BankAccount | void;
+  subscriptionAgreement: string | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
+  isSubscriptionAgreementLoading: boolean;
 }
 
 interface DispatchProps {
@@ -84,10 +86,41 @@ interface InvestState {
   currentStep: InvestStep;
 }
 
-const InvestForm = ({
-  handleSubmit,
-  submitErrors
-}: FormRenderProps): React.ReactNode => {
+const SubscriptionAgreement: React.FunctionComponent<{
+  subscriptionAgreement: string | void;
+  isSubscriptionAgreementLoading: boolean;
+}> = ({
+  subscriptionAgreement,
+  isSubscriptionAgreementLoading,
+}) => (
+  <a
+    target='_blank'
+    href={subscriptionAgreement || `${settings.HOST_CMS}/docs/en/subscription-agreement-template.pdf`}
+  >
+    <LinkButton
+      className={style.download}
+      type='button'
+      isDisabled={isSubscriptionAgreementLoading}
+    >
+      Download subscription agreement
+    </LinkButton>
+  </a>
+)
+
+const InvestForm: React.FunctionComponent<{
+  formProps: FormRenderProps;
+  subscriptionAgreement: string | void;
+  isSubscriptionAgreementLoading: boolean;
+}> = ({
+  formProps,
+  subscriptionAgreement,
+  isSubscriptionAgreementLoading,
+}) => {
+  const {
+    handleSubmit,
+    submitErrors
+  }: FormRenderProps = formProps
+
   const i18n = useI18n()
 
   return (
@@ -101,18 +134,10 @@ const InvestForm = ({
             maxLength={256}
           />
         </div>
-        <a
-          href={`${settings.HOST_CMS}/docs/en/subscription-agreement-template.pdf`}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <LinkButton
-            className={style.download}
-            type='button'
-          >
-            Download subscription agreement
-          </LinkButton>
-        </a>
+        <SubscriptionAgreement
+          subscriptionAgreement={subscriptionAgreement}
+          isSubscriptionAgreementLoading={isSubscriptionAgreementLoading}
+        />
         <p className={style.agreement}>
           By clicking <span>
             Accept and Sign
@@ -299,10 +324,14 @@ const FormStep: React.FunctionComponent<{
   handleSubmit: FormSubmit<InvestFormFields>;
   slug: string;
   offeringId: string | void;
+  subscriptionAgreement: string | void;
+  isSubscriptionAgreementLoading: boolean;
 }> = ({
   handleSubmit,
   slug,
   offeringId,
+  subscriptionAgreement,
+  isSubscriptionAgreementLoading,
 }) => (
   <>
     <BackLink slug={slug} />
@@ -313,7 +342,13 @@ const FormStep: React.FunctionComponent<{
     </div>
     <CustomerData />
     <Form
-      render={InvestForm}
+      render={(formProps: FormRenderProps): React.ReactNode => (
+        <InvestForm
+          formProps={formProps}
+          subscriptionAgreement={subscriptionAgreement}
+          isSubscriptionAgreementLoading={isSubscriptionAgreementLoading}
+        />
+      )}
       onSubmit={handleSubmit}
       initialValues={{
         amount: '',
@@ -372,6 +407,8 @@ class Invest extends Component<InvestProps, InvestState> {
       slug,
       offeringId,
       subscriptionAmount,
+      subscriptionAgreement,
+      isSubscriptionAgreementLoading,
     }: InvestProps = this.props
 
     if (!offeringId) {
@@ -394,6 +431,8 @@ class Invest extends Component<InvestProps, InvestState> {
               handleSubmit={this.handleSubmit}
               slug={slug}
               offeringId={offeringId}
+              subscriptionAgreement={subscriptionAgreement}
+              isSubscriptionAgreementLoading={isSubscriptionAgreementLoading}
             />
           </Grid.Container>
         )
@@ -432,12 +471,16 @@ export default connect<StateProps, DispatchProps, OwnProps>(
       offeringData,
       bankAccountData,
       subscriptionAmount,
+      subscriptionAgreement,
       isOfferingDataLoading,
+      isSubscriptionAgreementLoading,
     } = state.invest
 
     return {
       bankAccountData,
+      subscriptionAgreement,
       isOfferingDataLoading,
+      isSubscriptionAgreementLoading,
       offeringId: (offeringData || {}).uuid,
       subscriptionAmount: subscriptionAmount,
     }

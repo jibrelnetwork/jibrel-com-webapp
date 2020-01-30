@@ -60,9 +60,11 @@ export interface InvestState {
   customerData: Customer | void;
   offeringData: Offering | void;
   bankAccountData: BankAccount | void;
+  subscriptionAgreement: string | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
   isCustomerDataLoading: boolean;
+  isSubscriptionAgreementLoading: boolean;
 }
 
 export interface InvestFormFields {
