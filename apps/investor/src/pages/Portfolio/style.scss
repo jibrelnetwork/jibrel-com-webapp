@@ -1,3 +1,4 @@
+@import '~@jibrelcom/ui/src/Grid/grid';
 @import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/flex';
 
@@ -10,4 +11,29 @@
 .green {
   margin-left: 16px;
   color: $color-green;
+}
+
+.content {
+  margin-bottom: 128px;
+}
+
+.item {
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-s-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-5;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-4;
+    padding-right: 24px;
+
+    &:nth-child(3n) {
+      padding-right: 12px; // by default
+    }
+  }
 }

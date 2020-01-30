@@ -33,7 +33,7 @@ const InvestmentCard: React.FunctionComponent<Investment> = ({
 
   const { name } = security.company
   const languageCode = useLanguageCode()
-  const isPending: boolean = (status !== InvestmentStatus.pending)
+  const isPending: boolean = (status === InvestmentStatus.pending)
   const investedShares = parseFloat(amount) / parseFloat(price)
 
   const shares = formatAmount(

@@ -1,4 +1,3 @@
-@import '~@jibrelcom/ui/src/Grid/grid';
 @import '~@jibrelcom/ui/src/theme/fonts';
 @import '~@jibrelcom/ui/src/theme/media';
 @import '~@jibrelcom/ui/src/theme/colors';
@@ -8,25 +7,10 @@
 .main {
   @include flex-column;
 
-  width: $column-s-4;
   border-radius: 24px;
 
-  @include screen('>xsmall') {
-    width: $column-s-4;
-  }
-
-  @include screen('>small') {
-    width: $column-m-5;
-  }
-
   @include screen('>medium') {
-    width: $column-l-4;
-    margin-right: 24px;
     padding: 32px;
-
-    &:nth-child(n*3) {
-      margin-right: 0;
-    }
   }
 }
 

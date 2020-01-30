@@ -3,6 +3,7 @@ import { connect } from 'react-redux'
 import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
+  Grid,
   Loader,
   PageTitle,
 } from '@jibrelcom/ui'
@@ -47,18 +48,18 @@ class Portfolio extends Component<PortfolioProps> {
         <PageTitle className={style.title}>
           My Portfolio<InvestedAmount className={style.green} />
         </PageTitle>
-        <div className={style.content}>
+        <Grid.Container className={style.content}>
           {(!investments || isInvestmentsLoading) ? (
             <Loader
               className={style.loader}
               color={LoaderColor.gray}
             />
           ) : investments.map(i => (
-            <div key={i.offering.uuid} className={style.item}>
+            <Grid.Item key={i.offering.uuid} className={style.item}>
               <InvestmentCard {...i} />
-            </div>
+            </Grid.Item>
           ))}
-        </div>
+        </Grid.Container>
         <PageTitle>
           Available Balance<CurrentBalance className={style.green} />
         </PageTitle>
