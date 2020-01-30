@@ -2,9 +2,10 @@ declare namespace StyleScssModule {
   export interface IStyleScss {
     centered: string;
     column: string;
-    content: string;
+    description: string;
     green: string;
     grid: string;
+    investments: string;
     item: string;
     "l-1": string;
     "l-10": string;
@@ -30,6 +31,7 @@ declare namespace StyleScssModule {
     l7: string;
     l8: string;
     l9: string;
+    loader: string;
     "m-1": string;
     "m-2": string;
     "m-3": string;

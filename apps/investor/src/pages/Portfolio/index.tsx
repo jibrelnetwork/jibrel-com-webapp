@@ -5,6 +5,7 @@ import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 import {
   Grid,
   Loader,
+  FormTitle,
   PageTitle,
 } from '@jibrelcom/ui'
 
@@ -18,8 +19,8 @@ import {
 } from 'store'
 
 import style from './style.scss'
+import Investments from './components/Investments'
 import InvestedAmount from './components/InvestedAmount'
-import InvestmentCard from './components/InvestmentCard'
 
 interface StateProps {
   investments: Investment[] | undefined;
@@ -48,21 +49,20 @@ class Portfolio extends Component<PortfolioProps> {
         <PageTitle className={style.title}>
           My Portfolio<InvestedAmount className={style.green} />
         </PageTitle>
-        <Grid.Container className={style.content}>
+        <Grid.Container className={style.investments}>
           {(!investments || isInvestmentsLoading) ? (
             <Loader
               className={style.loader}
               color={LoaderColor.gray}
             />
-          ) : investments.map(i => (
-            <Grid.Item key={i.offering.uuid} className={style.item}>
-              <InvestmentCard {...i} />
-            </Grid.Item>
-          ))}
+          ) : <Investments items={investments} />}
         </Grid.Container>
         <PageTitle>
           Available Balance<CurrentBalance className={style.green} />
         </PageTitle>
+        <FormTitle>Add Funds</FormTitle>
+        <p className={style.description}>Top up your Jibrel account to invest into startups.</p>
+        <FormTitle>Withdraw</FormTitle>
       </CoreLayout>
     )
   }
@@ -76,7 +76,7 @@ export default connect<StateProps, DispatchProps>(
     } = state.portfolio
 
     return {
-      investments,
+      investments: [],
       isInvestmentsLoading,
     }
   },
