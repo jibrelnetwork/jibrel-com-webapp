@@ -112,3 +112,16 @@
   cursor: default;
   pointer-events: none;
 }
+
+.link {
+  text-decoration: none;
+
+  &:hover {
+    text-decoration: underline;
+  }
+
+  &:active {
+    text-decoration: underline;
+  }
+}
+

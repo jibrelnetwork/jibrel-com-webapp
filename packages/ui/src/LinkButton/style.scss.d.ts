@@ -4,6 +4,7 @@ declare namespace StyleScssModule {
     disabled: string;
     icon: string;
     left: string;
+    link: string;
     next: string;
     prev: string;
     right: string;
