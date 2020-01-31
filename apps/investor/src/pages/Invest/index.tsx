@@ -69,10 +69,8 @@ interface OwnProps {
 interface StateProps {
   offeringId: string | void;
   bankAccountData: BankAccount | void;
-  subscriptionAgreement: string | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
-  isSubscriptionAgreementLoading: boolean;
 }
 
 interface DispatchProps {
@@ -87,40 +85,27 @@ interface InvestState {
 }
 
 const SubscriptionAgreement: React.FunctionComponent<{
-  subscriptionAgreement: string | void;
-  isSubscriptionAgreementLoading: boolean;
-}> = ({
-  subscriptionAgreement,
-  isSubscriptionAgreementLoading,
-}) => (
+  offeringId: string | void;
+}> = ({ offeringId }) => !offeringId ? null : (
   <a
     target='_blank'
-    href={subscriptionAgreement || `${settings.HOST_CMS}/docs/en/subscription-agreement-template.pdf`}
+    rel='noopener noreferrer'
+    href={`${settings.API_BASE_URL}/v1/investment/offerings/${offeringId}/agreement`}
   >
     <LinkButton
       className={style.download}
       type='button'
-      isDisabled={isSubscriptionAgreementLoading}
     >
       Download subscription agreement
     </LinkButton>
   </a>
 )
 
-const InvestForm: React.FunctionComponent<{
-  formProps: FormRenderProps;
-  subscriptionAgreement: string | void;
-  isSubscriptionAgreementLoading: boolean;
-}> = ({
-  formProps,
-  subscriptionAgreement,
-  isSubscriptionAgreementLoading,
+const InvestForm: React.FunctionComponent<FormRenderProps> = ({
+  handleSubmit,
+  values,
+  submitErrors,
 }) => {
-  const {
-    handleSubmit,
-    submitErrors
-  }: FormRenderProps = formProps
-
   const i18n = useI18n()
 
   return (
@@ -134,10 +119,7 @@ const InvestForm: React.FunctionComponent<{
             maxLength={256}
           />
         </div>
-        <SubscriptionAgreement
-          subscriptionAgreement={subscriptionAgreement}
-          isSubscriptionAgreementLoading={isSubscriptionAgreementLoading}
-        />
+        <SubscriptionAgreement offeringId={values.id} />
         <p className={style.agreement}>
           By clicking <span>
             Accept and Sign
@@ -324,14 +306,10 @@ const FormStep: React.FunctionComponent<{
   handleSubmit: FormSubmit<InvestFormFields>;
   slug: string;
   offeringId: string | void;
-  subscriptionAgreement: string | void;
-  isSubscriptionAgreementLoading: boolean;
 }> = ({
   handleSubmit,
   slug,
   offeringId,
-  subscriptionAgreement,
-  isSubscriptionAgreementLoading,
 }) => (
   <>
     <BackLink slug={slug} />
@@ -342,13 +320,7 @@ const FormStep: React.FunctionComponent<{
     </div>
     <CustomerData />
     <Form
-      render={(formProps: FormRenderProps): React.ReactNode => (
-        <InvestForm
-          formProps={formProps}
-          subscriptionAgreement={subscriptionAgreement}
-          isSubscriptionAgreementLoading={isSubscriptionAgreementLoading}
-        />
-      )}
+      render={InvestForm}
       onSubmit={handleSubmit}
       initialValues={{
         amount: '',
@@ -407,8 +379,6 @@ class Invest extends Component<InvestProps, InvestState> {
       slug,
       offeringId,
       subscriptionAmount,
-      subscriptionAgreement,
-      isSubscriptionAgreementLoading,
     }: InvestProps = this.props
 
     if (!offeringId) {
@@ -431,8 +401,6 @@ class Invest extends Component<InvestProps, InvestState> {
               handleSubmit={this.handleSubmit}
               slug={slug}
               offeringId={offeringId}
-              subscriptionAgreement={subscriptionAgreement}
-              isSubscriptionAgreementLoading={isSubscriptionAgreementLoading}
             />
           </Grid.Container>
         )
@@ -471,16 +439,12 @@ export default connect<StateProps, DispatchProps, OwnProps>(
       offeringData,
       bankAccountData,
       subscriptionAmount,
-      subscriptionAgreement,
       isOfferingDataLoading,
-      isSubscriptionAgreementLoading,
     } = state.invest
 
     return {
       bankAccountData,
-      subscriptionAgreement,
       isOfferingDataLoading,
-      isSubscriptionAgreementLoading,
       offeringId: (offeringData || {}).uuid,
       subscriptionAmount: subscriptionAmount,
     }

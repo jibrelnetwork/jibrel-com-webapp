@@ -34,10 +34,8 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     offeringData: undefined,
     bankAccountData: undefined,
     subscriptionAmount: undefined,
-    subscriptionAgreement: undefined,
     isOfferingDataLoading: true,
     isCustomerDataLoading: true,
-    isSubscriptionAgreementLoading: true,
   },
   effects: (dispatch: Dispatch) => ({
     async getOfferingData(id: string, rootState: RootState): Promise<void> {
@@ -47,7 +45,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         const { data } = await axios.get(`/v1/campaigns/company/${id}/offerings/active`)
 
         this.setOfferingData(data)
-        this.getSubscriptionAgreement(data.uuid)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -124,31 +121,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         throw error
       }
     },
-    async getSubscriptionAgreement(id: string, rootState: RootState): Promise<void> {
-      try {
-        this.setSubscriptionAgreementLoading()
-
-        const { data } = await axios.get(`/v1/investment/offerings/${id}/agreement`)
-
-        this.setSubscriptionAgreement(data.file)
-      } catch (error) {
-        if (!error.response) {
-          throw error
-        }
-
-        const { status } = error.response
-
-        if (status === 403) {
-          return handle403(rootState.user.languageCode)
-        } else if (status === 404) {
-          this.setSubscriptionAgreement(undefined)
-
-          return
-        }
-
-        throw error
-      }
-    },
   }),
   reducers: {
     setOfferingData: (state, payload): InvestState => ({
@@ -176,15 +148,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
     setSubscriptionAmount: (state, payload): InvestState => ({
       ...state,
       subscriptionAmount: payload,
-    }),
-    setSubscriptionAgreement: (state, payload): InvestState => ({
-      ...state,
-      subscriptionAgreement: payload,
-      isSubscriptionAgreementLoading: false,
-    }),
-    setSubscriptionAgreementLoading: (state): InvestState => ({
-      ...state,
-      isSubscriptionAgreementLoading: true,
     }),
   }
 })
