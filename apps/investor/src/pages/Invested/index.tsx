@@ -11,9 +11,9 @@ const Invested: React.FunctionComponent = () => (
       imgSrc={heroImage}
       href={settings.HOST_CMS}
       buttonLabel='Back to startups'
-      title='You Have Invested Already'
+      title='You have Successfully Subscribed'
       secondaryButtonLabel='Contact support'
-      secondaryHref='mailto:support@jibrel.com'
+      secondaryHref='mailto:invest@jibrel.com'
       text='If you want to change the subscription amount or cancel the subscription, please, contact our Support team.'
     />
   </CoreLayout>

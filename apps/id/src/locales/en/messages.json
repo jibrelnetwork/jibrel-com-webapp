@@ -28,5 +28,5 @@
   "KYC.form.action.prev": "Previous",
   "form.error.isRequired": "Field value is required",
   "form.error.isMatchedPassword": "Password should match confirmation",
-  "form.error.isNotStrongPassword": "Password should be strong enough"
+  "form.error.isNotStrongPassword": "Password needs to be stronger."
 }

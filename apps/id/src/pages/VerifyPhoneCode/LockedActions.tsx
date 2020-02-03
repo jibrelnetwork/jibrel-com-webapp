@@ -32,7 +32,7 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
   if (isLocked) {
     return (
       <div className={style.countdown}>
-        You can request the code again after
+        You can request the code again in
         <Countdown timeLeft={timeout} onFinish={() => setIsLocked(false)} />.
       </div>
     )
