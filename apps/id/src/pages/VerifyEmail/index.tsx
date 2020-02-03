@@ -40,13 +40,13 @@ const VerifyEmailInfo: React.FunctionComponent<VerifyEmailInfoProps> = ({
 }) => (
   <UserActionInfo
     iconName={`status_${isSubmitError ? 'fail' : 'ok'}`}
-    title={isSubmitError ? 'Email Is Not Verified' : 'Email Is Verified'}
+    title={isSubmitError ? 'Email Is Not Verified' : 'Email Verified'}
   >
     {(!isSubmitError && email) ? (
       <>
         <p className={style.info}>
           Congratulations!<br />
-          Your email <span className={style.email}>{email}</span> is verified.
+          Your email <span className={style.email}>{email}</span> has been successfully verified.
         </p>
         <Link
           routeName='VerifyPhone'
