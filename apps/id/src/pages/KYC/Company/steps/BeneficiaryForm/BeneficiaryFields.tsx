@@ -114,7 +114,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
         {...(get(documents, `beneficiaries[${index}].proofOfAddressDocument`,  emptyFileField))}
         validate={isRequired({i18n})}
       />
-      <h3 className={style.groupTitle}>Personal ID</h3>
+      <h3 className={style.groupTitle}>Passport Details</h3>
       <Input
         name={`beneficiaries[${index}].passportNumber`}
         label="Passport Number"
