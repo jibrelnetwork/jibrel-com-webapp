@@ -35,9 +35,11 @@ class CustomerData extends Component<CustomerDataProps> {
       isCustomerDataLoading,
     }: CustomerDataProps = this.props
 
+    const isLoading = !customerData || isCustomerDataLoading
+
     return (
-      <div className={cc([style.data, isCustomerDataLoading && style.loading])}>
-        {!customerData || isCustomerDataLoading ? <Loader color={LoaderColor.gray} /> : (
+      <div className={cc([style.data, isLoading && style.loading])}>
+        {isLoading ? <Loader color={LoaderColor.gray} /> : (
           <>
             <div className={style.item}>
               <div className={investStyle.label}>
