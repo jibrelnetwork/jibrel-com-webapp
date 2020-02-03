@@ -58,6 +58,16 @@ const Footer: React.FunctionComponent<FooterProps> = ({
                 Terms and Conditions
               </a>
             </li>
+            <li className="footer__navigation-item">
+              <a
+                href={`${cmsURL}/docs/en/privacy-policy.pdf`}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__navigation-link"
+              >
+                Privacy Policy
+              </a>
+            </li>
           </ul>
         </section>
         <section className="footer__navigation-section">
@@ -102,6 +112,25 @@ const Footer: React.FunctionComponent<FooterProps> = ({
                     d='M0 0V24H24V0H0ZM19.938 5.686L18.651 6.92C18.5964 6.96155 18.5542 7.01725 18.529 7.08106C18.5038 7.14487 18.4965 7.21436 18.508 7.282V16.349C18.4967 16.4165 18.5041 16.4858 18.5293 16.5494C18.5545 16.613 18.5966 16.6685 18.651 16.71L19.908 17.944V18.215H13.586V17.945L14.888 16.68C15.016 16.552 15.016 16.515 15.016 16.32V8.99L11.396 18.185H10.906L6.69 8.99V15.153C6.67266 15.2808 6.68462 15.4109 6.72499 15.5334C6.76536 15.6559 6.83307 15.7676 6.923 15.86L8.617 17.914V18.185H3.815V17.915L5.51 15.86C5.5992 15.7675 5.6654 15.6553 5.70327 15.5325C5.74114 15.4097 5.74961 15.2797 5.728 15.153V8.027C5.73798 7.92938 5.7248 7.83079 5.68953 7.73922C5.65426 7.64765 5.59789 7.56569 5.525 7.5L4.019 5.686V5.416H8.693L12.306 13.339L15.482 5.415H19.938V5.686Z'/>
                 </svg>
                 Medium
+              </a>
+            </li>
+            <li className="footer__navigation-item">
+              <a
+                target="_blank"
+                rel="noopener noreferrer"
+                className="footer__navigation-link"
+                href="https://www.linkedin.com/company/jibrel-network/"
+              >
+                <svg
+                  width='24'
+                  height='24'
+                  viewBox='0 0 24 24'
+                  xmlns='http://www.w3.org/2000/svg'
+                  className="footer__navigation-item-icon"
+                >
+                  <path d="M20.447 20.452H16.893V14.883C16.893 13.555 16.866 11.846 15.041 11.846C13.188 11.846 12.905 13.291 12.905 14.785V20.452H9.351V9H12.765V10.561H12.811C13.288 9.661 14.448 8.711 16.181 8.711C19.782 8.711 20.448 11.081 20.448 14.166V20.452H20.447ZM5.337 7.433C4.193 7.433 3.274 6.507 3.274 5.368C3.274 4.23 4.194 3.305 5.337 3.305C6.477 3.305 7.401 4.23 7.401 5.368C7.401 6.507 6.476 7.433 5.337 7.433ZM7.119 20.452H3.555V9H7.119V20.452ZM22.225 0H1.771C0.792 0 0 0.774 0 1.729V22.271C0 23.227 0.792 24 1.771 24H22.222C23.2 24 24 23.227 24 22.271V1.729C24 0.774 23.2 0 22.222 0H22.225Z"/>
+                </svg>
+                LinkedIn
               </a>
             </li>
           </ul>
