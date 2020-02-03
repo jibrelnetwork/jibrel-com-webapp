@@ -76,7 +76,7 @@ const EmailVerificationWait: React.FunctionComponent<{
   return (
     <div className={style.countdown}>
       Email sent. Please check your inbox.<br />
-      You can request the email again after
+      You can request the email again in
       <Countdown
         onFinish={updateLimits}
         timeLeft={timeLeft}
