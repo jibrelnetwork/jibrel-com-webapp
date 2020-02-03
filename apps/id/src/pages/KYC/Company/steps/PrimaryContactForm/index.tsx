@@ -136,7 +136,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                 validate={isRequired({i18n})}
               />
               <h3 className={style.groupTitle}>
-                Personal ID
+                Passport Details
               </h3>
               <Input
                 name='passportNumber'
