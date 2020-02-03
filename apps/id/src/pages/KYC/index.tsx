@@ -41,7 +41,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             setKYCType={setKYCType}
             type={KYCType.individual}
             iconName='human'
-            description='Use an individual account if you want to invest on behalf of yourself.'
+            description='Use an individual account if you want to invest on your own behalf.'
             isActive={kycType === KYCType.individual}
           />
         </Grid.Item>
@@ -54,10 +54,10 @@ const KYC: React.FunctionComponent<KYCProps> = ({
         >
           <Button
             setKYCType={setKYCType}
-            type={KYCType.organizational}
+            type={KYCType.institution}
             iconName='case'
-            description='Use an organizational account if you will invest on behalf of an accredited organization.'
-            isActive={kycType === KYCType.organizational}
+            description='Use a professional account if you will invest on behalf of an accredited organization.'
+            isActive={kycType === KYCType.institution}
           />
         </Grid.Item>
         {kycType !== KYCType.empty && (
@@ -75,21 +75,21 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               </p>
               {kycType === KYCType.individual && (
                 <ul>
-                  <li>personal information,</li>
-                  <li>contact information,</li>
-                  <li>ID document (passport),</li>
-                  <li>proof of address (utility bill or bank statement),</li>
-                  <li>a declaration of source of funds.</li>
+                  <li>personal information</li>
+                  <li>contact information</li>
+                  <li>ID document (passport)</li>
+                  <li>proof of address (utility bill or bank statement)</li>
+                  <li>a declaration of source of funds</li>
                 </ul>
               )}
-              {kycType === KYCType.organizational && (
+              {kycType === KYCType.institution && (
                 <ul>
-                  <li>company information,</li>
-                  <li>primary contact information,</li>
-                  <li>Ultimate Beneficial Owner (UBO) information,</li>
-                  <li>commercial register,</li>
-                  <li>shareholder register,</li>
-                  <li>articles of Incorporation.</li>
+                  <li>company information</li>
+                  <li>primary contact information</li>
+                  <li>Ultimate Beneficial Owner (UBO) information</li>
+                  <li>commercial register</li>
+                  <li>shareholder register</li>
+                  <li>articles of Incorporation</li>
                 </ul>
               )}
               <p>
