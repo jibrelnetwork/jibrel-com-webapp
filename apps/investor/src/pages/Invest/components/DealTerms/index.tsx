@@ -11,11 +11,6 @@ import {
 import { RootState } from 'store'
 
 import {
-  formatDate,
-  formatPercents,
-} from 'utils/formatters'
-
-import {
   Offering,
   FundingRound,
   SecurityType,
@@ -63,17 +58,11 @@ const DealTerms: React.FunctionComponent<DealTermsProps> = ({
     key: 'Type of Security',
     value: SECURITY_TYPE_MAP[offeringData.security.type],
   }, {
-    key: 'Offered Equity',
-    value: formatPercents(offeringData.equity),
-  }, {
     key: 'Funding Round',
     value: FUNDING_ROUND_MAP[offeringData.round],
   }, {
     key: 'Round Size',
     value: formatAmount(offeringData.goal, languageCode),
-  }, {
-    key: 'Deadline',
-    value: formatDate(offeringData.dateEnd),
   }]
 
   return (
