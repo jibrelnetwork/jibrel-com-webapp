@@ -101,13 +101,18 @@ const InvestForm = ({
             maxLength={256}
           />
         </div>
-        <LinkButton
-          onClick={window.print}
-          className={style.download}
-          type='button'
+        <a
+          href={`${settings.HOST_CMS}/docs/en/subscription-agreement-template.pdf`}
+          target='_blank'
+          rel='noopener noreferrer'
         >
-          Download subscription agreement
-        </LinkButton>
+          <LinkButton
+            className={style.download}
+            type='button'
+          >
+            Download subscription agreement
+          </LinkButton>
+        </a>
         <p className={style.agreement}>
           By clicking <span>
             Accept and Sign
