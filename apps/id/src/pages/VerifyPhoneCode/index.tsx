@@ -36,7 +36,7 @@ const VerifyPhoneCode: React.FunctionComponent<VerifyPhoneCodeProps> = ({
     <div className={authStyle.form}>
       <h2 className={authStyle.title}>Phone Number Verification</h2>
       <div className={style.description}>
-        Enter the verification code that was sent to your phone number ending with <span>{maskedNumber}</span>.
+        Enter the verification code that was sent to your phone number ending in <span>{maskedNumber}</span>.
       </div>
       <InternalLink
         name='VerifyPhone'
