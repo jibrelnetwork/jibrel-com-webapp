@@ -25,6 +25,7 @@ const InternalLink: React.FunctionComponent<InternalLinkProps> = ({
     routeParams={params}
     routeName={name}
     className={cc([
+      style.link,
       style.button,
       isDisabled && style.disabled,
       className,
