@@ -21,7 +21,7 @@ const Link: React.FunctionComponent<LinkProps> = ({
       className,
     ])}
   >
-    <span className={linkButtonStyle.text}>{children}</span>
+    <span className={style.text}>{children}</span>
   </a>
 )
 
