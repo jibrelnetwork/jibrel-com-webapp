@@ -46,13 +46,17 @@ const FUNDING_ROUND_MAP = {
   [FundingRound.d]: 'Series D',
 }
 
+function checkTypeIsShares(type: SecurityType): boolean {
+  return (type === SecurityType.common_shares)
+}
+
 const DealTerms: React.FunctionComponent<DealTermsProps> = ({
   offeringData,
   languageCode,
   isOfferingDataLoading,
 }) => {
   const data = !offeringData ? undefined : [{
-    key: 'Valuation',
+    key: checkTypeIsShares(offeringData.security.type) ? 'Valuation' : 'Valuation Cap',
     value: formatAmount(offeringData.valuation, languageCode),
   }, {
     key: 'Type of Security',
