@@ -131,6 +131,65 @@ export type KYCIndividualState = {
   values: KYCIndividualValues;
 }
 
+export interface CompanyValues {
+  companyName: string;
+  tradingName: string;
+  dateOfIncorporation: string;
+  placeOfIncorporation: string;
+  commercialRegister: string;
+  shareholderRegister: string;
+  articlesOfIncorporation: string;
+}
+
+export interface ContactValues {
+  firstName: string;
+  lastName: string;
+  middleName?: string;
+  birthDate: string;
+  nationality: string;
+  phoneNumber: string;
+  email: string;
+  streetAddress: string;
+  apartment?: string;
+  city: string;
+  postCode?: string;
+  country: string;
+  proofOfAddressDocument: string;
+  passportNumber: string;
+  passportExpirationDate: string;
+  passportDocument: string;
+}
+
+export interface AddressValues {
+  streetAddress: string;
+  apartment?: string;
+  city: string;
+  postCode?: string;
+  country: string;
+}
+
+export interface OfficeAddressValues {
+  registered: AddressValues;
+  haveCompanyAddressPrincipal: boolean;
+  principal?: AddressValues;
+}
+
+export type BeneficiariesValues = ContactValues[]
+
+export interface DirectorValues {
+  fullName: string;
+}
+
+export type DirectorsValues = DirectorValues[]
+
+export interface KYCInstitutionValues {
+  company: CompanyValues;
+  primaryContact: ContactValues;
+  officeAddress: OfficeAddressValues;
+  beneficiaries: BeneficiariesValues;
+  directors: DirectorsValues;
+}
+
 export enum KYCStatus {
   pending = 'pending',
   verified = 'verified',
