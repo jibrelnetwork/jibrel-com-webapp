@@ -9,6 +9,7 @@ declare namespace StyleScssModule {
     beneficiary: string;
     caption: string;
     centered: string;
+    close: string;
     column: string;
     company: string;
     contact: string;
