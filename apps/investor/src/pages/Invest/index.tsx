@@ -281,17 +281,14 @@ const SuccessStep: React.FunctionComponent<{
             Download Details
           </BigButton>
         </div>
-        <a
-          href={settings.HOST_CMS}
-          className={cc([
-            pageWithHeroStyle.button,
-            pageWithHeroStyle.secondary,
-          ])}
-        >
-          <BigButton variant={BigButtonVariant.secondary}>
+        <div className={`${pageWithHeroStyle.button} ${pageWithHeroStyle.secondary}`}>
+          <BigButton
+            href={settings.HOST_CMS}
+            variant={BigButtonVariant.secondary}
+          >
             BACK TO STARTUPS
           </BigButton>
-        </a>
+        </div>
       </div>
     </>
   )
