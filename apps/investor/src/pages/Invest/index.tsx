@@ -22,7 +22,6 @@ import {
   Icon,
   Link,
   BigButton,
-  LinkButton,
   PageWithHero,
   BigButtonSubmit,
   ErrorToast,
@@ -84,10 +83,24 @@ interface InvestState {
   currentStep: InvestStep;
 }
 
-const InvestForm = ({
+const SubscriptionAgreement: React.FunctionComponent<{
+  offeringId: string | void;
+}> = ({ offeringId }) => !offeringId ? null : (
+  <Link
+    target='_blank'
+    rel='noopener noreferrer'
+    className={style.download}
+    href={`${settings.API_BASE_URL}/v1/investment/offerings/${offeringId}/agreement`}
+  >
+    Download subscription agreement
+  </Link>
+)
+
+const InvestForm: React.FunctionComponent<FormRenderProps> = ({
   handleSubmit,
-  submitErrors
-}: FormRenderProps): React.ReactNode => {
+  values,
+  submitErrors,
+}) => {
   const i18n = useI18n()
 
   return (
@@ -101,18 +114,7 @@ const InvestForm = ({
             maxLength={256}
           />
         </div>
-        <a
-          href={`${settings.HOST_CMS}/docs/en/subscription-agreement-template.pdf`}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          <LinkButton
-            className={style.download}
-            type='button'
-          >
-            Download subscription agreement
-          </LinkButton>
-        </a>
+        <SubscriptionAgreement offeringId={values.id} />
         <p className={style.agreement}>
           By clicking <span>
             Accept and Sign
