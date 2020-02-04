@@ -36,8 +36,6 @@ import {
 import style from '../style.scss'
 import { BeneficiaryFields } from './BeneficiaryFields'
 
-const initialBeneficiaries = [{}]
-
 interface StateProps {
   documents: Documents;
   values: KYCInstitutionValues;
@@ -88,21 +86,11 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
             submitError,
             values: { beneficiaries },
             form: {
-              change,
               mutators: {
                 push,
               },
             },
           }: FormRenderProps): React.ReactNode => {
-            function deleteBeneficiary(index: number): void {
-              if (!index) {
-                return
-              }
-
-              const items = [...beneficiaries.splice(index - 1, 1)]
-              change('beneficiaries', items)
-            }
-
             return (
               <form onSubmit={handleSubmit} className={style.step}>
                 <h2 className={style.title}>
@@ -111,17 +99,14 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
                 <div className={style.caption}>
                   Any natural person who owns or controls, directly or indirectly, 25% or more of the shares or voting rights in the organization.
                 </div>
-                <FieldArray name="beneficiary" initialValue={initialBeneficiaries}>
+                <FieldArray name='beneficiaries' initialValue={beneficiaries}>
                   {({ fields }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
                     name: string,
                     index: number,
                   ) => (
                       <BeneficiaryFields
                         key={name}
-                        deleteHandler={(): void => {
-                          fields.remove(index)
-                          deleteBeneficiary(index)
-                        }}
+                        deleteHandler={(): void => fields.remove(index)}
                         documents={documents}
                         uploadDocument={uploadDocument}
                         index={index}
@@ -129,7 +114,7 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
                       />
                     ))}
                 </FieldArray>
-                <LinkButton type="button" onClick={(): void => push('beneficiary', undefined)}>
+                <LinkButton type='button' onClick={(): void => push('beneficiaries', undefined)}>
                   + ADD MORE BENEFICIARIES
                 </LinkButton>
                 {submitError && <div className={style.submitError}>{submitError}</div>}
