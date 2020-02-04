@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import cc from 'classcat'
 import isEmpty from 'lodash-es/isEmpty'
 import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
 import { connect } from 'react-redux'
