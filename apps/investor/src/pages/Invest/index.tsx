@@ -249,6 +249,10 @@ const SuccessStep: React.FunctionComponent<{
             <div className={style.label}>Bank Account Holder Name</div>
             <div className={style.value}>{data.holderName}</div>
           </div>
+          {data.branchAddress && (<div className={style.item}>
+            <div className={style.label}>Bank Branch Address</div>
+            <div className={style.value}>{data.branchAddress}</div>
+          </div>)}
           <div className={style.item}>
             <div className={style.label}>IBAN</div>
             <div className={style.value}>{data.ibanNumber}</div>
