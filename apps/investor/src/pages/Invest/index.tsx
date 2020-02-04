@@ -22,7 +22,6 @@ import {
   Icon,
   Link,
   BigButton,
-  LinkButton,
   PageWithHero,
   BigButtonSubmit,
   ErrorToast,
@@ -87,18 +86,14 @@ interface InvestState {
 const SubscriptionAgreement: React.FunctionComponent<{
   offeringId: string | void;
 }> = ({ offeringId }) => !offeringId ? null : (
-  <a
+  <Link
     target='_blank'
     rel='noopener noreferrer'
+    className={style.download}
     href={`${settings.API_BASE_URL}/v1/investment/offerings/${offeringId}/agreement`}
   >
-    <LinkButton
-      className={style.download}
-      type='button'
-    >
-      Download subscription agreement
-    </LinkButton>
-  </a>
+    Download subscription agreement
+  </Link>
 )
 
 const InvestForm: React.FunctionComponent<FormRenderProps> = ({
