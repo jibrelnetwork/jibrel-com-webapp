@@ -3,8 +3,16 @@ import cc from 'classcat'
 import arrayMutators from 'final-form-arrays'
 import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { connect } from 'react-redux'
-import { Form } from 'react-final-form'
-import { FieldArray } from 'react-final-form-arrays'
+
+import {
+  Form,
+  FormRenderProps,
+} from 'react-final-form'
+
+import {
+  FieldArray,
+  FieldArrayProps,
+} from 'react-final-form-arrays'
 
 import {
   LinkButton,
@@ -13,17 +21,41 @@ import {
 
 import KYCLayout from 'layouts/KYCLayout'
 
+import {
+  Dispatch,
+  RootState,
+} from 'store'
+
+import {
+  DirectorsValues,
+  KYCInstitutionValues,
+} from 'store/types/kyc'
+
 import style from '../style.scss'
-import { FormProps } from '../FormProps'
 import { DirectorFields } from './DirectorFields'
 
-const initialDocuments = ['']
+interface StateProps {
+  values: KYCInstitutionValues;
+}
 
-export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({
+interface DispatchProps {
+  submit: (callback: () => void) => (values: KYCInstitutionValues) => Promise<KYCInstitutionValues> | void;
+}
+
+interface OwnProps {
+  backHandler: () => void;
+  nextHandler: () => void;
+  backLabel: string;
+  nextLabel: string;
+}
+
+export type DirectorProps = StateProps & DispatchProps & OwnProps
+
+export const Director: React.FunctionComponent<DirectorProps> = ({
   submit,
   backHandler,
   nextHandler,
-  formValues,
+  values,
   backLabel,
   nextLabel,
 }) => {
@@ -40,70 +72,79 @@ export const DirectorFormComponent: React.FunctionComponent<FormProps> = ({
         ])}
       >
         <Form
-          initialValues={formValues}
+          initialValues={values}
           mutators={{...arrayMutators}}
           onSubmit={submit(nextHandler)}
           render={({
             handleSubmit,
             submitError,
+            values: { directors },
             form: {
               mutators: {
                 push,
               },
             },
-          }) => (
-            <form onSubmit={handleSubmit} className={style.step}>
-              <h2 className={style.title}>
-                Director
-              </h2>
-              <div className={style.caption}>
-                {'Please insert full legal names of members of the board of directors.'}
-              </div>
-              <FieldArray name="directors" initialValue={initialDocuments}>
-                {({fields}) =>
-                  fields.map((name, index) => (
-                    <DirectorFields
-                      isPrimary={index === 0}
-                      key={name}
-                      index={index}
-                      deleteHandler={() => fields.remove(index)}
-                    />
-                  ))
-                }
-              </FieldArray>
-              <LinkButton className={style.addLink} type="button"
-                    onClick={() => push('directors', undefined)}>
-                + ADD MORE DIRECTORS
-              </LinkButton>
-              {submitError && <div className={style.submitError}>{submitError}</div>}
-              <BigButtonSubmit className={style.submit}>
-                {nextLabel}
-              </BigButtonSubmit>
-            </form>
-          )}
+          }: FormRenderProps): React.ReactNode => {
+            return (
+              <form onSubmit={handleSubmit} className={style.step}>
+                <h2 className={style.title}>
+                  Director
+                </h2>
+                <div className={style.caption}>
+                  Please insert full legal names of members of the board of directors.
+                </div>
+                <FieldArray name='directors' initialValue={directors}>
+                  {({ fields }: FieldArrayProps<DirectorsValues, HTMLElement>): React.ReactNode =>
+                    fields.map((name: string, index: number) => (
+                      <DirectorFields
+                        key={name}
+                        deleteHandler={(): void => fields.remove(index)}
+                        index={index}
+                        isPrimary={index === 0}
+                      />
+                    ))
+                  }
+                </FieldArray>
+                <LinkButton
+                  onClick={(): void => push('directors', undefined)}
+                  className={style.addLink}
+                  type='button'
+                >
+                  + ADD MORE DIRECTORS
+                </LinkButton>
+                {submitError && <div className={style.submitError}>{submitError}</div>}
+                <BigButtonSubmit className={style.submit}>
+                  {nextLabel}
+                </BigButtonSubmit>
+              </form>
+            )
+          }}
         />
       </div>
     </KYCLayout>
   )
 }
 
-const mapState = ({kycOrganization}) => ({
-  formValues: kycOrganization.values,
-})
-
-const mapDispatch = ({kycOrganization}) => ({
-  submit: (callback) => (values) =>
-    kycOrganization
-      .validate({step: 4, ...values})
+export default connect(
+  (state: RootState) => ({
+    values: state.kycOrganization.values,
+  }),
+  (dispatch: Dispatch) => ({
+    submit: (
+      callback: () => void,
+    ) => (
+      values: KYCInstitutionValues,
+    ): Promise<KYCInstitutionValues> | void => dispatch.kycOrganization
+      .validate({ step: 4, ...values })
       .then(errors => {
         if (errors) {
           return errors
         }
 
-        return kycOrganization.addValues(values)
-          .then(() => kycOrganization.submit())
+        return dispatch.kycOrganization.addValues(values)
+          .then(() => dispatch.kycOrganization.submit())
           .then(callback)
       }),
-})
-
-export const DirectorForm = connect(mapState, mapDispatch)(DirectorFormComponent)
+    uploadDocument: dispatch.kyc.uploadDocument,
+  }),
+)(Director)
