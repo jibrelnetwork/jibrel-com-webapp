@@ -29,7 +29,6 @@ import {
 import settings from 'app/settings'
 import NotFound from 'pages/NotFound'
 import CoreLayout from 'layouts/CoreLayout'
-import STARTUP_NAMES from 'data/startupNames.json'
 import isRequired from 'utils/validators/isRequired'
 import heroImage from 'public/images/pic_hero_rocket_sun.svg'
 
@@ -66,6 +65,7 @@ interface OwnProps {
 
 interface StateProps {
   offeringId: string | void;
+  startupName: string | void;
   bankAccountData: BankAccount | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
@@ -152,14 +152,18 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
 
 const BackLink: React.FunctionComponent<{
   slug: string;
-}> = ({ slug }) => (
+  startupName: string | void;
+}> = ({
+  slug,
+  startupName,
+}) => !startupName ? null : (
   <div className={style.back}>
     <Icon
       className={style.icon}
       name='ic_arrow_right_24'
     />
     <Link href={`${settings.HOST_CMS}/en/companies/${slug}`}>
-      {`Back to ${STARTUP_NAMES[slug]}`}
+      {`Back to ${startupName}`}
     </Link>
   </div>
 )
@@ -167,9 +171,11 @@ const BackLink: React.FunctionComponent<{
 const RisksStep: React.FunctionComponent<{
   handleClick: () => void;
   slug: string;
+  startupName: string | void;
 }> = ({
   handleClick,
   slug,
+  startupName,
 }) => (
   <>
     <Grid.Container>
@@ -180,7 +186,7 @@ const RisksStep: React.FunctionComponent<{
         l={8}
         xl={8}
       >
-        <BackLink slug={slug} />
+        <BackLink slug={slug} startupName={startupName} />
         <RiskDisclosures />
       </Grid.Item>
     </Grid.Container>
@@ -215,11 +221,11 @@ const RisksStep: React.FunctionComponent<{
 
 const SuccessStep: React.FunctionComponent<{
   data: BankAccount;
-  slug: string;
+  startupName: string | void;
   amount: number;
 }> = ({
   data,
-  slug,
+  startupName,
   amount,
 }) => {
   const lang = useLanguageCode()
@@ -230,7 +236,7 @@ const SuccessStep: React.FunctionComponent<{
         imgSrc={heroImage}
         className={style.success}
         title='Subscription Submitted'
-        text={`You have successfully subscribed! To complete your investment in ${STARTUP_NAMES[slug]}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
+        text={`You have successfully subscribed! To complete your investment in ${startupName}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
       >
         <h2 className={style.subtitle}>Subscription Amount</h2>
         <div className={style.amount}>{formatAmount(amount, lang)}</div>
@@ -301,14 +307,16 @@ const FormStep: React.FunctionComponent<{
   handleSubmit: FormSubmit<InvestFormFields>;
   slug: string;
   offeringId: string | void;
+  startupName: string | void;
 }> = ({
   handleSubmit,
   slug,
   offeringId,
+  startupName,
 }) => (
   <>
-    <BackLink slug={slug} />
-    <h1 className={style.title}>{`Invest in ${STARTUP_NAMES[slug]}`}</h1>
+    <BackLink slug={slug} startupName={startupName} />
+    <h1 className={style.title}>{`Invest in ${startupName}`}</h1>
     <DealTerms slug={slug} />
     <div className={style.note}>
       To continue, you need to sign the Subscription Agreement by electronic signature. Before you do this, please enter your Subscription Amount
@@ -373,6 +381,7 @@ class Invest extends Component<InvestProps, InvestState> {
       bankAccountData,
       slug,
       offeringId,
+      startupName,
       subscriptionAmount,
     }: InvestProps = this.props
 
@@ -386,6 +395,7 @@ class Invest extends Component<InvestProps, InvestState> {
           <RisksStep
             handleClick={this.agreeWithRisks}
             slug={slug}
+            startupName={startupName}
           />
         )
 
@@ -396,6 +406,7 @@ class Invest extends Component<InvestProps, InvestState> {
               handleSubmit={this.handleSubmit}
               slug={slug}
               offeringId={offeringId}
+              startupName={startupName}
             />
           </Grid.Container>
         )
@@ -405,7 +416,8 @@ class Invest extends Component<InvestProps, InvestState> {
           <Grid.Container>
             <SuccessStep
               data={bankAccountData}
-              slug={slug}amount={subscriptionAmount}
+              startupName={startupName}
+              amount={subscriptionAmount}
             />
           </Grid.Container>
         ): <NotFound />
@@ -442,6 +454,7 @@ export default connect<StateProps, DispatchProps, OwnProps>(
       isOfferingDataLoading,
       offeringId: (offeringData || {}).uuid,
       subscriptionAmount: subscriptionAmount,
+      startupName: offeringData ? offeringData.security.company.name : undefined,
     }
   },
   (dispatch: Dispatch): DispatchProps => ({
