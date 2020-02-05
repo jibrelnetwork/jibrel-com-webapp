@@ -261,6 +261,10 @@ const SuccessStep: React.FunctionComponent<{
             <div className={style.label}>Bank Name</div>
             <div className={style.value}>{data.bankName}</div>
           </div>
+          {data.branchAddress && (<div className={style.item}>
+            <div className={style.label}>Bank Branch Address</div>
+            <div className={style.value}>{data.branchAddress}</div>
+          </div>)}
           <div className={style.item}>
             <div className={style.label}>BIC/SWIFT Code</div>
             <div className={style.value}>{data.swiftCode}</div>
