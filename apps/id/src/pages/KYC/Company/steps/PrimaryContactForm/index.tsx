@@ -59,104 +59,106 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
             handleSubmit,
             submitError,
           }): React.ReactNode => (
-            <form onSubmit={handleSubmit} className={style.step}>
-              <h2 className={style.title}>
-                Primary Contact
-              </h2>
-              <h3 className={style.groupTitle}>
-                Personal Information
-              </h3>
-              <Input
-                name='firstName'
-                label='First Name'
-                validate={isRequired({i18n})}
-              />
-              <Input
-                name='lastName'
-                label='Last Name'
-                validate={isRequired({i18n})}
-              />
-              <Input
-                name='middleName'
-                label='Middle Name (Optional)'
-              />
-              <HistoricDateInput
-                name='birthDate'
-                label='Date of Birth'
-                validate={isRequired({i18n})}
-              />
-              <CountrySelect
-                name='nationality'
-                label='Nationality'
-                placeholder='select nationality'
-                validate={isRequired({i18n})}
-              />
-              <h3 className={style.groupTitle}>
-                Current Residential Address
-              </h3>
-              <PhoneNumberInput
-                validate={isRequired({i18n})}
-                name='phoneNumber'
-              />
-              <Input
-                name='email'
-                label='Email'
-                validate={isRequired({i18n})}
-              />
-              <Input
-                name='streetAddress'
-                label='Street Address'
-                validate={isRequired({i18n})}
-              />
-              <Input
-                name='apartment'
-                label='Apartment, Unit or Suite (Optional)'
-              />
-              <Input
-                name='city'
-                label='City'
-                validate={isRequired({i18n})}
-              />
-              <Input
-                name='postCode'
-                label='Post Code (Optional)'
-              />
-              <CountrySelect
-                name='country'
-                label='Country of Residency'
-                placeholder='select country'
-                validate={isRequired({i18n})}
-              />
-              <FileInput
-                name='proofOfAddressDocument'
-                label='Proof of Address (Utility Bill, Bank Statement)'
-                placeholder='PNG, PDF, JPG'
-                onUpload={uploadDocument}
-                {...(get(documents, 'proofOfAddressDocument',  emptyFileField))}
-                validate={isRequired({i18n})}
-              />
-              <h3 className={style.groupTitle}>
-                Passport Details
-              </h3>
-              <Input
-                name='passportNumber'
-                label='Passport Number'
-                validate={isRequired({i18n})}
-              />
-              <HistoricDateInput
-                name='passportExpirationDate'
-                label='Passport Expiration Date'
-                validate={isRequired({i18n})}
-              />
-              <FileInput
-                name='passportDocument'
-                label='Passport Front Page'
-                placeholder='PNG, PDF, JPG'
-                onUpload={uploadDocument}
-                {...(get(documents, 'passportDocument',  emptyFileField))}
-                validate={isRequired({i18n})}
-              />
-              {submitError && <div className={style.submitError}>{submitError}</div>}
+            <form onSubmit={handleSubmit}>
+              <div className={style.step}>
+                <h2 className={style.title}>
+                  Primary Contact
+                </h2>
+                <h3 className={style.groupTitle}>
+                  Personal Information
+                </h3>
+                <Input
+                  name='firstName'
+                  label='First Name'
+                  validate={isRequired({i18n})}
+                />
+                <Input
+                  name='lastName'
+                  label='Last Name'
+                  validate={isRequired({i18n})}
+                />
+                <Input
+                  name='middleName'
+                  label='Middle Name (Optional)'
+                />
+                <HistoricDateInput
+                  name='birthDate'
+                  label='Date of Birth'
+                  validate={isRequired({i18n})}
+                />
+                <CountrySelect
+                  name='nationality'
+                  label='Nationality'
+                  placeholder='select nationality'
+                  validate={isRequired({i18n})}
+                />
+                <h3 className={style.groupTitle}>
+                  Current Residential Address
+                </h3>
+                <PhoneNumberInput
+                  validate={isRequired({i18n})}
+                  name='phoneNumber'
+                />
+                <Input
+                  name='email'
+                  label='Email'
+                  validate={isRequired({i18n})}
+                />
+                <Input
+                  name='streetAddress'
+                  label='Street Address'
+                  validate={isRequired({i18n})}
+                />
+                <Input
+                  name='apartment'
+                  label='Apartment, Unit or Suite (Optional)'
+                />
+                <Input
+                  name='city'
+                  label='City'
+                  validate={isRequired({i18n})}
+                />
+                <Input
+                  name='postCode'
+                  label='Post Code (Optional)'
+                />
+                <CountrySelect
+                  name='country'
+                  label='Country of Residency'
+                  placeholder='select country'
+                  validate={isRequired({i18n})}
+                />
+                <FileInput
+                  name='proofOfAddressDocument'
+                  label='Proof of Address (Utility Bill, Bank Statement)'
+                  placeholder='PNG, PDF, JPG'
+                  onUpload={uploadDocument}
+                  {...(get(documents, 'proofOfAddressDocument',  emptyFileField))}
+                  validate={isRequired({i18n})}
+                />
+                <h3 className={style.groupTitle}>
+                  Passport Details
+                </h3>
+                <Input
+                  name='passportNumber'
+                  label='Passport Number'
+                  validate={isRequired({i18n})}
+                />
+                <HistoricDateInput
+                  name='passportExpirationDate'
+                  label='Passport Expiration Date'
+                  validate={isRequired({i18n})}
+                />
+                <FileInput
+                  name='passportDocument'
+                  label='Passport Front Page'
+                  placeholder='PNG, PDF, JPG'
+                  onUpload={uploadDocument}
+                  {...(get(documents, 'passportDocument',  emptyFileField))}
+                  validate={isRequired({i18n})}
+                />
+                {submitError && <div className={style.submitError}>{submitError}</div>}
+              </div>
               <BigButtonSubmit className={style.submit}>
                 {nextLabel}
               </BigButtonSubmit>

@@ -85,33 +85,35 @@ export const Director: React.FunctionComponent<DirectorProps> = ({
               },
             },
           }: FormRenderProps): React.ReactNode => (
-            <form onSubmit={handleSubmit} className={style.step}>
-              <h2 className={style.title}>
-                Director
-              </h2>
-              <div className={style.caption}>
-                Please insert full legal names of members of the board of directors.
+            <form onSubmit={handleSubmit}>
+              <div className={style.step}>
+                <h2 className={style.title}>
+                  Director
+                </h2>
+                <div className={style.caption}>
+                  Please insert full legal names of members of the board of directors.
+                </div>
+                <FieldArray name='directors' initialValue={directors}>
+                  {({ fields }: FieldArrayProps<DirectorsValues, HTMLElement>): React.ReactNode =>
+                    fields.map((name: string, index: number) => (
+                      <DirectorFields
+                        key={name}
+                        deleteHandler={(): void => fields.remove(index)}
+                        index={index}
+                        isPrimary={index === 0}
+                      />
+                    ))
+                  }
+                </FieldArray>
+                <LinkButton
+                  onClick={(): void => push('directors', undefined)}
+                  className={style.addLink}
+                  type='button'
+                >
+                  + ADD MORE DIRECTORS
+                </LinkButton>
+                {submitError && <div className={style.submitError}>{submitError}</div>}
               </div>
-              <FieldArray name='directors' initialValue={directors}>
-                {({ fields }: FieldArrayProps<DirectorsValues, HTMLElement>): React.ReactNode =>
-                  fields.map((name: string, index: number) => (
-                    <DirectorFields
-                      key={name}
-                      deleteHandler={(): void => fields.remove(index)}
-                      index={index}
-                      isPrimary={index === 0}
-                    />
-                  ))
-                }
-              </FieldArray>
-              <LinkButton
-                onClick={(): void => push('directors', undefined)}
-                className={style.addLink}
-                type='button'
-              >
-                + ADD MORE DIRECTORS
-              </LinkButton>
-              {submitError && <div className={style.submitError}>{submitError}</div>}
               <BigButtonSubmit className={style.submit}>
                 {nextLabel}
               </BigButtonSubmit>

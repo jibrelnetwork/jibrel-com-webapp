@@ -44,11 +44,11 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
       backHandler={backHandler}
     >
       <div
-      className={cc([
-        grid.grid,
-        style.company,
-        style.background,
-      ])}
+        className={cc([
+          grid.grid,
+          style.company,
+          style.background,
+        ])}
       >
       <Form
         initialValues={formValues}
@@ -57,63 +57,60 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
           handleSubmit,
           submitError,
         }): React.ReactNode => (
-          <form onSubmit={handleSubmit} className={style.step}>
-            <h2 className={style.title}>
-              Company Information
-            </h2>
-            <Input
-              name='companyName'
-              label={'Company Name'}
-              validate={isRequired({i18n})}
-            />
-            <Input
-              name='tradingName'
-              label={'Trading Name'}
-              validate={isRequired({i18n})}
-            />
-            <HistoricDateInput
-              name='dateOfIncorporation'
-              label={'Date of Incorporation'}
-              validate={isRequired({i18n})}
-            />
-            <Input
-              name='placeOfIncorporation'
-              label={'Place of Incorporation'}
-              validate={isRequired({i18n})}
-            />
-
-            <h3 className={style.groupTitle}>
-              {'Company Documentation'}
-            </h3>
-
-            <FileInput
-              name='commercialRegister'
-              label={'Commercial Register'}
-              placeholder={'PNG, PDF, JPG'}
-              onUpload={uploadDocument}
-              {...(get(documents, 'commercialRegister', emptyFileField))}
-
-              validate={isRequired({i18n})}
-            />
-            <FileInput
-              name='shareholderRegister'
-              label={'Shareholder Register'}
-              placeholder={'PNG, PDF, JPG'}
-              onUpload={uploadDocument}
-              {...(get(documents, 'shareholderRegister', emptyFileField))}
-              validate={isRequired({i18n})}
-            />
-            <FileInput
-              name='articlesOfIncorporation'
-              label={'Article of Incorporation'}
-              placeholder={'PNG, PDF, JPG'}
-              onUpload={uploadDocument}
-              {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
-              validate={isRequired({i18n})}
-            />
-
-            {submitError && <div className={style.submitError}>{submitError}</div>}
-
+          <form onSubmit={handleSubmit}>
+            <div className={style.step}>
+              <h2 className={style.title}>
+                Company Information
+              </h2>
+              <Input
+                name='companyName'
+                label={'Company Name'}
+                validate={isRequired({i18n})}
+              />
+              <Input
+                name='tradingName'
+                label={'Trading Name'}
+                validate={isRequired({i18n})}
+              />
+              <HistoricDateInput
+                name='dateOfIncorporation'
+                label={'Date of Incorporation'}
+                validate={isRequired({i18n})}
+              />
+              <Input
+                name='placeOfIncorporation'
+                label={'Place of Incorporation'}
+                validate={isRequired({i18n})}
+              />
+              <h3 className={style.groupTitle}>
+                Company Documentation
+              </h3>
+              <FileInput
+                name='commercialRegister'
+                label={'Commercial Register'}
+                placeholder={'PNG, PDF, JPG'}
+                onUpload={uploadDocument}
+                {...(get(documents, 'commercialRegister', emptyFileField))}
+                validate={isRequired({i18n})}
+              />
+              <FileInput
+                name='shareholderRegister'
+                label={'Shareholder Register'}
+                placeholder={'PNG, PDF, JPG'}
+                onUpload={uploadDocument}
+                {...(get(documents, 'shareholderRegister', emptyFileField))}
+                validate={isRequired({i18n})}
+              />
+              <FileInput
+                name='articlesOfIncorporation'
+                label={'Article of Incorporation'}
+                placeholder={'PNG, PDF, JPG'}
+                onUpload={uploadDocument}
+                {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
+                validate={isRequired({i18n})}
+              />
+              {submitError && <div className={style.submitError}>{submitError}</div>}
+            </div>
             <BigButtonSubmit className={style.submit}>
               {nextLabel}
             </BigButtonSubmit>

@@ -53,7 +53,20 @@
 }
 
 .submit {
-  margin: 64px 0;
+  width: $column-s-4;
+  margin-top: 64px;
+
+  @include screen('>xsmall') {
+    width: $column-m-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-3;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-4;
+  }
 }
 
 .submit-error {
@@ -87,6 +100,10 @@
     &.director {
       background-image: url('../../../../public/images/pic_kyc_docs.svg');
     }
+  }
+
+  form {
+    width: 100%;
   }
 }
 

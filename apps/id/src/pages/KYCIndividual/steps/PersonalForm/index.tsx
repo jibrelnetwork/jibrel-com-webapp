@@ -1,8 +1,7 @@
 import React from 'react'
-import cc from 'classcat'
-import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { useI18n } from '@jibrelcom/i18n'
 import { FormRenderProps } from 'react-final-form'
+import { column } from '@jibrelcom/ui/src/Grid/grid.scss'
 
 import {
   Input,
@@ -37,60 +36,62 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
   return (
     <form
       onSubmit={formProps.handleSubmit}
-      className={cc([grid.column, style.form])}
+      className={column}
     >
-      <h2 className={style.title}>
-        {i18n._('KYC.Personal.section.personal.title')}
-      </h2>
-      <Input
-        validate={isRequired({ i18n })}
-        label={i18n._('KYC.Personal.input.firstName.title')}
-        name='firstName'
-      />
-      <Input
-        validate={isRequired({ i18n })}
-        label={i18n._('KYC.Personal.input.lastName.title')}
-        name='lastName'
-      />
-      <Input
-        name='middleName'
-        label='Middle Name (Optional)'
-      />
-      <Input
-        name='alias'
-        label='Alias (Optional)'
-      />
-      <HistoricDateInput
-        validate={isRequired({ i18n })}
-        label={i18n._('KYC.Personal.input.birthDate.title')}
-        name='birthDate'
-      />
-      <CountrySelect
-        validate={isRequired({ i18n })}
-        label={i18n._('KYC.Personal.input.nationality.title')}
-        name='nationality'
-        placeholder={i18n._('KYC.Personal.input.nationality.placeholder')}
-      />
-      <h3 className={style.groupTitle}>
-        {i18n._('KYC.Personal.section.passport.title')}
-      </h3>
-      <Input
-        validate={isRequired({ i18n })}
-        label={i18n._('KYC.Personal.input.passportNumber.title')}
-        name='passportNumber'
-      />
-      <HistoricDateInput
-        validate={isRequired({ i18n })}
-        label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
-        name='passportExpirationDate'
-      />
-      <FileInput
-        validate={isRequired({ i18n })}
-        onUpload={uploadDocument}
-        label={i18n._('KYC.Personal.input.passportFrontPage.title')}
-        name='passportDocument'
-        placeholder='PNG, PDF, JPG'
-      />
+      <div className={style.form}>
+        <h2 className={style.title}>
+          {i18n._('KYC.Personal.section.personal.title')}
+        </h2>
+        <Input
+          validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.input.firstName.title')}
+          name='firstName'
+        />
+        <Input
+          validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.input.lastName.title')}
+          name='lastName'
+        />
+        <Input
+          name='middleName'
+          label='Middle Name (Optional)'
+        />
+        <Input
+          name='alias'
+          label='Alias (Optional)'
+        />
+        <HistoricDateInput
+          validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.input.birthDate.title')}
+          name='birthDate'
+        />
+        <CountrySelect
+          validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.input.nationality.title')}
+          name='nationality'
+          placeholder={i18n._('KYC.Personal.input.nationality.placeholder')}
+        />
+        <h3 className={style.groupTitle}>
+          {i18n._('KYC.Personal.section.passport.title')}
+        </h3>
+        <Input
+          validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.input.passportNumber.title')}
+          name='passportNumber'
+        />
+        <HistoricDateInput
+          validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
+          name='passportExpirationDate'
+        />
+        <FileInput
+          validate={isRequired({ i18n })}
+          onUpload={uploadDocument}
+          label={i18n._('KYC.Personal.input.passportFrontPage.title')}
+          name='passportDocument'
+          placeholder='PNG, PDF, JPG'
+        />
+      </div>
       <BigButtonSubmit
         className={style.submit}
       >
