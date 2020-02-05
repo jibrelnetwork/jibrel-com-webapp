@@ -20,29 +20,30 @@
 }
 
 .info {
+  margin-top: 64px;
   font-size: 18px;
   line-height: 140%;
+}
 
-  &-content {
-    p {
-      margin-bottom: 16px;
-    }
+.content {
+  p {
+    margin-bottom: 16px;
+  }
 
-    ul {
-      li {
-        position: relative;
-        padding-left: 24px;
-        margin-bottom: 24px;
+  ul {
+    li {
+      position: relative;
+      padding-left: 24px;
+      margin-bottom: 24px;
 
-        &::before {
-          position: absolute;
-          top: 0;
-          left: 0;
-          font-size: 18px;
-          line-height: 140%;
-          color: $color-black-30;
-          content: "•";
-        }
+      &::before {
+        position: absolute;
+        top: 0;
+        left: 0;
+        font-size: 18px;
+        line-height: 140%;
+        color: $color-black-30;
+        content: "•";
       }
     }
   }

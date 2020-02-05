@@ -68,8 +68,8 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             m={5}
             l={5}
           >
-            <h3 className={style.title}>Required Data</h3>
-            <div className={style.infoContent}>
+            <h2 className={style.title}>Required Data</h2>
+            <div className={style.content}>
               <p>
                 In order to complete the verification process, you will need to provide:
               </p>

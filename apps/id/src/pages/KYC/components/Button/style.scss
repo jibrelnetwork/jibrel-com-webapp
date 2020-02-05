@@ -26,6 +26,17 @@
     content: '';
   }
 
+  &:hover {
+    &::after {
+      border-color: $color-blue-40;
+    }
+
+    .icon {
+      @include icon-color($color-blue-60);
+    }
+  }
+
+  &:active,
   &.active {
     &::after {
       border: 4px solid $color-blue;
@@ -36,8 +47,14 @@
     }
   }
 
+  &.active {
+    background-color: $color-blue-10;
+  }
+
   .icon {
     @include icon-color($color-black);
+
+    transition: fill 0.2s ease 0s;
   }
 }
 
