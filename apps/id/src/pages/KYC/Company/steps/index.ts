@@ -1,5 +1,5 @@
 export { CompanyInformationForm } from './CompanyInformationForm'
 export { RegisteredOfficeAddressForm } from './RegisteredOfficeAddressForm'
 export { PrimaryContactForm } from './PrimaryContactForm'
-export { BeneficiaryForm } from './BeneficiaryForm'
-export { DirectorForm } from './DirectorForm'
+export { default as BeneficiaryForm } from './BeneficiaryForm'
+export { default as DirectorForm } from './DirectorForm'

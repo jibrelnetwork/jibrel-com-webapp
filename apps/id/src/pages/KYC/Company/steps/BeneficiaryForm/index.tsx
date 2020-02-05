@@ -3,8 +3,16 @@ import cc from 'classcat'
 import arrayMutators from 'final-form-arrays'
 import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { connect } from 'react-redux'
-import { Form } from 'react-final-form'
-import { FieldArray } from 'react-final-form-arrays'
+
+import {
+  FieldArray,
+  FieldArrayProps,
+} from 'react-final-form-arrays'
+
+import {
+  Form,
+  FormRenderProps,
+} from 'react-final-form'
 
 import {
   LinkButton,
@@ -13,19 +21,47 @@ import {
 
 import KYCLayout from 'layouts/KYCLayout'
 
+import {
+  Dispatch,
+  RootState,
+} from 'store'
+
+import {
+  Documents,
+  ContactValues,
+  KYCInstitutionValues,
+  UploadDocumentHandler,
+} from 'store/types/kyc'
+
 import style from '../style.scss'
-import { FormProps } from '../FormProps'
 import { BeneficiaryFields } from './BeneficiaryFields'
 
-const initialBeneficiaries = [{}]
+interface StateProps {
+  documents: Documents;
+  values: KYCInstitutionValues;
+}
 
-export const BeneficiaryFormComponent: React.FunctionComponent<FormProps> = ({
+interface DispatchProps {
+  uploadDocument: UploadDocumentHandler;
+  submit: (callback: () => void) => (values: KYCInstitutionValues) => Promise<KYCInstitutionValues> | void;
+}
+
+interface OwnProps {
+  backHandler: () => void;
+  nextHandler: () => void;
+  backLabel: string;
+  nextLabel: string;
+}
+
+export type BeneficiaryProps = StateProps & DispatchProps & OwnProps
+
+export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
   submit,
   backHandler,
   nextHandler,
   uploadDocument,
+  values,
   documents,
-  formValues,
   backLabel,
   nextLabel,
 }) => {
@@ -42,46 +78,45 @@ export const BeneficiaryFormComponent: React.FunctionComponent<FormProps> = ({
         ])}
       >
         <Form
-          initialValues={formValues}
-          mutators={{...arrayMutators}}
           onSubmit={submit(nextHandler)}
+          initialValues={values}
+          mutators={{ ...arrayMutators }}
           render={({
             handleSubmit,
             submitError,
+            values: { beneficiaries },
             form: {
               mutators: {
                 push,
               },
             },
-          }) => (
+          }: FormRenderProps): React.ReactNode => (
             <form onSubmit={handleSubmit} className={style.step}>
               <h2 className={style.title}>
                 Beneficiary
               </h2>
               <div className={style.caption}>
-                {'Any natural person who owns or controls, directly or indirectly, 25% or more of the shares or voting rights in the organization.'}
+                Any natural person who owns or controls, directly or indirectly, 25% or more of the shares or voting rights in the organization.
               </div>
-              <FieldArray name="beneficiary" initialValue={initialBeneficiaries}>
-                {({fields}) =>
-                  fields.map((name, index) => (
+              <FieldArray name='beneficiaries' initialValue={beneficiaries}>
+                {({ fields }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
+                  name: string,
+                  index: number,
+                ) => (
                     <BeneficiaryFields
-                      isPrimary={index===0}
                       key={name}
-                      index={index}
-                      deleteHandler={() => fields.remove(index)}
+                      deleteHandler={(): void => fields.remove(index)}
                       documents={documents}
                       uploadDocument={uploadDocument}
+                      index={index}
+                      isPrimary={(index === 0)}
                     />
-                  ))
-                }
+                  ))}
               </FieldArray>
-
-              <LinkButton type="button" onClick={() => push('beneficiary', undefined)}>
+              <LinkButton type='button' onClick={(): void => push('beneficiaries', undefined)}>
                 + ADD MORE BENEFICIARIES
               </LinkButton>
-
               {submitError && <div className={style.submitError}>{submitError}</div>}
-
               <BigButtonSubmit className={style.submit}>
                 {nextLabel}
               </BigButtonSubmit>
@@ -93,23 +128,25 @@ export const BeneficiaryFormComponent: React.FunctionComponent<FormProps> = ({
   )
 }
 
-const mapState = ({kycOrganization, kyc}) => ({
-  formValues: kycOrganization.values,
-  documents: kyc.documents,
-})
-
-const mapDispatch = ({kyc, kycOrganization}) => ({
-  uploadDocument: kyc.uploadDocument,
-  submit: (callback) => (values) =>
-    kycOrganization
-      .validate({step: 3, ...values})
+export default connect(
+  (state: RootState) => ({
+    documents: state.kyc.documents,
+    values: state.kycOrganization.values,
+  }),
+  (dispatch: Dispatch) => ({
+    submit: (
+      callback: () => void,
+    ) => (
+      values: KYCInstitutionValues,
+    ): Promise<KYCInstitutionValues> | void => dispatch.kycOrganization
+      .validate({ step: 3, ...values })
       .then(errors => {
         if (errors) {
           return errors
         }
 
-        return kycOrganization.addValues(values).then(callback)
+        return dispatch.kycOrganization.addValues(values).then(callback)
       }),
-})
-
-export const BeneficiaryForm = connect(mapState, mapDispatch)(BeneficiaryFormComponent)
+    uploadDocument: dispatch.kyc.uploadDocument,
+  }),
+)(Beneficiary)
