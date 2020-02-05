@@ -8,11 +8,10 @@ declare namespace StyleScssModule {
     choice: string;
     chromeframe: string;
     column: string;
+    content: string;
     grid: string;
     income: string;
     info: string;
-    "info-content": string;
-    infoContent: string;
     "l-1": string;
     "l-10": string;
     "l-11": string;
