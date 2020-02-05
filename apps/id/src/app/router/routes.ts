@@ -70,12 +70,12 @@ export const routes: RouteEnhanced[] = [
 
   {
     name: 'redirect!Reset',
-    path: '/reset?:token',
+    path: '/reset?:token?:email',
     canActivate: redirectLang,
   },
   {
     name: 'Reset',
-    path: '/:lang/reset?:token',
+    path: '/:lang/reset?:token?:email',
     canActivate: composeActivations([
       redirectLang,
       checkNextPageAvailable,
