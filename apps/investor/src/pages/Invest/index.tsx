@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import cc from 'classcat'
 import isEmpty from 'lodash-es/isEmpty'
 import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
 import { connect } from 'react-redux'
@@ -262,6 +261,10 @@ const SuccessStep: React.FunctionComponent<{
             <div className={style.label}>Bank Name</div>
             <div className={style.value}>{data.bankName}</div>
           </div>
+          {data.branchAddress && (<div className={style.item}>
+            <div className={style.label}>Bank Branch Address</div>
+            <div className={style.value}>{data.branchAddress}</div>
+          </div>)}
           <div className={style.item}>
             <div className={style.label}>BIC/SWIFT Code</div>
             <div className={style.value}>{data.swiftCode}</div>
@@ -281,17 +284,14 @@ const SuccessStep: React.FunctionComponent<{
             Download Details
           </BigButton>
         </div>
-        <a
-          href={settings.HOST_CMS}
-          className={cc([
-            pageWithHeroStyle.button,
-            pageWithHeroStyle.secondary,
-          ])}
-        >
-          <BigButton variant={BigButtonVariant.secondary}>
+        <div className={`${pageWithHeroStyle.button} ${pageWithHeroStyle.secondary}`}>
+          <BigButton
+            href={settings.HOST_CMS}
+            variant={BigButtonVariant.secondary}
+          >
             BACK TO STARTUPS
           </BigButton>
-        </a>
+        </div>
       </div>
     </>
   )

@@ -49,6 +49,7 @@ export interface Customer {
 
 export interface BankAccount {
   bankName: string;
+  branchAddress?: string,
   swiftCode: string;
   holderName: string;
   ibanNumber: string;
