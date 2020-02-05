@@ -50,73 +50,71 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
             haveCompanyAddressPrincipal,
           },
         }) => (
-          <form onSubmit={handleSubmit} className={style.step}>
-            <h2 className={style.title}>
-              Registered Office Address
-            </h2>
-            <Input
-              name='companyAddressRegistered.streetAddress'
-              label={'Street Address'}
-              validate={isRequired({i18n})}
-            />
-            <Input
-              name='companyAddressRegistered.apartment'
-              label={'Unit or Suite (Optional)'}
-            />
-            <Input
-              name='companyAddressRegistered.city'
-              label={'City'}
-              validate={isRequired({i18n})}
-            />
-            <Input
-              name='companyAddressRegistered.postCode'
-              label={'Post Code (Optional)'}
-            />
-            <CountrySelect
-              name='companyAddressRegistered.country'
-              label={'Country'}
-              validate={isRequired({i18n})}
-              placeholder='select country'
-            />
-
-            <Checkbox name='haveCompanyAddressPrincipal'>
-              {'Principal place of business different from registered address'}
-            </Checkbox>
-
-            { haveCompanyAddressPrincipal && (
-              <section>
-                <h2 className={style.subtitle}>
-                  Principal Place of Business
-                </h2>
-                <Input
-                  name='companyAddressPrincipal.streetAddress'
-                  label={'Street Address'}
-                  validate={isRequired({i18n})}
-                />
-                <Input
-                  name='companyAddressPrincipal.apartment'
-                  label={'Unit or Suite (Optional)'}
-                />
-                <Input
-                  name='companyAddressPrincipal.city'
-                  label={'City'}
-                  validate={isRequired({i18n})}
-                />
-                <Input
-                  name='companyAddressPrincipal.postCode'
-                  label={'Post Code (Optional)'}
-                />
-                <CountrySelect
-                  name='companyAddressPrincipal.country'
-                  label={'Country'}
-                  validate={isRequired({i18n})}
-                  placeholder='select country'
-                />
-              </section>
-            )}
-
-            {submitError && <div className={style.submitError}>{submitError}</div>}
-
+          <form onSubmit={handleSubmit}>
+            <div className={style.step}>
+              <h2 className={style.title}>
+                Registered Office Address
+              </h2>
+              <Input
+                name='companyAddressRegistered.streetAddress'
+                label='Street Address'
+                validate={isRequired({i18n})}
+              />
+              <Input
+                name='companyAddressRegistered.apartment'
+                label='Unit or Suite (Optional)'
+              />
+              <Input
+                name='companyAddressRegistered.city'
+                label='City'
+                validate={isRequired({i18n})}
+              />
+              <Input
+                name='companyAddressRegistered.postCode'
+                label='Post Code (Optional)'
+              />
+              <CountrySelect
+                name='companyAddressRegistered.country'
+                label='Country'
+                validate={isRequired({i18n})}
+                placeholder='select country'
+              />
+              <Checkbox name='haveCompanyAddressPrincipal'>
+                Principal place of business different from registered address
+              </Checkbox>
+              {haveCompanyAddressPrincipal && (
+                <section>
+                  <h2 className={style.subtitle}>
+                    Principal Place of Business
+                  </h2>
+                  <Input
+                    name='companyAddressPrincipal.streetAddress'
+                    label='Street Address'
+                    validate={isRequired({i18n})}
+                  />
+                  <Input
+                    name='companyAddressPrincipal.apartment'
+                    label='Unit or Suite (Optional)'
+                  />
+                  <Input
+                    name='companyAddressPrincipal.city'
+                    label='City'
+                    validate={isRequired({i18n})}
+                  />
+                  <Input
+                    name='companyAddressPrincipal.postCode'
+                    label='Post Code (Optional)'
+                  />
+                  <CountrySelect
+                    name='companyAddressPrincipal.country'
+                    label='Country'
+                    validate={isRequired({i18n})}
+                    placeholder='select country'
+                  />
+                </section>
+              )}
+              {submitError && <div className={style.submitError}>{submitError}</div>}
+            </div>
             <BigButtonSubmit className={style.submit}>
               {nextLabel}
             </BigButtonSubmit>

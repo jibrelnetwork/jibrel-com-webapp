@@ -1,3 +1,5 @@
+@import '~@jibrelcom/ui/src/theme/media';
+
 .wrapper {
   display: flex;
   flex-direction: column;
@@ -11,7 +13,19 @@
 .content {
   flex: 1 0 auto;
   flex-direction: column;
-  margin-bottom: 128px;
+  margin-bottom: 80px;
+
+  @include screen('>small') {
+    margin-bottom: 112px;
+  }
+
+  @include screen('>medium') {
+    margin-bottom: 128px;
+  }
+
+  @include screen('>large') {
+    margin-bottom: 152px;
+  }
 }
 
 .footer {
