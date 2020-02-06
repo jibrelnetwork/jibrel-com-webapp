@@ -99,7 +99,7 @@ export default connect<StateProps, DispatchProps>(
     } = state.portfolio
 
     return {
-      investments: [],
+      investments,
       isInvestmentsLoading,
     }
   },
