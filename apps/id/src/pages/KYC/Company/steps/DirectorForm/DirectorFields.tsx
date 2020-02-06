@@ -27,13 +27,19 @@ export const DirectorFields: React.FunctionComponent<DirectorFieldsProps>  = ({
     <section>
       {!isPrimary &&
         <div className={style.additionalTitle}>
-          <h2 className={style.title}>Director {index+1}</h2>
-          <Icon name='ic_close_24' onClick={deleteHandler}/>
+          <h2 className={style.title}>Director {index + 1}</h2>
+          <button
+            onClick={deleteHandler}
+            className={style.close}
+            type='button'
+          >
+            <Icon name='ic_close_24' />
+          </button>
         </div>
       }
       <Input
         name={`directors[${index}].fullName`}
-        label="Full Legal Name"
+        label='Full Legal Name'
         validate={isRequired({i18n})}
       />
     </section>

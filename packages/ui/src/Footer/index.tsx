@@ -55,7 +55,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
                 rel="noopener noreferrer"
                 className="footer__navigation-link"
               >
-                Terms and Conditions
+                Terms & Conditions
               </a>
             </li>
             <li className="footer__navigation-item">

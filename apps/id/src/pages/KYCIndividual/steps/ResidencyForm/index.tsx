@@ -1,8 +1,7 @@
 import React from 'react'
-import cc from 'classcat'
-import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { useI18n } from '@jibrelcom/i18n'
 import { FormRenderProps } from 'react-final-form'
+import { column } from '@jibrelcom/ui/src/Grid/grid.scss'
 
 import {
   Input,
@@ -37,43 +36,45 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
   return (
     <form
       onSubmit={formProps.handleSubmit}
-      className={cc([grid.column, style.form])}
+      className={column}
     >
-      <h2 className={style.title}>
-        Current Residential Address
-      </h2>
-      <Input
-        validate={isRequired({ i18n })}
-        name='streetAddress'
-        label='Street Address'
-      />
-      <Input
-        name='apartment'
-        label='Apartment, Unit or Suite (Optional)'
-      />
-      <Input
-        validate={isRequired({ i18n })}
-        name='city'
-        label='City'
-      />
-      <Input
-        name='postCode'
-        label='Post Code (Optional)'
-      />
-      <CountrySelect
-        validate={isRequired({ i18n })}
-        name='country'
-        label='Country'
-        placeholder='select country'
-      />
-      <FileInput
-        validate={isRequired({ i18n })}
-        onUpload={uploadDocument}
-        placeholder='PNG, PDF, JPG'
-        name='proofOfAddressDocument'
-        label='Proof of Address (Utility Bill, Bank Statements)'
-        {...(documents.proofOfAddressDocument || {})}
-      />
+      <div className={style.form}>
+        <h2 className={style.title}>
+          Current Residential Address
+        </h2>
+        <Input
+          validate={isRequired({ i18n })}
+          name='streetAddress'
+          label='Street Address'
+        />
+        <Input
+          name='apartment'
+          label='Apartment, Unit or Suite (Optional)'
+        />
+        <Input
+          validate={isRequired({ i18n })}
+          name='city'
+          label='City'
+        />
+        <Input
+          name='postCode'
+          label='Post Code (Optional)'
+        />
+        <CountrySelect
+          validate={isRequired({ i18n })}
+          name='country'
+          label='Country'
+          placeholder='select country'
+        />
+        <FileInput
+          validate={isRequired({ i18n })}
+          onUpload={uploadDocument}
+          placeholder='PNG, PDF, JPG'
+          name='proofOfAddressDocument'
+          label='Proof of Address (Utility Bill, Bank Statements)'
+          {...(documents.proofOfAddressDocument || {})}
+        />
+      </div>
       <BigButtonSubmit
         className={style.submit}
       >

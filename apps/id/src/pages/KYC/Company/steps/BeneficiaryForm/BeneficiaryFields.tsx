@@ -13,12 +13,17 @@ import {
 import CountrySelect from 'components/CountrySelect'
 import isRequired from 'utils/validators/isRequired'
 
+import {
+  Documents,
+  UploadDocumentHandler,
+} from 'store/types/kyc'
+
 import style from '../style.scss'
 
 interface BeneficiaryFieldsProps {
   deleteHandler: () => void;
-  uploadDocument: () => void;
-  documents: [];
+  uploadDocument: UploadDocumentHandler;
+  documents: Documents;
   index?: number;
   isPrimary: boolean;
 }
@@ -44,7 +49,13 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
       {!isPrimary &&
         <div className={style.additionalTitle}>
           <h2 className={style.title}>Beneficiary {index+1}</h2>
-          <Icon name='ic_close_24' onClick={deleteHandler}/>
+          <button
+            onClick={deleteHandler}
+            className={style.close}
+            type='button'
+          >
+            <Icon name='ic_close_24' />
+          </button>
         </div>
       }
       <h3 className={style.groupTitle}>Personal Information</h3>
@@ -64,12 +75,12 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
       />
       <HistoricDateInput
         name={`beneficiaries[${index}].birthDate`}
-        label="Date of Birth"
+        label='Date of Birth'
         validate={isRequired({i18n})}
       />
       <CountrySelect
         name={`beneficiaries[${index}].nationality`}
-        label={'Nationality'}
+        label='Nationality'
         validate={isRequired({i18n})}
         placeholder='select country'
       />
@@ -80,36 +91,36 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
       />
       <Input
         name={`beneficiaries[${index}].email`}
-        label="Email"
+        label='Email'
         validate={isRequired({i18n})}
       />
       <Input
         name={`beneficiaries[${index}].streetAddress`}
-        label="Street Address"
+        label='Street Address'
         validate={isRequired({i18n})}
       />
       <Input
         name={`beneficiaries[${index}].apartment`}
-        label="Apartment, Unit or Suite (Optional)"
+        label='Apartment, Unit or Suite (Optional)'
       />
       <Input
         name={`beneficiaries[${index}].city`}
-        label="City"
+        label='City'
       />
       <Input
         name={`beneficiaries[${index}].postCode`}
-        label="Post Code (Optional)"
+        label='Post Code (Optional)'
       />
       <CountrySelect
         name={`beneficiaries[${index}].country`}
-        label={'Country of Residence'}
+        label='Country of Residence'
         validate={isRequired({i18n})}
         placeholder='select country'
       />
       <FileInput
         name={`beneficiaries[${index}].proofOfAddressDocument`}
-        label={'Proof of Address (Utility Bill, Bank Statements)'}
-        placeholder={'PNG, PDF, JPG'}
+        label='Proof of Address (Utility Bill, Bank Statements)'
+        placeholder='PNG, PDF, JPG'
         onUpload={uploadDocument}
         {...(get(documents, `beneficiaries[${index}].proofOfAddressDocument`,  emptyFileField))}
         validate={isRequired({i18n})}
@@ -117,18 +128,18 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
       <h3 className={style.groupTitle}>Passport Details</h3>
       <Input
         name={`beneficiaries[${index}].passportNumber`}
-        label="Passport Number"
+        label='Passport Number'
         validate={isRequired({i18n})}
       />
       <HistoricDateInput
         name={`beneficiaries[${index}].passportExpirationDate`}
-        label="Passport Expiration Date"
+        label='Passport Expiration Date'
         validate={isRequired({i18n})}
       />
       <FileInput
         name={`beneficiaries[${index}].passportDocument`}
-        label={'Passport Front Page'}
-        placeholder={'PNG, PDF, JPG'}
+        label='Passport Front Page'
+        placeholder='PNG, PDF, JPG'
         onUpload={uploadDocument}
         {...(get(documents, `beneficiaries[${index}].passportDocument`,  emptyFileField))}
         validate={isRequired({i18n})}
