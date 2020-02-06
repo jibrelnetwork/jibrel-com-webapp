@@ -1,3 +1,7 @@
+// we need axios without config for API
+// for fetching companies data from CMS
+import { default as axiosPlain } from 'axios'
+
 import {
   createModel,
   ModelConfig,
@@ -63,9 +67,11 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
     },
     async getCompanyData(id: string): Promise<void> {
       const cmsAPI = __DEV__ ? 'https://jibrelcom.develop.jdev.network' : settings.HOST_CMS
-      const { data } = await axios.get(`${cmsAPI}/api/v1/companies/${id}`)
+      const { data } = await axiosPlain.get(`${cmsAPI}/api/v1/companies/${id}`)
 
-      this.setCompanyData(data)
+      console.log(data.data)
+
+      this.setCompanyData(data.data)
     },
   }),
   reducers: {
@@ -91,7 +97,7 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
       ...state,
       companies: {
         ...state.companies,
-        [payload.id]: payload,
+        [payload.slug]: payload,
       },
     }),
   }
