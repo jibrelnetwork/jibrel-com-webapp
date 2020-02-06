@@ -1,3 +1,5 @@
 export { default as Footer } from './Footer'
 export { default as Header } from './Header'
+export { default as CurrentBalance } from './CurrentBalance'
+export { default as InvestmentInput } from './InvestmentInput'
 export { default as RiskDisclosures } from './RiskDisclosures'

@@ -7,15 +7,17 @@ import grid from '../Grid/grid.scss'
 export interface HeaderProps {
   logout: () => void;
   lang: string;
-  cmsURL: string;
+  domain: string;
   className?: string;
+  activeRoute?: string;
   isAuthenticated?: boolean;
 }
 
 const Header: React.FunctionComponent<HeaderProps> = ({
   logout,
   lang,
-  cmsURL,
+  domain,
+  activeRoute,
   isAuthenticated = false,
 }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false)
@@ -40,14 +42,14 @@ const Header: React.FunctionComponent<HeaderProps> = ({
       >
         <div className='navbar__wrapper common__centered'>
           <nav className='navbar__content'>
-            <a href={`${cmsURL}/${lang}`} className="navbar__logo-link">
+            <a href={`//${domain}/${lang}`} className="navbar__logo-link">
               <img
                 className="navbar__logo navbar__logo--black"
-                src={`${cmsURL}/img/ic_logo_colored_32.svg`}
+                src={`//${domain}/img/ic_logo_colored_32.svg`}
               />
               <img
                 className="navbar__logo navbar__logo--white"
-                src={`${cmsURL}/img/ic_logo_colored_32_white.svg`}
+                src={`//${domain}/img/ic_logo_colored_32_white.svg`}
               />
             </a>
             <button
@@ -62,7 +64,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                   <ul className="navbar__menu-list">
                     <li className="navbar__menu-item">
                       <a
-                        href={`${cmsURL}/${lang}/invest`}
+                        href={`//${domain}/${lang}/invest`}
                         className="navbar__menu-link"
                       >
                         Invest
@@ -70,7 +72,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     </li>
                     <li className="navbar__menu-item">
                       <a
-                        href={`${cmsURL}/${lang}/raise`}
+                        href={`//${domain}/${lang}/raise`}
                         className="navbar__menu-link"
                       >
                         Raise
@@ -78,10 +80,21 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     </li>
                     <li className="navbar__menu-item">
                       <a
-                        href={`${cmsURL}/${lang}/about`}
+                        href={`//${domain}/${lang}/about`}
                         className="navbar__menu-link"
                       >
                         About
+                      </a>
+                    </li>
+                    <li className="navbar__menu-item">
+                      <a
+                        href={`//investor.${domain}/portfolio`}
+                        className={cc([
+                          'navbar__menu-link',
+                          (activeRoute === 'Portfolio') && '--current',
+                        ])}
+                      >
+                        Portfolio
                       </a>
                     </li>
                   </ul>

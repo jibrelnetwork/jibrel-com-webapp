@@ -1,0 +1,20 @@
+@import '../theme/colors';
+@import '../utils/scss/flex';
+@import '../utils/scss/iconColor';
+
+.main {
+  @include flex-row-center;
+
+  height: 24px;
+  margin-right: auto;
+  justify-content: flex-start;
+}
+
+.icon {
+  @include icon-color($color-blue);
+
+  flex: 0 0 auto;
+  width: 24px;
+  margin-right: 8px;
+  transform: rotate(180deg);
+}

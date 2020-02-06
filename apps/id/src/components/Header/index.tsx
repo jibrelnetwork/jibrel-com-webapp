@@ -10,11 +10,19 @@ import {
   RootState,
 } from 'store'
 
-export interface HeaderProps {
-  logout: () => void;
-  className?: string;
+interface StateProps {
   isAuthenticated?: boolean;
 }
+
+interface DispatchProps {
+  logout: () => void;
+}
+
+interface OwnProps {
+  className?: string;
+}
+
+export type HeaderProps = StateProps & DispatchProps & OwnProps
 
 const HeaderEnhanced: React.FunctionComponent<HeaderProps> = ({
   logout,
@@ -26,13 +34,13 @@ const HeaderEnhanced: React.FunctionComponent<HeaderProps> = ({
     <Header
       logout={logout}
       lang={languageCode}
-      cmsURL={settings.HOST_CMS}
+      domain={settings.FRONTEND_ROOT_DOMAIN_NAME}
       isAuthenticated={isAuthenticated}
     />
   )
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, OwnProps>(
   (state: RootState) => ({
     isAuthenticated: !!state.user.status,
   }),

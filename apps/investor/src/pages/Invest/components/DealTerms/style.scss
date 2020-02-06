@@ -1,5 +1,4 @@
 @import '~@jibrelcom/ui/src/Grid/grid';
-@import '~@jibrelcom/ui/src/theme/fonts';
 @import '~@jibrelcom/ui/src/theme/media';
 @import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/flex';
@@ -34,17 +33,4 @@
   @include screen('>medium') {
     width: $column-l-6;
   }
-}
-
-.label {
-  font-size: 12px;
-  line-height: 140%;
-  color: $color-black-60;
-}
-
-.value {
-  font-weight: 800;
-  font-size: 20px;
-  line-height: 24px;
-  color: $color-black;
 }
