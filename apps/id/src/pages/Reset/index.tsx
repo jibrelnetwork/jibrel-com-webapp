@@ -17,13 +17,8 @@ import {
 
 import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
-
+import { Dispatch } from 'store'
 import { checkPasswordStrength } from 'utils/forms'
-
-import {
-  Dispatch,
-  RootState,
-} from 'store'
 
 import {
   ResponseLoader,
@@ -42,12 +37,17 @@ import {
 
 import style from './style.scss'
 
-interface ResetProps {
+interface DispatchProps {
   checkResetToken: (token: string) => Promise<void>;
   resetPassword: FormSubmit<ResetPasswordFormFields>;
+}
+
+interface OwnProps {
   email: string;
   token: string;
 }
+
+export type ResetProps = DispatchProps & OwnProps
 
 interface ResetState {
   isChecking: boolean;
@@ -179,14 +179,8 @@ class Reset extends Component<ResetProps, ResetState> {
   }
 }
 
-export default connect(
-  (state: RootState) => {
-    const { profile } = state.user
-
-    return {
-      email: profile ? profile.userEmail : undefined,
-    }
-  },
+export default connect<null, DispatchProps, OwnProps>(
+  null,
   (dispatch: Dispatch) => ({
     resetPassword: dispatch.user.resetPassword,
     checkResetToken: dispatch.user.checkResetToken,
