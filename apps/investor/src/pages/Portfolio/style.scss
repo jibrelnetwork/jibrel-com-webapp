@@ -1,0 +1,58 @@
+@import '~@jibrelcom/ui/src/Grid/grid';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+.title {
+  @include flex-row;
+
+  align-items: center;
+}
+
+.green {
+  margin-left: 16px;
+  color: $color-green;
+}
+
+.investments {
+  margin-bottom: 128px;
+}
+
+.loader {
+  min-height: 350px;
+}
+
+.item {
+  width: $column-s-4;
+
+  @include screen('>xsmall') {
+    width: $column-s-4;
+  }
+
+  @include screen('>small') {
+    width: $column-m-5;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-4;
+    padding-right: 24px;
+
+    &:nth-child(3n) {
+      padding-right: 12px; // by default
+    }
+  }
+}
+
+.description {
+  margin-bottom: 16px;
+  font-size: 18px;
+  line-height: 140%;
+  color: $color-black;
+}
+
+.deposit {
+  margin-bottom: 64px;
+}
+
+.withdraw {
+  margin-bottom: 128px;
+}

@@ -5,25 +5,8 @@
 @import '~@jibrelcom/ui/src/utils/scss/flex';
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
-.title {
-  @include font-h1-xs;
-
-  width: $column-s-4;
-  padding-top: 24px;
-  padding-bottom: 32px;
-  flex-shrink: 1;
-
-  @include screen('>xsmall') {
-    @include font-h1-s;
-  }
-
-  @include screen('>small') {
-    @include font-h1-m;
-  }
-
-  @include screen('>medium') {
-    @include font-h1-l;
-  }
+.back {
+  margin-top: 64px;
 }
 
 .risk-annotation {
@@ -36,35 +19,6 @@
 
     margin-bottom: 24px;
   }
-}
-
-.subtitle {
-  @include font-h2-s;
-
-  width: 100%;
-  padding-bottom: 24px;
-
-  @include screen('>small') {
-    @include font-h2-l;
-  }
-}
-
-.back {
-  @include flex-row-center;
-  justify-content: flex-start;
-
-  height: 24px;
-  margin-top: 64px;
-  margin-right: auto;
-}
-
-.icon {
-  @include icon-color($color-blue);
-
-  flex: 0 0 auto;
-  width: 24px;
-  margin-right: 8px;
-  transform: rotate(180deg);
 }
 
 .form {
@@ -196,24 +150,9 @@
 }
 
 .warning {
-  @include flex-row-center;
-
-  padding: 24px 28px;
-  border-radius: 24px;
-  background-color: rgba($color-orange, 0.05);
-  font-size: 12px;
-  line-height: 140%;
-  text-align: left;
-
   @media print {
     display: none;
   }
-}
-
-.exclamation {
-  @include icon-color($color-orange);
-
-  margin-right: 24px;
 }
 
 .details {

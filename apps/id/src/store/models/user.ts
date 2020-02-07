@@ -211,8 +211,6 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
           password,
         })
 
-        this.updateProfile()
-
         return
       } catch (error) {
         if (error.response && (error.response.status === 400)) {

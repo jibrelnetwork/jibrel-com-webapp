@@ -1,0 +1,62 @@
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+
+.main {
+  padding: 24px 16px 24px 24px;
+  background-color: $color-blue-5;
+  border-radius: 24px;
+
+  .link {
+    display: inline-block;
+  }
+
+  .button {
+    width: auto;
+    margin-top: 24px;
+    margin-left: 48px;
+  }
+
+  &.coming,
+  &.disabled {
+    background-color: $color-black-5;
+    pointer-events: none;
+
+    .title {
+      color: $color-black-40;
+    }
+
+    .icon {
+      @include icon-color($color-black-40);
+    }
+  }
+
+  &.coming {
+    .button {
+      border-color: $color-green;
+      background-color: $color-green;
+
+      &:hover {
+        color: $color-green;
+      }
+    }
+  }
+}
+
+.title {
+  @include flex-row;
+
+  align-items: center;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 29px;
+  color: $color-blue;
+}
+
+.icon {
+  @include icon-color($color-blue);
+
+  width: 32px;
+  height: 32px;
+  margin-right: 16px;
+}

@@ -2,18 +2,22 @@ import React from 'react'
 import cc from 'classcat'
 import BigNumber from 'bignumber.js'
 
-import { withField, withFieldUX } from '@jibrelcom/ui/src'
-import { Icon } from '@jibrelcom/ui'
-
-import { OnChangeHandler } from './types'
+import {
+  Icon,
+  withField,
+  withFieldUX,
+  withMessage,
+} from '@jibrelcom/ui/src'
 
 import style from './style.scss'
 
+type OnChangeHandler = ((event?: React.ChangeEvent<HTMLInputElement>) => void) | undefined
+
 interface InputProps {
   onChange?: OnChangeHandler;
+  value?: string;
   className?: string;
   isDisabled?: boolean;
-  value?: string;
 }
 
 const NumberInputMask = new RegExp(/[^0-9].{0}/g)
@@ -36,21 +40,24 @@ const format = () => (value: string | void): string | void => {
   return extendedValue.toFormat(0)
 }
 
-const handleOnChange = (onChange: OnChangeHandler) => (event: React.ChangeEvent<HTMLInputElement>): OnChangeHandler => {
+const handleOnChange = (onChange: OnChangeHandler) => (event: React.ChangeEvent<HTMLInputElement>): void => {
   if (onChange === undefined) {
     event.preventDefault()
+
     return
   }
 
   const { value } = event.target
 
-  return onChange({
+  onChange({
     ...event,
     target: {
       ...event.target,
       value: value.replace(NumberInputMask, '')
     }
   })
+
+  return
 }
 
 const InvestmentInput: React.FunctionComponent<InputProps> = ({
@@ -58,8 +65,6 @@ const InvestmentInput: React.FunctionComponent<InputProps> = ({
   className,
   onChange,
   isDisabled,
-  messageType,
-  hasError,
   ...props
 }) => (
   <div className={cc([style.wrapper, className])}>
@@ -77,7 +82,7 @@ const InvestmentInput: React.FunctionComponent<InputProps> = ({
     <div className={style.border} />
     <button
       className={style.cross}
-      onClick={(): void => { onChange(undefined) }}
+      onClick={(): void => { return onChange ? onChange(undefined) : undefined }}
       type='button'
     >
       <Icon name='ic_close_24' />
@@ -85,8 +90,9 @@ const InvestmentInput: React.FunctionComponent<InputProps> = ({
   </div>
 )
 
-export default withField(withFieldUX(React.memo(InvestmentInput)), {
+export default withField(withFieldUX(React.memo(withMessage(InvestmentInput))), {
   format,
   parse,
   hint: ''
 })
+

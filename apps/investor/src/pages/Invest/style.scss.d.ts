@@ -12,10 +12,8 @@ declare namespace StyleScssModule {
     details: string;
     download: string;
     error: string;
-    exclamation: string;
     form: string;
     grid: string;
-    icon: string;
     item: string;
     "l-1": string;
     "l-10": string;
@@ -79,9 +77,7 @@ declare namespace StyleScssModule {
     s8: string;
     sticky: string;
     submit: string;
-    subtitle: string;
     success: string;
-    title: string;
     value: string;
     warning: string;
     "xl-1": string;

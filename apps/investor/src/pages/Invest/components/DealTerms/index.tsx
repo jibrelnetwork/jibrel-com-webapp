@@ -5,6 +5,7 @@ import { LanguageCode } from '@jibrelcom/i18n'
 
 import {
   Loader,
+  FormTitle,
   LoaderColor,
 } from '@jibrelcom/ui'
 
@@ -71,7 +72,7 @@ const DealTerms: React.FunctionComponent<DealTermsProps> = ({
 
   return (
     <>
-      <h2 className={investStyle.subtitle}>Deal Terms</h2>
+      <FormTitle>Deal Terms</FormTitle>
       <div className={cc([style.data, isOfferingDataLoading && style.loading])}>
         {!data || isOfferingDataLoading ? <Loader color={LoaderColor.gray} /> : data.map(item => (
           <div className={style.item} key={item.key}>

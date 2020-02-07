@@ -1,0 +1,26 @@
+@import '../Grid/grid';
+@import '../theme/fonts';
+@import '../theme/media';
+@import '../theme/colors';
+
+.main {
+  @include font-h1-xs;
+
+  width: $column-s-4;
+  padding-top: 24px;
+  padding-bottom: 32px;
+  flex-shrink: 1;
+  color: $color-black;
+
+  @include screen('>xsmall') {
+    @include font-h1-s;
+  }
+
+  @include screen('>small') {
+    @include font-h1-m;
+  }
+
+  @include screen('>medium') {
+    @include font-h1-l;
+  }
+}

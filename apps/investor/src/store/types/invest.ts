@@ -1,3 +1,5 @@
+import { JibrelBankAccount } from './user'
+
 export enum SecurityType {
   'common_shares' = 'common_shares',
   'convertible_debt' = 'convertible_debt',
@@ -10,6 +12,14 @@ export enum FundingRound {
   b = 'b',
   c = 'c',
   d = 'd',
+}
+
+export enum OfferingStatus {
+  pending = 'pending',
+  active = 'active',
+  clearing = 'clearing',
+  completed = 'completed',
+  canceled = 'canceled',
 }
 
 export interface OfferingSecurity {
@@ -26,7 +36,7 @@ export interface Offering {
   security: OfferingSecurity;
   uuid: string;
   goal: string;
-  status: string;
+  price: string;
   equity: string;
   dateEnd: string;
   dateStart: string;
@@ -34,6 +44,7 @@ export interface Offering {
   updatedAt: string;
   valuation: string;
   round: FundingRound;
+  status: OfferingStatus;
   limitMinAmount: string;
   shares: number;
 }
@@ -47,20 +58,10 @@ export interface Customer {
   country: string;
 }
 
-export interface BankAccount {
-  bankName: string;
-  branchAddress?: string,
-  swiftCode: string;
-  holderName: string;
-  ibanNumber: string;
-  accountNumber: string;
-  depositReferenceCode: string;
-}
-
 export interface InvestState {
   customerData: Customer | void;
   offeringData: Offering | void;
-  bankAccountData: BankAccount | void;
+  bankAccountData: JibrelBankAccount | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
   isCustomerDataLoading: boolean;

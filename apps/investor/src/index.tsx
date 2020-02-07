@@ -3,8 +3,12 @@ import ReactDOM from 'react-dom'
 
 // settings should be initialized before everything else in the app
 import './app/settings'
+import { registerSprite } from '@jibrelcom/ui'
 
 import App from './App'
+import sprite from './utils/sprite'
+
+registerSprite('id', sprite)
 
 const MOUNT_NODE = document.getElementById('app')
 

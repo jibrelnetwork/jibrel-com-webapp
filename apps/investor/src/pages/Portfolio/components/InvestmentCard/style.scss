@@ -1,0 +1,95 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+
+.main {
+  @include flex-column;
+
+  height: 100%;
+  border-radius: 24px;
+
+  @include screen('>medium') {
+    padding: 32px;
+  }
+}
+
+.logo {
+  width: 88px;
+  height: 88px;
+  border-radius: 50%;
+}
+
+.name {
+  margin-top: 32px;
+  font-size: 24px;
+  font-weight: 800;
+  line-height: 29px;
+}
+
+.amount {
+  @include flex-row;
+
+  margin-top: 8px;
+  align-items: center;
+  font-weight: 800;
+  font-size: 32px;
+  line-height: 38px;
+  color: $color-black;
+
+  &.pending {
+    color: $color-black-40;
+
+    .clock {
+      display: inline-flex;
+    }
+  }
+}
+
+.clock {
+  display: none;
+  margin-left: 16px;
+  position: relative;
+
+  .icon {
+    @include icon-color($color-black-40);
+
+    width: 32px;
+    height: 32px;
+  }
+
+  .hint {
+    position: absolute;
+  }
+}
+
+.date {
+  margin-top: 16px;
+  font-size: 18px;
+  line-height: 140%;
+  color: $color-black-60;
+}
+
+.info {
+  @include flex-row;
+
+  margin-top: 32px;
+
+  .item {
+    width: 50%;
+    padding-right: 16px;
+  }
+
+  .label {
+    font-size: 12px;
+    line-height: 140%;
+    color: $color-black-60;
+  }
+
+  .value {
+    font-size: 20px;
+    line-height: 24px;
+    color: $color-black;
+  }
+}

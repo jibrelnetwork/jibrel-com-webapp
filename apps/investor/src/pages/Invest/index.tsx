@@ -2,14 +2,13 @@ import React, { Component } from 'react'
 import isEmpty from 'lodash-es/isEmpty'
 import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
 import { connect } from 'react-redux'
+import { FORM_ERROR } from 'final-form'
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import {
   useI18n,
   useLanguageCode,
 } from '@jibrelcom/i18n'
-
-import { FORM_ERROR } from 'final-form'
 
 import {
   Form,
@@ -18,9 +17,12 @@ import {
 
 import {
   Grid,
-  Icon,
   Link,
+  Warning,
   BigButton,
+  FormTitle,
+  PageTitle,
+  PageBackLink,
   PageWithHero,
   BigButtonSubmit,
   ErrorToast,
@@ -29,9 +31,10 @@ import {
 import settings from 'app/settings'
 import NotFound from 'pages/NotFound'
 import CoreLayout from 'layouts/CoreLayout'
-import STARTUP_NAMES from 'data/startupNames.json'
 import isRequired from 'utils/validators/isRequired'
 import heroImage from 'public/images/pic_hero_rocket_sun.svg'
+import { JibrelBankAccount } from 'store/types/user'
+import { InvestFormFields } from 'store/types/invest'
 
 import {
   Dispatch,
@@ -44,11 +47,9 @@ import {
 } from 'store/types/form'
 
 import {
-  BankAccount,
-  InvestFormFields,
-} from 'store/types/invest'
-
-import { RiskDisclosures } from 'components'
+  InvestmentInput,
+  RiskDisclosures,
+} from 'components'
 
 import style from './style.scss'
 import formatAmount from './utils/formatAmount'
@@ -57,7 +58,6 @@ import { InvestStep } from './types'
 import {
   DealTerms,
   CustomerData,
-  InvestmentInput,
 } from './components'
 
 interface OwnProps {
@@ -66,7 +66,8 @@ interface OwnProps {
 
 interface StateProps {
   offeringId: string | void;
-  bankAccountData: BankAccount | void;
+  startupName: string | void;
+  bankAccountData: JibrelBankAccount | void;
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
 }
@@ -106,7 +107,7 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
     <>
       <form onSubmit={handleSubmit}>
         <div className={style.form}>
-          <h2 className={style.subtitle}>{i18n._('Invest.form.amount.title')}</h2>
+          <FormTitle>{i18n._('Invest.form.amount.title')}</FormTitle>
           <InvestmentInput
             validate={isRequired({ i18n })}
             name='amount'
@@ -152,24 +153,27 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
 
 const BackLink: React.FunctionComponent<{
   slug: string;
-}> = ({ slug }) => (
-  <div className={style.back}>
-    <Icon
-      className={style.icon}
-      name='ic_arrow_right_24'
-    />
-    <Link href={`${settings.HOST_CMS}/en/companies/${slug}`}>
-      {`Back to ${STARTUP_NAMES[slug]}`}
-    </Link>
-  </div>
+  startupName: string | void;
+}> = ({
+  slug,
+  startupName,
+}) => !startupName ? null : (
+  <PageBackLink
+    className={style.back}
+    href={`${settings.HOST_CMS}/en/companies/${slug}`}
+  >
+    {`Back to ${startupName}`}
+  </PageBackLink>
 )
 
 const RisksStep: React.FunctionComponent<{
   handleClick: () => void;
   slug: string;
+  startupName: string | void;
 }> = ({
   handleClick,
   slug,
+  startupName,
 }) => (
   <>
     <Grid.Container>
@@ -180,7 +184,7 @@ const RisksStep: React.FunctionComponent<{
         l={8}
         xl={8}
       >
-        <BackLink slug={slug} />
+        <BackLink slug={slug} startupName={startupName} />
         <RiskDisclosures />
       </Grid.Item>
     </Grid.Container>
@@ -214,12 +218,12 @@ const RisksStep: React.FunctionComponent<{
 )
 
 const SuccessStep: React.FunctionComponent<{
-  data: BankAccount;
-  slug: string;
+  data: JibrelBankAccount;
+  startupName: string | void;
   amount: number;
 }> = ({
   data,
-  slug,
+  startupName,
   amount,
 }) => {
   const lang = useLanguageCode()
@@ -230,20 +234,14 @@ const SuccessStep: React.FunctionComponent<{
         imgSrc={heroImage}
         className={style.success}
         title='Subscription Submitted'
-        text={`You have successfully subscribed! To complete your investment in ${STARTUP_NAMES[slug]}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
+        text={`You have successfully subscribed! To complete your investment in ${startupName}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
       >
-        <h2 className={style.subtitle}>Subscription Amount</h2>
+        <FormTitle>Subscription Amount</FormTitle>
         <div className={style.amount}>{formatAmount(amount, lang)}</div>
-        <h2 className={style.subtitle}>Jibrel Bank Account Details</h2>
-        <div className={style.warning}>
-          <Icon
-            name='ic_exclamation_24'
-            className={style.exclamation}
-          />
-          <span>
-            Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
-          </span>
-        </div>
+        <FormTitle>Jibrel Bank Account Details</FormTitle>
+        <Warning className={style.warning}>
+          Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
+        </Warning>
         <div className={style.details}>
           <div className={style.item}>
             <div className={style.label}>Bank Account Holder Name</div>
@@ -302,14 +300,16 @@ const FormStep: React.FunctionComponent<{
   handleSubmit: FormSubmit<InvestFormFields>;
   slug: string;
   offeringId: string | void;
+  startupName: string | void;
 }> = ({
   handleSubmit,
   slug,
   offeringId,
+  startupName,
 }) => (
   <>
-    <BackLink slug={slug} />
-    <h1 className={style.title}>{`Invest in ${STARTUP_NAMES[slug]}`}</h1>
+    <BackLink slug={slug} startupName={startupName} />
+    <PageTitle>{`Invest in ${startupName}`}</PageTitle>
     <DealTerms slug={slug} />
     <div className={style.note}>
       To continue, you need to sign the Subscription Agreement by electronic signature. Before you do this, please enter your Subscription Amount
@@ -374,6 +374,7 @@ class Invest extends Component<InvestProps, InvestState> {
       bankAccountData,
       slug,
       offeringId,
+      startupName,
       subscriptionAmount,
     }: InvestProps = this.props
 
@@ -387,6 +388,7 @@ class Invest extends Component<InvestProps, InvestState> {
           <RisksStep
             handleClick={this.agreeWithRisks}
             slug={slug}
+            startupName={startupName}
           />
         )
 
@@ -397,6 +399,7 @@ class Invest extends Component<InvestProps, InvestState> {
               handleSubmit={this.handleSubmit}
               slug={slug}
               offeringId={offeringId}
+              startupName={startupName}
             />
           </Grid.Container>
         )
@@ -406,7 +409,8 @@ class Invest extends Component<InvestProps, InvestState> {
           <Grid.Container>
             <SuccessStep
               data={bankAccountData}
-              slug={slug}amount={subscriptionAmount}
+              startupName={startupName}
+              amount={subscriptionAmount}
             />
           </Grid.Container>
         ): <NotFound />
@@ -443,6 +447,7 @@ export default connect<StateProps, DispatchProps, OwnProps>(
       isOfferingDataLoading,
       offeringId: (offeringData || {}).uuid,
       subscriptionAmount: subscriptionAmount,
+      startupName: offeringData ? offeringData.security.company.name : undefined,
     }
   },
   (dispatch: Dispatch): DispatchProps => ({
