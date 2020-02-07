@@ -31,6 +31,7 @@ const NotFound: React.FunctionComponent<NotFoundProps> = ({ href }) => (
         className={cc(['error__button', style.button])}
       >
         <BigButton
+          component='a'
           href={href}
         >
           Back to main

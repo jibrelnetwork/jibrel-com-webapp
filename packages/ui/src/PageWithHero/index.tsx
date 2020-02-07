@@ -47,7 +47,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
     <div className={style.actions}>
       {(href && buttonLabel) && (
         <div className={style.button}>
-          <BigButton href={href}>
+          <BigButton component='a' href={href}>
             {buttonLabel}
           </BigButton>
         </div>
@@ -60,6 +60,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
           ])}
         >
           <BigButton
+            component='a'
             href={secondaryHref}
             variant={BigButtonVariant.secondary}
           >

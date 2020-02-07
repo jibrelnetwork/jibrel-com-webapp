@@ -286,6 +286,7 @@ const SuccessStep: React.FunctionComponent<{
         </div>
         <div className={`${pageWithHeroStyle.button} ${pageWithHeroStyle.secondary}`}>
           <BigButton
+            component='a'
             href={settings.HOST_CMS}
             variant={BigButtonVariant.secondary}
           >
