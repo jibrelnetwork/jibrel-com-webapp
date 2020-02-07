@@ -27,6 +27,7 @@ const KYCSuccess: React.FunctionComponent = () => {
         </div>
 
         <BigButton
+          component='a'
           className={style.submit}
           href={`${settings.HOST_CMS}/${languageCode}`}
         >

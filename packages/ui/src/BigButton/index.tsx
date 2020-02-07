@@ -6,32 +6,39 @@ import loader from '../Loader/style.scss'
 import { BigButtonVariant } from './types'
 import { withSubmitButtonUX } from '../FieldWrapper'
 
-export interface BigButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
-  href?: string;
-  variant?: BigButtonVariant;
+export interface BigButtonCommonProps {
   className?: string;
+  variant?: BigButtonVariant;
   isLoading?: boolean;
   isDisabled?: boolean;
-  children: React.ReactNode;
 }
 
-const BigButton: React.FunctionComponent<BigButtonProps> = ({
+interface LinkBigButtonProps
+  extends BigButtonCommonProps,
+    React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
+  component: 'a';
+}
+
+interface ButtonBigButtonProps
+  extends BigButtonCommonProps,
+    React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
+  component: 'button';
+}
+
+const BigButton: React.FunctionComponent<LinkBigButtonProps | ButtonBigButtonProps> = ({
   variant = BigButtonVariant.main,
+  component = 'button',
   className,
   isLoading = false,
   isDisabled = false,
-  href,
   children,
   ...props
 }) => {
-  const Component = href === undefined
-    ? 'button'
-    : 'a'
+  const Component = component
 
   return (
     <Component
       {...props}
-      href={href}
       className={cc([
         style.button,
         style[variant],
