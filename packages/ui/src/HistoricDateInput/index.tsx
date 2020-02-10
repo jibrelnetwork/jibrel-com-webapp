@@ -4,6 +4,7 @@ import MaskedInput from 'react-text-mask'
 
 import style from '../Input/style.scss'
 import { GenericFieldProps } from '../FieldWrapper/types'
+
 import {
   withField,
   withFieldUX,
@@ -36,8 +37,8 @@ const format = () => (value: string | void): string | void => {
 }
 
 const HistoricDateInput: React.FunctionComponent<GenericFieldProps & HistoricDateInputProps> = ({
+  label,
   className,
-  label = 'Date',
   hasError = false,
   isDisabled = false,
   ...props
@@ -56,9 +57,7 @@ const HistoricDateInput: React.FunctionComponent<GenericFieldProps & HistoricDat
         {...props}
       />
       <div className={style.border} />
-      <p
-        className={style.label}
-      >
+      <p className={style.label}>
         {label}
       </p>
     </label>
@@ -68,5 +67,4 @@ const HistoricDateInput: React.FunctionComponent<GenericFieldProps & HistoricDat
 export default withField(withFieldUX(React.memo(withMessage(HistoricDateInput))), {
   parse,
   format,
-  hint: 'Please enter the date as DD-MM-YYYY',
 })

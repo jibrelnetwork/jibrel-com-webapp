@@ -1,5 +1,6 @@
 import React, { useState } from 'react'
 import cc from 'classcat'
+import { useI18n } from '@jibrelcom/i18n'
 
 import style from './style.scss'
 import grid from '../Grid/grid.scss'
@@ -20,6 +21,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
   activeRoute,
   isAuthenticated = false,
 }) => {
+  const i18n = useI18n()
   const [isMenuOpen, setIsMenuOpen] = useState(false)
 
   const handleClickButton = (): void => {
@@ -56,7 +58,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
               className="navbar__menu-toggle"
               onClick={handleClickButton}
             >
-              Open menu
+              {i18n._('navigation.menuToggle')}
             </button>
             <div className="navbar__menu">
               {isAuthenticated ? (
@@ -67,7 +69,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                         href={`//${domain}/${lang}/invest`}
                         className="navbar__menu-link"
                       >
-                        Invest
+                        {i18n._('navigation.invest')}
                       </a>
                     </li>
                     <li className="navbar__menu-item">
@@ -75,7 +77,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                         href={`//${domain}/${lang}/raise`}
                         className="navbar__menu-link"
                       >
-                        Raise
+                        {i18n._('navigation.raise')}
                       </a>
                     </li>
                     <li className="navbar__menu-item">
@@ -83,7 +85,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                         href={`//${domain}/${lang}/about`}
                         className="navbar__menu-link"
                       >
-                        About
+                        {i18n._('navigation.about')}
                       </a>
                     </li>
                     <li className="navbar__menu-item">
@@ -94,7 +96,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                           (activeRoute === 'Portfolio') && '--current',
                         ])}
                       >
-                        Portfolio
+                        {i18n._('navigation.portfolio')}
                       </a>
                     </li>
                   </ul>
@@ -105,7 +107,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                         className="navbar__menu-link"
                         onClick={logout}
                       >
-                        Log out
+                        {i18n._('navigation.logout')}
                       </a>
                     </li>
                   </ul>
@@ -117,7 +119,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                       href="mailto:support@jibrel.com"
                       className="navbar__menu-link"
                     >
-                      Support
+                      {i18n._('navigation.support')}
                     </a>
                   </li>
                 </ul>

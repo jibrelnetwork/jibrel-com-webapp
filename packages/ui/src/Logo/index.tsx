@@ -1,4 +1,5 @@
 import React from 'react'
+import { useI18n } from '@jibrelcom/i18n'
 
 import { LogoColor } from './types'
 
@@ -20,14 +21,18 @@ const LOGO_COLOR_MAP = {
 const Logo: React.FunctionComponent<LogoProps> = ({
   color = LogoColor.blue,
   className,
-}) => (
-  <img
-    src={LOGO_COLOR_MAP[color]}
-    className={className}
-    width='128'
-    height='32'
-    alt='Jibrel logo'
-  />
-)
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <img
+      src={LOGO_COLOR_MAP[color]}
+      className={className}
+      alt={i18n._('layout.logo.alt')}
+      width='128'
+      height='32'
+    />
+  )
+}
 
 export default React.memo(Logo)

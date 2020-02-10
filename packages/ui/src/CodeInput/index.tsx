@@ -11,7 +11,7 @@ import {
 } from '../FieldWrapper'
 
 export interface CodeInputProps extends React.PropsWithoutRef<JSX.IntrinsicElements['input']> {
-  label?: string;
+  label: string;
   className?: string;
   hasError?: boolean;
 }
@@ -25,8 +25,8 @@ const getMaskLength = (value: string | number | string[] | undefined): number =>
 }
 
 const CodeInput: React.FunctionComponent<CodeInputProps> = ({
+  label,
   className,
-  label = 'Verification Code',
   hasError = false,
   ...props
 }) => {

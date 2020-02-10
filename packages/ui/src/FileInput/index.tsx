@@ -1,5 +1,7 @@
 import React, { useState } from 'react'
 import cc from 'classcat'
+import { I18n } from '@lingui/core'
+import { useI18n } from '@jibrelcom/i18n'
 
 import Icon from '../Icon'
 import style from './style.scss'
@@ -31,19 +33,18 @@ type FileLike = File | {
 
 const KILO = 1024
 
-const getFileSize = (bytes: number): string => {
+const getFileSize = (i18n: I18n, bytes: number): string => {
   const kBytes = (bytes / KILO)
 
   return (kBytes < KILO)
-    ? `${kBytes.toFixed(1)} KB`
-    : `${(kBytes / KILO).toFixed(1)} MB`
+    ? `${kBytes.toFixed(1)} ${i18n._('form.file.kBytes')}`
+    : `${(kBytes / KILO).toFixed(1)} ${i18n._('form.file.mBytes')}`
 }
 
 // FIXME: add types
-const withFileField = (
-  FileInputComponent,
-) => {
+const withFileField = (FileInputComponent) => {
   const WithFileFieldWrapper = (props) => {
+    const i18n = useI18n()
     const [error, setError] = useState()
     const [isLoading, setIsLoading] = useState(false)
 
@@ -55,7 +56,7 @@ const withFileField = (
         onSetUploadError={setError}
         onSetUploadProgress={setIsLoading}
         error={error}
-        progress={isLoading ? 'Uploading...' : undefined}
+        progress={isLoading ? i18n._('form.file.uploading') : undefined}
       />
     )
   }
@@ -77,7 +78,9 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({
   onChange,
   ...props
 }) => {
+  const i18n = useI18n()
   const [isLoading, setIsLoading] = useState(false)
+
   const [file, setFile] = useState<FileLike | void>(
     value
       ? { name: value, size: 0 }
@@ -139,9 +142,14 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({
         disabled={isDisabled || isLoading}
         key={value}
       />
-      <div className={style.name}>{value && file && file.name}</div>
+      <div className={style.name}>{(value && file) ? file.name : ''}</div>
       <div className={style.placeholder}>{value ? '' : placeholder}</div>
-      <div className={style.size}>{(value && file && file.size) ? getFileSize(file.size) : 'Max size 10 MB' }</div>
+      <div className={style.size}>
+        {(value && file && file.size)
+          ? getFileSize(i18n, file.size)
+          : i18n._('form.file.sizeMessage')
+        }
+      </div>
       <div className={inputStyle.border} />
       <div className={style.border} />
       <p

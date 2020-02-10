@@ -53,7 +53,7 @@ const KYCIndividual: React.FunctionComponent<KYCIndividualProps> = ({
     <KYCLayout
       backHandler={goBack}
       backLabel={(status === KYCIndividualStatus.personal)
-        ? i18n._('KYC.form.action.back')
+        ? i18n._('KYC.form.action.start')
         : i18n._('KYC.form.action.prev')
       }
     >

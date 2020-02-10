@@ -78,9 +78,10 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
         label={i18n._('KYC.Company.beneficiary.form.lastName.label')}
       />
       <HistoricDateInput
+        validate={isRequired({ i18n })}
+        hint={i18n._('form.date.hint')}
         name={`beneficiaries[${index}].birthDate`}
         label={i18n._('KYC.Company.beneficiary.form.birthDate.label')}
-        validate={isRequired({ i18n })}
       />
       <CountrySelect
         validate={isRequired({ i18n })}
@@ -93,6 +94,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
       </h3>
       <PhoneNumberInput
         validate={isRequired({ i18n })}
+        hint={i18n._('form.phoneNumber.hint')}
         name={`beneficiaries[${index}].phoneNumber`}
       />
       <Input
@@ -141,6 +143,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
       />
       <HistoricDateInput
         validate={isRequired({ i18n })}
+        hint={i18n._('form.date.hint')}
         name={`beneficiaries[${index}].passportExpirationDate`}
         label={i18n._('KYC.Company.beneficiary.form.passportExpirationDate.label')}
       />

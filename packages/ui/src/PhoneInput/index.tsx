@@ -1,5 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
+import { useI18n } from '@jibrelcom/i18n'
 
 import { InputBase } from '../Input'
 import style from './style.scss'
@@ -34,10 +35,12 @@ export const clearPhoneNumber = ({ ccc }: PhoneInputProps) => (phoneNumber: stri
 
 const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> = ({
   ccc,
+  label,
   className,
-  label = 'Phone Number',
   ...props
 }) => {
+  const i18n = useI18n()
+
   return (
     <div
       className={cc([
@@ -49,8 +52,8 @@ const PhoneInput: React.FunctionComponent<GenericFieldProps & PhoneInputProps> =
         {ccc}
       </span>
       <InputBase
-        label={label}
         classNames={style}
+        label={label || i18n._('form.phone.label')}
         {...props}
       />
     </div>
