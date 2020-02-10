@@ -6,6 +6,7 @@
     "apps/id/src/**/*.tsx",
     "apps/investor/src/**/*.ts",
     "apps/investor/src/**/*.tsx",
+    "packages/axios/src/**/*.ts",
     "packages/ui/src/**/*.ts",
     "packages/ui/src/**/*.tsx",
     "packages/i18n/src/**/*.ts",
