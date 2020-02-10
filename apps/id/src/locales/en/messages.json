@@ -204,6 +204,5 @@
   "VerifyPhoneCode.actions.resendCode": "Resend verification code",
   "VerifyPhoneCode.actions.sendSMS": "Send SMS verification",
   "VerifyPhoneCode.actions.callAgain": "Call again",
-  "VerifyPhoneCode.actions.phoneCall": "Phone call verification",
-  "": ""
+  "VerifyPhoneCode.actions.phoneCall": "Phone call verification"
 }
