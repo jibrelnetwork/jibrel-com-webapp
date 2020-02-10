@@ -1,5 +1,6 @@
-import { createModel } from '@rematch/core'
 import get from 'lodash-es/get'
+import { i18n } from '@jibrelcom/i18n'
+import { createModel } from '@rematch/core'
 
 import axios from '../axios'
 
@@ -30,22 +31,21 @@ export const kyc = createModel({
       } catch (error) {
         const { response } = error
 
-        // FIXME: Errors should be translated
         if (!response) {
-          throw Error('No connection')
+          throw Error(i18n._('form.error.upload.noConnection'))
         }
 
         const { status, data } = response
 
         if (status === 413) {
-          throw Error('File too large')
+          throw Error(i18n._('form.error.upload.tooLarge'))
         }
 
         if (status === 400) {
-          throw Error(get(data, 'errors.file[0].message', 'Upload error'))
+          throw Error(get(data, 'errors.file[0].message', i18n._('form.error.upload.error')))
         }
 
-        throw Error('Upload error')
+        throw Error(i18n._('form.error.upload.error'))
       }
     },
   }),

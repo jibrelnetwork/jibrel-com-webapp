@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { Loader } from '@jibrelcom/ui'
+import { useI18n } from '@jibrelcom/i18n'
 import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
@@ -29,12 +30,17 @@ import {
 
 import style from './style.scss'
 
-interface EmailVerificationProps {
-  updateLimits: () => Promise<void>;
-  sendEmailLink: FormSubmit<EmailVerificationFormFields>;
+interface StateProps {
   email: string | void;
   resendVerificationEmail: UserLimit | void;
 }
+
+interface DispatchProps {
+  updateLimits: () => Promise<void>;
+  sendEmailLink: FormSubmit<EmailVerificationFormFields>;
+}
+
+export type EmailVerificationProps = StateProps & DispatchProps
 
 interface EmailVerificationStatusProps {
   updateLimits: () => Promise<void>;
@@ -44,24 +50,31 @@ interface EmailVerificationStatusProps {
 }
 
 const EmailVerificationSending: React.FunctionComponent = () => {
+  const i18n = useI18n()
+
   return (
     <div className={style.loading}>
       <div className={style.loader}>
         <Loader color={LoaderColor.blue} />
       </div>
-      <span>We are sending a new email. Please check your inbox.</span>
+      <span>{i18n._('EmailVerification.sending')}</span>
     </div>
   )
 }
 
 const EmailVerificationError: React.FunctionComponent = () => {
+  const i18n = useI18n()
+
   return (
     <div className={style.error}>
       <span className={style.message}>
-        We are unable to deliver email to your inbox.
+        {i18n._('EmailVerification.error.unable')}
       </span><br />
-      <span>Please check your spam folder or contact our</span><br />
-      <a className={style.support} href='#'>Support team.</a>
+      <div
+        dangerouslySetInnerHTML={{
+          __html: i18n._('EmailVerification.error.check'),
+        }}
+      />
     </div>
   )
 }
@@ -73,10 +86,13 @@ const EmailVerificationWait: React.FunctionComponent<{
   updateLimits,
   timeLeft,
 }) => {
+  const i18n = useI18n()
+
   return (
     <div className={style.countdown}>
-      Email sent. Please check your inbox.<br />
-      You can request the email again in
+      <div dangerouslySetInnerHTML={{
+        __html: i18n._('EmailVerification.wait'),
+      }} />
       <Countdown
         onFinish={updateLimits}
         timeLeft={timeLeft}
@@ -86,12 +102,14 @@ const EmailVerificationWait: React.FunctionComponent<{
 }
 
 const EmailVerificationSent: React.FunctionComponent = () => {
+  const i18n = useI18n()
+
   return (
     <button
       type='submit'
       className={style.action}
     >
-      EMAIL DIDN&apos;T ARRIVE?
+      {i18n._('EmailVerification.didntArrive')}
     </button>
   )
 }
@@ -123,6 +141,8 @@ const EmailVerification: React.FunctionComponent<EmailVerificationProps> = ({
     return null
   }
 
+  const i18n = useI18n()
+
   const {
     leftSeconds,
     temproraryUnavailable,
@@ -144,15 +164,15 @@ const EmailVerification: React.FunctionComponent<EmailVerificationProps> = ({
             return (
               <form onSubmit={handleSubmit}>
                 <UserActionInfo
-                  title='Verify Your Email'
+                  title={i18n._('EmailVerification.title')}
                   iconName='status_sent'
                 >
-                  <p className={style.info}>
-                    We&apos;ve sent a verification email to <span className={style.email}>
-                      {email}
-                    </span>.<br />
-                    Click the link inside to get started.
-                  </p>
+                  <p
+                    className={style.info}
+                    dangerouslySetInnerHTML={{
+                      __html: i18n._('EmailVerification.sent', { email })
+                    }}
+                  />
                   <EmailVerificationStatus
                     updateLimits={updateLimits}
                     timeLeft={leftSeconds}
@@ -170,7 +190,7 @@ const EmailVerification: React.FunctionComponent<EmailVerificationProps> = ({
   )
 }
 
-export default connect(
+export default connect<StateProps, DispatchProps, void>(
   (state: RootState) => {
     const {
       limits,

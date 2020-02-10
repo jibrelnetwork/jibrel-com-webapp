@@ -56,15 +56,19 @@ interface ResetState {
 const ResetSuccess: React.FunctionComponent<{ email: string }> = ({
   email,
 }) => {
+  const i18n = useI18n()
+
   return (
     <UserActionInfo
-      title='Password Updated'
+      title={i18n._('Reset.success.title')}
       iconName='status_ok'
     >
-      <p className={style.info}>
-        Congratulations!<br />
-        Password for <span className={style.email}>{email}</span> has been updated.
-      </p>
+      <p
+        className={style.info}
+        dangerouslySetInnerHTML={{
+          __html: i18n._('Reset.success.message', { email })
+        }}
+      />
       <Link
         routeName='Login'
         routeParams={{ lang: 'en' }}
@@ -73,7 +77,7 @@ const ResetSuccess: React.FunctionComponent<{ email: string }> = ({
           bigButtonStyle.main,
         ])}
       >
-        Log In to jibrel
+        {i18n._('Reset.success.login')}
       </Link>
     </UserActionInfo>
   )
@@ -115,7 +119,7 @@ class Reset extends Component<ResetProps, ResetState> {
     if (this.state.isChecking) {
       return (
         <ResponseLoader>
-          Wait a moment, please...
+          {i18n._('Reset.wait')}
         </ResponseLoader>
       )
     }
@@ -129,25 +133,25 @@ class Reset extends Component<ResetProps, ResetState> {
         onSubmit={handleSubmit}
         className={authStyle.form}
       >
-        <h2 className={authStyle.title}>Reset Password?</h2>
+        <h2 className={authStyle.title}>{i18n._('Reset.form.title')}</h2>
         <div className={authStyle.fields}>
           <PasswordInput
             validate={isRequired({ i18n })}
             checkPasswordStrength={checkPasswordStrength}
+            label={i18n._('Reset.form.password.label')}
             name='password'
-            label='New Password'
             maxLength={256}
             withIndicator
           />
           <PasswordInput
             validate={isMatchedPassword({ i18n })}
+            label={i18n._('Reset.form.passwordConfirm.label')}
             name='passwordConfirm'
-            label='Confirm Password'
             maxLength={256}
           />
         </div>
         <BigButtonSubmit>
-          Update Password
+          {i18n._('Reset.form.submit')}
         </BigButtonSubmit>
       </form>
     )
@@ -179,7 +183,7 @@ class Reset extends Component<ResetProps, ResetState> {
   }
 }
 
-export default connect<null, DispatchProps, OwnProps>(
+export default connect<void, DispatchProps, OwnProps>(
   null,
   (dispatch: Dispatch) => ({
     resetPassword: dispatch.user.resetPassword,

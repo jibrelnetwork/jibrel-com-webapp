@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { useI18n } from '@jibrelcom/i18n'
 
 import style from './style.scss'
 
@@ -14,7 +15,32 @@ interface CountdownState {
 const ONE_MINUTE = 60
 const ONE_SECOND = 1000
 
+enum Fraction {
+  min = 'min',
+  sec = 'sec',
+}
+
+const TimeFraction: React.FunctionComponent<{
+  value: number;
+  fraction: Fraction;
+}> = ({
+  value,
+  fraction,
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <>
+      <span className={style.number}>
+        {value}
+      </span> {i18n._(`common.components.Countdown.${Fraction[fraction]}`)}
+    </>
+  )
+}
+
 class Countdown extends Component<CountdownProps, CountdownState> {
+  timeout: number
+
   constructor(props: CountdownProps) {
     super(props)
 
@@ -56,7 +82,7 @@ class Countdown extends Component<CountdownProps, CountdownState> {
       return
     }
 
-    this.timeout = setTimeout(() => {
+    this.timeout = window.setTimeout(() => {
       this.setState({ countdown })
       this.tick()
     }, ONE_SECOND)
@@ -74,16 +100,8 @@ class Countdown extends Component<CountdownProps, CountdownState> {
 
     return (
       <div className={style.countdown}>
-        {!!min && (
-          <>
-            <span className={style.number}>{min}</span> min
-          </>
-        )}
-        {!!sec && (
-          <>
-            <span className={style.number}>{sec}</span> sec
-          </>
-        )}
+        {!!min && <TimeFraction value={min} fraction={Fraction.min} />}
+        {!!sec && <TimeFraction value={sec} fraction={Fraction.sec} />}
       </div>
     )
   }

@@ -1,3 +1,5 @@
+import { CountryCode } from '@jibrelcom/countries/src/types'
+
 /* eslint-disable @typescript-eslint/camelcase */
 export enum PhoneVerificationStatus {
   unconfirmed = 'unconfirmed',
@@ -30,7 +32,7 @@ export interface PhoneVerificationState {
 }
 
 export type PhoneAPINumberFields = {
-  country: string;
+  country: CountryCode;
   countryCode: string;
   number: string;
 }

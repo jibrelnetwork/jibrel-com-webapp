@@ -31,27 +31,27 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
     >
       <div className={style.form}>
         <h2 className={style.title}>
-          Declaration of Source of Funds
+          {i18n._('KYC.Personal.income.title')}
         </h2>
         <OtherSelect
           validate={isRequired({ i18n })}
           inputValidate={isRequired({ i18n })}
           options={OCCUPATIONS}
+          label={i18n._('KYC.Personal.income.form.occupation.label')}
+          placeholder={i18n._('KYC.Personal.income.form.occupation.placeholder')}
           name='occupation'
-          label='Profession'
-          placeholder='select profession'
         />
         <OtherSelect
           validate={isRequired({ i18n })}
           inputValidate={isRequired({ i18n })}
           options={INCOME_SOURCES}
+          label={i18n._('KYC.Personal.income.form.incomeSource.label')}
+          placeholder={i18n._('KYC.Personal.income.form.incomeSource.placeholder')}
           name='incomeSource'
-          label='Primary Source of Income'
-          placeholder='select source of income'
         />
       </div>
       <BigButtonSubmit className={style.submit}>
-        Finish
+        {i18n._('KYC.form.action.finish')}
       </BigButtonSubmit>
     </form>
   )

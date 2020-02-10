@@ -1,3 +1,4 @@
+export { i18n } from './i18n'
 export { useI18n } from './i18n/useI18n'
 export { I18nContext } from './i18n/I18nContext'
 export { useLanguage } from './i18n/useLanguage'

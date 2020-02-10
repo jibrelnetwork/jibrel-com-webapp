@@ -30,6 +30,12 @@ const LOGIN_INITIAL_VALUES: LoginFormFields = {
   password: '',
 }
 
+interface DispatchProps {
+  handleSubmit: FormSubmit<LoginFormFields>;
+}
+
+export type LoginProps = DispatchProps
+
 const LoginForm: React.FunctionComponent = ({
   handleSubmit,
   form: { getState },
@@ -42,13 +48,13 @@ const LoginForm: React.FunctionComponent = ({
       onSubmit={handleSubmit}
       className={style.form}
     >
-      <h2 className={style.title}>Sign In</h2>
+      <h2 className={style.title}>{i18n._('Login.form.title')}</h2>
       <div className={style.fields}>
         <Input
           validate={isRequired({ i18n })}
           className={style.field}
+          label={i18n._('Login.form.email.label')}
           name='email'
-          label='Email'
           maxLength={256}
         />
         <PasswordInput
@@ -60,29 +66,25 @@ const LoginForm: React.FunctionComponent = ({
       </div>
       {!!submitError && <div className={style.error}>{submitError}</div>}
       <BigButtonSubmit className={style.submit}>
-        Sign In
+        {i18n._('Login.form.submit')}
       </BigButtonSubmit>
       <InternalLink
         name='Forgot'
         className={cc([style.action, style.wide])}
       >
-        FORGOT PASSWORD?
+        {i18n._('Login.forgot')}
       </InternalLink>
       <div className={style.switch}>
-        <span>Don&apos;t have an account?</span>
+        <span>{i18n._('Login.dontHaveAccount')}</span>
         <InternalLink
           name='SignUp'
           className={style.action}
         >
-          SIGN UP
+          {i18n._('Login.signup')}
         </InternalLink>
       </div>
     </form>
   )
-}
-
-interface LoginProps {
-  handleSubmit: FormSubmit<LoginFormFields>;
 }
 
 const Login: React.FunctionComponent<LoginProps> = ({
@@ -101,7 +103,7 @@ const Login: React.FunctionComponent<LoginProps> = ({
   )
 }
 
-export default connect(
+export default connect<void, DispatchProps, void>(
   null,
   (dispatch: Dispatch) => ({
     handleSubmit: dispatch.user.login,
