@@ -16,20 +16,25 @@ import {
 } from '../types'
 import { RootState } from 'store'
 
-const timeout = (time: number): Promise<void> => new Promise((resolve) => setTimeout(resolve, time))
 const INTERVAL_MULTIPLY = 1.5
 const checkPhoneUntilResult = async (interval = 3000): Promise<Phone> => {
-  const { data } = await axios.get<APIResponse<Phone>>('/v1/kyc/phone')
-  const { status } = data.data
-  if (
-    status !== PhoneVerificationStatus.code_sent
-    && status !== PhoneVerificationStatus.code_submitted
-  ) {
-    return data.data
-  }
+  const { data } = await axios
+    .get<APIResponse<Phone>>(
+      '/v1/kyc/phone',
+      {
+        'axios-retry': {
+          retries: Infinity,
+          retryDelay: attempts => attempts * interval * INTERVAL_MULTIPLY,
+          retryCondition: response => {
+            const { status } = response.response.data.data
+            return status === PhoneVerificationStatus.code_sent
+              && status === PhoneVerificationStatus.code_submitted
+          }
+        }
+      }
+    )
 
-  await timeout(interval)
-  return await checkPhoneUntilResult(interval * INTERVAL_MULTIPLY)
+  return data.data
 }
 
 export const phone = createModel<PhoneVerificationState>({

@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
+import axiosRetry from 'axios-retry'
 
 import {
   Form,
@@ -18,7 +19,7 @@ import {
 import auth from 'styles/auth.scss'
 import settings from 'app/settings'
 import AuthLayout from 'layouts/AuthLayout'
-import { Dispatch } from 'store'
+import { axios, Dispatch} from 'store'
 import { checkPasswordStrength } from 'utils/forms'
 
 import {
@@ -51,6 +52,23 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
   values,
   form: { change },
 }) => {
+  React.useEffect(() => {
+     axios
+      .get(
+        '/v1/user/profile',
+        {
+          'axios-retry': {
+            retries: Infinity,
+            retryDelay: () => 1000,
+            retryCondition: (x) => {
+              console.log({...x})
+
+              return true
+            }
+          }
+        })
+  }, [])
+
   const i18n = useI18n()
 
   return (
