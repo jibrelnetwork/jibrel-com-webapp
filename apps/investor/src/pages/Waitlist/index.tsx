@@ -23,6 +23,7 @@ import settings from 'app/settings'
 import NotFound from 'pages/NotFound'
 import CoreLayout from 'layouts/CoreLayout'
 import isRequired from 'utils/validators/isRequired'
+import formatSlug from 'utils/formatters/formatSlug'
 import heroImage from 'public/images/pic_hero_rocket_sun.svg'
 import { WaitlistFormFields } from 'store/types/waitlist'
 
@@ -156,7 +157,7 @@ const FormStep: React.FunctionComponent<{
   <div className={style.background}>
     <PageTitle>Join Waitlist</PageTitle>
     <PageBackLink
-      href={`${settings.HOST_CMS}/en/companies/${startupName.replace(' ', '').toLowerCase()}`}
+      href={`${settings.HOST_CMS}/en/companies/${formatSlug(startupName)}`}
     >
       {`Back to ${startupName}`}
     </PageBackLink>

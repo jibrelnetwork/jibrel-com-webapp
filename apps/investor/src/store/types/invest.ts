@@ -20,6 +20,7 @@ export enum OfferingStatus {
   clearing = 'clearing',
   completed = 'completed',
   canceled = 'canceled',
+  waitlist = 'waitlist',
 }
 
 export interface OfferingSecurity {

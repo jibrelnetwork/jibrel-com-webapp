@@ -1,3 +1,4 @@
+import { actions } from 'redux-router5'
 import { FORM_ERROR } from 'final-form'
 
 import {
@@ -5,10 +6,16 @@ import {
   ModelConfig,
 } from '@rematch/core'
 
-import { RootState } from 'store'
+import formatSlug from 'utils/formatters/formatSlug'
+
+import {
+  Dispatch,
+  RootState,
+} from 'store'
 
 import axios from '../axios'
 import handle403 from '../utils/handle403'
+import { OfferingStatus } from '../types/invest'
 import { FormSubmitResult } from '../types/form'
 
 import {
@@ -21,14 +28,25 @@ export const waitlist: ModelConfig<WaitlistState> = createModel<WaitlistState>({
     offeringData: undefined,
     isOfferingDataLoading: true,
   },
-  effects: () => ({
+  effects: (dispatch: Dispatch) => ({
     async getOfferingData(id: string, rootState: RootState): Promise<void> {
       try {
         this.setOfferingDataLoading()
 
         const { data } = await axios.get(`/v1/investment/offerings/${id}`)
 
-        this.setOfferingData(data)
+        const {
+          status,
+          security,
+        } = data
+
+        if (status === OfferingStatus.waitlist) {
+          this.setOfferingData(data)
+        } else if (status === OfferingStatus.active) {
+          dispatch(actions.navigateTo('Invest', { slug: formatSlug(security.company.name) }))
+        } else {
+          this.setOfferingData(undefined)
+        }
       } catch (error) {
         if (!error.response) {
           throw error
