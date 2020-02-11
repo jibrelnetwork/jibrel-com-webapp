@@ -8,12 +8,12 @@ export interface AuthLayoutProps {
 }
 
 const AuthLayout: React.FunctionComponent<AuthLayoutProps> = ({ children }) => (
-  <div className={style.layout}>
+  <>
     <Header />
     <div className={style.content}>
       {children}
     </div>
-  </div>
+  </>
 )
 
 export default AuthLayout

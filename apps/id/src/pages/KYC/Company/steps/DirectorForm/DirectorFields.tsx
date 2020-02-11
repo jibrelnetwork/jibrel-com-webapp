@@ -27,7 +27,9 @@ export const DirectorFields: React.FunctionComponent<DirectorFieldsProps>  = ({
     <section>
       {!isPrimary &&
         <div className={style.additionalTitle}>
-          <h2 className={style.title}>Director {index + 1}</h2>
+          <h2 className={style.title}>
+            {i18n._('KYC.Company.director.form.indexTitle', { index: index + 1 })}
+          </h2>
           <button
             onClick={deleteHandler}
             className={style.close}
@@ -38,9 +40,9 @@ export const DirectorFields: React.FunctionComponent<DirectorFieldsProps>  = ({
         </div>
       }
       <Input
+        validate={isRequired({ i18n })}
         name={`directors[${index}].fullName`}
-        label='Full Legal Name'
-        validate={isRequired({i18n})}
+        label={i18n._('KYC.Company.director.form.fullName.label')}
       />
     </section>
   )

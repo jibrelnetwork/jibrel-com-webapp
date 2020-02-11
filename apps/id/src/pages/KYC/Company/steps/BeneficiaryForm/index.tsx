@@ -3,6 +3,7 @@ import cc from 'classcat'
 import arrayMutators from 'final-form-arrays'
 import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
   FieldArray,
@@ -43,7 +44,8 @@ interface StateProps {
 
 interface DispatchProps {
   uploadDocument: UploadDocumentHandler;
-  submit: (callback: () => void) => (values: KYCInstitutionValues) => Promise<KYCInstitutionValues> | void;
+  submit: (callback: () => void) => (values: KYCInstitutionValues) =>
+    Promise<KYCInstitutionValues> | void;
 }
 
 interface OwnProps {
@@ -65,6 +67,8 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
   backLabel,
   nextLabel,
 }) => {
+  const i18n = useI18n()
+
   return (
     <KYCLayout
       backHandler={backHandler}
@@ -94,28 +98,30 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
             <form onSubmit={handleSubmit}>
               <div className={style.step}>
                 <h2 className={style.title}>
-                  Beneficiary
+                  {i18n._('KYC.Company.beneficiary.form.title')}
                 </h2>
                 <div className={style.caption}>
-                  Any natural person who owns or controls, directly or indirectly, 25% or more of the shares or voting rights in the organization.
+                  {i18n._('KYC.Company.beneficiary.form.description')}
                 </div>
                 <FieldArray name='beneficiaries' initialValue={beneficiaries}>
-                  {({ fields }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
+                  {({
+                    fields,
+                  }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
                     name: string,
                     index: number,
                   ) => (
                       <BeneficiaryFields
                         key={name}
+                        uploadDocument={uploadDocument}
                         deleteHandler={(): void => fields.remove(index)}
                         documents={documents}
-                        uploadDocument={uploadDocument}
                         index={index}
                         isPrimary={(index === 0)}
                       />
                     ))}
                 </FieldArray>
                 <LinkButton type='button' onClick={(): void => push('beneficiaries', undefined)}>
-                  + ADD MORE BENEFICIARIES
+                  {i18n._('KYC.Company.beneficiary.form.button.add')}
                 </LinkButton>
                 {submitError && <div className={style.submitError}>{submitError}</div>}
               </div>

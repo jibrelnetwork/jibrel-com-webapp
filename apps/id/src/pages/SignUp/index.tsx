@@ -76,24 +76,24 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
       onSubmit={handleSubmit}
       className={auth.form}
     >
-      <h2 className={auth.title}>Sign Up</h2>
+      <h2 className={auth.title}>{i18n._('Signup.form.title')}</h2>
       <div className={auth.fields}>
         <Input
+          validate={isRequired({ i18n })}
+          label={i18n._('Signup.form.firstName.label')}
           name='firstName'
-          label='First Name'
           maxLength={30}
-          validate={isRequired({ i18n })}
         />
         <Input
+          validate={isRequired({ i18n })}
+          label={i18n._('Signup.form.lastName.label')}
           name='lastName'
-          label='Last Name'
           maxLength={30}
-          validate={isRequired({ i18n })}
         />
         <Input
-          name='email'
-          label='Email'
           validate={isRequired({ i18n })}
+          label={i18n._('Signup.form.email.label')}
+          name='email'
         />
         <PasswordInput
           validate={isStrongPassword({ i18n })}
@@ -109,46 +109,26 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
         />
       </div>
       <Checkbox
-        name='isAgreedDocuments'
         validate={isRequired({ i18n })}
+        name='isAgreedDocuments'
       >
-        <span>
-          I agree to Jibrel’s <a
-            className={style.terms}
-            href={`${settings.HOST_CMS}/docs/en/terms-and-conditions.pdf`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Terms and Conditions
-          </a>, <a
-            className={style.terms}
-            href={`${settings.HOST_CMS}/docs/en/privacy-policy.pdf`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Privacy Policy
-          </a> and <a
-            className={style.terms}
-            href={`${settings.HOST_CMS}/docs/en/risk-disclosures.pdf`}
-            target='_blank'
-            rel='noopener noreferrer'
-          >
-            Risk Disclosures
-          </a>.
-        </span>
+        <span
+          className={style.terms}
+          dangerouslySetInnerHTML={{
+            __html: i18n._('Signup.form.terms', { host: settings.HOST_CMS }),
+          }}
+        />
       </Checkbox>
-      <BigButtonSubmit
-        className={style.submit}
-      >
-        Create Account
+      <BigButtonSubmit className={style.submit}>
+        {i18n._('Signup.form.submit')}
       </BigButtonSubmit>
       <div className={style.signin}>
-        <span>Already have a Jibrel account?</span>
+        <span>{i18n._('Signup.alreadyHaveAccount')}</span>
         <InternalLink
           name='Login'
           className={style.action}
         >
-          SIGN IN
+          {i18n._('Signup.signin')}
         </InternalLink>
       </div>
     </form>

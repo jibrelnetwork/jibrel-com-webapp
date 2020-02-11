@@ -13,7 +13,6 @@ import CountrySelect from 'components/CountrySelect'
 import isRequired from 'utils/validators/isRequired'
 
 import {
-  Documents,
   KYCIndividualValues,
   UploadDocumentHandler,
 } from 'store/types/kyc'
@@ -23,13 +22,11 @@ import style from '../../style.scss'
 export interface ResidencyFormProps {
   uploadDocument: UploadDocumentHandler;
   formProps: FormRenderProps<KYCIndividualValues>;
-  documents: Documents;
 }
 
 const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
   uploadDocument,
   formProps,
-  documents,
 }) => {
   const i18n = useI18n()
 
@@ -40,44 +37,41 @@ const ResidencyForm: React.FunctionComponent<ResidencyFormProps> = ({
     >
       <div className={style.form}>
         <h2 className={style.title}>
-          Current Residential Address
+          {i18n._('KYC.Personal.residency.form.title')}
         </h2>
         <Input
           validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.residency.form.streetAddress.label')}
           name='streetAddress'
-          label='Street Address'
         />
         <Input
+          label={i18n._('KYC.Personal.residency.form.apartment.label')}
           name='apartment'
-          label='Apartment, Unit or Suite (Optional)'
         />
         <Input
           validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.residency.form.city.label')}
           name='city'
-          label='City'
         />
         <Input
+          label={i18n._('KYC.Personal.residency.form.postCode.label')}
           name='postCode'
-          label='Post Code (Optional)'
         />
         <CountrySelect
           validate={isRequired({ i18n })}
+          label={i18n._('KYC.Personal.residency.form.country.label')}
+          placeholder={i18n._('KYC.Personal.residency.form.country.placeholder')}
           name='country'
-          label='Country'
-          placeholder='select country'
         />
         <FileInput
           validate={isRequired({ i18n })}
           onUpload={uploadDocument}
-          placeholder='PNG, PDF, JPG'
+          placeholder={i18n._('KYC.document.placeholder')}
+          label={i18n._('KYC.Personal.residency.form.proofOfAddressDocument.label')}
           name='proofOfAddressDocument'
-          label='Proof of Address (Utility Bill, Bank Statements)'
-          {...(documents.proofOfAddressDocument || {})}
         />
       </div>
-      <BigButtonSubmit
-        className={style.submit}
-      >
+      <BigButtonSubmit className={style.submit}>
         {i18n._('KYC.form.action.next')}
       </BigButtonSubmit>
     </form>

@@ -1,13 +1,17 @@
 import React, { useState } from 'react'
 import { connect } from 'react-redux'
 import { actions } from 'redux-router5'
-import { useLanguageCode } from '@jibrelcom/i18n'
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import {
   Grid,
   BigButton,
 } from '@jibrelcom/ui'
+
+import {
+  useI18n,
+  useLanguageCode,
+} from '@jibrelcom/i18n'
 
 import settings from 'app/settings'
 import KYCLayout from 'layouts/KYCLayout'
@@ -23,13 +27,16 @@ interface KYCProps {
 const KYC: React.FunctionComponent<KYCProps> = ({
   goTo,
 }) => {
+  const i18n = useI18n()
   const languageCode = useLanguageCode()
   const [kycType, setKYCType] = useState(KYCType.empty)
 
   return (
     <KYCLayout>
       <Grid.Container className={style.choice}>
-        <Grid.Item className={style.title} component='h2'>What type of investor are you?</Grid.Item>
+        <Grid.Item className={style.title} component='h2'>
+          {i18n._('KYC.Index.chooseType.title')}
+        </Grid.Item>
         <Grid.Item
           className={style.button}
           xs={4}
@@ -40,8 +47,8 @@ const KYC: React.FunctionComponent<KYCProps> = ({
           <Button
             setKYCType={setKYCType}
             type={KYCType.individual}
+            description={i18n._('KYC.Index.chooseType.individual')}
             iconName='human'
-            description='Use an individual account if you want to invest on your own behalf.'
             isActive={kycType === KYCType.individual}
           />
         </Grid.Item>
@@ -55,8 +62,8 @@ const KYC: React.FunctionComponent<KYCProps> = ({
           <Button
             setKYCType={setKYCType}
             type={KYCType.institution}
+            description={i18n._('KYC.Index.chooseType.institution')}
             iconName='case'
-            description='Use a professional account if you will invest on behalf of an accredited organization.'
             isActive={kycType === KYCType.institution}
           />
         </Grid.Item>
@@ -68,38 +75,38 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             m={5}
             l={5}
           >
-            <h2 className={style.title}>Required Data</h2>
+            <h2 className={style.title}>
+              {i18n._('KYC.Index.requiredData.title')}
+            </h2>
             <div className={style.content}>
               <p>
-                In order to complete the verification process, you will need to provide:
+                {i18n._('KYC.Index.requiredData.description')}
               </p>
               {kycType === KYCType.individual && (
                 <ul>
-                  <li>personal information</li>
-                  <li>contact information</li>
-                  <li>ID document (passport)</li>
-                  <li>proof of address (utility bill or bank statement)</li>
-                  <li>a declaration of source of funds</li>
+                  <li>{i18n._('KYC.Index.requiredData.individual.personal')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.individual.contact')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.individual.id')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.individual.proofOfAddress')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.individual.sourceOfFunds')}</li>
                 </ul>
               )}
               {kycType === KYCType.institution && (
                 <ul>
-                  <li>company information</li>
-                  <li>primary contact information</li>
-                  <li>Ultimate Beneficial Owner (UBO) information</li>
-                  <li>commercial register</li>
-                  <li>shareholder register</li>
-                  <li>articles of Incorporation</li>
+                  <li>{i18n._('KYC.Index.requiredData.institution.company')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.institution.contact')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.institution.ubo')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.institution.commercial')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.institution.shareholder')}</li>
+                  <li>{i18n._('KYC.Index.requiredData.institution.articles')}</li>
                 </ul>
               )}
-              <p>
-                If you have any questions, please contact our <a
-                  href='mailto:support@jibrel.com'
-                  style={{ whiteSpace: 'nowrap' }}
-                >
-                  Support Team
-                </a>.
-              </p>
+              <p
+                className={style.support}
+                dangerouslySetInnerHTML={{
+                  __html: i18n._('KYC.Index.requiredData.support'),
+                }}
+              />
             </div>
           </Grid.Item>
         )}
@@ -121,7 +128,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               variant={BigButtonVariant.main}
               className={style.action}
             >
-              Start
+              {i18n._('KYC.Index.action.start')}
             </BigButton>
           </Grid.Item>
           <Grid.Item
@@ -137,7 +144,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               variant={BigButtonVariant.secondary}
               className={style.action}
             >
-              Back to Main
+              {i18n._('KYC.Index.action.back')}
             </BigButton>
           </Grid.Item>
         </Grid.Container>

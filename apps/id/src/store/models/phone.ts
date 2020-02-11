@@ -1,8 +1,12 @@
 import { FORM_ERROR } from 'final-form'
+import { i18n } from '@jibrelcom/i18n'
 import { createModel } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
 
+import { RootState } from 'store'
+
 import axios from '../axios'
+
 import {
   APIResponse,
   FormSubmitResult,
@@ -14,7 +18,6 @@ import {
   PhoneVerificationStatus,
   UserLimits,
 } from '../types'
-import { RootState } from 'store'
 
 const INTERVAL_MULTIPLY = 1.5
 const checkPhoneUntilResult = async (interval = 3000): Promise<Phone> => {
@@ -137,7 +140,7 @@ export const phone = createModel<PhoneVerificationState>({
         }
 
         return {
-          [FORM_ERROR]: 'Unexpected error'
+          [FORM_ERROR]: i18n._('form.error.phone.unexpected'),
         }
       }
     },
@@ -187,8 +190,9 @@ export const phone = createModel<PhoneVerificationState>({
         const phone = await checkPhoneUntilResult()
         if (phone.status === PhoneVerificationStatus.code_incorrect) {
           this.setIsLoading(false)
+
           return {
-            pin: 'Incorrect code'
+            pin: i18n._('form.error.phone.pin'),
           }
         }
 
@@ -222,8 +226,9 @@ export const phone = createModel<PhoneVerificationState>({
         }
 
         console.error(error)
+
         return {
-          [FORM_ERROR]: 'Unexpected error'
+          [FORM_ERROR]: i18n._('form.error.phone.unexpected')
         }
       }
     },

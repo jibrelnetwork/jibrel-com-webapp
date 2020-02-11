@@ -60,54 +60,54 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
           <form onSubmit={handleSubmit}>
             <div className={style.step}>
               <h2 className={style.title}>
-                Company Information
+                {i18n._('KYC.Company.company.form.title')}
               </h2>
               <Input
+                validate={isRequired({ i18n })}
+                label={i18n._('KYC.Company.company.form.companyName.label')}
                 name='companyName'
-                label={'Company Name'}
-                validate={isRequired({i18n})}
               />
               <Input
+                validate={isRequired({ i18n })}
+                label={i18n._('KYC.Company.company.form.tradingName.label')}
                 name='tradingName'
-                label={'Trading Name'}
-                validate={isRequired({i18n})}
               />
               <HistoricDateInput
+                validate={isRequired({ i18n })}
+                label={i18n._('KYC.Company.company.form.dateOfIncorporation.label')}
                 name='dateOfIncorporation'
-                label={'Date of Incorporation'}
-                validate={isRequired({i18n})}
               />
               <Input
+                validate={isRequired({ i18n })}
+                label={i18n._('KYC.Company.company.form.placeOfIncorporation.label')}
                 name='placeOfIncorporation'
-                label={'Place of Incorporation'}
-                validate={isRequired({i18n})}
               />
               <h3 className={style.groupTitle}>
-                Company Documentation
+                {i18n._('KYC.Company.company.form.documentationGroupTitle')}
               </h3>
               <FileInput
-                name='commercialRegister'
-                label={'Commercial Register'}
-                placeholder={'PNG, PDF, JPG'}
                 onUpload={uploadDocument}
+                validate={isRequired({ i18n })}
+                placeholder={i18n._('KYC.document.placeholder')}
+                label={i18n._('KYC.Company.company.form.commercialRegister.label')}
                 {...(get(documents, 'commercialRegister', emptyFileField))}
-                validate={isRequired({i18n})}
+                name='commercialRegister'
               />
               <FileInput
-                name='shareholderRegister'
-                label={'Shareholder Register'}
-                placeholder={'PNG, PDF, JPG'}
                 onUpload={uploadDocument}
+                validate={isRequired({ i18n })}
+                placeholder={i18n._('KYC.document.placeholder')}
+                label={i18n._('KYC.Company.company.form.shareholderRegister.label')}
                 {...(get(documents, 'shareholderRegister', emptyFileField))}
-                validate={isRequired({i18n})}
+                name='shareholderRegister'
               />
               <FileInput
-                name='articlesOfIncorporation'
-                label={'Article of Incorporation'}
-                placeholder={'PNG, PDF, JPG'}
                 onUpload={uploadDocument}
+                validate={isRequired({ i18n })}
+                label={i18n._('KYC.Company.company.form.articlesOfIncorporation.label')}
+                placeholder={i18n._('KYC.document.placeholder')}
                 {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
-                validate={isRequired({i18n})}
+                name='articlesOfIncorporation'
               />
               {submitError && <div className={style.submitError}>{submitError}</div>}
             </div>
@@ -122,12 +122,18 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
   )
 }
 
-const mapState = ({kycOrganization, kyc}) => ({
+const mapState = ({
+  kycOrganization,
+  kyc,
+}) => ({
   formValues: kycOrganization.values,
   documents: kyc.documents,
 })
 
-const mapDispatch = ({kyc, kycOrganization}) => ({
+const mapDispatch = ({
+  kyc,
+  kycOrganization,
+}) => ({
   uploadDocument: kyc.uploadDocument,
   submit: (callback) => (values) =>
     kycOrganization
@@ -141,4 +147,7 @@ const mapDispatch = ({kyc, kycOrganization}) => ({
       }),
 })
 
-export const CompanyInformationForm = connect(mapState, mapDispatch)(CompanyInformationFormComponent)
+export const CompanyInformationForm = connect(
+  mapState,
+  mapDispatch,
+)(CompanyInformationFormComponent)

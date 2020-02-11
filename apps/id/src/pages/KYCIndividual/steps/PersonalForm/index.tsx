@@ -14,7 +14,6 @@ import CountrySelect from 'components/CountrySelect'
 import isRequired from 'utils/validators/isRequired'
 
 import {
-  Documents,
   KYCIndividualValues,
   UploadDocumentHandler,
 } from 'store/types/kyc'
@@ -23,7 +22,6 @@ import style from '../../style.scss'
 
 export interface PersonalFormProps {
   uploadDocument: UploadDocumentHandler;
-  documents: Documents;
   formProps: FormRenderProps<KYCIndividualValues>;
 }
 
@@ -40,61 +38,59 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
     >
       <div className={style.form}>
         <h2 className={style.title}>
-          {i18n._('KYC.Personal.section.personal.title')}
+          {i18n._('KYC.Personal.personal.form.label')}
         </h2>
         <Input
           validate={isRequired({ i18n })}
-          label={i18n._('KYC.Personal.input.firstName.title')}
+          label={i18n._('KYC.Personal.personal.form.firstName.label')}
           name='firstName'
         />
         <Input
           validate={isRequired({ i18n })}
-          label={i18n._('KYC.Personal.input.lastName.title')}
+          label={i18n._('KYC.Personal.personal.form.lastName.label')}
           name='lastName'
         />
         <Input
+          label={i18n._('KYC.Personal.personal.form.middleName.label')}
           name='middleName'
-          label='Middle Name (Optional)'
         />
         <Input
+          label={i18n._('KYC.Personal.personal.form.alias.label')}
           name='alias'
-          label='Alias (Optional)'
         />
         <HistoricDateInput
           validate={isRequired({ i18n })}
-          label={i18n._('KYC.Personal.input.birthDate.title')}
+          label={i18n._('KYC.Personal.personal.form.birthDate.label')}
           name='birthDate'
         />
         <CountrySelect
           validate={isRequired({ i18n })}
-          label={i18n._('KYC.Personal.input.nationality.title')}
+          label={i18n._('KYC.Personal.personal.form.nationality.label')}
+          placeholder={i18n._('KYC.Personal.personal.form.nationality.placeholder')}
           name='nationality'
-          placeholder={i18n._('KYC.Personal.input.nationality.placeholder')}
         />
         <h3 className={style.groupTitle}>
-          {i18n._('KYC.Personal.section.passport.title')}
+          {i18n._('KYC.Personal.personal.form.passportGroupTitle')}
         </h3>
         <Input
           validate={isRequired({ i18n })}
-          label={i18n._('KYC.Personal.input.passportNumber.title')}
+          label={i18n._('KYC.Personal.personal.form.passportNumber.label')}
           name='passportNumber'
         />
         <HistoricDateInput
           validate={isRequired({ i18n })}
-          label={i18n._('KYC.Personal.input.passportExpirationDate.title')}
+          label={i18n._('KYC.Personal.personal.form.passportExpirationDate.label')}
           name='passportExpirationDate'
         />
         <FileInput
-          validate={isRequired({ i18n })}
           onUpload={uploadDocument}
-          label={i18n._('KYC.Personal.input.passportFrontPage.title')}
+          validate={isRequired({ i18n })}
+          placeholder={i18n._('KYC.document.placeholder')}
+          label={i18n._('KYC.Personal.personal.form.passportDocument.label')}
           name='passportDocument'
-          placeholder='PNG, PDF, JPG'
         />
       </div>
-      <BigButtonSubmit
-        className={style.submit}
-      >
+      <BigButtonSubmit className={style.submit}>
         {i18n._('KYC.form.action.next')}
       </BigButtonSubmit>
     </form>

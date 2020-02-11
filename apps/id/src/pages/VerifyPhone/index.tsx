@@ -2,6 +2,7 @@ import React from 'react'
 import COUNTRIES_INDEX from '@jibrelcom/countries/src/index.json'
 import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
+import { CountryCode } from '@jibrelcom/countries/src/types'
 
 import {
   PhoneInput,
@@ -15,45 +16,46 @@ import {
 
 import authStyle from 'styles/auth.scss'
 import CountrySelect from 'components/CountrySelect'
-import { isRequired } from 'utils/validators'
-
-import { FormSubmitResult, PhoneAPINumberFields } from 'store/types'
-
-import style from './style.scss'
 import { Dispatch } from 'store'
 import { AuthLayout } from 'layouts'
+import { isRequired } from 'utils/validators'
+
+import {
+  FormSubmitResult,
+  PhoneAPINumberFields,
+} from 'store/types'
+
+import style from './style.scss'
 
 const VERIFY_PHONE_INITIAL_VALUES: PhoneAPINumberFields = {
-  country: 'us',
+  country: CountryCode.us,
   countryCode: COUNTRIES_INDEX.us.ccc,
   number: '',
 }
 
-const VerifyPhoneForm: React.FunctionComponent<FormRenderProps> = ({
+const VerifyPhoneForm: React.FunctionComponent<FormRenderProps<PhoneAPINumberFields>> = ({
   handleSubmit,
   values,
 }) => {
   const i18n = useI18n()
   const countryData = COUNTRIES_INDEX[values.country]
 
-  if (!countryData) {
-    return null
-  }
-
   return (
     <form
       onSubmit={handleSubmit}
       className={authStyle.form}
     >
-      <h2 className={authStyle.title}>Add Your Phone Number</h2>
+      <h2 className={authStyle.title}>
+        {i18n._('VerifyPhone.form.title')}
+      </h2>
       <div className={style.description}>
-        Provide a phone number to verify your account.
+        {i18n._('VerifyPhone.form.description')}
       </div>
       <div className={authStyle.fields}>
         <CountrySelect
           validate={isRequired({ i18n })}
+          label={i18n._('VerifyPhone.form.country.label')}
           name='country'
-          label='Country'
         />
         <PhoneInput
           validate={isRequired({ i18n })}
@@ -62,7 +64,7 @@ const VerifyPhoneForm: React.FunctionComponent<FormRenderProps> = ({
         />
       </div>
       <BigButtonSubmit>
-        Send Code
+        {i18n._('VerifyPhone.form.submit')}
       </BigButtonSubmit>
     </form>
   )
@@ -79,7 +81,9 @@ const VerifyPhone: React.FunctionComponent<VerifyPhoneProps> = ({
     <AuthLayout>
       <div className={authStyle.main}>
         <Form
-          onSubmit={(values: PhoneAPINumberFields): FormSubmitResult<PhoneAPINumberFields> => onSubmit({
+          onSubmit={(
+            values: PhoneAPINumberFields,
+          ): FormSubmitResult<PhoneAPINumberFields> => onSubmit({
             ...values,
             countryCode: COUNTRIES_INDEX[values.country].ccc,
           })}

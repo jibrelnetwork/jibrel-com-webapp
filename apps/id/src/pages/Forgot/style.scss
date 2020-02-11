@@ -4,10 +4,10 @@
   margin-bottom: 32px;
   font-size: 18px;
   line-height: 140%;
-}
 
-.email {
-  font-weight: 600;
+  span {
+    font-weight: 600;
+  }
 }
 
 .loading {
@@ -29,14 +29,14 @@
 .error {
   font-size: 15px;
   line-height: 140%;
+
+  a {
+    color: $color-blue;
+  }
 }
 
 .message {
   color: $color-red;
-}
-
-.support {
-  color: $color-blue;
 }
 
 .action {

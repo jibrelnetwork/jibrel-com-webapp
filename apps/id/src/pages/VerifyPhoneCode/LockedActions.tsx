@@ -1,19 +1,25 @@
 import React, { useState } from 'react'
 import cc from 'classcat'
 import { connect } from 'react-redux'
-import store, { Dispatch, RootState } from 'store'
+import { useI18n } from '@jibrelcom/i18n'
 import { LinkButton } from '@jibrelcom/ui'
 
-import { PhoneConfirmationVariant } from 'store/types'
+import store, {
+  Dispatch,
+  RootState,
+} from 'store'
+
 import Countdown from 'components/Countdown'
+import { PhoneConfirmationVariant } from 'store/types'
+
 import style from './style.scss'
 
 interface LockedActionsProps {
-  timeout: number;
   onRequestSMS: () => void;
   onRequestCall: () => void;
-  isLoading: boolean;
   confirmationVariant: PhoneConfirmationVariant | null;
+  timeout: number;
+  isLoading: boolean;
 }
 
 const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
@@ -27,13 +33,14 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
     return null
   }
 
+  const i18n = useI18n()
   const [isLocked, setIsLocked] = useState(timeout > 0)
 
   if (isLocked) {
     return (
       <div className={style.countdown}>
-        You can request the code again in
-        <Countdown timeLeft={timeout} onFinish={() => setIsLocked(false)} />.
+        {i18n._('VerifyPhoneCode.actions.requestAgain')}
+        <Countdown timeLeft={timeout} onFinish={(): void => setIsLocked(false)} />.
       </div>
     )
   }
@@ -47,8 +54,8 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
         isDisabled={isLoading}
       >
         {confirmationVariant === PhoneConfirmationVariant.sms
-          ? 'Resend verification code'
-          : 'Send SMS verification'
+          ? i18n._('VerifyPhoneCode.actions.resendCode')
+          : i18n._('VerifyPhoneCode.actions.sendSMS')
         }
       </LinkButton>
       <LinkButton
@@ -58,8 +65,8 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
         isDisabled={isLoading}
       >
         {confirmationVariant === PhoneConfirmationVariant.call
-          ? 'Call again'
-          : 'Phone call verification'
+          ? i18n._('VerifyPhoneCode.actions.callAgain')
+          : i18n._('VerifyPhoneCode.actions.phoneCall')
         }
       </LinkButton>
     </>
