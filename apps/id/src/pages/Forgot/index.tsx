@@ -28,9 +28,11 @@ import {
 
 import style from './style.scss'
 
-interface ForgotProps {
+interface DispatchProps {
   handleSubmit: FormSubmit<ForgotPasswordFormFields>;
 }
+
+export type ForgotProps = DispatchProps
 
 const ForgotEmailSent: React.FunctionComponent = ({
   handleSubmit,
@@ -38,33 +40,39 @@ const ForgotEmailSent: React.FunctionComponent = ({
   form: { getState },
   submitting: isSubmitting,
 }: FormRenderProps<ForgotPasswordFormFields>) => {
+  const i18n = useI18n()
   const { submitError } = getState()
 
   return (
     <form onSubmit={handleSubmit}>
       <UserActionInfo
-        title='Email Sent'
+        title={i18n._('Forgot.title')}
         iconName='status_sent'
       >
-        <p className={style.info}>
-          We sent an email to <span className={style.email}>{email}</span>.<br />
-          Click the link inside to get started.
-        </p>
+        <p
+          className={style.info}
+          dangerouslySetInnerHTML={{
+            __html: i18n._('Forgot.sent', { email })
+          }}
+        />
         {isSubmitting && (
           <div className={style.loading}>
             <div className={style.loader}>
               <Loader color={LoaderColor.blue} />
             </div>
-            <span>We are sending a new email. Please check your inbox.</span>
+            <span>{i18n._('Forgot.sending')}</span>
           </div>
         )}
         {!isSubmitting && submitError && (
           <div className={style.error}>
             <span className={style.message}>
-              We are unable to deliver email to your inbox.
+              {i18n._('Forgot.error.unable')}
             </span><br />
-            <span>Please check your spam folder or contact our</span><br />
-            <a className={style.support} href='#'>Support team.</a>
+            <div
+              dangerouslySetInnerHTML={{
+                __html: i18n._('Forgot.error.check'),
+              }}
+            />
           </div>
         )}
         {!isSubmitting && !submitError && (
@@ -72,7 +80,7 @@ const ForgotEmailSent: React.FunctionComponent = ({
             type='submit'
             className={style.action}
           >
-            EMAIL DIDN&apos;T ARRIVE?
+            {i18n._('Forgot.didntArrive')}
           </button>
         )}
       </UserActionInfo>
@@ -104,35 +112,35 @@ const ForgotForm: React.FunctionComponent = (props: FormRenderProps<ForgotPasswo
       onSubmit={handleSubmit}
       className={authStyle.form}
     >
-      <h2 className={authStyle.title}>Forgot Password?</h2>
+      <h2 className={authStyle.title}>{i18n._('Forgot.form.title')}</h2>
       <div className={authStyle.fields}>
         <Input
           validate={isRequired({ i18n })}
           className={authStyle.field}
+          label={i18n._('Forgot.form.email.label')}
           name='email'
-          label='Email'
           maxLength={256}
         />
       </div>
       <BigButtonSubmit className={authStyle.submit}>
-        Reset Password
+        {i18n._('Forgot.form.submit')}
       </BigButtonSubmit>
       <div className={authStyle.switch}>
-        <span>Already have an account?</span>
+        <span>{i18n._('Forgot.alreadyHaveAccount')}</span>
         <InternalLink
           name='Login'
           className={authStyle.action}
         >
-          SIGN IN
+          {i18n._('Forgot.signin')}
         </InternalLink>
       </div>
       <div className={authStyle.switch}>
-        <span>Don&apos;t have an account?</span>
+        <span>{i18n._('Forgot.dontHaveAccount')}</span>
         <InternalLink
           name='SignUp'
           className={authStyle.action}
         >
-          SIGN UP
+          {i18n._('Forgot.signup')}
         </InternalLink>
       </div>
     </form>
@@ -153,7 +161,7 @@ const Forgot: React.FunctionComponent<ForgotProps> = ({ handleSubmit }) => {
   )
 }
 
-export default connect(
+export default connect<void, DispatchProps, void>(
   null,
   (dispatch: Dispatch) => ({
     handleSubmit: dispatch.user.sendForgotLink,

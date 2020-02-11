@@ -62,100 +62,100 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
             <form onSubmit={handleSubmit}>
               <div className={style.step}>
                 <h2 className={style.title}>
-                  Primary Contact
+                  {i18n._('KYC.Company.contact.form.title')}
                 </h2>
                 <h3 className={style.groupTitle}>
-                  Personal Information
+                  {i18n._('KYC.Company.contact.form.personalGroupTitle')}
                 </h3>
                 <Input
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.firstName.label')}
                   name='firstName'
-                  label='First Name'
-                  validate={isRequired({i18n})}
                 />
                 <Input
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.lastName.label')}
                   name='lastName'
-                  label='Last Name'
-                  validate={isRequired({i18n})}
                 />
                 <Input
+                  label={i18n._('KYC.Company.contact.form.middleName.label')}
                   name='middleName'
-                  label='Middle Name (Optional)'
                 />
                 <HistoricDateInput
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.birthDate.label')}
                   name='birthDate'
-                  label='Date of Birth'
-                  validate={isRequired({i18n})}
                 />
                 <CountrySelect
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.nationality.label')}
+                  placeholder={i18n._('KYC.Company.contact.form.nationality.placeholder')}
                   name='nationality'
-                  label='Nationality'
-                  placeholder='select nationality'
-                  validate={isRequired({i18n})}
                 />
                 <h3 className={style.groupTitle}>
-                  Current Residential Address
+                  {i18n._('KYC.Company.contact.form.residencyGroupTitle')}
                 </h3>
                 <PhoneNumberInput
-                  validate={isRequired({i18n})}
+                  validate={isRequired({ i18n })}
                   name='phoneNumber'
                 />
                 <Input
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.email.label')}
                   name='email'
-                  label='Email'
-                  validate={isRequired({i18n})}
                 />
                 <Input
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.streetAddress.label')}
                   name='streetAddress'
-                  label='Street Address'
-                  validate={isRequired({i18n})}
                 />
                 <Input
+                  label={i18n._('KYC.Company.contact.form.apartment.label')}
                   name='apartment'
-                  label='Apartment, Unit or Suite (Optional)'
                 />
                 <Input
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.city.label')}
                   name='city'
-                  label='City'
-                  validate={isRequired({i18n})}
                 />
                 <Input
+                  label={i18n._('KYC.Company.contact.form.postCode.label')}
                   name='postCode'
-                  label='Post Code (Optional)'
                 />
                 <CountrySelect
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.country.label')}
+                  placeholder={i18n._('KYC.Company.contact.form.country.placeholder')}
                   name='country'
-                  label='Country of Residency'
-                  placeholder='select country'
-                  validate={isRequired({i18n})}
                 />
                 <FileInput
-                  name='proofOfAddressDocument'
-                  label='Proof of Address (Utility Bill, Bank Statement)'
-                  placeholder='PNG, PDF, JPG'
                   onUpload={uploadDocument}
+                  validate={isRequired({ i18n })}
+                  placeholder={i18n._('KYC.document.placeholder')}
+                  label={i18n._('KYC.Company.contact.form.proofOfAddressDocument.label')}
+                  name='proofOfAddressDocument'
                   {...(get(documents, 'proofOfAddressDocument',  emptyFileField))}
-                  validate={isRequired({i18n})}
                 />
                 <h3 className={style.groupTitle}>
-                  Passport Details
+                  {i18n._('KYC.Company.contact.form.passportGroupTitle')}
                 </h3>
                 <Input
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.passportNumber.label')}
                   name='passportNumber'
-                  label='Passport Number'
-                  validate={isRequired({i18n})}
                 />
                 <HistoricDateInput
+                  validate={isRequired({ i18n })}
+                  label={i18n._('KYC.Company.contact.form.passportExpirationDate.label')}
                   name='passportExpirationDate'
-                  label='Passport Expiration Date'
-                  validate={isRequired({i18n})}
                 />
                 <FileInput
-                  name='passportDocument'
-                  label='Passport Front Page'
-                  placeholder='PNG, PDF, JPG'
                   onUpload={uploadDocument}
+                  validate={isRequired({ i18n })}
+                  placeholder={i18n._('KYC.document.placeholder')}
+                  label={i18n._('KYC.Company.contact.form.passportDocument.label')}
+                  name='passportDocument'
                   {...(get(documents, 'passportDocument',  emptyFileField))}
-                  validate={isRequired({i18n})}
                 />
                 {submitError && <div className={style.submitError}>{submitError}</div>}
               </div>
@@ -195,4 +195,7 @@ const mapDispatch = ({
       }),
 })
 
-export const PrimaryContactForm = connect(mapState, mapDispatch)(PrimaryContactFormComponent)
+export const PrimaryContactForm = connect(
+  mapState,
+  mapDispatch,
+)(PrimaryContactFormComponent)

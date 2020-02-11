@@ -1,8 +1,8 @@
 import React from 'react'
 import cc from 'classcat'
 import { Icon } from '@jibrelcom/ui'
+import { useI18n } from '@jibrelcom/i18n'
 
-import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import style from './style.scss'
 import { KYCType } from '../../types'
 
@@ -21,6 +21,8 @@ const Button: React.FunctionComponent<ButtonProps> = ({
   description,
   isActive,
 }) => {
+  const i18n = useI18n()
+
   return (
     <button
       onClick={(): void => setKYCType(type)}
@@ -31,7 +33,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
       type='button'
     >
       <Icon name={`ic_${iconName}_24`} className={style.icon} />
-      <p className={style.title}>{KYCType[type]}</p>
+      <p className={style.title}>{i18n._(`KYC.Index.button.${KYCType[type]}`)}</p>
       <p className={style.description}>{description}</p>
     </button>
   )

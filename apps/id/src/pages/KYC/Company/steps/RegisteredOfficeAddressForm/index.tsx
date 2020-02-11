@@ -9,7 +9,7 @@ import {
   Input,
   Checkbox,
   BigButtonSubmit,
-  } from '@jibrelcom/ui'
+} from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
 import isRequired from 'utils/validators/isRequired'
@@ -53,63 +53,63 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
           <form onSubmit={handleSubmit}>
             <div className={style.step}>
               <h2 className={style.title}>
-                Registered Office Address
+                {i18n._('KYC.Company.address.form.title')}
               </h2>
               <Input
+                validate={isRequired({i18n})}
+                label={i18n._('KYC.Company.address.form.streetAddress.label')}
                 name='companyAddressRegistered.streetAddress'
-                label='Street Address'
-                validate={isRequired({i18n})}
               />
               <Input
+                label={i18n._('KYC.Company.address.form.apartment.label')}
                 name='companyAddressRegistered.apartment'
-                label='Unit or Suite (Optional)'
               />
               <Input
-                name='companyAddressRegistered.city'
-                label='City'
                 validate={isRequired({i18n})}
+                label={i18n._('KYC.Company.address.form.city.label')}
+                name='companyAddressRegistered.city'
               />
               <Input
+                label={i18n._('KYC.Company.address.form.postCode.label')}
                 name='companyAddressRegistered.postCode'
-                label='Post Code (Optional)'
               />
               <CountrySelect
-                name='companyAddressRegistered.country'
-                label='Country'
                 validate={isRequired({i18n})}
-                placeholder='select country'
+                label={i18n._('KYC.Company.address.form.country.label')}
+                placeholder={i18n._('KYC.Company.address.form.country.placeholder')}
+                name='companyAddressRegistered.country'
               />
               <Checkbox name='haveCompanyAddressPrincipal'>
-                Principal place of business different from registered address
+                {i18n._('KYC.Company.address.form.differentAddress')}
               </Checkbox>
               {haveCompanyAddressPrincipal && (
                 <section>
                   <h2 className={style.subtitle}>
-                    Principal Place of Business
+                    {i18n._('KYC.Company.address.form.placeGroupTitle')}
                   </h2>
                   <Input
+                    validate={isRequired({i18n})}
+                    label={i18n._('KYC.Company.address.form.streetAddress.label')}
                     name='companyAddressPrincipal.streetAddress'
-                    label='Street Address'
-                    validate={isRequired({i18n})}
                   />
                   <Input
+                    label={i18n._('KYC.Company.address.form.apartment.label')}
                     name='companyAddressPrincipal.apartment'
-                    label='Unit or Suite (Optional)'
                   />
                   <Input
-                    name='companyAddressPrincipal.city'
-                    label='City'
                     validate={isRequired({i18n})}
+                    label={i18n._('KYC.Company.address.form.city.label')}
+                    name='companyAddressPrincipal.city'
                   />
                   <Input
+                    label={i18n._('KYC.Company.address.form.postCode.label')}
                     name='companyAddressPrincipal.postCode'
-                    label='Post Code (Optional)'
                   />
                   <CountrySelect
-                    name='companyAddressPrincipal.country'
-                    label='Country'
                     validate={isRequired({i18n})}
-                    placeholder='select country'
+                    label={i18n._('KYC.Company.address.form.country.label')}
+                    placeholder={i18n._('KYC.Company.address.form.country.placeholder')}
+                    name='companyAddressPrincipal.country'
                   />
                 </section>
               )}
@@ -127,11 +127,11 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
 }
 
 
-const mapState = ({kycOrganization}) => ({
+const mapState = ({ kycOrganization }) => ({
   formValues: kycOrganization.values,
 })
 
-const mapDispatch = ({kycOrganization}) => ({
+const mapDispatch = ({ kycOrganization }) => ({
   submit: (callback) => (values) =>
     kycOrganization
       .validate({step: 1, ...values})

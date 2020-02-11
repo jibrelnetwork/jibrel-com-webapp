@@ -1,8 +1,12 @@
 import mapValues from 'lodash-es/mapValues'
 import { FORM_ERROR } from 'final-form'
-import { DEFAULT_LANGUAGE_CODE } from '@jibrelcom/i18n'
 import { createModel, ModelConfig } from '@rematch/core'
 import { actions as routerActions } from 'redux-router5'
+
+import {
+  i18n,
+  DEFAULT_LANGUAGE_CODE,
+} from '@jibrelcom/i18n'
 
 import { RootState } from 'store'
 
@@ -139,7 +143,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
         if (status === 400) {
           return mapValues(data.errors, (e) => e[0].message)
         } else if (status === 403) {
-          return { [FORM_ERROR]: 'Permission denied' }
+          return { [FORM_ERROR]: i18n._('form.error.permissionDenied') }
         }
 
         throw error
@@ -168,7 +172,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
         return
       } catch (error) {
         console.error(error)
-        return { [FORM_ERROR]: 'We are unable to deliver email to your inbox.' }
+        return { [FORM_ERROR]: i18n._('EmailVerification.error.unable') }
       }
     },
     async checkEmailToken (key: string): Promise<void> {
@@ -186,7 +190,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
         return
       } catch (error) {
         console.error(error)
-        return { [FORM_ERROR]: 'We are unable to deliver email to your inbox.' }
+        return { [FORM_ERROR]: i18n._('Forgot.error.unable') }
       }
     },
     async checkResetToken (key: string, rootState: RootState): Promise<void> {

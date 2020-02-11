@@ -1,20 +1,20 @@
 import React from 'react'
+import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
+import { FormRenderProps } from 'react-final-form'
+
 import {
-  FormRenderProps,
-} from 'react-final-form'
-import {
-  BigButtonSubmit,
   CodeInput,
+  BigButtonSubmit,
 } from '@jibrelcom/ui'
 
-import style from './style.scss'
-import { connect } from 'react-redux'
 import { RootState } from 'store'
 
-// FIXME: use i18n
-const isCodeFilled = (value: string): string | undefined =>
-  !value || value.replace('_', '').length !== 6
-    ? 'Please, fill the code'
+import style from './style.scss'
+
+const isCodeFilled = (error: string) => (value: string): string | undefined =>
+  (!value || value.replace('_', '').length !== 6)
+    ? error
     : undefined
 
 interface VerifyPhoneCodeFormProps extends FormRenderProps {
@@ -23,19 +23,21 @@ interface VerifyPhoneCodeFormProps extends FormRenderProps {
 
 const VerifyPhoneCodeForm: React.FunctionComponent<VerifyPhoneCodeFormProps> = ({
   handleSubmit,
-}) => (
-  <form onSubmit={handleSubmit}>
-    <CodeInput
-      name='pin'
-      validate={isCodeFilled}
-    />
-    <BigButtonSubmit
-      className={style.button}
-    >
-      Verify
-    </BigButtonSubmit>
-  </form>
-)
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <form onSubmit={handleSubmit}>
+      <CodeInput
+        validate={isCodeFilled(i18n._('VerifyPhoneCode.form.code.error'))}
+        name='pin'
+      />
+      <BigButtonSubmit className={style.button}>
+        {i18n._('VerifyPhoneCode.form.submit')}
+      </BigButtonSubmit>
+    </form>
+  )
+}
 
 export default connect(
   ({ phone }: RootState) => ({

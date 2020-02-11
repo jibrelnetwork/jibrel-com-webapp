@@ -1,18 +1,24 @@
 import React from 'react'
-import { Form } from 'react-final-form'
 import { connect } from 'react-redux'
+import { Form } from 'react-final-form'
+import { useI18n } from '@jibrelcom/i18n'
 import { InternalLink } from '@jibrelcom/ui'
 
-import style from './style.scss'
-import authStyle from '../../styles/auth.scss'
-import store, { Dispatch, RootState } from 'store'
+import store, {
+  Dispatch,
+  RootState,
+} from 'store'
+
 import {
   PhoneVerificationStatus,
   PhoneAPIPinFields,
   FormSubmit,
 } from 'store/types'
-import VerifyPhoneCodeForm from './VerifyPhoneCodeForm'
+
+import style from './style.scss'
 import LockedActions from './LockedActions'
+import authStyle from '../../styles/auth.scss'
+import VerifyPhoneCodeForm from './VerifyPhoneCodeForm'
 
 interface VerifyPhoneCodeProps {
   status: PhoneVerificationStatus;
@@ -31,35 +37,44 @@ const VerifyPhoneCode: React.FunctionComponent<VerifyPhoneCodeProps> = ({
   onSubmit,
   status,
   isLoading,
-}) => (
-  <div className={authStyle.main}>
-    <div className={authStyle.form}>
-      <h2 className={authStyle.title}>Phone Number Verification</h2>
-      <div className={style.description}>
-        Enter the verification code that was sent to your phone number ending in <span>{maskedNumber}</span>.
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <div className={authStyle.main}>
+      <div className={authStyle.form}>
+        <h2 className={authStyle.title}>
+          {i18n._('VerifyPhoneCode.form.title')}
+        </h2>
+        <div
+          className={style.description}
+          dangerouslySetInnerHTML={{
+            __html: i18n._('VerifyPhoneCode.form.description', { maskedNumber }),
+          }}
+        />
+        <InternalLink
+          name='VerifyPhone'
+          className={style.action}
+          isDisabled={isLoading}
+        >
+          {i18n._('VerifyPhoneCode.form.changeNumber')}
+        </InternalLink>
+        <Form
+          onSubmit={onSubmit}
+          component={VerifyPhoneCodeForm}
+          initialValues={INITIAL_VALUES}
+        />
+        {status === PhoneVerificationStatus.max_attempts_reached && (
+          <div className={style.error}>{i18n._('VerifyPhoneCode.error.noAttempts')}</div>
+        )}
+        {status === PhoneVerificationStatus.expired && (
+          <div className={style.error}>{i18n._('VerifyPhoneCode.error.codeExpired')}</div>
+        )}
+        <LockedActions />
       </div>
-      <InternalLink
-        name='VerifyPhone'
-        className={style.action}
-        isDisabled={isLoading}
-      >
-        CHANGE NUMBER
-      </InternalLink>
-      <Form
-        onSubmit={onSubmit}
-        component={VerifyPhoneCodeForm}
-        initialValues={INITIAL_VALUES}
-      />
-      {status === PhoneVerificationStatus.max_attempts_reached && (
-        <div className={style.error}>No attempts left.</div>
-      )}
-      {status === PhoneVerificationStatus.expired && (
-        <div className={style.error}>Code expired.</div>
-      )}
-      <LockedActions />
     </div>
-  </div>
-)
+  )
+}
 
 export default connect(
   (state: RootState) => ({

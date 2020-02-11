@@ -3,8 +3,9 @@ import cc from 'classcat'
 import bigButtonStyle from '@jibrelcom/ui/src/BigButton/style.scss'
 import { Link } from 'react-router5'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
 
-import style from './style.scss'
+import settings from 'app/settings'
 import authStyle from 'styles/auth.scss'
 import AuthLayout from 'layouts/AuthLayout'
 
@@ -17,6 +18,8 @@ import {
   ResponseLoader,
   UserActionInfo,
 } from 'components'
+
+import style from './style.scss'
 
 interface VerifyEmailProps {
   checkEmailToken: (token: string) => Promise<void>;
@@ -37,48 +40,68 @@ interface VerifyEmailInfoProps {
 const VerifyEmailInfo: React.FunctionComponent<VerifyEmailInfoProps> = ({
   email,
   isSubmitError,
-}) => (
-  <UserActionInfo
-    iconName={`status_${isSubmitError ? 'fail' : 'ok'}`}
-    title={isSubmitError ? 'Email Is Not Verified' : 'Email Verified'}
-  >
-    {(!isSubmitError && email) ? (
-      <>
-        <p className={style.info}>
-          Congratulations!<br />
-          Your email <span className={style.email}>{email}</span> has been successfully verified.
-        </p>
-        <Link
-          routeName='VerifyPhone'
-          className={cc([
-            bigButtonStyle.button,
-            bigButtonStyle.main,
-          ])}
-        >
-          Сontinue
-        </Link>
-      </>
-    ) : (
-      <div className={style.error}>
-        <span className={style.message}>
-          The attempt to verify your email failed.
-        </span>
-        <a
-          href='/'
-          className={cc([
-            style.close,
-            bigButtonStyle.button,
-            bigButtonStyle.main,
-          ])}
-        >
-          Close
-        </a>
-        <span>If you have any questions, please get in touch with our </span>
-        <a className={style.support} href='#'>Support team.</a>
-      </div>
-    )}
-  </UserActionInfo>
-)
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <UserActionInfo
+      iconName={`status_${isSubmitError ? 'fail' : 'ok'}`}
+      title={i18n._(`VerifyEmail.title.${isSubmitError ? 'fail' : 'ok'}`)}
+    >
+      {(!isSubmitError && email) ? (
+        <>
+          <p
+            className={style.info}
+            dangerouslySetInnerHTML={{
+              __html: i18n._('VerifyEmail.congratulations', { email }),
+            }}
+          />
+          <Link
+            routeName='VerifyPhone'
+            className={cc([
+              bigButtonStyle.button,
+              bigButtonStyle.main,
+            ])}
+          >
+            {i18n._('VerifyEmail.continue')}
+          </Link>
+        </>
+      ) : (
+        <div className={style.error}>
+          <span className={style.message}>
+            {i18n._('VerifyEmail.error.message')}
+          </span>
+          <a
+            href={settings.HOST_CMS}
+            className={cc([
+              style.close,
+              bigButtonStyle.button,
+              bigButtonStyle.main,
+            ])}
+          >
+            {i18n._('VerifyEmail.error.close')}
+          </a>
+          <div
+            className={style.support}
+            dangerouslySetInnerHTML={{
+              __html: i18n._('VerifyEmail.error.support')
+            }}
+          />
+        </div>
+      )}
+    </UserActionInfo>
+  )
+}
+
+const VerifyEmailLoader: React.FunctionComponent = () => {
+  const i18n = useI18n()
+
+  return (
+    <ResponseLoader>
+      {i18n._('VerifyEmail.wait')}
+    </ResponseLoader>
+  )
+}
 
 class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
   constructor(props: VerifyEmailProps) {
@@ -125,9 +148,7 @@ class VerifyEmail extends Component<VerifyEmailProps, VerifyEmailState> {
       <AuthLayout>
         <div className={authStyle.main}>
           {(isSubmitting || !(email || isSubmitError)) ? (
-            <ResponseLoader>
-              Wait a moment, please...
-            </ResponseLoader>
+            <VerifyEmailLoader />
           ) : (
             <VerifyEmailInfo
               email={email}
