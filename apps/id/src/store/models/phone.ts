@@ -31,7 +31,7 @@ const checkPhoneUntilResult = async (interval = 3000): Promise<Phone> => {
           retryCondition: response => {
             const { status } = response.response.data.data
             return status === PhoneVerificationStatus.code_sent
-              && status === PhoneVerificationStatus.code_submitted
+              || status === PhoneVerificationStatus.code_submitted
           }
         }
       }
