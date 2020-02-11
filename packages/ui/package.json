@@ -7,6 +7,7 @@
     "dev": "./node_modules/.bin/env-cmd -e development npx webpack-dev-server --config ./webpack.config.js"
   },
   "dependencies": {
+    "@jibrelcom/i18n": "0.0.1",
     "classcat": "~4.0.2",
     "include-media": "~1.4.9",
     "lodash-es": "~4.17.15",

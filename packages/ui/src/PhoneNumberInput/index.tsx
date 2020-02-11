@@ -1,4 +1,5 @@
 import React from 'react'
+import { useI18n } from '@jibrelcom/i18n'
 
 import { InputBase } from '../Input'
 import { GenericFieldProps } from '../FieldWrapper/types'
@@ -19,15 +20,17 @@ const parse = () => (value: string | void): string | void => value
   : undefined
 
 const PhoneNumberInput: React.FunctionComponent<GenericFieldProps & PhoneNumberInputProps> = ({
+  label,
   className,
-  label = 'Primary Telephone',
   ...props
 }) => {
+  const i18n = useI18n()
+
   return (
     <InputBase
-      {...props}
-      label={label}
       className={className}
+      label={label || i18n._('form.phoneNumber.label')}
+      {...props}
     />
   )
 }
@@ -35,5 +38,4 @@ const PhoneNumberInput: React.FunctionComponent<GenericFieldProps & PhoneNumberI
 export default withField(withFieldUX(React.memo(withMessage(PhoneNumberInput))), {
   parse,
   format: parse,
-  hint: 'Please enter phone number in international format (only plus sign and numbers)',
 })

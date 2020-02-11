@@ -74,6 +74,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
               />
               <HistoricDateInput
                 validate={isRequired({ i18n })}
+                hint={i18n._('form.date.hint')}
                 label={i18n._('KYC.Company.company.form.dateOfIncorporation.label')}
                 name='dateOfIncorporation'
               />

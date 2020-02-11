@@ -38,7 +38,7 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
     >
       <div className={style.form}>
         <h2 className={style.title}>
-          {i18n._('KYC.Personal.personal.form.label')}
+          {i18n._('KYC.Personal.personal.form.title')}
         </h2>
         <Input
           validate={isRequired({ i18n })}
@@ -60,6 +60,7 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
         />
         <HistoricDateInput
           validate={isRequired({ i18n })}
+          hint={i18n._('form.date.hint')}
           label={i18n._('KYC.Personal.personal.form.birthDate.label')}
           name='birthDate'
         />
@@ -79,6 +80,7 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
         />
         <HistoricDateInput
           validate={isRequired({ i18n })}
+          hint={i18n._('form.date.hint')}
           label={i18n._('KYC.Personal.personal.form.passportExpirationDate.label')}
           name='passportExpirationDate'
         />

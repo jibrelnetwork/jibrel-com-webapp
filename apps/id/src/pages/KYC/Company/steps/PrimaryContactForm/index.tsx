@@ -83,6 +83,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                 />
                 <HistoricDateInput
                   validate={isRequired({ i18n })}
+                  hint={i18n._('form.date.hint')}
                   label={i18n._('KYC.Company.contact.form.birthDate.label')}
                   name='birthDate'
                 />
@@ -97,6 +98,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                 </h3>
                 <PhoneNumberInput
                   validate={isRequired({ i18n })}
+                  hint={i18n._('form.phoneNumber.hint')}
                   name='phoneNumber'
                 />
                 <Input
@@ -146,6 +148,7 @@ export const PrimaryContactFormComponent: React.FunctionComponent<FormProps> = (
                 />
                 <HistoricDateInput
                   validate={isRequired({ i18n })}
+                  hint={i18n._('form.date.hint')}
                   label={i18n._('KYC.Company.contact.form.passportExpirationDate.label')}
                   name='passportExpirationDate'
                 />

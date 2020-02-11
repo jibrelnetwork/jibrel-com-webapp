@@ -30,6 +30,7 @@ const VerifyPhoneCodeForm: React.FunctionComponent<VerifyPhoneCodeFormProps> = (
     <form onSubmit={handleSubmit}>
       <CodeInput
         validate={isCodeFilled(i18n._('VerifyPhoneCode.form.code.error'))}
+        label={i18n._('VerifyPhoneCode.form.code.label')}
         name='pin'
       />
       <BigButtonSubmit className={style.button}>

@@ -1,4 +1,5 @@
 import React from 'react'
+import { useI18n } from '@jibrelcom/i18n'
 import { useFormState } from 'react-final-form'
 
 import { SelectProps } from '../Select/Select'
@@ -24,6 +25,7 @@ const OtherSelect: React.FunctionComponent<OtherSelectProps> = (props) => {
     inputLabel,
   } = props
 
+  const i18n = useI18n()
   const value = useFormState().values[name] || ''
 
   return (
@@ -42,8 +44,8 @@ const OtherSelect: React.FunctionComponent<OtherSelectProps> = (props) => {
       {(value === OTHER_VALUE) && (
         <Input
           validate={inputValidate}
-          label={inputLabel || 'Other'}
           name={`${name}Other`}
+          label={inputLabel || i18n._('form.other.label')}
         />
       )}
     </>

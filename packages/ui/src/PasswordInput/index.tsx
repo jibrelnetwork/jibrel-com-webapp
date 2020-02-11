@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import cc from 'classcat'
 import noop from 'lodash-es/noop'
+import { useI18n } from '@jibrelcom/i18n'
 import { useFormState } from 'react-final-form'
 
 import style from './style.scss'
@@ -25,10 +26,11 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
   onScoreChange = noop,
   checkPasswordStrength = undefined,
   userInputs,
-  label = 'Password',
+  label,
   withIndicator = false,
   ...props
 }) => {
+  const i18n = useI18n()
   const [isOpen, setIsOpen] = useState(false)
   const value = useFormState().values.password || ''
 
@@ -41,10 +43,10 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
     >
       <Input
         {...props}
-        label={label}
         value={value}
         classNames={style}
         type={isOpen ? 'text' : 'password'}
+        label={label || i18n._('form.password.label')}
       />
       {withIndicator && checkPasswordStrength && (
         <Indicator
