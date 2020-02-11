@@ -18,7 +18,7 @@ import {
 import auth from 'styles/auth.scss'
 import settings from 'app/settings'
 import AuthLayout from 'layouts/AuthLayout'
-import { Dispatch} from 'store'
+import { Dispatch } from 'store'
 import { checkPasswordStrength } from 'utils/forms'
 
 import {
