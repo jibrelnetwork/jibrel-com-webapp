@@ -89,6 +89,8 @@
 
 .submit {
   @include flex-row-center;
+
+  padding: 0;
   margin: 32px 0;
 
   @include screen('>xsmall') {
