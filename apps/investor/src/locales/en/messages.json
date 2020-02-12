@@ -1,4 +1,23 @@
 {
+  "layout.copyright": "Jibrel Limited",
+  "layout.logo.alt": "Jibrel logo",
+  "navigation.invest": "Invest",
+  "navigation.raise": "Raise",
+  "navigation.about": "About",
+  "navigation.legal": "Legal",
+  "navigation.risks": "Risk Disclosures",
+  "navigation.terms": "Terms & Conditions",
+  "navigation.privacy": "Privacy Policy",
+  "navigation.help": "Help",
+  "navigation.support": "Support",
+  "navigation.social": "Social",
+  "navigation.twitter": "Twitter",
+  "navigation.facebook": "Facebook",
+  "navigation.medium": "Medium",
+  "navigation.linkedin": "LinkedIn",
+  "navigation.portfolio": "Portfolio",
+  "navigation.logout": "Log out",
+  "navigation.menuToggle": "Open menu",
   "meta.website.title.default": "Startup investing made simple, for everyone",
   "meta.website.title.empty": "Jibrel",
   "meta.website.title.template": "{ title } • Jibrel",
@@ -7,5 +26,8 @@
   "Invest.form.amount.title": "Subscription Amount",
   "RiskDisclosures.title": "Risk Disclosures",
   "RiskDisclosures.subtitleAnnotation": "While Jibrel’s team diligently and carefully screens all startups, we do not give any investing advice or assume responsibility for your losses. It is your responsibility to pick the companies you believe in. Jibrel does not and cannot recommend or endorse any company or offering.",
-  "RiskDisclosures.agreeButton.description": "By pressing the I Agree button, you acknowledge that you have read, understood and accept the risks set out above."
+  "RiskDisclosures.agreeButton.description": "By pressing the I Agree button, you acknowledge that you have read, understood and accept the risks set out above.",
+  "NotFound.title": "It Looks Like You’re Lost",
+  "NotFound.description": "This page is missing or you assembled the link incorrectly.",
+  "NotFound.button": "Back to main"
 }
