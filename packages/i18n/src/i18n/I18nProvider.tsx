@@ -7,6 +7,7 @@ import {
 } from '@lingui/react'
 
 import { I18nContext } from './I18nContext'
+import { i18n as i18nInstance } from './i18n'
 
 import {
   LANGUAGES,
@@ -28,8 +29,15 @@ export const I18nProvider: React.FunctionComponent<I18nProviderProps> = ({
     return null
   }
 
+  i18nInstance.load({
+    [languageCode]: catalog,
+  })
+
+  i18nInstance.activate(languageCode)
+
   return (
     <LinguiI18nProvider
+      i18n={i18nInstance}
       language={languageCode}
       catalogs={{
         [languageCode]: catalog,
@@ -40,9 +48,9 @@ export const I18nProvider: React.FunctionComponent<I18nProviderProps> = ({
         {({ i18n }): React.ReactNode => (
           <I18nContext.Provider
             value={{
+              i18n,
               languageCode,
               language: LANGUAGES[languageCode],
-              i18n,
             }}
           >
             {children}

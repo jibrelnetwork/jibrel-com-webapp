@@ -221,6 +221,7 @@
   "VerifyPhone.form.title": "Add Your Phone Number",
   "VerifyPhone.form.description": "Provide a phone number to verify your account.",
   "VerifyPhone.form.country.label": "Country",
+  "VerifyPhone.form.submit": "Send Code",
   "VerifyPhoneCode.form.title": "Phone Number Verification",
   "VerifyPhoneCode.form.description": "Enter the verification code that was sent to your phone number ending in <span>{ maskedNumber }</span>.",
   "VerifyPhoneCode.form.changeNumber": "CHANGE NUMBER",
