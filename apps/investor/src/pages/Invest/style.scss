@@ -25,11 +25,11 @@
   width: $column-s-4;
 
   @include screen('>xsmall') {
-    width: $column-s-4;
+    width: $column-m-5;
   }
 
   @include screen('>small') {
-    width: $column-m-5;
+    width: $column-m-4;
   }
 
   @include screen('>medium') {

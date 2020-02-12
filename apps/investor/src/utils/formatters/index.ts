@@ -1,4 +1,5 @@
 export { default as formatDate } from './formatDate'
+export { default as formatSlug } from './formatSlug'
 export { default as formatAmount } from './formatAmount'
 export { default as formatCurrency } from './formatCurrency'
 export { default as formatPercents } from './formatPercents'
