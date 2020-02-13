@@ -1,13 +1,10 @@
 import React, { Component } from 'react'
 import isEmpty from 'lodash-es/isEmpty'
-import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
 import { connect } from 'react-redux'
 import { FORM_ERROR } from 'final-form'
-import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import {
   useI18n,
-  useLanguageCode,
 } from '@jibrelcom/i18n'
 
 import {
@@ -18,12 +15,10 @@ import {
 import {
   Grid,
   Link,
-  Warning,
   BigButton,
   FormTitle,
   PageTitle,
   PageBackLink,
-  PageWithHero,
   BigButtonSubmit,
   ErrorToast,
 } from '@jibrelcom/ui'
@@ -32,7 +27,6 @@ import settings from 'app/settings'
 import NotFound from 'pages/NotFound'
 import CoreLayout from 'layouts/CoreLayout'
 import isRequired from 'utils/validators/isRequired'
-import heroImage from 'public/images/pic_hero_rocket_sun.svg'
 import { JibrelBankAccount } from 'store/types/user'
 import { InvestFormFields } from 'store/types/invest'
 
@@ -52,7 +46,6 @@ import {
 } from 'components'
 
 import style from './style.scss'
-import formatAmount from './utils/formatAmount'
 import { InvestStep } from './types'
 
 import {
@@ -218,86 +211,6 @@ const RisksStep: React.FunctionComponent<{
   </>
 )
 
-const SuccessStep: React.FunctionComponent<{
-  data: JibrelBankAccount;
-  startupName: string | void;
-  amount: number;
-}> = ({
-  data,
-  startupName,
-  amount,
-}) => {
-  const lang = useLanguageCode()
-
-  return (
-    <>
-      <PageWithHero
-        imgSrc={heroImage}
-        className={style.success}
-        title='Subscription Submitted'
-        text={`You have successfully subscribed! To complete your investment in ${startupName}, please make your transfer using the banking information below. You will also receive an email with this information shortly. For any questions related to your investment, please feel free to submit a request and your dedicated Relationship Manager will assist you.`}
-      >
-        <FormTitle>Subscription Amount</FormTitle>
-        <div className={style.amount}>{formatAmount(amount, lang)}</div>
-        <FormTitle>Jibrel Bank Account Details</FormTitle>
-        <Warning className={style.warning}>
-          Please make sure to add your Deposit Order ID in the Purpose of Payment, Notes, Reference, or Remarks sections.
-        </Warning>
-        <div className={style.details}>
-          <div className={style.item}>
-            <div className={style.label}>Bank Account Holder Name</div>
-            <div className={style.value}>{data.holderName}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>IBAN</div>
-            <div className={style.value}>{data.ibanNumber}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Account Number</div>
-            <div className={style.value}>{data.accountNumber}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Bank Name</div>
-            <div className={style.value}>{data.bankName}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Bank Branch Address</div>
-            <div className={style.value}>{data.branchAddress}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>BIC/SWIFT Code</div>
-            <div className={style.value}>{data.swiftCode}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>Deposit Order ID</div>
-            <div className={style.value}>{data.depositReferenceCode}</div>
-          </div>
-        </div>
-      </PageWithHero>
-      <div className={style.actions}>
-        <div className={pageWithHeroStyle.button}>
-          <BigButton
-            component='button'
-            onClick={window.print}
-            type='button'
-          >
-            Download Details
-          </BigButton>
-        </div>
-        <div className={`${pageWithHeroStyle.button} ${pageWithHeroStyle.secondary}`}>
-          <BigButton
-            component='a'
-            href={settings.HOST_CMS}
-            variant={BigButtonVariant.secondary}
-          >
-            BACK TO STARTUPS
-          </BigButton>
-        </div>
-      </div>
-    </>
-  )
-}
-
 const FormStep: React.FunctionComponent<{
   handleSubmit: FormSubmit<InvestFormFields>;
   slug: string;
@@ -363,7 +276,6 @@ class Invest extends Component<InvestProps, InvestState> {
         return { [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.' }
       }
 
-      // this.setCurrentStep(InvestStep.SUCCESS)
     } catch (error) {
       return {
         [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.'
@@ -373,11 +285,9 @@ class Invest extends Component<InvestProps, InvestState> {
 
   renderCurrentStep = (): React.ReactNode => {
     const {
-      bankAccountData,
       slug,
       offeringId,
       startupName,
-      subscriptionAmount,
     }: InvestProps = this.props
 
     if (!offeringId) {
@@ -405,17 +315,6 @@ class Invest extends Component<InvestProps, InvestState> {
             />
           </Grid.Container>
         )
-
-      case InvestStep.SUCCESS:
-        return (bankAccountData && subscriptionAmount) ? (
-          <Grid.Container>
-            <SuccessStep
-              data={bankAccountData}
-              startupName={startupName}
-              amount={subscriptionAmount}
-            />
-          </Grid.Container>
-        ): <NotFound />
 
       default:
         return null

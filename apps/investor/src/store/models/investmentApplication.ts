@@ -15,7 +15,7 @@ export const application = createModel({
   },
 
   effects: ({ investmentApplication }) => ({
-    getById: ({ id, isRedirect }: { id: string; isRedirect: boolean }) => {
+    getById: ({ id, isRedirect = false }: { id: string; isRedirect: boolean }) => {
       return axios.get(`/v1/investment/applications/${id}`, {
         // @ts-ignore
         'axios-retry': {
@@ -34,10 +34,11 @@ export const application = createModel({
         },
       })
         .then(response => {
-          const docSignUrl = response.data.data.subscriptionAgreementRedirectUrl
-          const isPrepared = response.data.data.subscriptionAgreementStatus === SubscriptionAgreementStatus.prepared
-          if (isRedirect && typeof docSignUrl === 'string' && docSignUrl.length > 0) {
-            window.location.href = docSignUrl
+          if (response.status === 200 || response.response === undefined) {
+            const docSignUrl = response.data.data.subscriptionAgreementRedirectUrl
+            if (isRedirect && typeof docSignUrl === 'string' && docSignUrl.length > 0) {
+              window.location.href = docSignUrl
+            }
           }
 
           return investmentApplication.requestSuccess(response)

@@ -129,13 +129,13 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   getById
 }) => {
   React.useEffect(() => {
-    getById({ id })
-
-    if (subscriptionAgreementStatus === SubscriptionAgreementStatus.prepared) {
-      finishSigning(id)
-    }
+    finishSigning(id)
+      .then(response => { console.log(response)})
+      .catch(x => { console.log(x) })
+      .finally(() => {
+        getById({ id })
+      })
   }, [subscriptionAgreementStatus])
-
 
   return (
     <CoreLayout>
@@ -154,7 +154,7 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   )
 }
 
-export default connect<StateProps, { getById, finishSigning }, OwnProps>(
+export default connect<StateProps, { getById: any; finishSigning: any }, OwnProps>(
   (state: RootState): StateProps => {
     const {
       bankAccount,
