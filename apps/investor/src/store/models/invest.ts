@@ -100,8 +100,8 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
           'axios-retry': {
             retries: settings.API_REQUEST_MAX_ATTEMPTS,
             retryDelay: (attempts: number): number => attempts * INTERVAL_DELAY * INTERVAL_MULTIPLY,
-            retryCondition: ({ data }) => {
-              const status = data.data.subscriptionAgreementStatus
+            retryCondition: ({ data: response }) => {
+              const status = response.data.subscriptionAgreementStatus
 
               return (
                 (status === SubscriptionAgreementStatus.initial) ||
