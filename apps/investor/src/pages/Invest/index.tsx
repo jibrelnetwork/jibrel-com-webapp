@@ -267,6 +267,8 @@ class Invest extends Component<InvestProps, InvestState> {
     try {
       await this.props.sendOfferingApplication(values)
     } catch (error) {
+      console.error(error)
+
       return {
         [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.'
       }

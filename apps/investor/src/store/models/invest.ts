@@ -5,6 +5,8 @@ import {
   ModelConfig,
 } from '@rematch/core'
 
+import settings from 'app/settings'
+
 import {
   Dispatch,
   RootState,
@@ -21,6 +23,7 @@ import {
   SubscriptionAgreementStatus,
 } from '../types/invest'
 
+const INTERVAL_DELAY = 3000
 const INTERVAL_MULTIPLY = 1.5
 
 export const invest: ModelConfig<InvestState> = createModel<InvestState>({
@@ -95,12 +98,10 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
         const { data: application } = await axios.get(`/v1/investment/applications/${data.data.id}`, {
           'axios-retry': {
-            retries: Infinity,
-            retryDelay: attempts => attempts * interval * INTERVAL_MULTIPLY,
-            retryCondition: (response) => {
-              console.log(response)
-              const status = response.response.data.data.subscriptionAgreementStatus
-              console.log('response.data.data', response.response.data.data)
+            retries: settings.API_REQUEST_MAX_ATTEMPTS,
+            retryDelay: (attempts: number): number => attempts * INTERVAL_DELAY * INTERVAL_MULTIPLY,
+            retryCondition: ({ data }) => {
+              const status = data.data.subscriptionAgreementStatus
 
               return (
                 (status === SubscriptionAgreementStatus.initial) ||
@@ -110,9 +111,16 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
           },
         })
 
-        const { subscriptionAgreementRedirectUrl: redirectURL } = application.data
-        console.log(application)
-        // window.location.href = redirectURL
+        const {
+          subscriptionAgreementStatus: status,
+          subscriptionAgreementRedirectUrl: redirectURL,
+        } = application.data
+
+        if (status !== SubscriptionAgreementStatus.prepared) {
+          throw new Error(`Incorrect DocuSign status: ${status}`)
+        }
+
+        window.location.href = redirectURL
       } catch (error) {
         if (!error.response) {
           throw error
