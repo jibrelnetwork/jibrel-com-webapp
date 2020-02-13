@@ -74,3 +74,12 @@ export interface InvestFormFields {
   isSigned: boolean;
   isRiskAgreed: boolean;
 }
+
+export enum SubscriptionAgreementStatus {
+  initial = 'initial',
+  preparing = 'preparing',
+  prepared = 'prepared',
+  validating = 'validating',
+  success = 'success',
+  error = 'error',
+}

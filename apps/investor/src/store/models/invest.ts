@@ -98,9 +98,12 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
       try {
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
+        const { payload } = await dispatch.investmentApplication.getById({ id: data.data.id, isRedirect: true })
 
         this.setBankAccountData(data.data)
         this.setSubscriptionAmount(form.amount)
+
+        // dispatch(actions.navigateTo('Application', { id: payload.data.data.id }))
       } catch (error) {
         if (!error.response) {
           throw error

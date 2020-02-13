@@ -5,6 +5,7 @@ export type Settings = {
   API_BASE_URL: string;
   HOST_ID: string;
   HOST_CMS: string;
+  RETRY_DEFAULT_COUNT: number;
 }
 
 declare global {
@@ -33,5 +34,6 @@ const settings: Settings = assignWith(
 
 settings.HOST_ID = `//id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
 settings.HOST_CMS = `//${settings.FRONTEND_ROOT_DOMAIN_NAME}`
+settings.RETRY_DEFAULT_COUNT = 32
 
 export default settings

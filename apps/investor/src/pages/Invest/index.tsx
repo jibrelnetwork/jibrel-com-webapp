@@ -197,6 +197,7 @@ const RisksStep: React.FunctionComponent<{
         xl={4}
       >
         <BigButton
+          component='button'
           onClick={handleClick}
           type='button'
         >
@@ -259,10 +260,10 @@ const SuccessStep: React.FunctionComponent<{
             <div className={style.label}>Bank Name</div>
             <div className={style.value}>{data.bankName}</div>
           </div>
-          {data.branchAddress && (<div className={style.item}>
+          <div className={style.item}>
             <div className={style.label}>Bank Branch Address</div>
             <div className={style.value}>{data.branchAddress}</div>
-          </div>)}
+          </div>
           <div className={style.item}>
             <div className={style.label}>BIC/SWIFT Code</div>
             <div className={style.value}>{data.swiftCode}</div>
@@ -276,6 +277,7 @@ const SuccessStep: React.FunctionComponent<{
       <div className={style.actions}>
         <div className={pageWithHeroStyle.button}>
           <BigButton
+            component='button'
             onClick={window.print}
             type='button'
           >
@@ -361,7 +363,7 @@ class Invest extends Component<InvestProps, InvestState> {
         return { [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.' }
       }
 
-      this.setCurrentStep(InvestStep.SUCCESS)
+      // this.setCurrentStep(InvestStep.SUCCESS)
     } catch (error) {
       return {
         [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.'
