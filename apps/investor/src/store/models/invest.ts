@@ -112,15 +112,15 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         })
 
         const {
-          subscriptionAgreementStatus: status,
-          subscriptionAgreementRedirectUrl: redirectURL,
+          subscriptionAgreementStatus,
+          subscriptionAgreementRedirectUrl,
         } = application.data
 
-        if (status !== SubscriptionAgreementStatus.prepared) {
-          throw new Error(`Incorrect DocuSign status: ${status}`)
+        if (subscriptionAgreementStatus !== SubscriptionAgreementStatus.prepared) {
+          throw new Error(`Incorrect DocuSign status: ${subscriptionAgreementStatus}`)
         }
 
-        window.location.href = redirectURL
+        window.location.href = subscriptionAgreementRedirectUrl
       } catch (error) {
         if (!error.response) {
           throw error
