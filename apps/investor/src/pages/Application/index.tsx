@@ -175,7 +175,7 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
     )
   }
 
-  if (!isLoading) {
+  if (isLoading) {
     return (
       <CoreLayout>
         <Grid.Container>
@@ -183,7 +183,7 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
             header={<Animation.Component
               loadAnimation={Animation.loaders.hourglass}
               className={style.anim}
-              isLooped
+              loop
             />}
             title='Verifying...'
             text='This may take several minutes. Please do not close this page until the end of the process.'
