@@ -123,6 +123,8 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
       <div className={style.privacy}>
         For information about how we use your personal data, please see our <a
           href={`${settings.HOST_CMS}/docs/en/privacy-policy.pdf`}
+          target='_blank'
+          rel='noopener noreferrer'
         >
           Privacy Policy
         </a>.
