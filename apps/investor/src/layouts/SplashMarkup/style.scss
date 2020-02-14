@@ -2,8 +2,6 @@
 @import '~@jibrelcom/ui/src/theme/fonts';
 @import '~@jibrelcom/ui/src/theme/media';
 @import '~@jibrelcom/ui/src/theme/colors';
-@import '~@jibrelcom/ui/src/utils/scss/flex';
-@import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
 .main {
   width: 100%;
@@ -68,22 +66,9 @@
   width: 100%;
 }
 
-.actions {
-  width: 100%;
-  margin: 32px auto;
-
-  @include screen('>small') {
-    margin: 48px auto;
-  }
-  @include screen('>medium') {
-    margin: 64px auto;
-  }
-}
-
 .header,
 .title,
-.text,
-.actions {
+.text {
   @media print {
     display: none;
   }

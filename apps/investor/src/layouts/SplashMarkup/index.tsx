@@ -9,11 +9,11 @@ export interface PageWithHero {
   children?: React.ReactNode;
   title?: string;
   text?: string;
-  header: React.ReactNode;
+  header: JSX.Element;
   className?: string;
 }
 
-const PageWithHero: React.FunctionComponent<PageWithHero> = ({
+const SplashMarkup: React.FunctionComponent<PageWithHero> = ({
   children,
   text,
   title,
@@ -34,10 +34,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
         <div className={style.children}>{children}</div>
       </div>
     )}
-    <div className={style.actions}>
-
-    </div>
   </Grid.Item>
 )
 
-export default React.memo(PageWithHero)
+export default React.memo(SplashMarkup)

@@ -1,6 +1,5 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    actions: string;
     centered: string;
     children: string;
     column: string;

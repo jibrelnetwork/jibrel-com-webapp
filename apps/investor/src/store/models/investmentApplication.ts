@@ -14,6 +14,9 @@ const agreementStatusMap: { [K in SubscriptionAgreementStatus]: boolean } = {
   [SubscriptionAgreementStatus.success]: false,
 }
 
+const INTERVAL_DELAY = 3000
+const INTERVAL_MULTIPLY = 1.5
+
 export const application = createModel({
   state: {
     data: {}
@@ -30,7 +33,7 @@ export const application = createModel({
         // @ts-ignore
         'axios-retry': {
           retries: settings.RETRY_DEFAULT_COUNT,
-          retryDelay: (attempts: number) => attempts * 1000,
+          retryDelay: (attempts: number) => attempts * INTERVAL_DELAY * INTERVAL_MULTIPLY,
           retryCondition: ({ response, status, ...responseProps }) => {
             // If non error response
             if (status === 200 || response === undefined) {
@@ -55,9 +58,7 @@ export const application = createModel({
         })
         .catch(investmentApplication.requestError)
     },
-    finishSigning: (id) =>
+    finishSigning: (id: string) =>
       axios.post(`/v1/investment/applications/${id}/finish-signing`)
-        .then(identity)
-        .catch(identity)
     })
 })
