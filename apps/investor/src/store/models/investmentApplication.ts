@@ -1,8 +1,18 @@
+import { identity } from 'lodash-es'
 import { createModel } from '@rematch/core'
 
 import settings from 'app/settings'
 import axios from 'store/axios'
 import {SubscriptionAgreementStatus} from 'store/types/invest'
+
+const agreementStatusMap: { [K in SubscriptionAgreementStatus]: boolean } = {
+  [SubscriptionAgreementStatus.initial]: true,
+  [SubscriptionAgreementStatus.preparing]: true,
+  [SubscriptionAgreementStatus.validating]: true,
+  [SubscriptionAgreementStatus.prepared]: false,
+  [SubscriptionAgreementStatus.error]: false,
+  [SubscriptionAgreementStatus.success]: false,
+}
 
 export const application = createModel({
   state: {
@@ -24,9 +34,9 @@ export const application = createModel({
           retryCondition: ({ response, status, ...responseProps }) => {
             // If non error response
             if (status === 200 || response === undefined) {
-              const agreementStatus = responseProps.data.data.subscriptionAgreementStatus
+              const agreementStatus: SubscriptionAgreementStatus = responseProps.data.data.subscriptionAgreementStatus
 
-              return agreementStatus !== SubscriptionAgreementStatus.prepared
+              return agreementStatusMap[agreementStatus]
             }
 
             return true
@@ -47,7 +57,7 @@ export const application = createModel({
     },
     finishSigning: (id) =>
       axios.post(`/v1/investment/applications/${id}/finish-signing`)
-        .then(response => { console.log(response) })
-        .catch(x => { console.log(x) })
+        .then(identity)
+        .catch(identity)
     })
 })

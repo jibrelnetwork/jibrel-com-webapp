@@ -1,10 +1,12 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
+import { connect } from 'react-redux'
 
 import {
   useLanguageCode,
 } from '@jibrelcom/i18n'
 
 import {
+  Animation,
   Grid,
   Warning,
   BigButton,
@@ -12,19 +14,23 @@ import {
   PageWithHero,
 } from '@jibrelcom/ui'
 
-import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import CoreLayout from 'layouts/CoreLayout'
+import SplashMarkup from 'layouts/SplashMarkup'
 import NotFound from 'pages/NotFound'
-import {JibrelBankAccount} from 'store/types/user'
 import heroImage from 'public/images/pic_hero_rocket_sun.svg'
-import style from 'pages/Invest/style.scss'
+import errorImage from 'public/images/pic_unknown_error.svg'
 import formatAmount from 'pages/Invest/utils/formatAmount'
 import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
 import settings from 'app/settings'
-import { connect } from 'react-redux'
+
+import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
+
 import { RootState } from 'store'
-import {SubscriptionAgreementStatus} from 'store/types/invest'
+import { JibrelBankAccount } from 'store/types/user'
+import { SubscriptionAgreementStatus } from 'store/types/invest'
+
+import style from './style.scss'
 
 interface OwnProps {
   id: string;
@@ -125,34 +131,84 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   subscriptionAmount,
   startupName,
   finishSigning,
-  subscriptionAgreementStatus,
   getById
 }) => {
-  React.useEffect(() => {
+  const [ isLoading, setIsLoading ] = useState(true)
+  const [ isError, setIsError ] = useState(false)
+
+  useEffect(() => {
+    setIsLoading(true)
     finishSigning(id)
-      .then(response => { console.log(response)})
-      .catch(x => { console.log(x) })
-      .finally(() => {
-        getById({ id })
+      .catch(() => {
+        setIsError(true)
       })
-  }, [subscriptionAgreementStatus])
+      .then(() => getById({ id }))
+      .then(({ payload }) => {
+        setIsError(payload.data.data.subscriptionAgreementStatus === SubscriptionAgreementStatus.error)
+        return payload
+      })
+      .finally(() => {
+        setIsLoading(false)
+      })
+  }, [])
+
+  if (isError) {
+    return (
+      <CoreLayout>
+        <Grid.Container>
+          <PageWithHero
+            imgSrc={errorImage}
+            title='Something Went Wrong'
+            text='We are already working to resolve this issue. Please, go back and try again.'
+          />
+          <div className={pageWithHeroStyle.button}>
+            <BigButton
+              component='a'
+              href={settings.HOST_CMS}
+              variant={BigButtonVariant.main}
+            >
+              back to startup invest
+            </BigButton>
+          </div>
+        </Grid.Container>
+      </CoreLayout>
+    )
+  }
+
+  if (!isLoading) {
+    return (
+      <CoreLayout>
+        <Grid.Container>
+          <SplashMarkup
+            header={<Animation.Component
+              loadAnimation={Animation.loaders.hourglass}
+              className={style.anim}
+              isLooped
+            />}
+            title='Verifying...'
+            text='This may take several minutes. Please do not close this page until the end of the process.'
+          />
+        </Grid.Container>
+      </CoreLayout>
+    )
+  }
 
   return (
     <CoreLayout>
       {
         (bankAccountData && subscriptionAmount) ? (
-          <Grid.Container>
-            <SuccessStep
-              data={bankAccountData}
-              startupName={startupName}
-              amount={subscriptionAmount}
-            />
-          </Grid.Container>
+          <SuccessStep
+            data={bankAccountData}
+            startupName={startupName}
+            amount={subscriptionAmount}
+          />
         ): <NotFound />
       }
     </CoreLayout>
   )
 }
+
+Application.displayName = 'ApplicationPage'
 
 export default connect<StateProps, { getById: any; finishSigning: any }, OwnProps>(
   (state: RootState): StateProps => {
@@ -161,11 +217,9 @@ export default connect<StateProps, { getById: any; finishSigning: any }, OwnProp
       offering,
       amount,
       depositReferenceCode,
-      subscriptionAgreementStatus
     } = state.investmentApplication.data
 
     return {
-      subscriptionAgreementStatus,
       bankAccountData: { ...bankAccount, depositReferenceCode },
       offeringId: (offering || {}).uuid,
       subscriptionAmount: amount,

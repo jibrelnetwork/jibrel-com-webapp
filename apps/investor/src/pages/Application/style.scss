@@ -1,0 +1,81 @@
+@import '~@jibrelcom/ui/src/Grid/grid';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+
+.amount {
+  margin-bottom: 64px;
+  font-size: 32px;
+  font-weight: 800;
+  line-height: 38px;
+  text-align: center;
+  color: $color-green;
+}
+
+.warning {
+  @media print {
+    display: none;
+  }
+}
+
+.details {
+  margin-top: 24px;
+  padding: 30px 24px;
+  background-color: $color-blue-5;
+  border-radius: 12px;
+
+  @media print {
+    padding: 0;
+  }
+}
+
+.item {
+  margin-top: 24px;
+  text-align: left;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.label {
+  margin-bottom: 4px;
+  font-size: 12px;
+  line-height: 140%;
+  color: $color-black-60;
+}
+
+.value {
+  font-weight: 800;
+  font-size: 20px;
+  line-height: 24px;
+  color: $color-black;
+}
+
+.actions,
+.back,
+.note,
+.download,
+.agreement,
+.submit,
+.error {
+  @media print {
+    display: none;
+  }
+}
+
+.success {
+  padding-bottom: 0;
+}
+
+.actions {
+  width: 100%;
+  margin-bottom: 64px;
+}
+
+
+.anim {
+  background-color: #fff;
+}
