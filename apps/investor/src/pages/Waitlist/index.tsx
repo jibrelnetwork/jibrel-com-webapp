@@ -11,12 +11,13 @@ import {
 import {
   Grid,
   Input,
+  Checkbox,
   FormTitle,
   PageTitle,
+  ErrorToast,
   PageBackLink,
   PageWithHero,
   BigButtonSubmit,
-  ErrorToast,
 } from '@jibrelcom/ui'
 
 import settings from 'app/settings'
@@ -37,9 +38,8 @@ import {
   FormSubmitResult,
 } from 'store/types/form'
 
-import InvestmentInput from 'components/InvestmentInput'
-
 import style from './style.scss'
+import AmountSelect from './components/AmountSelect'
 import { WaitlistStep } from './types'
 
 interface OwnProps {
@@ -65,25 +65,27 @@ interface WaitlistState {
 
 const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
   handleSubmit,
-  values,
   submitError,
+  values: { startupName },
 }) => {
   const i18n = useI18n()
 
   return (
     <>
-      <form onSubmit={handleSubmit}>
+      <form
+        onSubmit={handleSubmit}
+        className={style.background}
+      >
         <div className={style.form}>
           <FormTitle className={style.title}>
             Intended investment amount
           </FormTitle>
           <div className={style.note}>
-            {`Please enter the amount you a planning to invest in ${values.startupName}. It can be changed when signing Subscription Agreement.`}
+            {`Please choose the amount you are planning to invest in ${startupName}. You can change it at any time when the startup starts to haggle.`}
           </div>
-          <InvestmentInput
+          <AmountSelect
             validate={isRequired({ i18n })}
             name='amount'
-            maxLength={256}
           />
           <FormTitle className={style.title}>
             Email for Notifications
@@ -97,6 +99,13 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
             label='Email'
             maxLength={256}
           />
+          <Checkbox
+            validate={isRequired({ i18n })}
+            className={style.checkbox}
+            name='isAgreedToReceiveEmails'
+          >
+            {`I agree to receive emails from Jibrel when ${startupName} launches. I understand that joining the waitlist does not guarantee my subscription.`}
+          </Checkbox>
         </div>
         <Grid.Item
           className={style.submit}
@@ -107,10 +116,17 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
           xl={4}
         >
           <BigButtonSubmit>
-            Join
+            JOIN WAITLIST
           </BigButtonSubmit>
         </Grid.Item>
       </form>
+      <div className={style.privacy}>
+        For information about how we use your personal data, please see our <a
+          href={`${settings.HOST_CMS}/docs/en/privacy-policy.pdf`}
+        >
+          Privacy Policy
+        </a>.
+      </div>
       <div className={style.error}>
         {submitError && (
           <Grid.Item
@@ -154,13 +170,16 @@ const FormStep: React.FunctionComponent<{
   offeringId,
   startupName,
 }) => (
-  <div className={style.background}>
+  <>
     <PageTitle>Join Waitlist</PageTitle>
     <PageBackLink
       href={`${settings.HOST_CMS}/en/companies/${formatSlug(startupName)}`}
     >
       {`Back to ${startupName}`}
     </PageBackLink>
+    <div className={style.message}>
+      To ensure that you’re one of the first in line to invest in <span>{startupName}</span>, join the waitlist by submitting the form below.
+    </div>
     <Form
       render={WaitlistForm}
       onSubmit={handleSubmit}
@@ -169,9 +188,10 @@ const FormStep: React.FunctionComponent<{
         startupName,
         amount: '',
         id: offeringId,
+        isAgreedToReceiveEmails: false,
       }}
     />
-  </div>
+  </>
 )
 
 class Waitlist extends Component<WaitlistProps, WaitlistState> {
