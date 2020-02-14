@@ -1,4 +1,3 @@
-import { identity } from 'lodash-es'
 import { createModel } from '@rematch/core'
 
 import settings from 'app/settings'
