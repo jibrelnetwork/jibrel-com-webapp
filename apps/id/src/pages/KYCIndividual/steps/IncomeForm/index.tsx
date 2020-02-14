@@ -31,7 +31,7 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
     >
       <div className={style.form}>
         <h2 className={style.title}>
-          {i18n._('KYC.Personal.income.title')}
+          {i18n._('KYC.Personal.income.form.title')}
         </h2>
         <OtherSelect
           validate={isRequired({ i18n })}
