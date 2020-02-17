@@ -53,7 +53,7 @@ interface StateProps {
 }
 
 interface DispatchProps {
-  getOfferingData: (id: string) => void;
+  checkSubscribed: (id: string) => Promise<boolean>;
   sendOfferingSubscription: FormSubmit<WaitlistFormFields>;
 }
 
@@ -205,13 +205,17 @@ class Waitlist extends Component<WaitlistProps, WaitlistState> {
     }
   }
 
-  componentDidMount(): void {
+  async componentDidMount(): Promise<void> {
     const {
-      getOfferingData,
+      checkSubscribed,
       offeringId,
     }: WaitlistProps = this.props
 
-    getOfferingData(offeringId)
+    const isSubscribed = await checkSubscribed(offeringId)
+
+    if (isSubscribed) {
+      this.setCurrentStep(WaitlistStep.SUCCESS)
+    }
   }
 
   setCurrentStep = (currentStep: WaitlistStep): void => {
@@ -294,7 +298,7 @@ export default connect<StateProps, DispatchProps, OwnProps>(
     }
   },
   (dispatch: Dispatch): DispatchProps => ({
-    getOfferingData: dispatch.waitlist.getOfferingData,
+    checkSubscribed: dispatch.waitlist.checkSubscribed,
     sendOfferingSubscription: dispatch.waitlist.sendOfferingSubscription,
   })
 )(Waitlist)
