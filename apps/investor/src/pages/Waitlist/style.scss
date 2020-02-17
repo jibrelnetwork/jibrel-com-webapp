@@ -33,8 +33,11 @@
 }
 
 .title {
+  @include font-h3-s;
+
   margin-top: 40px;
   padding-bottom: 8px;
+  color: $color-black;
 }
 
 .message {
@@ -68,30 +71,21 @@
   color: $color-black-60;
 }
 
-.checkbox {
-  margin-top: 64px;
-}
-
 .submit {
   @include flex-row-center;
 
   padding: 0;
-  margin: 32px 0;
+  margin: 32px 0 0;
 
   @include screen('>xsmall') {
-    margin: 48px 0;
+    margin-top: 48px;
   }
 
   @include screen('>small') {
     justify-content: flex-start;
 
-    margin: 64px 0;
+    margin-top: 64px;
   }
-}
-
-.privacy {
-  font-size: 18px;
-  line-height: 140%;
 }
 
 .error {
