@@ -11,8 +11,6 @@ import {
 import {
   Grid,
   Input,
-  Checkbox,
-  FormTitle,
   PageTitle,
   ErrorToast,
   PageBackLink,
@@ -77,9 +75,9 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
         className={style.background}
       >
         <div className={style.form}>
-          <FormTitle className={style.title}>
+          <h3 className={style.title}>
             Intended investment amount
-          </FormTitle>
+          </h3>
           <div className={style.note}>
             {`Please choose the amount you are planning to invest in ${startupName}. You can change it at any time when the startup starts to haggle.`}
           </div>
@@ -87,9 +85,9 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
             validate={isRequired({ i18n })}
             name='amount'
           />
-          <FormTitle className={style.title}>
+          <h3 className={style.title}>
             Email for Notifications
-          </FormTitle>
+          </h3>
           <div className={style.note}>
             Please make sure that the email address below is the one you are willing to receive notifications to.
           </div>
@@ -99,13 +97,6 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
             label='Email'
             maxLength={256}
           />
-          <Checkbox
-            validate={isRequired({ i18n })}
-            className={style.checkbox}
-            name='isAgreedToReceiveEmails'
-          >
-            {`I agree to receive emails from Jibrel when ${startupName} launches. I understand that joining the waitlist does not guarantee my subscription.`}
-          </Checkbox>
         </div>
         <Grid.Item
           className={style.submit}
@@ -120,15 +111,6 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
           </BigButtonSubmit>
         </Grid.Item>
       </form>
-      <div className={style.privacy}>
-        For information about how we use your personal data, please see our <a
-          href={`${settings.HOST_CMS}/docs/en/privacy-policy.pdf`}
-          target='_blank'
-          rel='noopener noreferrer'
-        >
-          Privacy Policy
-        </a>.
-      </div>
       <div className={style.error}>
         {submitError && (
           <Grid.Item
@@ -190,7 +172,6 @@ const FormStep: React.FunctionComponent<{
         startupName,
         amount: '',
         id: offeringId,
-        isAgreedToReceiveEmails: false,
       }}
     />
   </>
