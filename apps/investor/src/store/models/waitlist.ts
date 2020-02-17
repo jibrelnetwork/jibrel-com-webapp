@@ -73,7 +73,7 @@ export const waitlist: ModelConfig<WaitlistState> = createModel<WaitlistState>({
           this.setOfferingData(undefined)
         }
 
-        return false
+        return true
       } catch (error) {
         if (!error.response) {
           throw error
@@ -84,15 +84,15 @@ export const waitlist: ModelConfig<WaitlistState> = createModel<WaitlistState>({
         if (status === 403) {
           handle403(rootState.user.languageCode)
 
-          return false
+          return true
         } else if (status === 404) {
           this.setOfferingData(undefined)
 
-          return false
+          return true
         } else if (status === 409) {
           this.getOfferingData(id)
 
-          return true
+          return false
         }
 
         throw error
