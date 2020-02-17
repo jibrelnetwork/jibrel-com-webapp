@@ -89,6 +89,8 @@
 
 .submit {
   @include flex-row-center;
+
+  padding: 0;
   margin: 32px 0;
 
   @include screen('>xsmall') {
@@ -181,6 +183,7 @@
   position: fixed; // old browsers fallback
   position: sticky;
   bottom: 20px;
+  width: 100%;
 }
 
 .back,
