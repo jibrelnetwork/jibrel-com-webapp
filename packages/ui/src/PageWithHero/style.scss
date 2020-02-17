@@ -5,7 +5,6 @@
 
 .main {
   width: 100%;
-  padding-bottom: 64px;
 }
 
 .hero {
@@ -68,13 +67,14 @@
 
 .actions {
   width: 100%;
-  margin: 32px auto;
+  margin: 32px auto 0;
 
   @include screen('>small') {
-    margin: 48px auto;
+    margin-top: 48px;
   }
+
   @include screen('>medium') {
-    margin: 64px auto;
+    margin-top: 64px;
   }
 }
 
