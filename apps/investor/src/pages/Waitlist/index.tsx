@@ -75,9 +75,9 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
         className={style.background}
       >
         <div className={style.form}>
-          <div className={style.title}>
+          <h3 className={style.title}>
             Intended investment amount
-          </div>
+          </h3>
           <div className={style.note}>
             {`Please choose the amount you are planning to invest in ${startupName}. You can change it at any time when the startup starts to haggle.`}
           </div>
@@ -85,9 +85,9 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
             validate={isRequired({ i18n })}
             name='amount'
           />
-          <div className={style.title}>
+          <h3 className={style.title}>
             Email for Notifications
-          </div>
+          </h3>
           <div className={style.note}>
             Please make sure that the email address below is the one you are willing to receive notifications to.
           </div>
