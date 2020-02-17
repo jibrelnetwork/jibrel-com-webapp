@@ -2,7 +2,6 @@ declare namespace StyleScssModule {
   export interface IStyleScss {
     background: string;
     centered: string;
-    checkbox: string;
     column: string;
     error: string;
     form: string;
