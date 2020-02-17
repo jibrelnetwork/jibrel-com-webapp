@@ -4,7 +4,8 @@
 @import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/flex';
 
-.form {
+.form,
+.privacy {
   width: $column-s-4;
 
   @include screen('>xsmall') {
@@ -24,7 +25,7 @@
   background-size: 50%;
   background-image: none;
   background-repeat: no-repeat;
-  background-position: top right;
+  background-position: top 64px right 0;
 
   @include screen('>small') {
     background-image: url('../../public/images/pic_waitlist.svg');
@@ -36,11 +37,39 @@
   padding-bottom: 8px;
 }
 
+.message {
+  width: $column-s-4;
+  margin: 24px 0;
+  font-size: 24px;
+  line-height: 140%;
+  color: $color-black;
+
+  @include screen('>xsmall') {
+    width: $column-m-8;
+  }
+
+  @include screen('>small') {
+    width: $column-m-5;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-8;
+  }
+
+  span {
+    font-weight: 800;
+  }
+}
+
 .note {
   margin-bottom: 24px;
   font-size: 12px;
   line-height: 140%;
   color: $color-black-60;
+}
+
+.checkbox {
+  margin-top: 64px;
 }
 
 .submit {
@@ -60,13 +89,9 @@
   }
 }
 
-.amount {
-  margin-bottom: 64px;
-  font-size: 32px;
-  font-weight: 800;
-  line-height: 38px;
-  text-align: center;
-  color: $color-green;
+.privacy {
+  font-size: 18px;
+  line-height: 140%;
 }
 
 .error {

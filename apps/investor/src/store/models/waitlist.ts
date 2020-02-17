@@ -35,18 +35,7 @@ export const waitlist: ModelConfig<WaitlistState> = createModel<WaitlistState>({
 
         const { data } = await axios.get(`/v1/investment/offerings/${id}`)
 
-        const {
-          status,
-          security,
-        } = data
-
-        if (status === OfferingStatus.waitlist) {
-          this.setOfferingData(data)
-        } else if (status === OfferingStatus.active) {
-          dispatch(actions.navigateTo('Invest', { slug: formatSlug(security.company.name) }))
-        } else {
-          this.setOfferingData(undefined)
-        }
+        this.setOfferingData(data)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -60,6 +49,50 @@ export const waitlist: ModelConfig<WaitlistState> = createModel<WaitlistState>({
           this.setOfferingData(undefined)
 
           return
+        }
+
+        throw error
+      }
+    },
+    async checkSubscribed(id: string, rootState: RootState): Promise<boolean> {
+      try {
+        this.setOfferingDataLoading()
+
+        const { data } = await axios.get(`/v1/investment/offerings/${id}/subscribe`)
+
+        const {
+          status,
+          security,
+        } = data.offering
+
+        if (status === OfferingStatus.waitlist) {
+          this.setOfferingData(data.offering)
+        } else if (status === OfferingStatus.active) {
+          dispatch(actions.navigateTo('Invest', { slug: formatSlug(security.company.name) }))
+        } else {
+          this.setOfferingData(undefined)
+        }
+
+        return true
+      } catch (error) {
+        if (!error.response) {
+          throw error
+        }
+
+        const { status } = error.response
+
+        if (status === 403) {
+          handle403(rootState.user.languageCode)
+
+          return true
+        } else if (status === 404) {
+          this.setOfferingData(undefined)
+
+          return true
+        } else if (status === 409) {
+          this.getOfferingData(id)
+
+          return false
         }
 
         throw error
