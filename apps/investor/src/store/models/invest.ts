@@ -104,8 +104,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
             retryDelay: (attempts: number): number => attempts * INTERVAL_DELAY * INTERVAL_MULTIPLY,
             retryCondition: ({ data: response }): boolean => {
               const status = response.data.subscriptionAgreementStatus
-              console.log(settings.API_REQUEST_MAX_ATTEMPTS )
-              console.log(status, status === SubscriptionAgreementStatus.initial, (status === SubscriptionAgreementStatus.preparing))
 
               return (
                 (status === SubscriptionAgreementStatus.initial) ||

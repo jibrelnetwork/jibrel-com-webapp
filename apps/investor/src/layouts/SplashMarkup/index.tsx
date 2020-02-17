@@ -5,7 +5,7 @@ import { Grid } from '@jibrelcom/ui'
 
 import style from './style.scss'
 
-export interface PageWithHero {
+export interface SplashMarkupProps {
   children?: React.ReactNode;
   title?: string;
   text?: string;
@@ -13,7 +13,7 @@ export interface PageWithHero {
   className?: string;
 }
 
-const SplashMarkup: React.FunctionComponent<PageWithHero> = ({
+const SplashMarkup: React.FunctionComponent<SplashMarkupProps> = ({
   children,
   text,
   title,
