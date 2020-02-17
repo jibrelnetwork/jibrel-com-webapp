@@ -316,6 +316,7 @@ const create = (dirname) => {
         'process.env.BUILD_NUMBER': process.env.BUILD_NUMBER || 'dev',
         'process.env.FRONTEND_ROOT_DOMAIN_NAME': JSON.stringify(process.env.FRONTEND_ROOT_DOMAIN_NAME),
         'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL),
+        'process.env.API_REQUEST_MAX_ATTEMPTS': JSON.stringify(process.env.API_REQUEST_MAX_ATTEMPTS),
         '__DEV__': isEnvDevelopment,
         '__PROD__': isEnvProduction,
       }),

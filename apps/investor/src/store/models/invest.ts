@@ -1,5 +1,4 @@
 import { actions } from 'redux-router5'
-import { LanguageCode } from '@jibrelcom/i18n'
 
 import {
   createModel,
@@ -14,19 +13,18 @@ import {
 } from 'store'
 
 import axios from '../axios'
+import handle403 from '../utils/handle403'
 import prepareCustomerData from '../utils/prepareCustomerData'
 import { FormSubmitResult } from '../types/form'
 
 import {
   InvestState,
   InvestFormFields,
+  SubscriptionAgreementStatus,
 } from '../types/invest'
 
-const ID_DOMAIN = `id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
-
-function handle403(lang: LanguageCode): void {
-  window.location.href = `//${ID_DOMAIN}/${lang}/login`
-}
+const INTERVAL_DELAY = 3000
+const INTERVAL_MULTIPLY = 1.5
 
 export const invest: ModelConfig<InvestState> = createModel<InvestState>({
   state: {
@@ -98,9 +96,31 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
       try {
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
+        const { data: application } = await axios.get(`/v1/investment/applications/${data.data.id}`, {
+          'axios-retry': {
+            retries: settings.API_REQUEST_MAX_ATTEMPTS,
+            retryDelay: (attempts: number): number => attempts * INTERVAL_DELAY * INTERVAL_MULTIPLY,
+            retryCondition: ({ data: response }) => {
+              const status = response.data.subscriptionAgreementStatus
 
-        this.setBankAccountData(data.data)
-        this.setSubscriptionAmount(form.amount)
+              return (
+                (status === SubscriptionAgreementStatus.initial) ||
+                (status === SubscriptionAgreementStatus.preparing)
+              )
+            },
+          },
+        })
+
+        const {
+          subscriptionAgreementStatus,
+          subscriptionAgreementRedirectUrl,
+        } = application.data
+
+        if (subscriptionAgreementStatus !== SubscriptionAgreementStatus.prepared) {
+          throw new Error(`Incorrect DocuSign status: ${subscriptionAgreementStatus}`)
+        }
+
+        window.location.href = subscriptionAgreementRedirectUrl
       } catch (error) {
         if (!error.response) {
           throw error
@@ -108,11 +128,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
         const { status } = error.response
 
-        if (status === 404) {
-          this.setBankAccountData(undefined)
-
-          return
-        } else if (status === 409) {
+        if (status === 409) {
           dispatch(actions.navigateTo('Invested'))
 
           return
