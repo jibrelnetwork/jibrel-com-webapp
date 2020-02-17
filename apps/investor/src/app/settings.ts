@@ -5,7 +5,7 @@ export type Settings = {
   API_BASE_URL: string;
   HOST_ID: string;
   HOST_CMS: string;
-  RETRY_DEFAULT_COUNT: number;
+  API_REQUEST_MAX_ATTEMPTS: number;
 }
 
 declare global {
@@ -19,6 +19,7 @@ const settings: Settings = assignWith(
   {
     FRONTEND_ROOT_DOMAIN_NAME: process.env.FRONTEND_ROOT_DOMAIN_NAME,
     API_BASE_URL: process.env.API_BASE_URL,
+    API_REQUEST_MAX_ATTEMPTS: process.env.API_REQUEST_MAX_ATTEMPTS,
   },
   window.SETTINGS,
   (objValue, srcValue) => {
@@ -34,6 +35,6 @@ const settings: Settings = assignWith(
 
 settings.HOST_ID = `//id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
 settings.HOST_CMS = `//${settings.FRONTEND_ROOT_DOMAIN_NAME}`
-settings.RETRY_DEFAULT_COUNT = 32
+settings.API_REQUEST_MAX_ATTEMPTS = parseInt(settings.API_REQUEST_MAX_ATTEMPTS.toString(), 10) || 0
 
 export default settings

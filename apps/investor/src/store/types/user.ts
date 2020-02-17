@@ -32,5 +32,6 @@ export interface JibrelBankAccount {
   holderName: string;
   ibanNumber: string;
   accountNumber: string;
+  branchAddress: string;
   depositReferenceCode: string;
 }

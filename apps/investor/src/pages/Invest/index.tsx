@@ -1,11 +1,7 @@
 import React, { Component } from 'react'
-import isEmpty from 'lodash-es/isEmpty'
 import { connect } from 'react-redux'
 import { FORM_ERROR } from 'final-form'
-
-import {
-  useI18n,
-} from '@jibrelcom/i18n'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
   Form,
@@ -194,7 +190,7 @@ const RisksStep: React.FunctionComponent<{
           onClick={handleClick}
           type='button'
         >
-          I agree
+          Accept and Sign
         </BigButton>
       </Grid.Item>
       <Grid.Item
@@ -205,7 +201,7 @@ const RisksStep: React.FunctionComponent<{
         xl={4}
         className={style.buttonDescription}
       >
-        By pressing the <span className={style.bold}>I Agree</span> button, you acknowledge that you have read, understood and accept the risks set out above.
+        By pressing the <span className={style.bold}>Accept and Sign</span> button, you acknowledge that you have read, understood and accept the risks set out above.
       </Grid.Item>
     </Grid.Container>
   </>
@@ -270,13 +266,10 @@ class Invest extends Component<InvestProps, InvestState> {
 
   handleSubmit = async (values: InvestFormFields): FormSubmitResult<InvestFormFields> => {
     try {
-      const errors = await this.props.sendOfferingApplication(values)
-
-      if (!isEmpty(errors)) {
-        return { [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.' }
-      }
-
+      await this.props.sendOfferingApplication(values)
     } catch (error) {
+      console.error(error)
+
       return {
         [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.'
       }
