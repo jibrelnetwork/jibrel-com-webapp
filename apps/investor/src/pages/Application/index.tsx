@@ -26,9 +26,9 @@ import settings from 'app/settings'
 
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
-import { RootState } from 'store'
+import { Dispatch, RootState } from 'store'
 import { JibrelBankAccount } from 'store/types/user'
-import { SubscriptionAgreementStatus } from 'store/types/invest'
+import { InvestApplication, SubscriptionAgreementStatus} from 'store/types/invest'
 
 import style from './style.scss'
 
@@ -39,11 +39,17 @@ interface OwnProps {
 interface StateProps {
   offeringId: string | void;
   startupName: string | void;
+  startupSlug: string | void;
   bankAccountData: JibrelBankAccount | void;
   subscriptionAmount: number | void;
 }
 
-type ApplicationProps = OwnProps & StateProps
+interface DispatchProps {
+  getById: (id: string) => Promise<InvestApplication>;
+  finishSigning: (id: string) => Promise<InvestApplication>;
+}
+
+type ApplicationProps = OwnProps & StateProps & DispatchProps
 
 const SuccessStep: React.FunctionComponent<{
   data: JibrelBankAccount;
@@ -130,6 +136,7 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   bankAccountData,
   subscriptionAmount,
   startupName,
+  startupSlug,
   finishSigning,
   getById
 }) => {
@@ -137,19 +144,19 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   const [ isError, setIsError ] = useState(false)
 
   useEffect(() => {
-    setIsLoading(true)
-    finishSigning(id)
-      .catch(() => {
+    (async (): Promise<void> => {
+      setIsLoading(true)
+      try {
+        await finishSigning(id)
+        const { data: application } = await getById(id)
+
+        setIsError(application.data.subscriptionAgreementStatus === SubscriptionAgreementStatus.error)
+      } catch(error) {
         setIsError(true)
-      })
-      .then(() => getById({ id }))
-      .then(({ payload }) => {
-        setIsError(payload.data.data.subscriptionAgreementStatus === SubscriptionAgreementStatus.error)
-        return payload
-      })
-      .finally(() => {
-        setIsLoading(false)
-      })
+      }
+
+      setIsLoading(false)
+    })()
   }, [])
 
   if (isError) {
@@ -164,7 +171,7 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
           <div className={pageWithHeroStyle.button}>
             <BigButton
               component='a'
-              href={settings.HOST_CMS}
+              href={`/invest/${startupSlug}`}
               variant={BigButtonVariant.main}
             >
               back to startup invest
@@ -210,23 +217,25 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
 
 Application.displayName = 'ApplicationPage'
 
-export default connect<StateProps, { getById: any; finishSigning: any }, OwnProps>(
+export default connect<StateProps, DispatchProps, OwnProps>(
   (state: RootState): StateProps => {
     const {
-      bankAccount,
-      offering,
-      amount,
-      depositReferenceCode,
-    } = state.investmentApplication.data
+      bankAccountData,
+      offeringData,
+      subscriptionAmount,
+    } = state.invest
+
+    const company = offeringData ? offeringData?.security?.company : { name: '', slug: ' '}
 
     return {
-      bankAccountData: { ...bankAccount, depositReferenceCode },
-      offeringId: (offering || {}).uuid,
-      subscriptionAmount: amount,
-      startupName: offering?.security?.company?.name
+      bankAccountData,
+      offeringId: (offeringData || {}).uuid,
+      subscriptionAmount,
+      startupName: company.name,
+      startupSlug: company.slug
     }
   }
-, (dispatch) => ({
-    finishSigning: dispatch.investmentApplication.finishSigning,
-    getById: dispatch.investmentApplication.getById
+, (dispatch: Dispatch): DispatchProps => ({
+    finishSigning: dispatch.invest.finishSigning,
+    getById: dispatch.invest.getApplicationById
   }))(Application)

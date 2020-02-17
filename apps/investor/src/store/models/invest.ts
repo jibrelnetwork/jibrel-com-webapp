@@ -21,6 +21,7 @@ import {
   InvestState,
   InvestFormFields,
   SubscriptionAgreementStatus,
+  InvestApplication
 } from '../types/invest'
 
 const INTERVAL_DELAY = 3000
@@ -96,12 +97,15 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
       try {
         const { data } = await axios.post(`/v1/investment/offerings/${id}/application`, form)
-        const { data: application } = await axios.get(`/v1/investment/applications/${data.data.id}`, {
+        const { data: application } = await axios.get(`/v1/investment/applications/${data.data.uuid}`, {
+          // @ts-ignore
           'axios-retry': {
             retries: settings.API_REQUEST_MAX_ATTEMPTS,
             retryDelay: (attempts: number): number => attempts * INTERVAL_DELAY * INTERVAL_MULTIPLY,
-            retryCondition: ({ data: response }) => {
+            retryCondition: ({ data: response }): boolean => {
               const status = response.data.subscriptionAgreementStatus
+              console.log(settings.API_REQUEST_MAX_ATTEMPTS )
+              console.log(status, status === SubscriptionAgreementStatus.initial, (status === SubscriptionAgreementStatus.preparing))
 
               return (
                 (status === SubscriptionAgreementStatus.initial) ||
@@ -111,7 +115,6 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
           },
         })
 
-        await dispatch.investmentApplication.getById({ id: data.data.id, isRedirect: true })
         const {
           subscriptionAgreementStatus,
           subscriptionAgreementRedirectUrl,
@@ -138,6 +141,54 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         throw error
       }
     },
+    async getApplicationById( id: string, rootState: RootState): Promise<InvestApplication | void> {
+      try {
+        const response = await axios.get(`/v1/investment/applications/${id}`, {
+          // @ts-ignore
+          'axios-retry': {
+            retries: settings.API_REQUEST_MAX_ATTEMPTS,
+            retryDelay: (attempts: number): number => attempts * INTERVAL_DELAY * INTERVAL_MULTIPLY,
+            retryCondition: ({ data: response }): boolean => {
+              if (response) {
+                const status = response.data.subscriptionAgreementStatus
+
+                return (
+                  (status === SubscriptionAgreementStatus.initial) ||
+                  (status === SubscriptionAgreementStatus.preparing)
+                )
+              }
+
+              return false
+            },
+          },
+        })
+
+        if (response.isAxiosError) {
+          throw new Error(`Incorrect investment application with id: ${id}`)
+        }
+
+        const { data: responseData } = response.data
+
+        this.setBankAccountData({ ...responseData.bankAccount, depositReferenceCode: responseData.depositReferenceCode })
+        this.setSubscriptionAmount(response.data.data.amount)
+        this.setOfferingData(responseData.offering)
+
+        return response
+      } catch (error) {
+        if (error?.response?.status === 409) {
+          dispatch(actions.navigateTo('Invested'))
+
+          return
+        }
+
+        throw error
+      }
+    },
+    finishSigning: async (id: string): Promise<InvestApplication> =>
+       await axios.post(`/v1/investment/applications/${id}/finish-signing`, null, {
+        validateStatus: (status: number): boolean =>
+          status === 200 || status === 409 // made 409 status code is accepted too
+      })
   }),
   reducers: {
     setOfferingData: (state, payload): InvestState => ({

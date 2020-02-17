@@ -1,4 +1,5 @@
 import { JibrelBankAccount } from './user'
+import { Asset } from './portfolio'
 
 export enum SecurityType {
   'common_shares' = 'common_shares',
@@ -35,6 +36,7 @@ export enum OfferingStatus {
 export interface OfferingSecurity {
   company: {
     name: string;
+    slug?: string;
   };
   uuid: string;
   type: SecurityType;
@@ -75,6 +77,7 @@ export interface InvestState {
   subscriptionAmount: number | void;
   isOfferingDataLoading: boolean;
   isCustomerDataLoading: boolean;
+  depositReferenceCode: string | void;
 }
 
 export interface InvestFormFields {
@@ -84,11 +87,16 @@ export interface InvestFormFields {
   isRiskAgreed: boolean;
 }
 
-export enum SubscriptionAgreementStatus {
-  initial = 'initial',
-  preparing = 'preparing',
-  prepared = 'prepared',
-  validating = 'validating',
-  success = 'success',
-  error = 'error',
+export interface InvestApplication {
+  uuid: string;
+  amount: string;
+  isAgreedRisks: boolean;
+  bankAccount: JibrelBankAccount;
+  depositReferenceCode: string;
+  createdAt: Date;
+  updatedAt: Date;
+  offering: Offering;
+  asset: Asset;
+  subscriptionAgreementStatus: SubscriptionAgreementStatus;
+  subscriptionAgreementRedirectUrl: string;
 }
