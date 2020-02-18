@@ -139,7 +139,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         throw error
       }
     },
-    async getApplicationById( id: string, rootState: RootState): Promise<InvestApplication | void> {
+    async getApplicationById(id: string): Promise<InvestApplication | void> {
       try {
         const response = await axios.get(`/v1/investment/applications/${id}`, {
           // @ts-ignore
@@ -151,8 +151,8 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
                 const status = response.data.subscriptionAgreementStatus
 
                 return (
-                  (status === SubscriptionAgreementStatus.initial) ||
-                  (status === SubscriptionAgreementStatus.preparing)
+                  (status !== SubscriptionAgreementStatus.success)
+                  && (status !== SubscriptionAgreementStatus.error)
                 )
               }
 
@@ -168,8 +168,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         const { data: responseData } = response.data
 
         this.setBankAccountData({ ...responseData.bankAccount, depositReferenceCode: responseData.depositReferenceCode })
-        this.setSubscriptionAmount(response.data.data.amount)
+        this.setSubscriptionAmount(responseData.amount)
         this.setOfferingData(responseData.offering)
+        this.setApplicationAgreementStatus(responseData.subscriptionAgreementStatus)
 
         return response
       } catch (error) {
@@ -215,5 +216,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
       ...state,
       subscriptionAmount: payload,
     }),
+    setApplicationAgreementStatus: (state, payload): InvestState => ({
+      ...state,
+      applicationAgreementStatus: payload
+    })
   }
 })

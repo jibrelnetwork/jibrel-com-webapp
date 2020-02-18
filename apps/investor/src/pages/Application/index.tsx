@@ -14,10 +14,8 @@ import {
   PageWithHero,
 } from '@jibrelcom/ui'
 
-
 import CoreLayout from 'layouts/CoreLayout'
 import SplashMarkup from 'layouts/SplashMarkup'
-import NotFound from 'pages/NotFound'
 import heroImage from 'public/images/pic_hero_rocket_sun.svg'
 import errorImage from 'public/images/pic_unknown_error.svg'
 import formatAmount from 'pages/Invest/utils/formatAmount'
@@ -28,7 +26,7 @@ import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import { Dispatch, RootState } from 'store'
 import { JibrelBankAccount } from 'store/types/user'
-import { InvestApplication, SubscriptionAgreementStatus} from 'store/types/invest'
+import { InvestApplication, SubscriptionAgreementStatus } from 'store/types/invest'
 
 import style from './style.scss'
 
@@ -41,6 +39,7 @@ interface StateProps {
   startupSlug: string | void;
   bankAccountData: JibrelBankAccount | void;
   subscriptionAmount: number | void;
+  applicationAgreementStatus: SubscriptionAgreementStatus | void;
 }
 
 interface DispatchProps {
@@ -130,8 +129,34 @@ const SuccessStep: React.FunctionComponent<{
   )
 }
 
+interface ErrorStepProps {
+  slug: string | void;
+}
+
+const ErrorStep: React.FunctionComponent<ErrorStepProps> = ({ slug }) => (
+  <CoreLayout>
+    <Grid.Container>
+      <PageWithHero
+        imgSrc={errorImage}
+        title='Something Went Wrong'
+        text='We are already working to resolve this issue. Please, go back and try again.'
+      />
+      <div className={pageWithHeroStyle.button}>
+        <BigButton
+          component='a'
+          href={slug ? `/invest/${slug}` : settings.HOST_CMS}
+          variant={BigButtonVariant.main}
+        >
+          back to startup invest
+        </BigButton>
+      </div>
+    </Grid.Container>
+  </CoreLayout>
+)
+
 const Application: React.FunctionComponent<ApplicationProps> = ({
   id,
+  applicationAgreementStatus,
   bankAccountData,
   subscriptionAmount,
   startupName,
@@ -139,12 +164,10 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   finishSigning,
   getById
 }) => {
-  const [ isLoading, setIsLoading ] = useState(true)
   const [ isError, setIsError ] = useState(false)
 
   useEffect(() => {
     (async (): Promise<void> => {
-      setIsLoading(true)
       try {
         await finishSigning(id)
         const { data: application } = await getById(id)
@@ -153,63 +176,41 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
       } catch(error) {
         setIsError(true)
       }
-
-      setIsLoading(false)
     })()
   }, [])
 
   if (isError) {
-    return (
-      <CoreLayout>
-        <Grid.Container>
-          <PageWithHero
-            imgSrc={errorImage}
-            title='Something Went Wrong'
-            text='We are already working to resolve this issue. Please, go back and try again.'
-          />
-          <div className={pageWithHeroStyle.button}>
-            <BigButton
-              component='a'
-              href={`/invest/${startupSlug}`}
-              variant={BigButtonVariant.main}
-            >
-              back to startup invest
-            </BigButton>
-          </div>
-        </Grid.Container>
-      </CoreLayout>
-    )
+    return <ErrorStep slug={startupSlug} />
   }
 
-  if (isLoading) {
+  if (
+    applicationAgreementStatus === SubscriptionAgreementStatus.success
+    && (bankAccountData && subscriptionAmount)
+  ) {
     return (
       <CoreLayout>
-        <Grid.Container>
-          <SplashMarkup
-            header={<Animation.Component
-              loadAnimation={Animation.loaders.hourglass}
-              className={style.anim}
-              loop
-            />}
-            title='Verifying...'
-            text='This may take several minutes. Please do not close this page until the end of the process.'
-          />
-        </Grid.Container>
+        <SuccessStep
+          data={bankAccountData}
+          startupName={startupName}
+          amount={subscriptionAmount}
+        />
       </CoreLayout>
     )
   }
 
   return (
     <CoreLayout>
-      {
-        (bankAccountData && subscriptionAmount) ? (
-          <SuccessStep
-            data={bankAccountData}
-            startupName={startupName}
-            amount={subscriptionAmount}
-          />
-        ): <NotFound />
-      }
+      <Grid.Container>
+        <SplashMarkup
+          header={<Animation.Component
+            loadAnimation={Animation.loaders.hourglass}
+            className={style.anim}
+            loop
+          />}
+          title='Verifying...'
+          text='This may take several minutes. Please do not close this page until the end of the process.'
+        />
+      </Grid.Container>
     </CoreLayout>
   )
 }
@@ -222,11 +223,13 @@ export default connect<StateProps, DispatchProps, OwnProps>(
       bankAccountData,
       offeringData,
       subscriptionAmount,
+      applicationAgreementStatus,
     } = state.invest
 
     const company = offeringData ? offeringData?.security?.company : { name: '', slug: ' '}
 
     return {
+      applicationAgreementStatus,
       bankAccountData,
       subscriptionAmount,
       startupName: company.name,
