@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect } from 'react'
 import cc from 'classcat'
 import { useI18n } from '@jibrelcom/i18n'
 
@@ -10,11 +10,21 @@ import {
 import style from './style.scss'
 
 export interface NotFoundProps {
-  href: string;
+  requestProfile: () => void;
+  host: string;
 }
 
-const NotFound: React.FunctionComponent<NotFoundProps> = ({ href }) => {
+const NotFound: React.FunctionComponent<NotFoundProps> = ({
+  requestProfile,
+  host,
+}) => {
   const i18n = useI18n()
+
+  useEffect(() => {
+    requestProfile()
+
+    return
+  }, [])
 
   return (
     <Grid.Container>
@@ -23,7 +33,7 @@ const NotFound: React.FunctionComponent<NotFoundProps> = ({ href }) => {
         className={cc(['error', style.main])}
       >
         <img
-          src={`${href}/img/pic_hero_404_error.png`}
+          src={`${host}/img/pic_hero_404_error.png`}
           alt='404 Not Found'
           className='error__hero'
         />
@@ -38,7 +48,7 @@ const NotFound: React.FunctionComponent<NotFoundProps> = ({ href }) => {
         >
           <BigButton
             component='a'
-            href={href}
+            href={host}
           >
             {i18n._('NotFound.button')}
           </BigButton>
