@@ -1,20 +1,28 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
-import { useLanguageCode } from '@jibrelcom/i18n'
+import {
+  useLanguageCode,
+} from '@jibrelcom/i18n'
 
-import { Animation, BigButton, FormTitle, Grid, PageWithHero, Warning } from '@jibrelcom/ui'
-import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
-
-import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
-
-import settings from 'app/settings'
+import {
+  Animation,
+  Grid,
+  Warning,
+  BigButton,
+  FormTitle,
+  PageWithHero,
+} from '@jibrelcom/ui'
 
 import CoreLayout from 'layouts/CoreLayout'
 import SplashMarkup from 'layouts/SplashMarkup'
 import heroImage from 'public/images/pic_hero_rocket_sun.svg'
 import errorImage from 'public/images/pic_unknown_error.svg'
 import formatAmount from 'pages/Invest/utils/formatAmount'
+import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
+import settings from 'app/settings'
+
+import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import { Dispatch, RootState } from 'store'
 import { JibrelBankAccount } from 'store/types/user'
@@ -156,12 +164,10 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   finishSigning,
   getById
 }) => {
-  const [ isLoading, setIsLoading ] = useState(true)
   const [ isError, setIsError ] = useState(false)
 
   useEffect(() => {
     (async (): Promise<void> => {
-      setIsLoading(true)
       try {
         await finishSigning(id)
         const { data: application } = await getById(id)
@@ -170,51 +176,41 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
       } catch(error) {
         setIsError(true)
       }
-
-      setIsLoading(false)
     })()
   }, [])
 
-  if (isError || applicationAgreementStatus === SubscriptionAgreementStatus.error) {
+  if (isError) {
     return <ErrorStep slug={startupSlug} />
   }
 
   if (
-    isLoading
-    || applicationAgreementStatus === SubscriptionAgreementStatus.validating
-    || applicationAgreementStatus === SubscriptionAgreementStatus.preparing
+    applicationAgreementStatus === SubscriptionAgreementStatus.success
+    && (bankAccountData && subscriptionAmount)
   ) {
     return (
       <CoreLayout>
-        <Grid.Container>
-          <SplashMarkup
-            header={<Animation.Component
-              loadAnimation={Animation.loaders.hourglass}
-              className={style.anim}
-              loop
-            />}
-            title='Verifying...'
-            text='This may take several minutes. Please do not close this page until the end of the process.'
-          />
-        </Grid.Container>
+        <SuccessStep
+          data={bankAccountData}
+          startupName={startupName}
+          amount={subscriptionAmount}
+        />
       </CoreLayout>
     )
   }
 
   return (
     <CoreLayout>
-      {
-        (
-          applicationAgreementStatus === SubscriptionAgreementStatus.success
-          && (bankAccountData && subscriptionAmount)
-        ) ? (
-          <SuccessStep
-            data={bankAccountData}
-            startupName={startupName}
-            amount={subscriptionAmount}
-          />
-        ): <ErrorStep slug={startupSlug} />
-      }
+      <Grid.Container>
+        <SplashMarkup
+          header={<Animation.Component
+            loadAnimation={Animation.loaders.hourglass}
+            className={style.anim}
+            loop
+          />}
+          title='Verifying...'
+          text='This may take several minutes. Please do not close this page until the end of the process.'
+        />
+      </Grid.Container>
     </CoreLayout>
   )
 }

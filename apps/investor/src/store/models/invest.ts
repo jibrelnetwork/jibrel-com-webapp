@@ -1,17 +1,28 @@
-import {actions} from 'redux-router5'
+import { actions } from 'redux-router5'
 
-import {createModel, ModelConfig} from '@rematch/core'
+import {
+  createModel,
+  ModelConfig,
+} from '@rematch/core'
 
 import settings from 'app/settings'
 
-import {Dispatch, RootState} from 'store'
+import {
+  Dispatch,
+  RootState,
+} from 'store'
 
 import axios from '../axios'
 import handle403 from '../utils/handle403'
 import prepareCustomerData from '../utils/prepareCustomerData'
-import {FormSubmitResult} from '../types/form'
+import { FormSubmitResult } from '../types/form'
 
-import {InvestApplication, InvestFormFields, InvestState, SubscriptionAgreementStatus} from '../types/invest'
+import {
+  InvestState,
+  InvestFormFields,
+  SubscriptionAgreementStatus,
+  InvestApplication
+} from '../types/invest'
 
 const INTERVAL_DELAY = 3000
 const INTERVAL_MULTIPLY = 1.5
