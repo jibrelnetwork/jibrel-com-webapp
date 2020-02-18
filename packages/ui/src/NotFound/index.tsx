@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import cc from 'classcat'
 import { useI18n } from '@jibrelcom/i18n'
 
@@ -14,10 +14,17 @@ export interface NotFoundProps {
   host: string;
 }
 
-const NotFoundPage: React.FunctionComponent<{
-  host: string;
-}> = ({ host }) => {
+const NotFound: React.FunctionComponent<NotFoundProps> = ({
+  requestProfile,
+  host,
+}) => {
   const i18n = useI18n()
+
+  useEffect(() => {
+    requestProfile()
+
+    return
+  }, [])
 
   return (
     <Grid.Container>
@@ -49,16 +56,6 @@ const NotFoundPage: React.FunctionComponent<{
       </Grid.Item>
     </Grid.Container>
   )
-}
-
-class NotFound extends Component<NotFoundProps> {
-  componentDidMount(): void {
-    this.props.requestProfile()
-  }
-
-  render(): React.ReactElement {
-    return <NotFoundPage host={this.props.host} />
-  }
 }
 
 export default NotFound
