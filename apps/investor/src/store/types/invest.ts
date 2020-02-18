@@ -78,6 +78,7 @@ export interface InvestState {
   isOfferingDataLoading: boolean;
   isCustomerDataLoading: boolean;
   depositReferenceCode: string | void;
+  applicationAgreementStatus: SubscriptionAgreementStatus;
 }
 
 export interface InvestFormFields {

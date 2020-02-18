@@ -1,34 +1,24 @@
 import React, { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 
-import {
-  useLanguageCode,
-} from '@jibrelcom/i18n'
+import { useLanguageCode } from '@jibrelcom/i18n'
 
-import {
-  Animation,
-  Grid,
-  Warning,
-  BigButton,
-  FormTitle,
-  PageWithHero,
-} from '@jibrelcom/ui'
-
-
-import CoreLayout from 'layouts/CoreLayout'
-import SplashMarkup from 'layouts/SplashMarkup'
-import NotFound from 'pages/NotFound'
-import heroImage from 'public/images/pic_hero_rocket_sun.svg'
-import errorImage from 'public/images/pic_unknown_error.svg'
-import formatAmount from 'pages/Invest/utils/formatAmount'
+import { Animation, BigButton, FormTitle, Grid, PageWithHero, Warning } from '@jibrelcom/ui'
 import pageWithHeroStyle from '@jibrelcom/ui/src/PageWithHero/style.scss'
-import settings from 'app/settings'
 
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
+import settings from 'app/settings'
+
+import CoreLayout from 'layouts/CoreLayout'
+import SplashMarkup from 'layouts/SplashMarkup'
+import heroImage from 'public/images/pic_hero_rocket_sun.svg'
+import errorImage from 'public/images/pic_unknown_error.svg'
+import formatAmount from 'pages/Invest/utils/formatAmount'
+
 import { Dispatch, RootState } from 'store'
 import { JibrelBankAccount } from 'store/types/user'
-import { InvestApplication, SubscriptionAgreementStatus} from 'store/types/invest'
+import { InvestApplication, SubscriptionAgreementStatus } from 'store/types/invest'
 
 import style from './style.scss'
 
@@ -41,6 +31,7 @@ interface StateProps {
   startupSlug: string | void;
   bankAccountData: JibrelBankAccount | void;
   subscriptionAmount: number | void;
+  applicationAgreementStatus: SubscriptionAgreementStatus | void;
 }
 
 interface DispatchProps {
@@ -130,8 +121,34 @@ const SuccessStep: React.FunctionComponent<{
   )
 }
 
+interface ErrorStepProps {
+  slug: string | void;
+}
+
+const ErrorStep: React.FunctionComponent<ErrorStepProps> = ({ slug }) => (
+  <CoreLayout>
+    <Grid.Container>
+      <PageWithHero
+        imgSrc={errorImage}
+        title='Something Went Wrong'
+        text='We are already working to resolve this issue. Please, go back and try again.'
+      />
+      <div className={pageWithHeroStyle.button}>
+        <BigButton
+          component='a'
+          href={slug ? `/invest/${slug}` : settings.HOST_CMS}
+          variant={BigButtonVariant.main}
+        >
+          back to startup invest
+        </BigButton>
+      </div>
+    </Grid.Container>
+  </CoreLayout>
+)
+
 const Application: React.FunctionComponent<ApplicationProps> = ({
   id,
+  applicationAgreementStatus,
   bankAccountData,
   subscriptionAmount,
   startupName,
@@ -158,30 +175,15 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
     })()
   }, [])
 
-  if (isError) {
-    return (
-      <CoreLayout>
-        <Grid.Container>
-          <PageWithHero
-            imgSrc={errorImage}
-            title='Something Went Wrong'
-            text='We are already working to resolve this issue. Please, go back and try again.'
-          />
-          <div className={pageWithHeroStyle.button}>
-            <BigButton
-              component='a'
-              href={`/invest/${startupSlug}`}
-              variant={BigButtonVariant.main}
-            >
-              back to startup invest
-            </BigButton>
-          </div>
-        </Grid.Container>
-      </CoreLayout>
-    )
+  if (isError || applicationAgreementStatus === SubscriptionAgreementStatus.error) {
+    return <ErrorStep slug={startupSlug} />
   }
 
-  if (isLoading) {
+  if (
+    isLoading
+    || applicationAgreementStatus === SubscriptionAgreementStatus.validating
+    || applicationAgreementStatus === SubscriptionAgreementStatus.preparing
+  ) {
     return (
       <CoreLayout>
         <Grid.Container>
@@ -202,13 +204,16 @@ const Application: React.FunctionComponent<ApplicationProps> = ({
   return (
     <CoreLayout>
       {
-        (bankAccountData && subscriptionAmount) ? (
+        (
+          applicationAgreementStatus === SubscriptionAgreementStatus.success
+          && (bankAccountData && subscriptionAmount)
+        ) ? (
           <SuccessStep
             data={bankAccountData}
             startupName={startupName}
             amount={subscriptionAmount}
           />
-        ): <NotFound />
+        ): <ErrorStep slug={startupSlug} />
       }
     </CoreLayout>
   )
@@ -222,11 +227,13 @@ export default connect<StateProps, DispatchProps, OwnProps>(
       bankAccountData,
       offeringData,
       subscriptionAmount,
+      applicationAgreementStatus,
     } = state.invest
 
     const company = offeringData ? offeringData?.security?.company : { name: '', slug: ' '}
 
     return {
+      applicationAgreementStatus,
       bankAccountData,
       subscriptionAmount,
       startupName: company.name,

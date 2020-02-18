@@ -1,28 +1,17 @@
-import { actions } from 'redux-router5'
+import {actions} from 'redux-router5'
 
-import {
-  createModel,
-  ModelConfig,
-} from '@rematch/core'
+import {createModel, ModelConfig} from '@rematch/core'
 
 import settings from 'app/settings'
 
-import {
-  Dispatch,
-  RootState,
-} from 'store'
+import {Dispatch, RootState} from 'store'
 
 import axios from '../axios'
 import handle403 from '../utils/handle403'
 import prepareCustomerData from '../utils/prepareCustomerData'
-import { FormSubmitResult } from '../types/form'
+import {FormSubmitResult} from '../types/form'
 
-import {
-  InvestState,
-  InvestFormFields,
-  SubscriptionAgreementStatus,
-  InvestApplication
-} from '../types/invest'
+import {InvestApplication, InvestFormFields, InvestState, SubscriptionAgreementStatus} from '../types/invest'
 
 const INTERVAL_DELAY = 3000
 const INTERVAL_MULTIPLY = 1.5
@@ -139,7 +128,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         throw error
       }
     },
-    async getApplicationById( id: string, rootState: RootState): Promise<InvestApplication | void> {
+    async getApplicationById(id: string): Promise<InvestApplication | void> {
       try {
         const response = await axios.get(`/v1/investment/applications/${id}`, {
           // @ts-ignore
@@ -152,7 +141,8 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
                 return (
                   (status === SubscriptionAgreementStatus.initial) ||
-                  (status === SubscriptionAgreementStatus.preparing)
+                  (status === SubscriptionAgreementStatus.preparing) ||
+                  (status === SubscriptionAgreementStatus.validating)
                 )
               }
 
@@ -168,8 +158,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
         const { data: responseData } = response.data
 
         this.setBankAccountData({ ...responseData.bankAccount, depositReferenceCode: responseData.depositReferenceCode })
-        this.setSubscriptionAmount(response.data.data.amount)
+        this.setSubscriptionAmount(responseData.amount)
         this.setOfferingData(responseData.offering)
+        this.setApplicationAgreementStatus(responseData.subscriptionAgreementStatus)
 
         return response
       } catch (error) {
@@ -215,5 +206,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
       ...state,
       subscriptionAmount: payload,
     }),
+    setApplicationAgreementStatus: (state, payload): InvestState => ({
+      ...state,
+      applicationAgreementStatus: payload
+    })
   }
 })
