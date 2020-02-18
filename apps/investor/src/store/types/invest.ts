@@ -36,7 +36,7 @@ export enum OfferingStatus {
 export interface OfferingSecurity {
   company: {
     name: string;
-    slug?: string;
+    slug: string;
   };
   uuid: string;
   type: SecurityType;

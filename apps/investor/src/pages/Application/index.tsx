@@ -37,7 +37,6 @@ interface OwnProps {
 }
 
 interface StateProps {
-  offeringId: string | void;
   startupName: string | void;
   startupSlug: string | void;
   bankAccountData: JibrelBankAccount | void;
@@ -229,7 +228,6 @@ export default connect<StateProps, DispatchProps, OwnProps>(
 
     return {
       bankAccountData,
-      offeringId: (offeringData || {}).uuid,
       subscriptionAmount,
       startupName: company.name,
       startupSlug: company.slug
