@@ -26,6 +26,8 @@ export { default as PhoneNumberInput } from './PhoneNumberInput'
 export { default as Select } from './Select'
 export { default as ErrorToast } from './ErrorToast'
 
+export { default as Animation }from './Animation'
+
 export { LoaderColor } from './Loader/types'
 
 export {

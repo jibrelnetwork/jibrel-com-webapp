@@ -18,7 +18,6 @@ const Header: React.FunctionComponent<HeaderProps> = ({
   logout,
   lang,
   domain,
-  activeRoute,
   isAuthenticated = false,
 }) => {
   const i18n = useI18n()
@@ -86,17 +85,6 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                         className="navbar__menu-link"
                       >
                         {i18n._('navigation.about')}
-                      </a>
-                    </li>
-                    <li className="navbar__menu-item">
-                      <a
-                        href={`//investor.${domain}/portfolio`}
-                        className={cc([
-                          'navbar__menu-link',
-                          (activeRoute === 'Portfolio') && '--current',
-                        ])}
-                      >
-                        {i18n._('navigation.portfolio')}
                       </a>
                     </li>
                   </ul>

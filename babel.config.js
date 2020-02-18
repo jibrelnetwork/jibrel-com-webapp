@@ -10,6 +10,7 @@ module.exports = {
   ],
   plugins: [
     "@babel/plugin-proposal-class-properties",
+    "@babel/plugin-proposal-optional-chaining",
     ["@babel/plugin-transform-runtime", { "corejs": 3 }],
     "macros"
   ],
