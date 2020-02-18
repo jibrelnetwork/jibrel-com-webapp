@@ -1,0 +1,75 @@
+@import '~@jibrelcom/ui/src/Grid/grid';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+
+.main {
+  width: 100%;
+  padding-bottom: 64px;
+}
+
+.header {
+  max-width: 100%;
+  margin: 0 auto;
+}
+
+.title {
+  @include font-h1-xs;
+
+  margin: 32px auto 0;
+  text-align: center;
+
+  @include screen('>xsmall') {
+    @include font-h1-s;
+  }
+
+  @include screen('>small') {
+    @include font-h1-m;
+
+    margin-top: 48px;
+  }
+
+  @include screen('>medium') {
+    @include font-h1-l;
+
+    margin-top: 64px;
+  }
+}
+
+.text,
+.children {
+  @include font-subheader-2-s;
+
+  width: $column-s-4;
+  margin: 32px auto 0;
+  text-align: center;
+  color: $color-black;
+
+  @include screen('>xsmall') {
+    width: $column-m-4;
+  }
+
+  @include screen('>small') {
+    @include font-subheader-2-l;
+
+    width: $column-m-6;
+    margin: 48px auto 0;
+  }
+
+  @include screen('>medium') {
+    width: $column-l-6;
+    margin: 64px auto 0;
+  }
+}
+
+.content {
+  width: 100%;
+}
+
+.header,
+.title,
+.text {
+  @media print {
+    display: none;
+  }
+}

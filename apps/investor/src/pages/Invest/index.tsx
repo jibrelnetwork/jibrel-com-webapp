@@ -186,6 +186,7 @@ const RisksStep: React.FunctionComponent<{
         xl={4}
       >
         <BigButton
+          component='button'
           onClick={handleClick}
           type='button'
         >
