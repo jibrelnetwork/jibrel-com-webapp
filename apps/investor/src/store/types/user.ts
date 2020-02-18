@@ -27,7 +27,6 @@ export interface Profile {
 
 export interface JibrelBankAccount {
   bankName: string;
-  branchAddress: string;
   swiftCode: string;
   holderName: string;
   ibanNumber: string;
