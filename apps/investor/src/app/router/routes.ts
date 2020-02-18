@@ -28,6 +28,15 @@ export const routes: RouteEnhanced[] = [
   },
 
   {
+    name: 'Application',
+    path: '/application/:id',
+    canActivate: composeActivations([
+      isLoggedIn,
+      checkKYCStatus,
+    ]),
+  },
+
+  {
     name: 'Waitlist',
     path: '/waitlist/:offeringId',
     canActivate: composeActivations([
