@@ -151,9 +151,8 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
                 const status = response.data.subscriptionAgreementStatus
 
                 return (
-                  (status === SubscriptionAgreementStatus.initial) ||
-                  (status === SubscriptionAgreementStatus.preparing) ||
-                  (status === SubscriptionAgreementStatus.validating)
+                  (status !== SubscriptionAgreementStatus.success)
+                  && (status !== SubscriptionAgreementStatus.error)
                 )
               }
 
