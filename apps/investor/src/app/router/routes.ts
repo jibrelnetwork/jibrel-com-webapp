@@ -10,15 +10,6 @@ const ROUTER_ROOT = ''
 
 export const routes: RouteEnhanced[] = [
   {
-    name: 'Portfolio',
-    path: '/portfolio',
-    canActivate: composeActivations([
-      isLoggedIn,
-      checkKYCStatus,
-    ]),
-  },
-
-  {
     name: 'Invest',
     path: '/invest/:slug',
     canActivate: composeActivations([
