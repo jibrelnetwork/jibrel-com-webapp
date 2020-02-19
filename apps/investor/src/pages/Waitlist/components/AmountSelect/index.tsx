@@ -1,33 +1,42 @@
 import React from 'react'
 import { Select } from '@jibrelcom/ui'
+import { useI18n } from '@jibrelcom/i18n'
 
 type AmountSelectProps = Omit<React.ComponentProps<typeof Select.Select>, 'children'>
 
 const AMOUNT_VALUES = [
-  'from $1,000 to $9,999',
-  'from $10,000 to $19,999',
-  'from $20,000 to $49,999',
-  'from $50,000 to $99,999',
-  '$100,000 or more',
+  'Waitlist.form.amount.value1k',
+  'Waitlist.form.amount.value10k',
+  'Waitlist.form.amount.value20k',
+  'Waitlist.form.amount.value50k',
+  'Waitlist.form.amount.value100k',
 ]
 
-const AmountSelect: React.FunctionComponent<AmountSelectProps> = (props) => (
-  <Select.Select
-    name='amount'
-    label='Amount'
-    placeholder='select approximate amount'
-    {...props}
-  >
-    {AMOUNT_VALUES.map((amount: string) => (
-        <Select.Option
-          key={amount}
-          label={amount}
-          value={amount}
-        >
-          {amount}
-        </Select.Option>
-      ))}
-  </Select.Select>
-)
+const AmountSelect: React.FunctionComponent<AmountSelectProps> = (props) => {
+  const i18n = useI18n()
+
+  return (
+    <Select.Select
+      name='amount'
+      label={i18n._('Waitlist.form.amount.label')}
+      placeholder={i18n._('Waitlist.form.amount.placeholder')}
+      {...props}
+    >
+      {AMOUNT_VALUES.map((amount: string) => {
+        const value = i18n._(amount)
+
+        return (
+          <Select.Option
+            key={value}
+            label={value}
+            value={value}
+          >
+            {value}
+          </Select.Option>
+        )
+      })}
+    </Select.Select>
+  )
+}
 
 export default AmountSelect

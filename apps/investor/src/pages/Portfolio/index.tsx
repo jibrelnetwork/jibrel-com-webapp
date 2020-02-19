@@ -1,5 +1,6 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
 import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
@@ -36,59 +37,66 @@ interface DispatchProps {
 type PortfolioProps = StateProps & DispatchProps
 
 const ADD_FUNDS: FundsCardProps[] = [{
-  label: 'Deposit',
-  title: 'Wire Transfer',
+  label: 'Portfolio.FundsCard.wireTransfer.label',
+  title: 'Portfolio.FundsCard.wireTransfer.title',
 }, {
-  title: 'Crypto Trasfer',
+  title: 'Portfolio.FundsCard.cryptoTransfer.title',
   isComing: true,
 }, {
-  title: 'Bank Card',
+  title: 'Portfolio.FundsCard.bankCard.title',
   isComing: true,
 }]
 
-class Portfolio extends Component<PortfolioProps> {
-  componentDidMount(): void {
-    this.props.getInvestments()
-  }
+const Portfolio: React.FunctionComponent<PortfolioProps> = ({
+  getInvestments,
+  investments,
+  isInvestmentsLoading,
+}) => {
+  useEffect(() => {
+    getInvestments()
 
-  render(): React.ReactNode {
-    const {
-      investments,
-      isInvestmentsLoading,
-    }: PortfolioProps = this.props
+    return
+  }, [])
 
-    return (
-      <CoreLayout>
-        <PageTitle className={style.title}>
-          My Portfolio<InvestedAmount className={style.green} />
-        </PageTitle>
-        <Grid.Container className={style.investments}>
-          {(!investments || isInvestmentsLoading) ? (
-            <Loader
-              className={style.loader}
-              color={LoaderColor.gray}
-            />
-          ) : <Investments items={investments} />}
-        </Grid.Container>
-        <PageTitle>
-          Available Balance<CurrentBalance className={style.green} />
-        </PageTitle>
-        <FormTitle>Add Funds</FormTitle>
-        <p className={style.description}>Top up your Jibrel account to invest into startups.</p>
-        <Grid.Container className={style.deposit}>
-          {ADD_FUNDS.map(c => <FundsCard key={c.title} {...c} />)}
-        </Grid.Container>
-        <FormTitle>Withdraw</FormTitle>
-        <Grid.Container className={style.withdraw}>
-          <FundsCard
-            label='Withdraw'
-            title='Wire Transfer'
-            isDisabled
+  const i18n = useI18n()
+
+  return (
+    <CoreLayout>
+      <PageTitle className={style.title}>
+        {i18n._('Portfolio.title')}<InvestedAmount className={style.green} />
+      </PageTitle>
+      <Grid.Container className={style.investments}>
+        {(!investments || isInvestmentsLoading) ? (
+          <Loader
+            className={style.loader}
+            color={LoaderColor.gray}
           />
-        </Grid.Container>
-      </CoreLayout>
-    )
-  }
+        ) : <Investments items={investments} />}
+      </Grid.Container>
+      <PageTitle>
+        {i18n._('Portfolio.balance')}<CurrentBalance className={style.green} />
+      </PageTitle>
+      <FormTitle>{i18n._('Portfolio.addFunds.title')}</FormTitle>
+      <p className={style.description}>{i18n._('Portfolio.addFunds.description')}</p>
+      <Grid.Container className={style.deposit}>
+        {ADD_FUNDS.map(c => (
+          <FundsCard
+            key={i18n._(c.title)}
+            label={c.label ? i18n._(c.label) : undefined}
+            {...c}
+          />
+        ))}
+      </Grid.Container>
+      <FormTitle>{i18n._('Portfolio.withdraw.title')}</FormTitle>
+      <Grid.Container className={style.withdraw}>
+        <FundsCard
+          label={i18n._('Portfolio.withdraw.card.label')}
+          title={i18n._('Portfolio.withdraw.card.title')}
+          isDisabled
+        />
+      </Grid.Container>
+    </CoreLayout>
+  )
 }
 
 export default connect<StateProps, DispatchProps>(

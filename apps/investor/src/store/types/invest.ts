@@ -1,3 +1,5 @@
+import { CountryCode } from '@jibrelcom/countries/src/types'
+
 import { JibrelBankAccount } from './user'
 
 export enum SecurityType {
@@ -65,7 +67,7 @@ export interface Customer {
   apartment: string;
   city: string;
   postCode: string;
-  country: string;
+  country: CountryCode;
 }
 
 export interface InvestState {

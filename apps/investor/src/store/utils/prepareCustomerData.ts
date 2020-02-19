@@ -1,3 +1,5 @@
+import { CountryCode } from '@jibrelcom/countries/src/types'
+
 import { Customer } from '../types/invest'
 
 export interface CustomerFromAPI {
@@ -10,13 +12,13 @@ export interface CustomerFromAPI {
   apartment?: string;
   city?: string;
   postCode?: string;
-  country?: string;
+  country?: CountryCode;
   companyAddressRegistered?: {
     streetAddress: string;
     apartment: string;
     city: string;
     postCode: string;
-    country: string;
+    country: CountryCode;
   };
 }
 
@@ -29,7 +31,7 @@ export default function prepareCustomerData(data: CustomerFromAPI): Customer | v
         apartment: data.apartment || '',
         city: data.city || '',
         postCode: data.postCode || '',
-        country: data.country || '',
+        country: data.country || CountryCode.us,
       }
 
     case 'business': {
@@ -43,7 +45,7 @@ export default function prepareCustomerData(data: CustomerFromAPI): Customer | v
         apartment: data.companyAddressRegistered.apartment || '',
         city: data.companyAddressRegistered.city || '',
         postCode: data.companyAddressRegistered.postCode || '',
-        country: data.companyAddressRegistered.country || '',
+        country: data.companyAddressRegistered.country || CountryCode.us,
       }
     }
 

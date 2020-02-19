@@ -1,7 +1,9 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import cc from 'classcat'
 import COUNTRIES_TITLES from '@jibrelcom/countries/src/en.common.json'
 import { connect } from 'react-redux'
+import { useI18n } from '@jibrelcom/i18n'
+import { CountryRef } from '@jibrelcom/countries/src/types'
 
 import { Customer } from 'store/types/invest'
 
@@ -24,48 +26,48 @@ export interface CustomerDataProps {
   isCustomerDataLoading: boolean;
 }
 
-class CustomerData extends Component<CustomerDataProps> {
-  componentDidMount(): void {
-    this.props.getCustomerData()
-  }
+const CustomerData: React.FunctionComponent<CustomerDataProps> = ({
+  getCustomerData,
+  customerData,
+  isCustomerDataLoading,
+}) => {
+  useEffect(() => {
+    getCustomerData()
 
-  render(): React.ReactNode {
-    const {
-      customerData,
-      isCustomerDataLoading,
-    }: CustomerDataProps = this.props
+    return
+  }, [])
 
-    const isLoading = !customerData || isCustomerDataLoading
+  const i18n = useI18n()
+  const isLoading = !customerData || isCustomerDataLoading
 
-    return (
-      <div className={cc([style.data, isLoading && style.loading])}>
-        {isLoading ? <Loader color={LoaderColor.gray} /> : (
-          <>
-            <div className={style.item}>
-              <div className={investStyle.label}>
-                Full Legal Name
-              </div>
-              <div className={investStyle.value}>
-                <p>{customerData.name}</p>
-              </div>
+  return (
+    <div className={cc([style.data, isLoading && style.loading])}>
+      {isLoading ? <Loader color={LoaderColor.gray} /> : (
+        <>
+          <div className={style.item}>
+            <div className={investStyle.label}>
+              {i18n._('Invest.CustomerData.name')}
             </div>
-            <div className={style.item}>
-              <div className={investStyle.label}>
-                Address
-              </div>
-              <div className={investStyle.value}>
-                <p>{customerData.streetAddress}</p>
-                <p>{customerData.apartment}</p>
-                <p>{customerData.city}</p>
-                <p>{customerData.postCode}</p>
-                <p>{COUNTRIES_TITLES[`ref.country.${customerData.country}`]}</p>
-              </div>
+            <div className={investStyle.value}>
+              <p>{customerData.name}</p>
             </div>
-          </>
-        )}
-      </div>
-    )
-  }
+          </div>
+          <div className={style.item}>
+            <div className={investStyle.label}>
+              {i18n._('Invest.CustomerData.address')}
+            </div>
+            <div className={investStyle.value}>
+              <p>{customerData.streetAddress}</p>
+              <p>{customerData.apartment}</p>
+              <p>{customerData.city}</p>
+              <p>{customerData.postCode}</p>
+              <p>{COUNTRIES_TITLES[CountryRef[customerData.country]]}</p>
+            </div>
+          </div>
+        </>
+      )}
+    </div>
+  )
 }
 
 export default connect(
