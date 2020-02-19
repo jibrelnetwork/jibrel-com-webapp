@@ -99,6 +99,5 @@
   "Waitlist.form.error.alreadySubscribed": "You have subscribed already",
   "Waitlist.success.text": "You have successfully joined the waitlist for { startupName }. Once the deal is open we will notify you via email.",
   "Waitlist.success.action.back": "BACK TO STARTUPS",
-  "Waitlist.success.title": "You Are on the Waitlist",
-  "": ""
+  "Waitlist.success.title": "You Are on the Waitlist"
 }
