@@ -10,7 +10,6 @@ import {
 
 import {
   Grid,
-  Link,
   BigButton,
   FormTitle,
   PageTitle,
@@ -72,22 +71,8 @@ interface InvestState {
   currentStep: InvestStep;
 }
 
-const SubscriptionAgreement: React.FunctionComponent<{
-  offeringId: string | void;
-}> = ({ offeringId }) => !offeringId ? null : (
-  <Link
-    target='_blank'
-    rel='noopener noreferrer'
-    className={style.download}
-    href={`${settings.API_BASE_URL}/v1/investment/offerings/${offeringId}/agreement`}
-  >
-    Download subscription agreement
-  </Link>
-)
-
 const InvestForm: React.FunctionComponent<FormRenderProps> = ({
   handleSubmit,
-  values,
   submitErrors,
 }) => {
   const i18n = useI18n()
@@ -103,7 +88,6 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
             maxLength={256}
           />
         </div>
-        <SubscriptionAgreement offeringId={values.id} />
         <p className={style.agreement}>
           By clicking <span>
             Accept and Sign
