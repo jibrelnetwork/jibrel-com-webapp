@@ -1,14 +1,27 @@
 import React from 'react'
+import { connect } from 'react-redux'
 import { NotFound } from '@jibrelcom/ui'
 
 import settings from 'app/settings'
 import ProfileLayout from 'layouts/ProfileLayout'
+import { Dispatch } from 'store'
 
-const NotFoundEnhanced: React.FunctionComponent = () => (
+export interface NotFoundProps {
+  requestProfile: () => void;
+}
+
+const NotFoundEnhanced: React.FunctionComponent<NotFoundProps> = ({ requestProfile }) => (
   <ProfileLayout>
-    <NotFound href={settings.HOST_CMS} />
+    <NotFound
+      requestProfile={requestProfile}
+      host={settings.HOST_CMS}
+    />
   </ProfileLayout>
 )
 
-export default NotFoundEnhanced
-
+export default connect<null, NotFoundProps>(
+  null,
+  (dispatch: Dispatch) => ({
+    requestProfile: dispatch.user.updateProfile,
+  })
+)(NotFoundEnhanced)
