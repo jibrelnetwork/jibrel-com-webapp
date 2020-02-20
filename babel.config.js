@@ -2,6 +2,7 @@ module.exports = {
   presets: [
     ["@babel/preset-typescript"],
     ["@babel/preset-env", {
+      "targets": "last 2 versions, ie 11",
       "modules": "umd",
       "useBuiltIns": "entry",
       "corejs": 3
