@@ -73,7 +73,7 @@ interface InvestState {
 
 const InvestForm: React.FunctionComponent<FormRenderProps> = ({
   handleSubmit,
-  submitErrors,
+  submitError,
 }) => {
   const i18n = useI18n()
 
@@ -107,7 +107,7 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
         </Grid.Item>
       </form>
       <div className={style.error}>
-        {submitErrors && submitErrors[FORM_ERROR] && (
+        {submitError && (
           <Grid.Item
             component={ErrorToast}
             xl={8}
@@ -116,7 +116,7 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
             s={4}
             xs={4}
           >
-            {submitErrors[FORM_ERROR]}
+            {submitError}
           </Grid.Item>
         )}
       </div>
@@ -250,7 +250,11 @@ class Invest extends Component<InvestProps, InvestState> {
 
   handleSubmit = async (values: InvestFormFields): FormSubmitResult<InvestFormFields> => {
     try {
-      await this.props.sendOfferingApplication(values)
+      const errors = await this.props.sendOfferingApplication(values)
+
+      if (errors) {
+        return errors
+      }
     } catch (error) {
       console.error(error)
 

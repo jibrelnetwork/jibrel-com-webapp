@@ -122,7 +122,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
           throw new Error(`Incorrect DocuSign status: ${subscriptionAgreementStatus}`)
         }
 
-        window.location.href = subscriptionAgreementRedirectUrl
+        if (subscriptionAgreementRedirectUrl) {
+          window.location.href = subscriptionAgreementRedirectUrl
+        }
       } catch (error) {
         if (!error.response) {
           throw error
@@ -130,7 +132,9 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
 
         const { status } = error.response
 
-        if (status === 409) {
+        if (status === 400) {
+          return error.formValidation
+        } else if (status === 409) {
           dispatch(actions.navigateTo('Invested'))
 
           return
@@ -184,7 +188,7 @@ export const invest: ModelConfig<InvestState> = createModel<InvestState>({
       }
     },
     finishSigning: async (id: string): Promise<InvestApplication> =>
-       await axios.post(`/v1/investment/applications/${id}/finish-signing`, null, {
+      await axios.post(`/v1/investment/applications/${id}/finish-signing`, null, {
         validateStatus: (status: number): boolean =>
           status === 200 || status === 409 // made 409 status code is accepted too
       })
