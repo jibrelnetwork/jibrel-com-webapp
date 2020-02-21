@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Trans } from '@lingui/macro'
 import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
 
@@ -160,12 +161,13 @@ const FormStep: React.FunctionComponent<{
       <PageBackLink href={`${settings.HOST_CMS}/en/companies/${formatSlug(startupName)}`}>
         {i18n._('Waitlist.form.back', { startupName })}
       </PageBackLink>
-      <div
-        className={style.message}
-        dangerouslySetInnerHTML={{
-          __html: i18n._('Waitlist.form.message', { startupName }),
-        }}
-      />
+      <div className={style.message}>
+        <Trans
+          values={{ startupName }}
+          id='Waitlist.form.message'
+          components={[<span key='Waitlist.form.message' />]}
+        />
+      </div>
       <Form
         render={WaitlistForm}
         onSubmit={handleSubmit}

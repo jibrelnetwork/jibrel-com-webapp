@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Trans } from '@lingui/macro'
 import { connect } from 'react-redux'
 import { FORM_ERROR } from 'final-form'
 import { useI18n } from '@jibrelcom/i18n'
@@ -88,12 +89,12 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
             maxLength={256}
           />
         </div>
-        <p
-          className={style.agreement}
-          dangerouslySetInnerHTML={{
-            __html: i18n._('Invest.form.agreement'),
-          }}
-        />
+        <p className={style.agreement}>
+          <Trans
+            id='Invest.form.agreement'
+            components={[<span key='Invest.form.agreement' />]}
+          />
+        </p>
         <Grid.Item
           className={style.submit}
           xs={4}
@@ -192,7 +193,10 @@ const RisksStep: React.FunctionComponent<{
           xl={4}
           className={style.buttonDescription}
         >
-          <p dangerouslySetInnerHTML={{ __html: i18n._('Invest.risks.description') }} />
+          <Trans
+            id='Invest.risks.description'
+            components={[<span key='Invest.risks.description' />]}
+          />
         </Grid.Item>
       </Grid.Container>
     </>

@@ -33,8 +33,6 @@ const CustomerData: React.FunctionComponent<CustomerDataProps> = ({
 }) => {
   useEffect(() => {
     getCustomerData()
-
-    return
   }, [])
 
   const i18n = useI18n()

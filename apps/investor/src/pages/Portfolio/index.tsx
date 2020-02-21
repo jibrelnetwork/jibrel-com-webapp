@@ -54,8 +54,6 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
 }) => {
   useEffect(() => {
     getInvestments()
-
-    return
   }, [])
 
   const i18n = useI18n()
