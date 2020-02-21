@@ -260,7 +260,11 @@ class Invest extends Component<InvestProps, InvestState> {
 
   handleSubmit = async (values: InvestFormFields): FormSubmitResult<InvestFormFields> => {
     try {
-      await this.props.sendOfferingApplication(values)
+      const errors = await this.props.sendOfferingApplication(values)
+
+      if (errors) {
+        return errors
+      }
     } catch (error) {
       console.error(error)
 
