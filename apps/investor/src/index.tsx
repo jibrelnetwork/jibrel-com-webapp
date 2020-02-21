@@ -11,7 +11,7 @@ import { registerSprite } from '@jibrelcom/ui'
 import App from './App'
 import sprite from './utils/sprite'
 
-registerSprite('id', sprite)
+registerSprite('investor', sprite)
 
 const MOUNT_NODE = document.getElementById('app')
 

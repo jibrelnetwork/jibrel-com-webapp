@@ -1,3 +1,4 @@
+import { i18n } from '@jibrelcom/i18n'
 import { actions } from 'redux-router5'
 import { FORM_ERROR } from 'final-form'
 
@@ -121,9 +122,9 @@ export const waitlist: ModelConfig<WaitlistState> = createModel<WaitlistState>({
         } else if (status === 403) {
           return handle403(rootState.user.languageCode)
         } else if (status === 404) {
-          return { [FORM_ERROR]: 'Offering isn\'t found' }
+          return { [FORM_ERROR]: i18n._('Waitlist.form.error.notFound') }
         } else if (status === 409) {
-          return { [FORM_ERROR]: 'You have subscribed already' }
+          return { [FORM_ERROR]: i18n._('Waitlist.form.error.alreadySubscribed') }
         }
 
         throw error

@@ -106,6 +106,7 @@
 
 .button-description {
   @include font-caption;
+
   margin-top: 16px;
   text-align: center;
 
@@ -118,10 +119,10 @@
   @include screen('>xsmall', '<small') {
     padding: 0 25%;
   }
-}
 
-.bold {
-  font-weight: bold;
+  span {
+    font-weight: 800;
+  }
 }
 
 .sticky {

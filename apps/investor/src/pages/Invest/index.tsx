@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import { Trans } from '@lingui/macro'
 import { connect } from 'react-redux'
 import { FORM_ERROR } from 'final-form'
 import { useI18n } from '@jibrelcom/i18n'
@@ -89,9 +90,10 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
           />
         </div>
         <p className={style.agreement}>
-          By clicking <span>
-            Accept and Sign
-          </span>, I understand and agree that this is a legal representation of my handwritten signature/initials.
+          <Trans
+            id='Invest.form.agreement'
+            components={[<span key='Invest.form.agreement' />]}
+          />
         </p>
         <Grid.Item
           className={style.submit}
@@ -102,7 +104,7 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
           xl={4}
         >
           <BigButtonSubmit>
-            Accept and Sign
+            {i18n._('Invest.form.submit')}
           </BigButtonSubmit>
         </Grid.Item>
       </form>
@@ -116,7 +118,7 @@ const InvestForm: React.FunctionComponent<FormRenderProps> = ({
             s={4}
             xs={4}
           >
-            {submitError}
+            {i18n._('Invest.form.error')}
           </Grid.Item>
         )}
       </div>
@@ -130,14 +132,18 @@ const BackLink: React.FunctionComponent<{
 }> = ({
   slug,
   startupName,
-}) => !startupName ? null : (
-  <PageBackLink
-    className={style.back}
-    href={`${settings.HOST_CMS}/en/companies/${slug}`}
-  >
-    {`Back to ${startupName}`}
-  </PageBackLink>
-)
+}) => {
+  const i18n = useI18n()
+
+  return !startupName ? null : (
+    <PageBackLink
+      className={style.back}
+      href={`${settings.HOST_CMS}/en/companies/${slug}`}
+    >
+      {i18n._('Invest.back', { startupName })}
+    </PageBackLink>
+  )
+}
 
 const RisksStep: React.FunctionComponent<{
   handleClick: () => void;
@@ -147,49 +153,55 @@ const RisksStep: React.FunctionComponent<{
   handleClick,
   slug,
   startupName,
-}) => (
-  <>
-    <Grid.Container>
-      <Grid.Item
-        xs={4}
-        s={8}
-        m={5}
-        l={8}
-        xl={8}
-      >
-        <BackLink slug={slug} startupName={startupName} />
-        <RiskDisclosures />
-      </Grid.Item>
-    </Grid.Container>
-    <Grid.Container className={`${style.submit} ${style.sticky}`}>
-      <Grid.Item
-        xs={4}
-        s={4}
-        m={3}
-        l={4}
-        xl={4}
-      >
-        <BigButton
-          component='button'
-          onClick={handleClick}
-          type='button'
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <>
+      <Grid.Container>
+        <Grid.Item
+          xs={4}
+          s={8}
+          m={5}
+          l={8}
+          xl={8}
         >
-          Accept and Sign
-        </BigButton>
-      </Grid.Item>
-      <Grid.Item
-        xs={4}
-        s={8}
-        m={4}
-        l={4}
-        xl={4}
-        className={style.buttonDescription}
-      >
-        By pressing the <span className={style.bold}>Accept and Sign</span> button, you acknowledge that you have read, understood and accept the risks set out above.
-      </Grid.Item>
-    </Grid.Container>
-  </>
-)
+          <BackLink slug={slug} startupName={startupName} />
+          <RiskDisclosures />
+        </Grid.Item>
+      </Grid.Container>
+      <Grid.Container className={`${style.submit} ${style.sticky}`}>
+        <Grid.Item
+          xs={4}
+          s={4}
+          m={3}
+          l={4}
+          xl={4}
+        >
+          <BigButton
+            onClick={handleClick}
+            type='button'
+          >
+            {i18n._('Invest.risks.submit')}
+          </BigButton>
+        </Grid.Item>
+        <Grid.Item
+          xs={4}
+          s={8}
+          m={4}
+          l={4}
+          xl={4}
+          className={style.buttonDescription}
+        >
+          <Trans
+            id='Invest.risks.description'
+            components={[<span key='Invest.risks.description' />]}
+          />
+        </Grid.Item>
+      </Grid.Container>
+    </>
+  )
+}
 
 const FormStep: React.FunctionComponent<{
   handleSubmit: FormSubmit<InvestFormFields>;
@@ -201,27 +213,29 @@ const FormStep: React.FunctionComponent<{
   slug,
   offeringId,
   startupName,
-}) => (
-  <>
-    <BackLink slug={slug} startupName={startupName} />
-    <PageTitle>{`Invest in ${startupName}`}</PageTitle>
-    <DealTerms slug={slug} />
-    <div className={style.note}>
-      To continue, you need to sign the Subscription Agreement by electronic signature. Before you do this, please enter your Subscription Amount
-    </div>
-    <CustomerData />
-    <Form
-      render={InvestForm}
-      onSubmit={handleSubmit}
-      initialValues={{
-        amount: '',
-        id: offeringId,
-        isAgreedRisks: true,
-        isAgreedSubscription: true,
-      }}
-    />
-  </>
-)
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <>
+      <BackLink slug={slug} startupName={startupName} />
+      <PageTitle>{i18n._('Invest.form.title', { startupName })}</PageTitle>
+      <DealTerms slug={slug} />
+      <div className={style.note}>{i18n._('Invest.form.note')}</div>
+      <CustomerData />
+      <Form
+        render={InvestForm}
+        onSubmit={handleSubmit}
+        initialValues={{
+          amount: '',
+          id: offeringId,
+          isAgreedRisks: true,
+          isAgreedSubscription: true,
+        }}
+      />
+    </>
+  )
+}
 
 class Invest extends Component<InvestProps, InvestState> {
   constructor(props: InvestProps) {
@@ -259,7 +273,7 @@ class Invest extends Component<InvestProps, InvestState> {
       console.error(error)
 
       return {
-        [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.'
+        [FORM_ERROR]: 'FORM_ERROR',
       }
     }
   }

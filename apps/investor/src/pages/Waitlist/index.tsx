@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
+import { Trans } from '@lingui/macro'
 import { connect } from 'react-redux'
-import { FORM_ERROR } from 'final-form'
 import { useI18n } from '@jibrelcom/i18n'
 
 import {
@@ -76,25 +76,22 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
       >
         <div className={style.form}>
           <h3 className={style.title}>
-            Intended investment amount
+            {i18n._('Waitlist.form.amount.title')}
           </h3>
           <div className={style.note}>
-            {`Please choose the amount you are planning to invest in ${startupName}. You can change it at any time when the startup starts to haggle.`}
+            {i18n._('Waitlist.form.amount.note', { startupName })}
           </div>
-          <AmountSelect
-            validate={isRequired({ i18n })}
-            name='amount'
-          />
+          <AmountSelect validate={isRequired({ i18n })} />
           <h3 className={style.title}>
-            Email for Notifications
+            {i18n._('Waitlist.form.email.title')}
           </h3>
           <div className={style.note}>
-            Please make sure that the email address below is the one you are willing to receive notifications to.
+            {i18n._('Waitlist.form.email.note')}
           </div>
           <Input
             validate={isRequired({ i18n })}
+            label={i18n._('Waitlist.form.email.label')}
             name='email'
-            label='Email'
             maxLength={256}
           />
         </div>
@@ -107,7 +104,7 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
           xl={4}
         >
           <BigButtonSubmit>
-            JOIN WAITLIST
+            {i18n._('Waitlist.form.submit')}
           </BigButtonSubmit>
         </Grid.Item>
       </form>
@@ -132,13 +129,15 @@ const WaitlistForm: React.FunctionComponent<FormRenderProps> = ({
 const SuccessStep: React.FunctionComponent<{
   startupName: string;
 }> = ({ startupName }) => {
+  const i18n = useI18n()
+
   return (
     <PageWithHero
       imgSrc={heroImage}
       href={settings.HOST_CMS}
-      text={`You have successfully joined the waitlist for ${startupName}. Once the deal is open we will notify you via email.`}
-      buttonLabel='BACK TO STARTUPS'
-      title='You Are on the Waitlist'
+      title={i18n._('Waitlist.success.title')}
+      buttonLabel={i18n._('Waitlist.success.action.back')}
+      text={i18n._('Waitlist.success.text', { startupName })}
     />
   )
 }
@@ -153,29 +152,35 @@ const FormStep: React.FunctionComponent<{
   email,
   offeringId,
   startupName,
-}) => (
-  <>
-    <PageTitle>Join Waitlist</PageTitle>
-    <PageBackLink
-      href={`${settings.HOST_CMS}/en/companies/${formatSlug(startupName)}`}
-    >
-      {`Back to ${startupName}`}
-    </PageBackLink>
-    <div className={style.message}>
-      To ensure that you’re one of the first in line to invest in <span>{startupName}</span>, join the waitlist by submitting the form below.
-    </div>
-    <Form
-      render={WaitlistForm}
-      onSubmit={handleSubmit}
-      initialValues={{
-        email,
-        startupName,
-        amount: '',
-        id: offeringId,
-      }}
-    />
-  </>
-)
+}) => {
+  const i18n = useI18n()
+
+  return (
+    <>
+      <PageTitle>{i18n._('Waitlist.form.title')}</PageTitle>
+      <PageBackLink href={`${settings.HOST_CMS}/en/companies/${formatSlug(startupName)}`}>
+        {i18n._('Waitlist.form.back', { startupName })}
+      </PageBackLink>
+      <div className={style.message}>
+        <Trans
+          values={{ startupName }}
+          id='Waitlist.form.message'
+          components={[<span key='Waitlist.form.message' />]}
+        />
+      </div>
+      <Form
+        render={WaitlistForm}
+        onSubmit={handleSubmit}
+        initialValues={{
+          email,
+          startupName,
+          amount: '',
+          id: offeringId,
+        }}
+      />
+    </>
+  )
+}
 
 class Waitlist extends Component<WaitlistProps, WaitlistState> {
   constructor(props: WaitlistProps) {
@@ -205,19 +210,13 @@ class Waitlist extends Component<WaitlistProps, WaitlistState> {
   }
 
   handleSubmit = async (values: WaitlistFormFields): FormSubmitResult<WaitlistFormFields> => {
-    try {
-      const errors = await this.props.sendOfferingSubscription(values)
+    const errors = await this.props.sendOfferingSubscription(values)
 
-      if (errors) {
-        return errors
-      }
-
-      this.setCurrentStep(WaitlistStep.SUCCESS)
-    } catch (error) {
-      return {
-        [FORM_ERROR]: 'Oops, something went wrong. Please reload the page or try again later.'
-      }
+    if (errors) {
+      return errors
     }
+
+    this.setCurrentStep(WaitlistStep.SUCCESS)
   }
 
   renderCurrentStep = (): React.ReactNode => {

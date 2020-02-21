@@ -22,8 +22,6 @@ const NotFound: React.FunctionComponent<NotFoundProps> = ({
 
   useEffect(() => {
     requestProfile()
-
-    return
   }, [])
 
   return (
