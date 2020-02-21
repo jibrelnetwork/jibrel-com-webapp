@@ -30,10 +30,7 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'Waitlist',
     path: '/waitlist/:offeringId',
-    canActivate: composeActivations([
-      isLoggedIn,
-      checkKYCStatus,
-    ]),
+    canActivate: isLoggedIn,
   },
 
   {
