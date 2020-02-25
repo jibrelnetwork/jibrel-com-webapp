@@ -174,7 +174,7 @@ const RisksStep: React.FunctionComponent<{
           onClick={handleClick}
           type='button'
         >
-          Accept and Sign
+          Accept
         </BigButton>
       </Grid.Item>
       <Grid.Item
@@ -185,7 +185,7 @@ const RisksStep: React.FunctionComponent<{
         xl={4}
         className={style.buttonDescription}
       >
-        By pressing the <span className={style.bold}>Accept and Sign</span> button, you acknowledge that you have read, understood and accept the risks set out above.
+        By pressing the <span className={style.bold}>Accept</span> button, you acknowledge that you have read, understood and accept the risks set out above.
       </Grid.Item>
     </Grid.Container>
   </>
