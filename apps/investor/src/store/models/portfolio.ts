@@ -65,11 +65,16 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
         throw error
       }
     },
-    async getCompanyData(id: string): Promise<void> {
+    async getCompanyData(id: string, rootState: RootState): Promise<void> {
       const cmsAPI = __DEV__ ? 'https://jibrelcom.develop.jdev.network' : settings.HOST_CMS
-      const { data } = await axiosPlain.get(`${cmsAPI}/api/v1/companies/${id}`)
 
-      console.log(data.data)
+      const { data } = await axiosPlain({
+        method: 'get',
+        url: `${cmsAPI}/api/v1/companies/${id}`,
+        headers: {
+          'Accept-Language': rootState.user.languageCode,
+        },
+      })
 
       this.setCompanyData(data.data)
     },
