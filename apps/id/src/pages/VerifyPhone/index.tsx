@@ -26,6 +26,8 @@ import {
 } from 'store/types'
 
 import style from './style.scss'
+import { useStore } from 'effector-react'
+import { $PhoneStore } from 'effector/phone/store'
 
 const VERIFY_PHONE_INITIAL_VALUES: PhoneAPINumberFields = {
   country: CountryCode.us,
@@ -77,6 +79,9 @@ interface VerifyPhoneProps {
 const VerifyPhone: React.FunctionComponent<VerifyPhoneProps> = ({
   onSubmit,
 }) => {
+  const phoneStore = useStore($PhoneStore)
+  console.log(phoneStore)
+
   return (
     <AuthLayout>
       <div className={authStyle.main}>

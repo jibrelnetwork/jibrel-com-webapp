@@ -1,23 +1,16 @@
-import { ActivationFnFactory, Router, State } from 'router5'
+import { ActivationFnFactory, State } from 'router5'
 
-import { RouterDependencies } from '../types'
+import { PhoneVerificationStatus } from '../../../effector/phone/types'
+import { fetchPhoneFx } from '../../../effector/phone/events'
+import { $PhoneStore } from '../../../effector/phone/store'
 
-import { PhoneVerificationStatus } from 'store/types'
-
-const verifyPhone: ActivationFnFactory = (
-  router: Router,
-  dependencies: RouterDependencies,
-) =>
+const verifyPhone: ActivationFnFactory = () =>
   async (toState: State, fromState: State): Promise<boolean> => {
-    const { store } = dependencies
-    try {
-      await store.dispatch.phone.init()
-    } catch (e) {
-      // handle exception below
-    }
-    const { phone } = store.getState()
+    await fetchPhoneFx()
 
-    if (phone.backendStatus === PhoneVerificationStatus.verified) {
+    const phone = $PhoneStore.getState()
+
+    if (phone.status === PhoneVerificationStatus.verified) {
       throw {
         redirect: {
           name: 'KYC',
