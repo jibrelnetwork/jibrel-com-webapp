@@ -1,6 +1,7 @@
 import React from 'react'
+import { createComponent, useEvent } from 'effector-react'
+
 import COUNTRIES_INDEX from '@jibrelcom/countries/src/index.json'
-import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
 import { CountryCode } from '@jibrelcom/countries/src/types'
 
@@ -14,9 +15,12 @@ import {
   FormRenderProps,
 } from 'react-final-form'
 
+import { $PhoneStore } from 'effector/phone/store'
+import { setPhoneFx, updatePhoneFx } from 'effector/phone/events'
+import { PhoneVerificationState } from 'effector/phone/types'
+
 import authStyle from 'styles/auth.scss'
 import CountrySelect from 'components/CountrySelect'
-import { Dispatch } from 'store'
 import { AuthLayout } from 'layouts'
 import { isRequired } from 'utils/validators'
 
@@ -70,34 +74,30 @@ const VerifyPhoneForm: React.FunctionComponent<FormRenderProps<PhoneAPINumberFie
   )
 }
 
-interface VerifyPhoneProps {
-  onSubmit: (values: PhoneAPINumberFields) => FormSubmitResult<PhoneAPINumberFields>;
-}
+export default createComponent<void, PhoneVerificationState>(
+  $PhoneStore,
+  (props, store) => {
+    const submitFx = store.maskedNumber && store.maskedNumber.length > 0
+      ? updatePhoneFx
+      : setPhoneFx
+    const onSubmit = useEvent(submitFx)
 
-const VerifyPhone: React.FunctionComponent<VerifyPhoneProps> = ({
-  onSubmit,
-}) => {
-  return (
-    <AuthLayout>
-      <div className={authStyle.main}>
-        <Form
-          onSubmit={(
-            values: PhoneAPINumberFields,
-          ): FormSubmitResult<PhoneAPINumberFields> => onSubmit({
-            ...values,
-            countryCode: COUNTRIES_INDEX[values.country].ccc,
-          })}
-          render={VerifyPhoneForm}
-          initialValues={VERIFY_PHONE_INITIAL_VALUES}
-        />
-      </div>
-    </AuthLayout>
-  )
-}
-
-export default connect(
-  null,
-  (dispatch: Dispatch) => ({
-    onSubmit: dispatch.phone.setNumber,
+    return (
+      <AuthLayout>
+        <div className={authStyle.main}>
+          <Form
+            onSubmit={(
+              values: PhoneAPINumberFields,
+            ): FormSubmitResult<PhoneAPINumberFields> => {
+              return onSubmit({
+                ...values,
+                countryCode: COUNTRIES_INDEX[values.country].ccc,
+              }).catch((error) => error.formValidation)
+            }}
+            render={VerifyPhoneForm}
+            initialValues={VERIFY_PHONE_INITIAL_VALUES}
+          />
+        </div>
+      </AuthLayout>
+    )
   })
-)(VerifyPhone)

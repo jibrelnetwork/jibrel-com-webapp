@@ -1,4 +1,39 @@
 import { CountryCode } from '@jibrelcom/countries/src/types'
+import { API_FORM_ERROR } from '@jibrelcom/forms'
+
+// utility
+
+type BackendErrorMessage = {
+  message: string;
+  code: string;
+}
+
+export interface SuccessWrapper<T = Record<string, any>> {
+  data: T;
+}
+
+export interface FailWrapper<T = Record<string, any>> {
+  errors: {
+    [key in keyof T | API_FORM_ERROR]?: BackendErrorMessage[];
+  };
+}
+
+// FIXME: Actual example of real type of BackendWrapper
+//
+// type FieldError = {
+//   message: string;
+//   code: string;
+// }
+//
+// interface BackendWrapper<T = any> {
+//   data?: T;
+//   errors?: {
+//     field?: FieldError[];
+//     detail?: FieldError[];
+//   };
+// }
+
+// !utility
 
 export enum PhoneVerificationStatus {
   unconfirmed = 'unconfirmed',
@@ -22,19 +57,18 @@ export enum PhoneConfirmationVariant {
 }
 
 export interface PhoneVerificationState {
-  isLoading: boolean;
   maskedNumber: string;
   status?: PhoneVerificationStatus;
   requestAvailableAt?: Date;
   confirmationVariant?: PhoneConfirmationVariant;
 }
 
-export type PhoneAPINumberFields = {
+export type APIRqRetrivePhone = {
   country: CountryCode;
   countryCode: string;
   number: string;
 }
 
-export type PhoneAPIPinFields = {
+export type APIRqVerifyPhoneNumber = {
   pin: string;
 }

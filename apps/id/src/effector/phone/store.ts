@@ -4,7 +4,6 @@ import { fetchPhoneFx } from './events'
 
 const initialState: PhoneVerificationState = {
   status: undefined,
-  isLoading: false,
   maskedNumber: '',
   requestAvailableAt: undefined,
   confirmationVariant: undefined,
