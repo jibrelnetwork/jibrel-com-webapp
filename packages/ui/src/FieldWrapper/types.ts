@@ -6,7 +6,11 @@ export enum MessageType {
   success = 'success',
 }
 
-export type GenericFieldValue = string | number | boolean
+export type GenericFieldValue
+  = void
+  | number
+  | boolean
+  | string
 
 export type GenericFieldRenderProps = FieldRenderProps<GenericFieldValue, HTMLElement>
 export type GenericFieldProps = FieldProps<GenericFieldValue, GenericFieldRenderProps>
