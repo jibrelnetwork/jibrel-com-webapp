@@ -17,7 +17,6 @@
   letter-spacing: 0.05em;
   text-transform: uppercase;
   text-align: left;
-  text-decoration: none;
   padding: 2px 6px;
   border-radius: 20px;
   transition:
@@ -25,37 +24,66 @@
           .15s ease-in-out border-color,
           .15s ease-in-out color;
 
-  background: $color-blue;
-  border-color: $color-blue;
   color: $color-white;
 
-  &:hover {
-    background: $color-white;
-    color: $color-blue;
-    cursor: pointer;
+  &.main {
+    background: $color-blue;
+    border-color: $color-blue;
+
+    &:hover {
+      color: $color-blue;
+    }
+
+    &:active {
+      background: $color-blue-10;
+      color: $color-blue;
+    }
   }
 
-  &:active {
-    background: $color-blue-10;
-    color: $color-blue;
+  &.secondary {
+    background: $color-black;
+    border-color: $color-black;
+
+    &:hover {
+      color: $color-black;
+    }
+
+    &:active {
+      background: $color-black-10;
+      color: $color-black;
+    }
   }
 
-  @include disabled {
-    background: $color-black-10;
-    border-color: $color-black-10;
-    color: $color-black-40;
-    cursor: auto;
-  }
+  &,
+  &.main,
+  &.secondary {
+    @include disabled {
+      background: $color-black-10;
+      border-color: $color-black-10;
+      color: $color-black-40;
+      cursor: auto;
+    }
 
-  &:hover, &:focus, &:active {
-    text-decoration: none;
+    &:hover {
+      background: $color-white;
+      cursor: pointer;
+    }
+
+    &, &:hover, &:focus, &:active {
+      text-decoration: none;
+    }
   }
 }
 
 .text {
   @include ellipsis;
+
   flex: 1 1 auto;
   margin: 5px 8px;
+
+  &, &:hover, &:focus, &:active {
+    text-decoration: none;
+  }
 }
 
 .icon {

@@ -4,37 +4,57 @@ import cc from 'classcat'
 import Icon from '../Icon'
 
 import style from './style.scss'
+import { SmallButtonVariant } from './types'
 
-interface SmallButtonProps extends React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
-  className?: string;
-  isDisabled?: boolean;
+interface SmallButtonCommonProps {
   iconName?: string;
-  children: React.ReactNode;
+  className?: string;
+  variant?: SmallButtonVariant;
+  isDisabled?: boolean;
 }
 
-const SmallButton: React.FunctionComponent<SmallButtonProps> = ({
-  className,
-  isDisabled = false,
-  iconName,
+interface LinkSmallButtonProps
+  extends SmallButtonCommonProps,
+    React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
+  component: 'a';
+}
+
+interface ButtonSmallButtonProps
+  extends SmallButtonCommonProps,
+    React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
+  component: 'button';
+}
+
+const SmallButton: React.FunctionComponent<LinkSmallButtonProps | ButtonSmallButtonProps> = ({
   children,
+  iconName,
+  className,
+  component = 'button',
+  variant = SmallButtonVariant.main,
+  isDisabled = false,
   ...props
-}) => (
-  <button
-    {...props}
-    className={cc([
-      style.button,
-      className,
-    ])}
-    disabled={isDisabled}
-  >
-    <span className={style.text}>{children}</span>
-    {iconName && (
-      <Icon
-        name={iconName}
-        className={style.icon}
-      />
-    )}
-  </button>
-)
+}) => {
+  const Component = component
+
+  return (
+    <Component
+      {...props}
+      className={cc([
+        style.button,
+        style[variant],
+        className,
+      ])}
+      disabled={isDisabled}
+    >
+      <span className={style.text}>{children}</span>
+      {iconName && (
+        <Icon
+          name={iconName}
+          className={style.icon}
+        />
+      )}
+    </Component>
+  )
+}
 
 export default React.memo(SmallButton)
