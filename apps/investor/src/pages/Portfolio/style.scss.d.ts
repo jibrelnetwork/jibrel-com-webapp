@@ -1,13 +1,19 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
+    available: string;
+    balance: string;
+    border: string;
+    buttons: string;
     centered: string;
     column: string;
+    current: string;
     deposit: string;
     description: string;
     green: string;
     grid: string;
+    "invested-loader": string;
+    investedLoader: string;
     investments: string;
-    item: string;
     "l-1": string;
     "l-10": string;
     "l-11": string;
@@ -49,6 +55,8 @@ declare namespace StyleScssModule {
     m6: string;
     m7: string;
     m8: string;
+    note: string;
+    opportunities: string;
     "s-1": string;
     "s-2": string;
     "s-3": string;
@@ -65,6 +73,7 @@ declare namespace StyleScssModule {
     s6: string;
     s7: string;
     s8: string;
+    subtitle: string;
     title: string;
     withdraw: string;
     "xl-1": string;

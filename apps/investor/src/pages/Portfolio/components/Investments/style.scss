@@ -1,0 +1,41 @@
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+.main {
+  position: relative;
+
+  &:not(:last-child) {
+    margin-bottom: 24px;
+  }
+}
+
+.title {
+  position: relative;
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 24px;
+  color: $color-black;
+}
+
+.description {
+  margin-top: 8px;
+  font-size: 12px;
+  line-height: 140%;
+  color: $color-black-60;
+}
+
+.count {
+  margin-left: 8px;
+  padding: 3px 12px;
+  font-size: 16px;
+  font-weight: 800;
+  line-height: 19px;
+  border-radius: 12px;
+  color: $color-blue-60;
+  background: $color-blue-10;
+
+  &.pending {
+    color: $color-white;
+    background: $color-red;
+  }
+}

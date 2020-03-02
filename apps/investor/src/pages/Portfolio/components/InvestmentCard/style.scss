@@ -5,91 +5,139 @@
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
 .main {
-  @include flex-column;
-
-  height: 100%;
+  margin-top: 16px;
+  padding: 24px 32px;
   border-radius: 24px;
+  align-items: center;
 
-  @include screen('>medium') {
-    padding: 32px;
+  @include screen('>small') {
+    @include flex-row;
+
+    margin-top: 24px;
+  }
+}
+
+.left,
+.right {
+  @include screen('>xsmall') {
+    @include flex-row;
+
+    align-items: center;
+  }
+}
+
+.right {
+  margin-top: 16px;
+
+  @include screen('>xsmall') {
+    margin-top: 12px;
+    margin-left: 80px;
+  }
+
+  @include screen('>small') {
+    margin-top: 0;
+    margin-left: auto;
   }
 }
 
 .logo {
-  width: 88px;
-  height: 88px;
+  width: 56px;
+  height: 56px;
   border-radius: 50%;
 }
 
-.name {
-  margin-top: 32px;
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 29px;
-}
+.item {
+  @include flex-column;
 
-.amount {
-  @include flex-row;
-
-  margin-top: 8px;
-  align-items: center;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 38px;
-  color: $color-black;
-
-  &.pending {
-    color: $color-black-40;
-
-    .clock {
-      display: inline-flex;
-    }
+  @include screen('>small') {
+    text-align: right;
   }
 }
 
-.clock {
-  display: none;
-  margin-left: 16px;
-  position: relative;
-
-  .icon {
-    @include icon-color($color-black-40);
-
-    width: 32px;
-    height: 32px;
-  }
-
-  .hint {
-    position: absolute;
-  }
-}
-
-.date {
-  margin-top: 16px;
-  font-size: 18px;
+.label {
+  margin-bottom: 4px;
+  font-size: 12px;
   line-height: 140%;
   color: $color-black-60;
 }
 
-.info {
-  @include flex-row;
+.value {
+  font-size: 20px;
+  font-weight: 800;
+  line-height: 24px;
+  color: $color-black;
+}
 
+.name,
+.date,
+.email {
+  margin-top: 16px;
+
+  @include screen('>xsmall') {
+    margin-top: 0;
+  }
+}
+
+.name {
+  text-align: left;
+
+  @include screen('>xsmall') {
+    margin-left: 24px;
+  }
+}
+
+.amount,
+.email {
+  @include screen('>small') {
+    margin-left: auto;
+  }
+}
+
+.amount,
+.date {
+  @include screen('>xsmall') {
+    width: 50%;
+  }
+}
+
+.amount {
+  order: 2;
+
+  @include screen('>small') {
+    order: 1;
+    width: initial;
+  }
+}
+
+.date {
+  order: 3;
+
+  @include screen('>small') {
+    width: 136px;
+    margin-left: 16px;
+  }
+
+  @include screen('>medium') {
+    width: 200px;
+  }
+
+  @include screen('>large') {
+    width: 240px;
+  }
+}
+
+.pay {
+  order: 1;
   margin-top: 32px;
 
-  .item {
-    width: 50%;
-    padding-right: 16px;
+  @include screen('>xsmall') {
+    margin-top: 0;
+    margin-right: 24px;
   }
 
-  .label {
-    font-size: 12px;
-    line-height: 140%;
-    color: $color-black-60;
-  }
-
-  .value {
-    font-size: 20px;
-    line-height: 24px;
-    color: $color-black;
+  @include screen('>small') {
+    order: 2;
+    margin-right: 0;
+    margin-left: 32px;
   }
 }

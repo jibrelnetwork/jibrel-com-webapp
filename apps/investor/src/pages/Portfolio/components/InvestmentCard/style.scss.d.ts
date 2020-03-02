@@ -1,17 +1,16 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
     amount: string;
-    clock: string;
     date: string;
-    hint: string;
-    icon: string;
-    info: string;
+    email: string;
     item: string;
     label: string;
+    left: string;
     logo: string;
     main: string;
     name: string;
-    pending: string;
+    pay: string;
+    right: string;
     value: string;
   }
 }
