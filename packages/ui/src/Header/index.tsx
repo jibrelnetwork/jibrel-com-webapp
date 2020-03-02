@@ -3,7 +3,6 @@ import cc from 'classcat'
 import { useI18n } from '@jibrelcom/i18n'
 
 import style from './style.scss'
-import grid from '../Grid/grid.scss'
 
 export interface HeaderProps {
   logout: () => void;
@@ -36,8 +35,6 @@ const Header: React.FunctionComponent<HeaderProps> = ({
         className={cc([
           'navbar',
           '--black',
-          grid.centered,
-          style.main,
           !isAuthenticated && '--no-dropdown',
         ])}
         data-is-open={isMenuOpen ? '1' : '0'}

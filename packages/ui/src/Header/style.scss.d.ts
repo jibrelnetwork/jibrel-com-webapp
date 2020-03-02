@@ -45,7 +45,6 @@ declare namespace StyleScssModule {
     m6: string;
     m7: string;
     m8: string;
-    main: string;
     "s-1": string;
     "s-2": string;
     "s-3": string;
