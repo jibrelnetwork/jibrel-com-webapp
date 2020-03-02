@@ -29,6 +29,8 @@ export { default as ErrorToast } from './ErrorToast'
 export { default as Animation }from './Animation'
 
 export { LoaderColor } from './Loader/types'
+export { BigButtonVariant } from './BigButton/types'
+export { SmallButtonVariant } from './SmallButton/types'
 
 export {
   BigButtonSubmit,
