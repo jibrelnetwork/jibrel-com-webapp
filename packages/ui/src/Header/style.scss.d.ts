@@ -61,6 +61,7 @@ declare namespace StyleScssModule {
     s6: string;
     s7: string;
     s8: string;
+    wrapper: string;
     "xl-1": string;
     "xl-10": string;
     "xl-11": string;
