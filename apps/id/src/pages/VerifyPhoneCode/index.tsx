@@ -1,44 +1,34 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { Form } from 'react-final-form'
 import { useI18n } from '@jibrelcom/i18n'
 import { InternalLink } from '@jibrelcom/ui'
-
-import store, {
-  Dispatch,
-  RootState,
-} from 'store'
+import { useEvent, useStore } from 'effector-react'
 
 import {
-  PhoneVerificationStatus,
   PhoneAPIPinFields,
-  FormSubmit,
 } from 'store/types'
+
+import { $PhoneStore } from 'effector/phone/store'
+import { submitCodeFx } from 'effector/phone/events'
+import { PhoneVerificationStatus } from 'effector/phone/types'
 
 import style from './style.scss'
 import LockedActions from './LockedActions'
 import authStyle from '../../styles/auth.scss'
 import VerifyPhoneCodeForm from './VerifyPhoneCodeForm'
 
-interface VerifyPhoneCodeProps {
-  status: PhoneVerificationStatus;
-  maskedNumber: string;
-  timeout: number;
-  isLoading: boolean;
-  onSubmit: FormSubmit<PhoneAPIPinFields>;
-}
-
 const INITIAL_VALUES: PhoneAPIPinFields = {
   pin: '',
 }
 
-const VerifyPhoneCode: React.FunctionComponent<VerifyPhoneCodeProps> = ({
-  maskedNumber,
-  onSubmit,
-  status,
-  isLoading,
-}) => {
+const VerifyPhoneCode: React.FunctionComponent = () => {
   const i18n = useI18n()
+  const {
+    maskedNumber,
+    status,
+    isLoading
+  } = useStore($PhoneStore)
+  const onSubmit = useEvent(submitCodeFx)
 
   return (
     <div className={authStyle.main}>
@@ -64,7 +54,7 @@ const VerifyPhoneCode: React.FunctionComponent<VerifyPhoneCodeProps> = ({
           component={VerifyPhoneCodeForm}
           initialValues={INITIAL_VALUES}
         />
-        {status === PhoneVerificationStatus.max_attempts_reached && (
+        {status === PhoneVerificationStatus.maxAttemptsReached && (
           <div className={style.error}>{i18n._('VerifyPhoneCode.error.noAttempts')}</div>
         )}
         {status === PhoneVerificationStatus.expired && (
@@ -76,14 +66,4 @@ const VerifyPhoneCode: React.FunctionComponent<VerifyPhoneCodeProps> = ({
   )
 }
 
-export default connect(
-  (state: RootState) => ({
-    isLoading: state.phone.isLoading,
-    maskedNumber: state.phone.maskedNumber,
-    status: state.phone.status,
-    timeout: store.select.phone.timeout(state),
-  }),
-  (dispatch: Dispatch) => ({
-    onSubmit: dispatch.phone.submitCode,
-  }),
-)(VerifyPhoneCode)
+export default React.memo(VerifyPhoneCode)

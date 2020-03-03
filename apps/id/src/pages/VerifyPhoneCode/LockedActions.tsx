@@ -5,7 +5,6 @@ import { useI18n } from '@jibrelcom/i18n'
 import { LinkButton } from '@jibrelcom/ui'
 
 import store, {
-  Dispatch,
   RootState,
 } from 'store'
 
@@ -13,21 +12,19 @@ import Countdown from 'components/Countdown'
 import { PhoneConfirmationVariant } from 'store/types'
 
 import style from './style.scss'
+import { $PhoneStore } from 'effector/phone/store'
+import { useEvent, useStore } from 'effector-react'
+import { requestVerificationCode } from 'effector/phone/events'
 
 interface LockedActionsProps {
   onRequestSMS: () => void;
   onRequestCall: () => void;
   confirmationVariant: PhoneConfirmationVariant | null;
   timeout: number;
-  isLoading: boolean;
 }
 
 const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
   timeout,
-  onRequestSMS,
-  onRequestCall,
-  isLoading = false,
-  confirmationVariant,
 }) => {
   if (timeout < 0) {
     return null
@@ -35,6 +32,8 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
 
   const i18n = useI18n()
   const [isLocked, setIsLocked] = useState(timeout > 0)
+  const { isLoading, confirmationVariant } = useStore($PhoneStore)
+  const handleRequestVerificationCode = useEvent(requestVerificationCode)
 
   if (isLocked) {
     return (
@@ -49,7 +48,7 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
     <>
       <LinkButton
         type='button'
-        onClick={onRequestSMS}
+        onClick={() => handleRequestVerificationCode(PhoneConfirmationVariant.sms)}
         className={cc([style.action, style.wide])}
         isDisabled={isLoading}
       >
@@ -60,7 +59,7 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
       </LinkButton>
       <LinkButton
         type='button'
-        onClick={onRequestCall}
+        onClick={() => handleRequestVerificationCode(PhoneConfirmationVariant.call)}
         className={cc([style.action, style.wide])}
         isDisabled={isLoading}
       >
@@ -75,12 +74,6 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
 
 export default connect(
   (state: RootState) => ({
-    isLoading: state.phone.isLoading,
     timeout: store.select.phone.timeout(state),
-    confirmationVariant: state.phone.confirmationVariant,
-  }),
-  (dispatch: Dispatch) => ({
-    onRequestSMS: () => dispatch.phone.requestSMS(),
-    onRequestCall: () => dispatch.phone.requestCall(),
   })
 )(LockedActions)

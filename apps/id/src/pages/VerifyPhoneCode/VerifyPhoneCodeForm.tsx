@@ -1,5 +1,4 @@
 import React from 'react'
-import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
 import { FormRenderProps } from 'react-final-form'
 
@@ -8,9 +7,10 @@ import {
   BigButtonSubmit,
 } from '@jibrelcom/ui'
 
-import { RootState } from 'store'
 
 import style from './style.scss'
+import { $PhoneStore } from 'effector/phone/store'
+import { useStore } from 'effector-react'
 
 const isCodeFilled = (error: string) => (value: string): string | undefined =>
   (!value || value.replace('_', '').length !== 6)
@@ -25,6 +25,7 @@ const VerifyPhoneCodeForm: React.FunctionComponent<VerifyPhoneCodeFormProps> = (
   handleSubmit,
 }) => {
   const i18n = useI18n()
+  const { isLoading } = useStore($PhoneStore)
 
   return (
     <form onSubmit={handleSubmit}>
@@ -32,6 +33,7 @@ const VerifyPhoneCodeForm: React.FunctionComponent<VerifyPhoneCodeFormProps> = (
         validate={isCodeFilled(i18n._('VerifyPhoneCode.form.code.error'))}
         label={i18n._('VerifyPhoneCode.form.code.label')}
         name='pin'
+        isDisabled={isLoading}
       />
       <BigButtonSubmit className={style.button}>
         {i18n._('VerifyPhoneCode.form.submit')}
@@ -40,8 +42,4 @@ const VerifyPhoneCodeForm: React.FunctionComponent<VerifyPhoneCodeFormProps> = (
   )
 }
 
-export default connect(
-  ({ phone }: RootState) => ({
-    isLoading: phone.isLoading,
-  }),
-)(VerifyPhoneCodeForm)
+export default React.memo(VerifyPhoneCodeForm)

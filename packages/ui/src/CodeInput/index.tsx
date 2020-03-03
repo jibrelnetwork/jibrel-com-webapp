@@ -14,6 +14,7 @@ export interface CodeInputProps extends React.PropsWithoutRef<JSX.IntrinsicEleme
   label: string;
   className?: string;
   hasError?: boolean;
+  isDisabled?: boolean;
 }
 
 const getMaskLength = (value: string | number | string[] | undefined): number => {
@@ -28,6 +29,7 @@ const CodeInput: React.FunctionComponent<CodeInputProps> = ({
   label,
   className,
   hasError = false,
+  isDisabled,
   ...props
 }) => {
   const mask = '_'.repeat(
@@ -44,6 +46,7 @@ const CodeInput: React.FunctionComponent<CodeInputProps> = ({
     >
       <input
         {...props}
+        disabled={isDisabled}
         className={cc([
           inputStyle.input,
           style.code,

@@ -1,5 +1,6 @@
 import { CountryCode } from '@jibrelcom/countries/src/types'
 import { API_FORM_ERROR } from '@jibrelcom/forms'
+import { AxiosError, AxiosResponse } from 'axios'
 
 // utility
 
@@ -8,15 +9,15 @@ type BackendErrorMessage = {
   code: string;
 }
 
-export interface SuccessWrapper<T = Record<string, any>> {
+export type SuccessWrapper<T = Record<string, any>> = AxiosResponse<{
   data: T;
-}
+}>
 
-export interface FailWrapper<T = Record<string, any>> {
+export type FailWrapper<T = Record<string, any>> = AxiosError<{
   errors: {
     [key in keyof T | API_FORM_ERROR]?: BackendErrorMessage[];
   };
-}
+}>
 
 // FIXME: Actual example of real type of BackendWrapper
 //
@@ -56,8 +57,14 @@ export enum PhoneConfirmationVariant {
   call = 'call',
 }
 
+export enum PhoneConfirmationOperation {
+  sms = 'request-sms',
+  call = 'call-me'
+}
+
 export interface PhoneVerificationState {
   maskedNumber: string;
+  isLoading: boolean;
   status?: PhoneVerificationStatus;
   requestAvailableAt?: Date;
   confirmationVariant?: PhoneConfirmationVariant;
