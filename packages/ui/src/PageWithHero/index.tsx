@@ -1,7 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
 
-import Grid from '../Grid'
 import style from './style.scss'
 import BigButton from '../BigButton'
 import { BigButtonVariant } from '../BigButton/types'
@@ -29,7 +28,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
   secondaryHref,
   secondaryButtonLabel,
 }) => (
-  <Grid.Container
+  <div
     className={cc([
       style.main,
       className,
@@ -68,7 +67,7 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
         </div>
       )}
     </div>
-  </Grid.Container>
+  </div>
 )
 
 export default PageWithHero
