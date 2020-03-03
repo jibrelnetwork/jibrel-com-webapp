@@ -2,8 +2,12 @@ import React from 'react'
 import cc from 'classcat'
 import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { connect } from 'react-redux'
-import { Form } from 'react-final-form'
 import { useI18n } from '@jibrelcom/i18n'
+
+import {
+  Form,
+  FormRenderProps,
+} from 'react-final-form'
 
 import {
   Input,
@@ -17,6 +21,22 @@ import CountrySelect from 'components/CountrySelect'
 
 import style from '../style.scss'
 import { FormProps } from '../FormProps'
+
+const CHECKBOX_NAME = 'haveCompanyAddressPrincipal'
+const PRINCIPAL_ADDRESS_NAME = 'companyAddressPrincipal'
+
+function handleCheckboxChange(
+  change: (name: string, value: void | boolean) => void,
+  oldValue: boolean,
+): () => void {
+  return (): void => {
+    change(CHECKBOX_NAME, !oldValue)
+
+    if (oldValue) {
+      change(PRINCIPAL_ADDRESS_NAME, undefined)
+    }
+  }
+}
 
 export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormProps> = ({
   submit,
@@ -40,87 +60,100 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
           style.background,
         ])}
       >
-      <Form
-        initialValues={formValues}
-        onSubmit={submit(nextHandler)}
-        render={({
-          handleSubmit,
-          submitError,
-          values: {
-            haveCompanyAddressPrincipal,
-          },
-        }) => (
-          <form onSubmit={handleSubmit}>
-            <div className={style.step}>
-              <h2 className={style.title}>
-                {i18n._('KYC.Company.address.form.title')}
-              </h2>
-              <Input
-                validate={isRequired({i18n})}
-                label={i18n._('KYC.Company.address.form.streetAddress.label')}
-                name='companyAddressRegistered.streetAddress'
-              />
-              <Input
-                label={i18n._('KYC.Company.address.form.apartment.label')}
-                name='companyAddressRegistered.apartment'
-              />
-              <Input
-                validate={isRequired({i18n})}
-                label={i18n._('KYC.Company.address.form.city.label')}
-                name='companyAddressRegistered.city'
-              />
-              <Input
-                label={i18n._('KYC.Company.address.form.postCode.label')}
-                name='companyAddressRegistered.postCode'
-              />
-              <CountrySelect
-                validate={isRequired({i18n})}
-                label={i18n._('KYC.Company.address.form.country.label')}
-                placeholder={i18n._('KYC.Company.address.form.country.placeholder')}
-                name='companyAddressRegistered.country'
-              />
-              <Checkbox name='haveCompanyAddressPrincipal'>
-                {i18n._('KYC.Company.address.form.differentAddress')}
-              </Checkbox>
-              {haveCompanyAddressPrincipal && (
-                <section>
-                  <h2 className={style.subtitle}>
-                    {i18n._('KYC.Company.address.form.placeGroupTitle')}
+        <Form
+          initialValues={formValues}
+          onSubmit={submit(nextHandler)}
+          render={({
+            handleSubmit,
+            form,
+            values,
+            submitError,
+          }: FormRenderProps): React.ReactNode => {
+            const haveCompanyAddressPrincipal = values[CHECKBOX_NAME]
+
+            return (
+              <form onSubmit={handleSubmit}>
+                <div className={style.step}>
+                  <h2 className={style.title}>
+                    {i18n._('KYC.Company.address.form.title')}
                   </h2>
                   <Input
                     validate={isRequired({i18n})}
                     label={i18n._('KYC.Company.address.form.streetAddress.label')}
-                    name='companyAddressPrincipal.streetAddress'
+                    name='companyAddressRegistered.streetAddress'
+                    maxLength={256}
                   />
                   <Input
                     label={i18n._('KYC.Company.address.form.apartment.label')}
-                    name='companyAddressPrincipal.apartment'
+                    name='companyAddressRegistered.apartment'
                   />
                   <Input
                     validate={isRequired({i18n})}
                     label={i18n._('KYC.Company.address.form.city.label')}
-                    name='companyAddressPrincipal.city'
+                    name='companyAddressRegistered.city'
+                    maxLength={256}
                   />
                   <Input
                     label={i18n._('KYC.Company.address.form.postCode.label')}
-                    name='companyAddressPrincipal.postCode'
+                    name='companyAddressRegistered.postCode'
+                    maxLength={256}
                   />
                   <CountrySelect
                     validate={isRequired({i18n})}
                     label={i18n._('KYC.Company.address.form.country.label')}
                     placeholder={i18n._('KYC.Company.address.form.country.placeholder')}
-                    name='companyAddressPrincipal.country'
+                    name='companyAddressRegistered.country'
                   />
-                </section>
-              )}
-              {submitError && <div className={style.submitError}>{submitError}</div>}
-            </div>
-            <BigButtonSubmit className={style.submit}>
-              {nextLabel}
-            </BigButtonSubmit>
-          </form>
-        )}
-      />
+                  <Checkbox
+                    onChange={handleCheckboxChange(form.change, haveCompanyAddressPrincipal)}
+                    name={CHECKBOX_NAME}
+                  >
+                    {i18n._('KYC.Company.address.form.differentAddress')}
+                  </Checkbox>
+                  {haveCompanyAddressPrincipal && (
+                    <section>
+                      <h2 className={style.subtitle}>
+                        {i18n._('KYC.Company.address.form.placeGroupTitle')}
+                      </h2>
+                      <Input
+                        validate={isRequired({i18n})}
+                        name={`${PRINCIPAL_ADDRESS_NAME}.streetAddress`}
+                        label={i18n._('KYC.Company.address.form.streetAddress.label')}
+                        maxLength={256}
+                      />
+                      <Input
+                        name={`${PRINCIPAL_ADDRESS_NAME}.apartment`}
+                        label={i18n._('KYC.Company.address.form.apartment.label')}
+                        maxLength={256}
+                      />
+                      <Input
+                        validate={isRequired({i18n})}
+                        name={`${PRINCIPAL_ADDRESS_NAME}.city`}
+                        label={i18n._('KYC.Company.address.form.city.label')}
+                        maxLength={256}
+                      />
+                      <Input
+                        name={`${PRINCIPAL_ADDRESS_NAME}.postCode`}
+                        label={i18n._('KYC.Company.address.form.postCode.label')}
+                        maxLength={256}
+                      />
+                      <CountrySelect
+                        validate={isRequired({i18n})}
+                        name={`${PRINCIPAL_ADDRESS_NAME}.country`}
+                        label={i18n._('KYC.Company.address.form.country.label')}
+                        placeholder={i18n._('KYC.Company.address.form.country.placeholder')}
+                      />
+                    </section>
+                  )}
+                  {submitError && <div className={style.submitError}>{submitError}</div>}
+                </div>
+                <BigButtonSubmit className={style.submit}>
+                  {nextLabel}
+                </BigButtonSubmit>
+              </form>
+            )
+          }}
+        />
       </div>
     </KYCLayout>
   )
