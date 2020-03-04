@@ -106,6 +106,14 @@
   /* letter-spacing: -0.54px; */
 }
 
+@mixin font-body () {
+  @include font-body-s;
+
+  @include screen('>medium') {
+    @include font-body-l;
+  }
+}
+
 @mixin font-body-l () {
   font-weight: 400;
   font-size: 18px;

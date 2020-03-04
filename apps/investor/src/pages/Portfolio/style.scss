@@ -32,9 +32,9 @@
 }
 
 .note {
+  @include font-caption;
+
   margin-top: 8px;
-  font-size: 12px;
-  line-height: 140%;
   color: $color-black-60;
 }
 
@@ -128,9 +128,9 @@
 }
 
 .description {
+  @include font-body;
+
   margin-bottom: 16px;
-  font-size: 18px;
-  line-height: 140%;
   color: $color-black;
 }
 
