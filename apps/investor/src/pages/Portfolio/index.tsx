@@ -165,16 +165,19 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
           {i18n._('Portfolio.investments.title')}
         </Grid.Item>
         {(isLoading || !investments) ? (
-          <Loader
+          <Grid.Item
+            component={Loader}
             className={style.loader}
             color={LoaderColor.gray}
           />
         ) : (
-          <Investments
-            waitlist={waitlist}
-            investments={investments}
-            isWaitlistLoading={isWaitlistLoading}
-          />
+          <Grid.Item>
+            <Investments
+              waitlist={waitlist}
+              investments={investments}
+              isWaitlistLoading={isWaitlistLoading}
+            />
+          </Grid.Item>
         )}
       </Grid.Container>
       {moreOpportunities && !!moreOpportunities.length && (

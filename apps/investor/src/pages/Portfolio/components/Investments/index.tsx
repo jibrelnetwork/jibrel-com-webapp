@@ -4,7 +4,6 @@ import { Trans } from '@lingui/macro'
 import { useI18n } from '@jibrelcom/i18n'
 
 import {
-  Grid,
   Loader,
   LoaderColor,
 } from '@jibrelcom/ui'
@@ -90,7 +89,7 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
         const isPending = (status === 'pending')
 
         return (
-          <Grid.Item key={status} className={style.main}>
+          <div key={status} className={style.main}>
             <div className={style.title}>
               <span>{i18n._(title)}</span>
               <span className={cc([style.count, isPending && style.pending])}>
@@ -106,7 +105,7 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
               </p>
             )}
             {list.map(i => <InvestmentCard key={i.offering.uuid} {...i} />)}
-          </Grid.Item>
+          </div>
         )
       })}
       {isWaitlistLoading || !waitlist ? (

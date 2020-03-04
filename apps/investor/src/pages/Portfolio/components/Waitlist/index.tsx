@@ -1,5 +1,4 @@
 import React from 'react'
-import { Grid } from '@jibrelcom/ui'
 import { useI18n } from '@jibrelcom/i18n'
 
 import { OfferingSubscription } from 'store/types/portfolio'
@@ -20,7 +19,7 @@ const Waitlist: React.FunctionComponent<WaitlistProps> = ({ items }) => {
   const i18n = useI18n()
 
   return (
-    <Grid.Item key={status} className={style.main}>
+    <div key={status} className={style.main}>
       <div className={style.title}>
         <span>{i18n._('Portfolio.investments.waitlist.title')}</span>
         <span className={style.count}>
@@ -31,7 +30,7 @@ const Waitlist: React.FunctionComponent<WaitlistProps> = ({ items }) => {
         {i18n._('Portfolio.investments.waitlist.description')}
       </p>
       {items.map(i => <WaitlistCard key={i.offering.uuid} {...i} />)}
-    </Grid.Item>
+    </div>
   )
 }
 

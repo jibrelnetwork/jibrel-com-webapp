@@ -6,6 +6,8 @@
   @include flex-column-center;
 
   height: 300px;
+  margin-left: 0;
+  margin-right: 0;
   background-size: cover;
   background-position: left -130px top -80px;
   background-repeat: no-repeat;
@@ -22,15 +24,18 @@
   }
 }
 
+.title,
+.description {
+  text-align: center;
+  color: $color-black;
+}
+
 .title {
   @include font-h3;
-
-  color: $color-black;
 }
 
 .description {
   @include font-caption;
 
   margin-top: 24px;
-  text-align: center;
 }

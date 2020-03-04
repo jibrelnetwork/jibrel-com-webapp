@@ -8,10 +8,13 @@ const Empty: React.FunctionComponent = () => {
   const i18n = useI18n()
 
   return (
-    <Grid.Item className={style.main}>
-      <h3 className={style.title}>
+    <Grid.Container className={style.main}>
+      <Grid.Item
+        className={style.title}
+        component='h3'
+      >
         {i18n._('Portfolio.empty.title')}
-      </h3>
+      </Grid.Item>
       <Grid.Item
         xs={4}
         s={8}
@@ -23,7 +26,7 @@ const Empty: React.FunctionComponent = () => {
       >
         {i18n._('Portfolio.empty.description')}
       </Grid.Item>
-    </Grid.Item>
+    </Grid.Container>
   )
 }
 
