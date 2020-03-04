@@ -89,7 +89,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     </li>
                     <li className="navbar__menu-item">
                       <a
-                        href={`//investor.${domain}/portfolio`}
+                        href={`//investor.${domain}`}
                         className={cc([
                           'navbar__menu-link',
                           (activeRoute === 'Portfolio') && '--current',
