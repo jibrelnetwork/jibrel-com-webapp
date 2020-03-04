@@ -21,7 +21,9 @@ const Waitlist: React.FunctionComponent<WaitlistProps> = ({ items }) => {
   return (
     <div key={status} className={style.main}>
       <div className={style.title}>
-        <span>{i18n._('Portfolio.investments.waitlist.title')}</span>
+        <span className={style.text}>
+          {i18n._('Portfolio.investments.waitlist.title')}
+        </span>
         <span className={style.count}>
           {items.length}
         </span>

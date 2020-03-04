@@ -42,16 +42,16 @@
   color: $color-green;
 
   @include screen('>medium') {
-    margin-left: 16px;
+    margin: 0 16px;
   }
 }
 
 .invested-loader {
   min-height: 32px;
-  margin-left: 0;
+  margin: 0;
 
   @include screen('>medium') {
-    margin-left: 32px;
+    margin: 0 32px;
   }
 }
 
@@ -109,8 +109,7 @@
   margin-top: 16px;
 
   @include screen('>medium') {
-    margin-top: 0;
-    margin-left: 16px;
+    margin: 0 16px;
   }
 }
 

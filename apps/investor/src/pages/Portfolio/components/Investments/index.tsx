@@ -91,7 +91,7 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
         return (
           <div key={status} className={style.main}>
             <div className={style.title}>
-              <span>{i18n._(title)}</span>
+              <span className={style.text}>{i18n._(title)}</span>
               <span className={cc([style.count, isPending && style.pending])}>
                 {list.length}
               </span>

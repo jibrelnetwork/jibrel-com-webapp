@@ -11,9 +11,9 @@
 }
 
 .title {
+  @include flex-row;
   @include font-title;
 
-  position: relative;
   color: $color-black;
 }
 
@@ -27,7 +27,7 @@
 .count {
   @include font-button-1;
 
-  margin-left: 8px;
+  margin: 0 8px;
   padding: 3px 12px;
   border-radius: 12px;
   color: $color-blue-60;
