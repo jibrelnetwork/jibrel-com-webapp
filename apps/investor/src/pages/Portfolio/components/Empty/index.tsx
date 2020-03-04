@@ -1,12 +1,6 @@
 import React from 'react'
+import { Grid } from '@jibrelcom/ui'
 import { useI18n } from '@jibrelcom/i18n'
-
-import {
-  Grid,
-  // Link,
-} from '@jibrelcom/ui'
-
-// import settings from 'app/settings'
 
 import style from './style.scss'
 
@@ -29,12 +23,6 @@ const Empty: React.FunctionComponent = () => {
       >
         {i18n._('Portfolio.empty.description')}
       </Grid.Item>
-      {/* <Link
-        className={style.link}
-        href={settings.HOST_CMS}
-      >
-        {i18n._('Portfolio.empty.action')}
-      </Link> */}
     </Grid.Item>
   )
 }
