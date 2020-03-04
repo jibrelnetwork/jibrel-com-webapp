@@ -177,7 +177,7 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
           />
         )}
       </Grid.Container>
-      {moreOpportunities && moreOpportunities.length && (
+      {moreOpportunities && !!moreOpportunities.length && (
         <Grid.Container className={style.opportunities}>
           <Grid.Item
             component={PageTitle}
