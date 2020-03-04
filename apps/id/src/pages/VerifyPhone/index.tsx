@@ -16,7 +16,7 @@ import {
 } from 'react-final-form'
 
 import { $PhoneStore } from 'effector/phone/store'
-import { setPhoneFx, updatePhoneFx } from 'effector/phone/events'
+import { savePhoneFx } from 'effector/phone/events'
 import { PhoneVerificationState } from 'effector/phone/types'
 
 import authStyle from 'styles/auth.scss'
@@ -77,23 +77,27 @@ const VerifyPhoneForm: React.FunctionComponent<FormRenderProps<PhoneAPINumberFie
 export default createComponent<void, PhoneVerificationState>(
   $PhoneStore,
   (props, store) => {
-    const submitFx = store.maskedNumber && store.maskedNumber.length > 0
-      ? updatePhoneFx
-      : setPhoneFx
-    const onSubmit = useEvent(submitFx)
+    const submitMethod = store.maskedNumber && store.maskedNumber.length > 0
+      ? 'PUT'
+      : 'POST'
+    const onSubmit = useEvent(savePhoneFx)
+    const handleSubmit = (
+      values: PhoneAPINumberFields,
+    ): FormSubmitResult<PhoneAPINumberFields> => {
+      return onSubmit({
+        method: submitMethod,
+        payload: {
+          ...values,
+          countryCode: COUNTRIES_INDEX[values.country].ccc,
+        }
+      }).catch((error) => error.formValidation)
+    }
 
     return (
       <AuthLayout>
         <div className={authStyle.main}>
           <Form
-            onSubmit={(
-              values: PhoneAPINumberFields,
-            ): FormSubmitResult<PhoneAPINumberFields> => {
-              return onSubmit({
-                ...values,
-                countryCode: COUNTRIES_INDEX[values.country].ccc,
-              }).catch((error) => error.formValidation)
-            }}
+            onSubmit={handleSubmit}
             render={VerifyPhoneForm}
             initialValues={VERIFY_PHONE_INITIAL_VALUES}
           />

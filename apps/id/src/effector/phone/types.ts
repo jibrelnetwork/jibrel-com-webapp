@@ -57,14 +57,8 @@ export enum PhoneConfirmationVariant {
   call = 'call',
 }
 
-export enum PhoneConfirmationOperation {
-  sms = 'request-sms',
-  call = 'call-me'
-}
-
 export interface PhoneVerificationState {
   maskedNumber: string;
-  isLoading: boolean;
   status?: PhoneVerificationStatus;
   requestAvailableAt?: Date;
   confirmationVariant?: PhoneConfirmationVariant;
@@ -78,4 +72,9 @@ export type APIRqRetrivePhone = {
 
 export type APIRqVerifyPhoneNumber = {
   pin: string;
+}
+
+export type ChangePhoneEffect = {
+  method: 'PUT' | 'POST';
+  payload: APIRqRetrivePhone;
 }

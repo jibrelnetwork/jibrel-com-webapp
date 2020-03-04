@@ -6,17 +6,23 @@ import axios from 'store/axios'
 import { PhoneDomain } from './domain'
 import {
   Phone,
-  APIRqRetrivePhone,
   APIRqVerifyPhoneNumber,
   SuccessWrapper,
   FailWrapper,
   PhoneVerificationStatus,
-  PhoneConfirmationVariant,
+  PhoneConfirmationVariant, ChangePhoneEffect
 } from './types'
 import { checkPhoneUntilResult } from './utils'
 
-function createPhoneHandler(method: 'PUT' | 'POST') {
-  return (payload: APIRqRetrivePhone): Promise<SuccessWrapper<Phone>> | SuccessWrapper<Phone> => {
+export const putPhone = PhoneDomain.createEvent<Phone>('put Phone data to store')
+
+export const fetchPhoneFx = PhoneDomain
+  .effect<void, SuccessWrapper<Phone>, FailWrapper<Phone>>('retrieve phone')
+  .use(() => axios.get('/v1/kyc/phone'))
+
+export const savePhoneFx = PhoneDomain
+  .effect<ChangePhoneEffect, SuccessWrapper<Phone>, FailWrapper<Phone>>('submit phone')
+  .use(({ method, payload}): Promise<SuccessWrapper<Phone>> => {
     const data = {
       number: `${payload.countryCode}${payload.number}`
     }
@@ -28,30 +34,24 @@ function createPhoneHandler(method: 'PUT' | 'POST') {
     }
 
     return axios.request(config)
-  }
-}
-
-export const fetchPhoneFx = PhoneDomain
-  .effect<void, SuccessWrapper<Phone>, FailWrapper<Phone>>('retrieve phone')
-  .use(() => axios.get('/v1/kyc/phone'))
-
-export const setPhoneFx = PhoneDomain
-  .effect<APIRqRetrivePhone, SuccessWrapper<Phone>, FailWrapper<Phone>>('submit phone')
-  .use(createPhoneHandler('POST'))
-
-export const updatePhoneFx = PhoneDomain
-  .effect<APIRqRetrivePhone, SuccessWrapper<Phone>, FailWrapper<Phone>>('change phone')
-  .use(createPhoneHandler('PUT'))
+  })
 
 export const submitCodeFx = PhoneDomain
   .effect<APIRqVerifyPhoneNumber, SuccessWrapper<Phone>, AxiosError>('submit pin code')
-  .use((payload) => {
-    return axios.post(
-      '/v1/kyc/phone/verify',
-      payload,
-    )
+  .use(async (payload) => {
+    try {
+      await axios.post(
+        '/v1/kyc/phone/verify',
+        payload,
+      )
+    } catch(error) {
+      console.log('Request FAILED')
+      const phone = error.response?.data.data
+      putPhone(phone)
+    }
+
+    return await checkPhoneUntilResult()
   })
-  .use(() => checkPhoneUntilResult())
 
 export const requestVerificationCode = PhoneDomain
   .effect<PhoneConfirmationVariant, SuccessWrapper<Phone>, FailWrapper<Phone>>('request phone verification code')
@@ -66,31 +66,22 @@ fetchPhoneFx.fail.watch(({ error }) => {
   }, 2000)
 })
 
-function handleErrorSubmitPhoneFx(error: FailWrapper<Phone>): void {
+savePhoneFx.done.watch(() => {
+  requestVerificationCode(PhoneConfirmationVariant.sms)
+
+  router.navigate('VerifyPhoneCode')
+})
+
+savePhoneFx.failData.watch((error) => {
   if (error.response?.status === 400) {
     if (error.response.data.errors.number?.find((e) => e.code === 'same')) {
       router.navigate('VerifyPhoneCode')
     }
   }
-}
-
-function handleSuccessSubmitPhoneFx(): void {
-  requestVerificationCode(PhoneConfirmationVariant.sms)
-
-  router.navigate('VerifyPhoneCode')
-}
-
-setPhoneFx.done.watch(handleSuccessSubmitPhoneFx)
-
-updatePhoneFx.done.watch(handleSuccessSubmitPhoneFx)
-
-setPhoneFx.failData.watch(handleErrorSubmitPhoneFx)
-
-updatePhoneFx.failData.watch(handleErrorSubmitPhoneFx)
+})
 
 submitCodeFx.doneData.watch((response) => {
   const { data: { data: phone } } = response
-  // if (data.status === PhoneVerificationStatus.codeIncorrect) {}
 
   if (phone.status === PhoneVerificationStatus.verified) {
     router.navigate('KYC')

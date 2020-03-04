@@ -17,9 +17,6 @@ import { useEvent, useStore } from 'effector-react'
 import { requestVerificationCode } from 'effector/phone/events'
 
 interface LockedActionsProps {
-  onRequestSMS: () => void;
-  onRequestCall: () => void;
-  confirmationVariant: PhoneConfirmationVariant | null;
   timeout: number;
 }
 
@@ -32,8 +29,9 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
 
   const i18n = useI18n()
   const [isLocked, setIsLocked] = useState(timeout > 0)
-  const { isLoading, confirmationVariant } = useStore($PhoneStore)
+  const { confirmationVariant } = useStore($PhoneStore)
   const handleRequestVerificationCode = useEvent(requestVerificationCode)
+  const isLoading = useStore(requestVerificationCode.pending)
 
   if (isLocked) {
     return (

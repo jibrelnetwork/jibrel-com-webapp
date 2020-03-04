@@ -26,8 +26,8 @@ const VerifyPhoneCode: React.FunctionComponent = () => {
   const {
     maskedNumber,
     status,
-    isLoading
   } = useStore($PhoneStore)
+  const isLoading = useStore(submitCodeFx.pending)
   const onSubmit = useEvent(submitCodeFx)
 
   return (
