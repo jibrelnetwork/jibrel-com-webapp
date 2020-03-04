@@ -2,9 +2,9 @@ import React from 'react'
 import { useI18n } from '@jibrelcom/i18n'
 
 import {
+  Grid,
   BigButton,
   BigButtonVariant,
-  Grid,
 } from '@jibrelcom/ui'
 
 import settings from 'app/settings'
@@ -31,7 +31,7 @@ const Company: React.FunctionComponent<CompanyData> = ({
   const i18n = useI18n()
 
   return (
-    <li className='companies__list-item common__grid__item --xs-4 --s-8 --m-4 --l-4'>
+    <li className='companies__list-item'>
       <a
         style={{ backgroundImage: `url(${preview})` }}
         href={`${settings.HOST_CMS}${permalink}`}
@@ -153,31 +153,43 @@ const Companies: React.FunctionComponent<CompaniesProps> = ({ list }) => {
   return (
     <>
       <link
-        href={`${settings.HOST_CMS}/styles/common.css`}
+        href={`${settings.HOST_CMS}/styles/company.css`}
         type='text/css'
         rel='stylesheet'
       />
-      <ul className={`${style.main} companies__list common__grid`}>
-        {list.slice(0, MAX_COMPANIES_COUNT).map(c => (<Company key={c.slug} {...c} />))}
-      </ul>
-      {hasMore && (
-        <Grid.Item
-          xs={4}
-          s={4}
-          m={4}
-          l={4}
-          xl={4}
-          className={style.button}
-        >
-          <BigButton
-            href={settings.HOST_CMS}
-            variant={BigButtonVariant.secondary}
-            component='a'
+      <Grid.Container className={`${style.main} companies__list`}>
+        {list.slice(0, MAX_COMPANIES_COUNT).map(c => (
+          <Grid.Item
+            key={c.slug}
+            xs={4}
+            s={8}
+            m={4}
+            l={4}
           >
-            {i18n._('Portfolio.offering.action.more')}
-          </BigButton>
-        </Grid.Item>
-      )}
+            <Company {...c} />
+          </Grid.Item>
+        ))}
+      </Grid.Container>
+      <Grid.Container>
+        {hasMore && (
+          <Grid.Item
+            className={style.button}
+            xs={4}
+            s={4}
+            m={4}
+            l={4}
+            xl={4}
+          >
+            <BigButton
+              href={settings.HOST_CMS}
+              variant={BigButtonVariant.secondary}
+              component='a'
+            >
+              {i18n._('Portfolio.offering.action.more')}
+            </BigButton>
+          </Grid.Item>
+        )}
+      </Grid.Container>
     </>
   )
 }
