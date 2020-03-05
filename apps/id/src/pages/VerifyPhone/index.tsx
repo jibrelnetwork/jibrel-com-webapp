@@ -17,7 +17,7 @@ import {
 
 import { $PhoneStore } from 'effector/phone/store'
 import { savePhoneFx } from 'effector/phone/events'
-import { PhoneVerificationState } from 'effector/phone/types'
+import { PhoneVerificationState, APIRqRetrivePhone } from 'effector/phone/types'
 
 import authStyle from 'styles/auth.scss'
 import CountrySelect from 'components/CountrySelect'
@@ -26,18 +26,17 @@ import { isRequired } from 'utils/validators'
 
 import {
   FormSubmitResult,
-  PhoneAPINumberFields,
 } from 'store/types'
 
 import style from './style.scss'
 
-const VERIFY_PHONE_INITIAL_VALUES: PhoneAPINumberFields = {
+const VERIFY_PHONE_INITIAL_VALUES: APIRqRetrivePhone = {
   country: CountryCode.us,
   countryCode: COUNTRIES_INDEX.us.ccc,
   number: '',
 }
 
-const VerifyPhoneForm: React.FunctionComponent<FormRenderProps<PhoneAPINumberFields>> = ({
+const VerifyPhoneForm: React.FunctionComponent<FormRenderProps<APIRqRetrivePhone>> = ({
   handleSubmit,
   values,
 }) => {
@@ -82,8 +81,8 @@ export default createComponent<void, PhoneVerificationState>(
       : 'POST'
     const onSubmit = useEvent(savePhoneFx)
     const handleSubmit = (
-      values: PhoneAPINumberFields,
-    ): FormSubmitResult<PhoneAPINumberFields> => onSubmit({
+      values: APIRqRetrivePhone,
+    ): FormSubmitResult<APIRqRetrivePhone> => onSubmit({
       method: submitMethod,
       payload: {
         ...values,

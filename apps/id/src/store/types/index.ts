@@ -18,15 +18,6 @@ export {
 } from './form'
 
 export {
-  Phone,
-  PhoneVerificationStatus,
-  PhoneVerificationState,
-  PhoneAPINumberFields,
-  PhoneConfirmationVariant,
-  PhoneAPIPinFields,
-} from './phone'
-
-export {
   KYCStatus
 } from './kyc'
 

@@ -9,9 +9,7 @@ import { LinkButton } from '@jibrelcom/ui'
 import Countdown from 'components/Countdown'
 import { $PhoneStore } from 'effector/phone/store'
 import { requestVerificationCode, submitCodeFx } from 'effector/phone/events'
-import { PhoneVerificationState } from 'effector/phone/types'
-
-import { PhoneConfirmationVariant } from 'store/types'
+import { PhoneVerificationState, PhoneConfirmationVariant } from 'effector/phone/types'
 
 import style from './style.scss'
 

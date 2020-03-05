@@ -4,20 +4,18 @@ import { useI18n } from '@jibrelcom/i18n'
 import { InternalLink } from '@jibrelcom/ui'
 import { useEvent, useStore } from 'effector-react'
 
-import {
-  PhoneAPIPinFields,
-} from 'store/types'
-
 import { $PhoneStore } from 'effector/phone/store'
 import { submitCodeFx } from 'effector/phone/events'
-import { PhoneVerificationStatus } from 'effector/phone/types'
+import {
+  PhoneVerificationStatus,
+} from 'effector/phone/types'
 
 import style from './style.scss'
 import LockedActions from './LockedActions'
 import authStyle from '../../styles/auth.scss'
 import VerifyPhoneCodeForm from './VerifyPhoneCodeForm'
 
-const INITIAL_VALUES: PhoneAPIPinFields = {
+const INITIAL_VALUES = {
   pin: '',
 }
 
@@ -50,19 +48,17 @@ const VerifyPhoneCode: React.FunctionComponent = () => {
           {i18n._('VerifyPhoneCode.form.changeNumber')}
         </InternalLink>
         <Form
-          onSubmit={(values) => {
-            return handleSubmit(values)
-              .then(response => {
-                if (response.data.data.status === PhoneVerificationStatus.codeIncorrect) {
-                  return {
-                    pin: i18n._('form.error.phone.pin'),
-                  }
+          onSubmit={(values) => handleSubmit(values)
+            .then(response => {
+              if (response.data.data.status === PhoneVerificationStatus.codeIncorrect) {
+                return {
+                  pin: i18n._('form.error.phone.pin'),
                 }
+              }
 
-                return
-              })
-              .catch(error => error.formValidation)
-          }}
+              return
+            })
+            .catch(error => error.formValidation)}
           component={VerifyPhoneCodeForm}
           initialValues={INITIAL_VALUES}
         />

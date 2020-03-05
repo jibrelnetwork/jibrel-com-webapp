@@ -3,7 +3,6 @@ import { API_FORM_ERROR } from '@jibrelcom/forms'
 import { AxiosError, AxiosResponse } from 'axios'
 
 // utility
-
 type BackendErrorMessage = {
   message: string;
   code: string;
@@ -18,22 +17,6 @@ export type FailWrapper<T = Record<string, any>> = AxiosError<{
     [key in keyof T | API_FORM_ERROR]?: BackendErrorMessage[];
   };
 }>
-
-// FIXME: Actual example of real type of BackendWrapper
-//
-// type FieldError = {
-//   message: string;
-//   code: string;
-// }
-//
-// interface BackendWrapper<T = any> {
-//   data?: T;
-//   errors?: {
-//     field?: FieldError[];
-//     detail?: FieldError[];
-//   };
-// }
-
 // !utility
 
 export enum PhoneVerificationStatus {
