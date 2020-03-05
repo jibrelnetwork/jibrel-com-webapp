@@ -2,8 +2,11 @@
 @import '../theme/fonts';
 @import '../theme/media';
 @import '../theme/colors';
+@import '../utils/scss/flex';
 
 .main {
+  @include flex-column;
+
   width: 100%;
 }
 
