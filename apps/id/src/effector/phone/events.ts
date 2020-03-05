@@ -13,8 +13,11 @@ import {
   PhoneConfirmationVariant, ChangePhoneEffect
 } from './types'
 import { checkPhoneUntilResult } from './utils'
+import { UserLimits } from 'store/types'
 
 export const putPhone = PhoneDomain.createEvent<Phone>('put Phone data to store')
+
+export const putLimits = PhoneDomain.createEvent<UserLimits>('put date requestAvailableAt')
 
 export const fetchPhoneFx = PhoneDomain
   .effect<void, SuccessWrapper<Phone>, FailWrapper<Phone>>('retrieve phone')
@@ -45,9 +48,10 @@ export const submitCodeFx = PhoneDomain
         payload,
       )
     } catch(error) {
-      console.log('Request FAILED')
       const phone = error.response?.data.data
-      putPhone(phone)
+      if (phone !== null) {
+        putPhone(phone)
+      }
     }
 
     return await checkPhoneUntilResult()
@@ -78,6 +82,8 @@ savePhoneFx.failData.watch((error) => {
       router.navigate('VerifyPhoneCode')
     }
   }
+
+  window.location.reload()
 })
 
 submitCodeFx.doneData.watch((response) => {
@@ -86,4 +92,12 @@ submitCodeFx.doneData.watch((response) => {
   if (phone.status === PhoneVerificationStatus.verified) {
     router.navigate('KYC')
   }
+})
+
+requestVerificationCode.failData.watch((error) => {
+  fetchPhoneFx().then(() => {
+    if (error.response?.status === 429) {
+      router.navigate('VerifyPhoneCode')
+    }
+  })
 })

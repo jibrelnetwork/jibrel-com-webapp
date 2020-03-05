@@ -1,37 +1,51 @@
 import React, { useState } from 'react'
 import cc from 'classcat'
-import { connect } from 'react-redux'
+import { combine } from 'effector'
+import { useEvent, useStore, createComponent } from 'effector-react'
+
 import { useI18n } from '@jibrelcom/i18n'
 import { LinkButton } from '@jibrelcom/ui'
 
-import store, {
-  RootState,
-} from 'store'
-
 import Countdown from 'components/Countdown'
+import { $PhoneStore } from 'effector/phone/store'
+import { requestVerificationCode, submitCodeFx } from 'effector/phone/events'
+import { PhoneVerificationState } from 'effector/phone/types'
+
 import { PhoneConfirmationVariant } from 'store/types'
 
 import style from './style.scss'
-import { $PhoneStore } from 'effector/phone/store'
-import { useEvent, useStore } from 'effector-react'
-import { requestVerificationCode } from 'effector/phone/events'
 
-interface LockedActionsProps {
-  timeout: number;
-}
+const calculateTimeout = (requestAvailableAt?: Date): number => {
+    if (requestAvailableAt === undefined) {
+      return -1
+    }
 
-const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
-  timeout,
-}) => {
+    return Math.max(
+      0,
+      Math.round(
+        (+requestAvailableAt - Date.now())
+        / 1000
+      )
+    )
+  }
+
+export default createComponent<{}, PhoneVerificationState>(
+  $PhoneStore,
+  (props, store
+  ) => {
+  const timeout = calculateTimeout(store.requestAvailableAt)
+  const i18n = useI18n()
+  const [isLocked, setIsLocked] = useState(timeout > 0)
+  const handleRequestVerificationCode = useEvent(requestVerificationCode)
+  const isLoading = useStore(combine(
+    submitCodeFx.pending,
+    requestVerificationCode.pending,
+    (codePending, verificationPending) => codePending || verificationPending
+  ))
+
   if (timeout < 0) {
     return null
   }
-
-  const i18n = useI18n()
-  const [isLocked, setIsLocked] = useState(timeout > 0)
-  const { confirmationVariant } = useStore($PhoneStore)
-  const handleRequestVerificationCode = useEvent(requestVerificationCode)
-  const isLoading = useStore(requestVerificationCode.pending)
 
   if (isLocked) {
     return (
@@ -50,7 +64,7 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
         className={cc([style.action, style.wide])}
         isDisabled={isLoading}
       >
-        {confirmationVariant === PhoneConfirmationVariant.sms
+        {store.confirmationVariant === PhoneConfirmationVariant.sms
           ? i18n._('VerifyPhoneCode.actions.resendCode')
           : i18n._('VerifyPhoneCode.actions.sendSMS')
         }
@@ -61,17 +75,11 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
         className={cc([style.action, style.wide])}
         isDisabled={isLoading}
       >
-        {confirmationVariant === PhoneConfirmationVariant.call
+        {store.confirmationVariant === PhoneConfirmationVariant.call
           ? i18n._('VerifyPhoneCode.actions.callAgain')
           : i18n._('VerifyPhoneCode.actions.phoneCall')
         }
       </LinkButton>
     </>
   )
-}
-
-export default connect(
-  (state: RootState) => ({
-    timeout: store.select.phone.timeout(state),
-  })
-)(LockedActions)
+})

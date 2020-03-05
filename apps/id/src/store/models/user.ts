@@ -8,6 +8,7 @@ import {
   DEFAULT_LANGUAGE_CODE,
 } from '@jibrelcom/i18n'
 
+import { putLimits } from 'effector/phone/events'
 import { RootState } from 'store'
 
 import axios from '../axios'
@@ -39,7 +40,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
         const limits = await axios.get('/v1/user/limits')
         const userLimits = getUserLimits(limits.data)
         this.setProfileLimits(userLimits)
-        dispatch.phone.setLimits(userLimits)
+        putLimits(userLimits)
 
         return
       } catch (error) {

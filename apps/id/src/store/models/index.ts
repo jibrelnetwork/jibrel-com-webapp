@@ -1,5 +1,4 @@
 export { kyc } from './kyc'
 export { user } from './user'
-export { phone } from './phone'
 export { kycIndividual } from './kycIndividual'
 export { kycOrganization } from './kycOrganization'

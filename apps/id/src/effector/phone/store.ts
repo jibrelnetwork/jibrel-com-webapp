@@ -1,6 +1,12 @@
 import { PhoneDomain } from './domain'
 import { PhoneVerificationState } from './types'
-import { fetchPhoneFx, putPhone, requestVerificationCode, submitCodeFx } from './events'
+import {
+  putPhone,
+  putLimits,
+  fetchPhoneFx,
+  requestVerificationCode,
+  submitCodeFx
+} from './events'
 
 const initialState: PhoneVerificationState = {
   maskedNumber: '',
@@ -31,13 +37,19 @@ export const $PhoneStore = PhoneDomain.store<PhoneVerificationState>(initialStat
     ...state,
     ...result.data,
   }))
-  .on(submitCodeFx.failData, (state, error) => ({
+  .on(submitCodeFx.doneData, (state, result) => ({
     ...state,
-    ...error.response?.data.data
+    ...result.data.data
   }))
   .on(putPhone, (state, data) => ({
     ...state,
     ...data,
+  }))
+  .on(putLimits, (state, data) => ({
+    ...state,
+    requestAvailableAt: data.resendVerificationSMS
+      ? new Date(Date.now() + data.resendVerificationSMS.leftSeconds * 1000)
+      : new Date()
   }))
 
 $PhoneStore.updates.watch((state) => console.log('Current $PhoneState:', state))

@@ -83,15 +83,13 @@ export default createComponent<void, PhoneVerificationState>(
     const onSubmit = useEvent(savePhoneFx)
     const handleSubmit = (
       values: PhoneAPINumberFields,
-    ): FormSubmitResult<PhoneAPINumberFields> => {
-      return onSubmit({
-        method: submitMethod,
-        payload: {
-          ...values,
-          countryCode: COUNTRIES_INDEX[values.country].ccc,
-        }
-      }).catch((error) => error.formValidation)
-    }
+    ): FormSubmitResult<PhoneAPINumberFields> => onSubmit({
+      method: submitMethod,
+      payload: {
+        ...values,
+        countryCode: COUNTRIES_INDEX[values.country].ccc,
+      }
+    }).catch((error) => error.formValidation)
 
     return (
       <AuthLayout>

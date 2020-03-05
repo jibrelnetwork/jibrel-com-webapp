@@ -4,7 +4,7 @@ import { getErrorFieldsFromResponse } from '@jibrelcom/forms'
 
 import settings from 'app/settings'
 
-const instance: AxiosExtendedInstance = axios.create({
+const instance = axios.create({
   baseURL: settings.API_BASE_URL,
   xsrfHeaderName: 'X-CSRFToken',
   xsrfCookieName: 'csrftoken',
@@ -17,4 +17,4 @@ instance.interceptors.response.use(function (response) {
 
 axiosRetry(instance)
 
-export default instance
+export default instance as AxiosExtendedInstance

@@ -28,7 +28,7 @@ const VerifyPhoneCode: React.FunctionComponent = () => {
     status,
   } = useStore($PhoneStore)
   const isLoading = useStore(submitCodeFx.pending)
-  const onSubmit = useEvent(submitCodeFx)
+  const handleSubmit = useEvent(submitCodeFx)
 
   return (
     <div className={authStyle.main}>
@@ -50,7 +50,19 @@ const VerifyPhoneCode: React.FunctionComponent = () => {
           {i18n._('VerifyPhoneCode.form.changeNumber')}
         </InternalLink>
         <Form
-          onSubmit={onSubmit}
+          onSubmit={(values) => {
+            return handleSubmit(values)
+              .then(response => {
+                if (response.data.data.status === PhoneVerificationStatus.codeIncorrect) {
+                  return {
+                    pin: i18n._('form.error.phone.pin'),
+                  }
+                }
+
+                return
+              })
+              .catch(error => error.formValidation)
+          }}
           component={VerifyPhoneCodeForm}
           initialValues={INITIAL_VALUES}
         />

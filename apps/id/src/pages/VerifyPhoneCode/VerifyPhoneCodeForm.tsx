@@ -25,22 +25,7 @@ const VerifyPhoneCodeForm: React.FunctionComponent<FormRenderProps<APIRqVerifyPh
   const isLoading = useStore(submitCodeFx.pending)
 
   return (
-    <form
-      onSubmit={
-        values => handleSubmit(values)
-          ?.then(response => {
-            if (response?.data.data.status === PhoneVerificationStatus.codeIncorrect) {
-              console.log('SUUBMITTED', response)
-              return {
-                pin: i18n._('VerifyPhoneCode.form.code.error.codeIncorrect')
-              }
-            }
-
-            return {}
-          })
-          ?.catch(error => error.formValidation)
-      }
-    >
+    <form onSubmit={handleSubmit}>
       <CodeInput
         validate={isCodeFilled(i18n._('VerifyPhoneCode.form.code.error'))}
         label={i18n._('VerifyPhoneCode.form.code.label')}

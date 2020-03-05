@@ -227,7 +227,6 @@
   "VerifyPhoneCode.form.changeNumber": "CHANGE NUMBER",
   "VerifyPhoneCode.form.code.error": "Please, fill the code",
   "VerifyPhoneCode.form.code.label": "Verification Code",
-  "VerifyPhoneCode.form.code.error.codeIncorrect": "Incorrect code",
   "VerifyPhoneCode.form.submit": "Verify",
   "VerifyPhoneCode.error.noAttempts": "No attempts left.",
   "VerifyPhoneCode.error.codeExpired": "Code expired.",
