@@ -59,7 +59,7 @@ export const waitlist: ModelConfig<WaitlistState> = createModel<WaitlistState>({
       try {
         this.setOfferingDataLoading()
 
-        const { data } = await axios.get(`/v1/investment/offerings/${id}/subscribe`)
+        const { data: { data } } = await axios.get(`/v1/investment/offerings/${id}/subscribe`)
 
         const {
           status,
