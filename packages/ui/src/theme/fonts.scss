@@ -22,6 +22,14 @@
   line-height: 38px;
 }
 
+@mixin font-h2 {
+  @include font-h2-s;
+
+  @include screen('>medium') {
+    @include font-h2-l;
+  }
+}
+
 @mixin font-h2-l () {
   font-weight: 800;
   font-size: 32px;
@@ -70,6 +78,14 @@
   line-height: 24px;
   /* in design it is some kind of SF font hack */
   /* letter-spacing: -0.54px; */
+}
+
+@mixin font-body {
+  @include font-body-s;
+
+  @include screen('>medium') {
+    @include font-body-l;
+  }
 }
 
 @mixin font-body-l () {

@@ -30,11 +30,14 @@ const TimeFraction: React.FunctionComponent<{
   const i18n = useI18n()
 
   return (
-    <>
+    <div className={`${style.fraction} ${style[fraction]}`}>
       <span className={style.number}>
         {value}
-      </span> {i18n._(`common.components.Countdown.${Fraction[fraction]}`)}
-    </>
+      </span>
+      <span>
+        {i18n._(`common.components.Countdown.${Fraction[fraction]}`)}
+      </span>
+    </div>
   )
 }
 
@@ -99,7 +102,7 @@ class Countdown extends Component<CountdownProps, CountdownState> {
     const sec = countdown - (min * ONE_MINUTE)
 
     return (
-      <div className={style.countdown}>
+      <div className={style.main}>
         {!!min && <TimeFraction value={min} fraction={Fraction.min} />}
         {!!sec && <TimeFraction value={sec} fraction={Fraction.sec} />}
       </div>

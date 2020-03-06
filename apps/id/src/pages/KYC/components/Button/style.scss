@@ -1,12 +1,14 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
 @import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
 .button {
+  @include flex-column;
+
   flex: 1 0 auto;
   position: relative;
-  display: flex;
   width: 100%;
-  flex-direction: column;
   padding: 16px;
   background: $color-white;
   border: none;
@@ -56,19 +58,23 @@
 
     transition: fill 0.2s ease 0s;
   }
+
+  [dir=rtl] & {
+    text-align: right;
+  }
 }
 
 .title {
+  @include font-body-l;
+
   margin-top: 8px;
-  font-size: 18px;
-  line-height: 140%;
   color: $color-black;
   text-transform: capitalize;
 }
 
 .description {
+  @include font-caption;
+
   margin-top: 4px;
-  font-size: 12px;
-  line-height: 140%;
   color: $color-black-60;
 }

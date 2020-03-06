@@ -90,7 +90,7 @@ const EmailVerificationWait: React.FunctionComponent<{
 
   return (
     <div className={style.countdown}>
-      <div dangerouslySetInnerHTML={{
+      <span dangerouslySetInnerHTML={{
         __html: i18n._('EmailVerification.wait'),
       }} />
       <Countdown
