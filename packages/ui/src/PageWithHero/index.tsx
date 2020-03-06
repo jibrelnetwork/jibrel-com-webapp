@@ -2,7 +2,6 @@ import React from 'react'
 import cc from 'classcat'
 
 import style from './style.scss'
-import grid from '../Grid/grid.scss'
 import BigButton from '../BigButton'
 import { BigButtonVariant } from '../BigButton/types'
 
@@ -31,7 +30,6 @@ const PageWithHero: React.FunctionComponent<PageWithHero> = ({
 }) => (
   <div
     className={cc([
-      grid.grid,
       style.main,
       className,
     ])}
