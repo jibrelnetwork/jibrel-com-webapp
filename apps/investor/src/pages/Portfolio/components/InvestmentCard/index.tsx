@@ -28,7 +28,7 @@ import {
 import style from './style.scss'
 
 interface StateProps {
-  company: CompanyData | undefined;
+  company?: CompanyData;
   languageCode: LanguageCode;
 }
 
@@ -68,6 +68,7 @@ const InvestmentCard: React.FunctionComponent<InvestmentCardProps> = ({
     title,
   } = company
 
+  // FIXME should use RouterLink by name
   return (
     <div
       className={style.main}
@@ -80,6 +81,8 @@ const InvestmentCard: React.FunctionComponent<InvestmentCardProps> = ({
         <img
           src={logo}
           className={style.logo}
+          alt=''
+          aria-disabled
         />
         <div className={cc([style.item, style.name])}>
           {isVerifying && (
@@ -111,7 +114,7 @@ const InvestmentCard: React.FunctionComponent<InvestmentCardProps> = ({
           <SmallButton
             className={style.pay}
             variant={SmallButtonVariant.secondary}
-            href='#'
+            href='/application/:id/pay'
             component='a'
           >
             {i18n._('Portfolio.investments.card.action.pay')}
@@ -135,9 +138,10 @@ export default connect<StateProps, null, OwnProps>(
   (state: RootState, ownProps: OwnProps) => {
     const { companies } = state.portfolio
 
-    const company = companies
-      ? companies.find(({ title }) => (title === ownProps.offering.security.company.name))
-      : undefined
+    const company = companies?.find(
+      ({ title }) =>
+        title === ownProps.offering.security.company.name
+    )
 
     return {
       company,
