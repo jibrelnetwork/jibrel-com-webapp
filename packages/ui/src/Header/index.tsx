@@ -18,6 +18,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
   logout,
   lang,
   domain,
+  activeRoute,
   isAuthenticated = false,
 }) => {
   const i18n = useI18n()
@@ -36,12 +37,11 @@ const Header: React.FunctionComponent<HeaderProps> = ({
           'navbar',
           '--black',
           grid.centered,
-          style.main,
           !isAuthenticated && '--no-dropdown',
         ])}
         data-is-open={isMenuOpen ? '1' : '0'}
       >
-        <div className='navbar__wrapper common__centered'>
+        <div className={cc(['navbar__wrapper', 'common__centered', style.wrapper])}>
           <nav className='navbar__content'>
             <a href={`//${domain}/${lang}`} className="navbar__logo-link">
               <img
@@ -85,6 +85,17 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                         className="navbar__menu-link"
                       >
                         {i18n._('navigation.about')}
+                      </a>
+                    </li>
+                    <li className="navbar__menu-item">
+                      <a
+                        href={`//investor.${domain}`}
+                        className={cc([
+                          'navbar__menu-link',
+                          (activeRoute === 'Portfolio') && '--current',
+                        ])}
+                      >
+                        {i18n._('navigation.portfolio')}
                       </a>
                     </li>
                   </ul>

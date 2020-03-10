@@ -1,4 +1,6 @@
 @import '~@jibrelcom/ui/src/Grid/grid';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
 @import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/flex';
 
@@ -8,51 +10,129 @@
   align-items: center;
 }
 
-.green {
-  margin-left: 16px;
-  color: $color-green;
-}
+.subtitle {
+  @include font-h2;
+  @include flex-column;
 
-.investments {
-  margin-bottom: 128px;
-}
+  margin-top: 16px;
+  text-align: left;
+  align-items: flex-start;
+  justify-content: center;
 
-.loader {
-  min-height: 350px;
-}
-
-.item {
-  width: $column-s-4;
-
-  @include screen('>xsmall') {
-    width: $column-s-4;
-  }
-
-  @include screen('>small') {
-    width: $column-m-5;
+  &.current {
+    margin-top: 0;
   }
 
   @include screen('>medium') {
-    width: $column-l-4;
-    padding-right: 24px;
+    @include flex-row;
 
-    &:nth-child(3n) {
-      padding-right: 12px; // by default
+    align-items: center;
+    justify-content: flex-start;
+  }
+}
+
+.note {
+  @include font-caption;
+
+  margin-top: 8px;
+  color: $color-black-60;
+}
+
+.green {
+  color: $color-green;
+
+  @include screen('>medium') {
+    margin: 0 16px;
+  }
+}
+
+.invested-loader {
+  min-height: 32px;
+  margin: 0;
+
+  @include screen('>medium') {
+    margin: 0 32px;
+  }
+}
+
+.border {
+  padding: 24px;
+  margin-top: 48px;
+  border-radius: 24px;
+  border: 1px solid $color-black-20;
+
+  @include screen('>xsmall') {
+    margin-top: 24px;
+  }
+}
+
+.balance {
+  @include font-h3;
+
+  color: $color-black-60;
+}
+
+.available {
+  display: inline-flex;
+  min-height: 33px;
+  margin-top: 16px;
+  align-items: center;
+  align-self: flex-start;
+
+  @include screen('>medium') {
+    min-height: 38px;
+  }
+}
+
+.buttons {
+  @include flex-column;
+
+  margin-top: 24px;
+
+  a {
+    &, &:hover, &:focus, &:active {
+      text-decoration: none;
     }
+  }
+
+  @include screen('>small') {
+    margin-top: 32px;
+  }
+
+  @include screen('>medium') {
+    @include flex-row;
+  }
+}
+
+.withdraw {
+  display: inline-block;
+  margin-top: 16px;
+
+  @include screen('>medium') {
+    margin: 0 16px;
+  }
+}
+
+.loader {
+  height: 300px;
+}
+
+.investments,
+.opportunities {
+  margin-top: 48px;
+
+  @include screen('>medium') {
+    margin-top: 56px;
   }
 }
 
 .description {
+  @include font-body;
+
   margin-bottom: 16px;
-  font-size: 18px;
-  line-height: 140%;
   color: $color-black;
 }
 
 .deposit {
   margin-bottom: 64px;
-}
-
-.withdraw {
-  margin-bottom: 128px;
 }

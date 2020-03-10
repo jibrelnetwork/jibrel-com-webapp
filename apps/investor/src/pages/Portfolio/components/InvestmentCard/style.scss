@@ -5,91 +5,179 @@
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
 .main {
-  @include flex-column;
-
-  height: 100%;
+  margin-top: 16px;
+  padding: 24px 32px;
   border-radius: 24px;
+  align-items: center;
 
-  @include screen('>medium') {
-    padding: 32px;
+  @include screen('>small') {
+    @include flex-row;
+
+    margin-top: 24px;
   }
 }
 
-.logo {
-  width: 88px;
-  height: 88px;
-  border-radius: 50%;
+.left,
+.right {
+  @include screen('>xsmall') {
+    @include flex-row;
+
+    align-items: center;
+  }
 }
 
-.name {
-  margin-top: 32px;
-  font-size: 24px;
-  font-weight: 800;
-  line-height: 29px;
-}
+.right {
+  margin-top: 16px;
 
-.amount {
-  @include flex-row;
+  @include screen('>xsmall') {
+    margin-top: 12px;
+    margin-left: 80px;
+  }
 
-  margin-top: 8px;
-  align-items: center;
-  font-weight: 800;
-  font-size: 32px;
-  line-height: 38px;
-  color: $color-black;
+  @include screen('>small') {
+    margin-top: 0;
+    margin-left: auto;
+  }
 
-  &.pending {
-    color: $color-black-40;
+  [dir=rtl] & {
+    @include screen('>xsmall') {
+      margin-left: 0;
+      margin-right: 80px;
+    }
 
-    .clock {
-      display: inline-flex;
+    @include screen('>small') {
+      margin-left: 0;
+      margin-right: auto;
     }
   }
 }
 
-.clock {
-  display: none;
-  margin-left: 16px;
-  position: relative;
+.logo {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+}
 
-  .icon {
-    @include icon-color($color-black-40);
+.item {
+  @include flex-column;
 
-    width: 32px;
-    height: 32px;
+  @include screen('>small') {
+    text-align: right;
+
+    [dir=rtl] & {
+      text-align: left;
+    }
+  }
+}
+
+.label {
+  @include font-caption;
+
+  margin-bottom: 4px;
+  color: $color-black-60;
+}
+
+.value {
+  @include font-title;
+
+  color: $color-black;
+}
+
+.name,
+.date,
+.email {
+  margin-top: 16px;
+
+  @include screen('>xsmall') {
+    margin-top: 0;
+  }
+}
+
+.name {
+  text-align: left;
+
+  @include screen('>xsmall') {
+    margin: 0 24px;
   }
 
-  .hint {
-    position: absolute;
+  [dir=rtl] & {
+    text-align: right;
+  }
+}
+
+.amount,
+.email {
+  @include screen('>small') {
+    margin-left: auto;
+
+    [dir=rtl] & {
+      margin-right: auto;
+    }
+  }
+}
+
+.amount,
+.date {
+  @include screen('>xsmall') {
+    width: 50%;
+  }
+}
+
+.amount {
+  order: 2;
+
+  @include screen('>small') {
+    order: 1;
+    width: initial;
   }
 }
 
 .date {
-  margin-top: 16px;
-  font-size: 18px;
-  line-height: 140%;
-  color: $color-black-60;
+  order: 3;
+
+  @include screen('>small') {
+    width: 136px;
+    margin-left: 16px;
+
+    [dir=rtl] & {
+      margin-left: 0;
+      margin-right: 16px;
+    }
+  }
+
+  @include screen('>medium') {
+    width: 200px;
+  }
+
+  @include screen('>large') {
+    width: 240px;
+  }
 }
 
-.info {
-  @include flex-row;
-
+.pay {
+  order: 1;
   margin-top: 32px;
 
-  .item {
-    width: 50%;
-    padding-right: 16px;
+  @include screen('>xsmall') {
+    margin-top: 0;
+    margin-right: 24px;
   }
 
-  .label {
-    font-size: 12px;
-    line-height: 140%;
-    color: $color-black-60;
+  @include screen('>small') {
+    order: 2;
+    margin-right: 0;
+    margin-left: 32px;
   }
 
-  .value {
-    font-size: 20px;
-    line-height: 24px;
-    color: $color-black;
+  [dir=rtl] & {
+    @include screen('>xsmall') {
+      margin-right: 0;
+      margin-left: 24px;
+    }
+
+    @include screen('>small') {
+      margin-left: 0;
+      margin-right: 32px;
+    }
   }
 }

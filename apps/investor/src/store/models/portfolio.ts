@@ -16,9 +16,12 @@ import { PortfolioState } from '../types/portfolio'
 
 export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState>({
   state: {
-    companies: {},
+    waitlist: undefined,
+    companies: undefined,
     investments: undefined,
     investedAmount: undefined,
+    isWaitlistLoading: true,
+    isCompaniesLoading: true,
     isInvestmentsLoading: true,
     isInvestedAmountLoading: true,
   },
@@ -27,9 +30,30 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
       try {
         this.setInvestmentsLoading()
 
-        const { data } = await axios.get('/v1/investment/offerings')
+        const { data } = await axios.get('/v1/investment/applications')
 
         this.setInvestments(data.data)
+      } catch (error) {
+        if (!error.response) {
+          throw error
+        }
+
+        const { status } = error.response
+
+        if (status === 403) {
+          return handle403(rootState.user.languageCode)
+        }
+
+        throw error
+      }
+    },
+    async getWaitlist(_: void, rootState: RootState): Promise<void> {
+      try {
+        this.setWaitlistLoading()
+
+        const { data } = await axios.get('/v1/investment/offerings/subscriptions')
+
+        this.setWaitlist(data.data)
       } catch (error) {
         if (!error.response) {
           throw error
@@ -65,13 +89,20 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
         throw error
       }
     },
-    async getCompanyData(id: string): Promise<void> {
+    async getCompanies(_: void, rootState: RootState): Promise<void> {
+      this.setCompaniesLoading()
       const cmsAPI = __DEV__ ? 'https://jibrelcom.develop.jdev.network' : settings.HOST_CMS
-      const { data } = await axiosPlain.get(`${cmsAPI}/api/v1/companies/${id}`)
 
-      console.log(data.data)
+      const { data } = await axiosPlain({
+        method: 'get',
+        withCredentials: true,
+        url: `${cmsAPI}/api/v1/companies`,
+        headers: {
+          'Accept-Language': rootState.user.languageCode,
+        },
+      })
 
-      this.setCompanyData(data.data)
+      this.setCompanies(data.data)
     },
   }),
   reducers: {
@@ -84,6 +115,15 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
       ...state,
       isInvestmentsLoading: true,
     }),
+    setWaitlist: (state, payload): PortfolioState => ({
+      ...state,
+      waitlist: payload,
+      isWaitlistLoading: false,
+    }),
+    setWaitlistLoading: (state): PortfolioState => ({
+      ...state,
+      isWaitlistLoading: true,
+    }),
     setInvestedAmount: (state, payload): PortfolioState => ({
       ...state,
       investedAmount: payload,
@@ -93,12 +133,14 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
       ...state,
       isInvestedAmountLoading: true,
     }),
-    setCompanyData: (state, payload): PortfolioState => ({
+    setCompanies: (state, payload): PortfolioState => ({
       ...state,
-      companies: {
-        ...state.companies,
-        [payload.slug]: payload,
-      },
+      companies: payload,
+      isCompaniesLoading: false,
+    }),
+    setCompaniesLoading: (state): PortfolioState => ({
+      ...state,
+      isCompaniesLoading: true,
     }),
   }
 })

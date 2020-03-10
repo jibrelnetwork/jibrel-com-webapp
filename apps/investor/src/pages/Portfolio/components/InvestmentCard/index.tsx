@@ -1,158 +1,151 @@
-import React, { Component } from 'react'
+import React from 'react'
 import cc from 'classcat'
-import { Icon } from '@jibrelcom/ui'
 import { connect } from 'react-redux'
-import { LanguageCode } from '@jibrelcom/i18n'
 
 import {
-  Dispatch,
-  RootState,
-} from 'store'
+  useI18n,
+  LanguageCode,
+} from '@jibrelcom/i18n'
+
+import {
+  SmallButton,
+  SmallButtonVariant,
+} from '@jibrelcom/ui'
+
+import { RootState } from 'store'
 
 import {
   formatDate,
-  formatAmount,
   formatCurrency,
-  formatPercents,
 } from 'utils/formatters'
 
 import {
-  Companies,
   Investment,
+  CompanyData,
   InvestmentStatus,
 } from 'store/types/portfolio'
 
 import style from './style.scss'
 
 interface StateProps {
-  companies: Companies;
+  company?: CompanyData;
   languageCode: LanguageCode;
 }
 
-interface DispatchProps {
-  getCompanyData: (slug: string) => void;
-}
-
-interface OwnProps {
+type OwnProps = Investment & {
   className?: string;
 }
 
-type InvestmentCardProps = StateProps & DispatchProps & Investment
+type InvestmentCardProps = StateProps & OwnProps
 
-class InvestmentCard extends Component<InvestmentCardProps> {
-  componentDidMount(): void {
-    const {
-      getCompanyData,
-      offering: { security },
-    } = this.props
-
-    getCompanyData(security.company.name.toLowerCase().replace(' ', ''))
+const InvestmentCard: React.FunctionComponent<InvestmentCardProps> = ({
+  company,
+  amount,
+  status,
+  updatedAt,
+  languageCode,
+}) => {
+  if (!company) {
+    return null
   }
 
-  render(): React.ReactNode {
-    const {
-      offering,
-      companies,
-      amount,
-      status,
-      createdAt,
-      languageCode,
-    } = this.props
+  const i18n = useI18n()
+  const isVerifying = (status === InvestmentStatus.hold)
+  const isPending = (status === InvestmentStatus.pending)
 
-    const {
-      price,
-      security,
-      shares: totalShares,
-    } = offering
+  const value = formatCurrency(
+    parseInt(amount.toString(), 10),
+    languageCode,
+    'USD', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    },
+  )
 
-    const { name } = security.company
-    const companyData = companies[name.toLowerCase().replace(' ', '')]
+  const {
+    logo,
+    color,
+    title,
+  } = company
 
-    if (!companyData) {
-      return null
-    }
-
-    const isPending: boolean = (status === InvestmentStatus.pending)
-    const investedShares = parseFloat(amount) / parseFloat(price)
-
-    const shares = formatAmount(
-      Math.floor(investedShares),
-      languageCode, {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      },
-    )
-
-    const ownership = formatPercents(
-      investedShares / totalShares / 100,
-      languageCode, {
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 4,
-      },
-    )
-
-    const value = formatCurrency(
-      parseInt(amount.toString(), 10),
-      languageCode,
-      'USD', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 0,
-      },
-    )
-
-    const {
-      logo,
-      color,
-    } = companyData
-
-    return (
-      <div
-        className={style.main}
-        style={{
-          color: color.primary,
-          backgroundColor: color.background,
-        }}
-      >
+  // FIXME should use RouterLink by name
+  return (
+    <div
+      className={style.main}
+      style={{
+        color: color.primary,
+        backgroundColor: color.background,
+      }}
+    >
+      <div className={style.left}>
         <img
           src={logo}
           className={style.logo}
+          alt=''
+          aria-disabled
         />
-        <div className={style.name}>{name}</div>
-        <div className={cc([style.amount, isPending && style.pending])}>
-          <div className={style.value}>{value}</div>
-          <div className={style.clock}>
-            <Icon
-              className={style.icon}
-              namespace='investor'
-              name='ic_trx_pending_32'
-            />
-            <div className={style.hint} />
+        <div className={cc([style.item, style.name])}>
+          {isVerifying && (
+            <div className={style.label}>
+              {i18n._('Portfolio.investments.card.verifying')}
+            </div>
+          )}
+          <div
+            className={style.value}
+            style={{ color: color.primary }}
+          >
+            {title}
           </div>
         </div>
-        <div className={style.date}>{formatDate(createdAt)}</div>
-        {!isPending && (
-          <div className={style.info}>
-            <div className={style.item}>
-              <div className={style.label}>Number of Shares</div>
-              <div className={style.value}>{shares}</div>
+      </div>
+      <div className={style.right}>
+      <div className={cc([style.item, style.amount])}>
+        <div className={style.label}>
+            {isPending
+              ? i18n._('Portfolio.investments.card.paymentAmount')
+              : i18n._('Portfolio.investments.card.amount')
+            }
+          </div>
+          <div className={style.value}>
+            {value}
+          </div>
+        </div>
+        {isPending ? (
+          <SmallButton
+            className={style.pay}
+            variant={SmallButtonVariant.secondary}
+            href='/application/:id/pay'
+            component='a'
+          >
+            {i18n._('Portfolio.investments.card.action.pay')}
+          </SmallButton>
+        ) : (
+          <div className={cc([style.item, style.date])}>
+            <div className={style.label}>
+              {i18n._('Portfolio.investments.card.dateOfInvestment')}
             </div>
-            <div className={style.item}>
-              <div className={style.label}>Ownership</div>
-              <div className={style.value}>{ownership}</div>
+            <div className={style.value}>
+              {formatDate(updatedAt, languageCode, { month: 'short' })}
             </div>
           </div>
         )}
       </div>
-    )
-  }
+    </div>
+  )
 }
 
-export default connect<StateProps, DispatchProps, OwnProps>(
-  (state: RootState) => ({
-    companies: state.portfolio.companies,
-    languageCode: state.user.languageCode,
-  }),
-  (dispatch: Dispatch) => ({
-    getCompanyData: dispatch.portfolio.getCompanyData,
-  })
+export default connect<StateProps, null, OwnProps>(
+  (state: RootState, ownProps: OwnProps) => {
+    const { companies } = state.portfolio
+
+    const company = companies?.find(
+      ({ title }) =>
+        title === ownProps.offering.security.company.name
+    )
+
+    return {
+      company,
+      languageCode: state.user.languageCode,
+    }
+  },
 )(InvestmentCard)
