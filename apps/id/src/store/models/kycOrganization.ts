@@ -16,25 +16,20 @@ const initialFormValues = {
 
     companyAddressRegistered: {
         streetAddress: '',
-        apartment: '',
         city: '',
-        postCode: '',
         country: '',
     },
 
     beneficiaries: [
         {
             firstName: '',
-            middleName: '',
             lastName: '',
             birthDate: '',
             nationality: '',
             email: '',
             phoneNumber: '',
             streetAddress: '',
-            apartment: '',
             city: '',
-            postCode: '',
             country: '',
             passportNumber: '',
             passportExpirationDate: '',
