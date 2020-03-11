@@ -1,5 +1,5 @@
 import axios from 'axios'
-import axiosRetry from 'axios-retry'
+import axiosRetry, { AxiosExtendedInstance } from 'axios-retry'
 import { getErrorFieldsFromResponse } from '@jibrelcom/forms'
 
 import settings from 'app/settings'
@@ -17,4 +17,4 @@ instance.interceptors.response.use(function (response) {
 
 axiosRetry(instance)
 
-export default instance
+export default instance as AxiosExtendedInstance
