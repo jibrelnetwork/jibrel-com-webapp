@@ -93,16 +93,22 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
       this.setCompaniesLoading()
       const cmsAPI = __DEV__ ? 'https://jibrelcom.develop.jdev.network' : settings.HOST_CMS
 
-      const { data } = await axiosPlain({
-        method: 'get',
-        withCredentials: true,
-        url: `${cmsAPI}/api/v1/companies`,
-        headers: {
-          'Accept-Language': rootState.user.languageCode,
-        },
-      })
+      try {
+        const { data } = await axiosPlain({
+          method: 'get',
+          withCredentials: true,
+          url: `${cmsAPI}/api/v1/companies`,
+          headers: {
+            'Accept-Language': rootState.user.languageCode,
+          },
+        })
 
-      this.setCompanies(data.data)
+        this.setCompanies(data.data)
+      } catch (e) {
+        console.log(e)
+      } finally {
+        this.setCompaniesLoading(false)
+      }
     },
   }),
   reducers: {
@@ -138,9 +144,9 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
       companies: payload,
       isCompaniesLoading: false,
     }),
-    setCompaniesLoading: (state): PortfolioState => ({
+    setCompaniesLoading: (state, isCompaniesLoading = true): PortfolioState => ({
       ...state,
-      isCompaniesLoading: true,
+      isCompaniesLoading,
     }),
   }
 })

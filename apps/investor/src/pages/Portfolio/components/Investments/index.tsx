@@ -2,6 +2,7 @@ import React from 'react'
 import cc from 'classcat'
 import { Trans } from '@lingui/macro'
 import { useI18n } from '@jibrelcom/i18n'
+import { groupBy } from 'lodash'
 
 import {
   Loader,
@@ -9,59 +10,57 @@ import {
 } from '@jibrelcom/ui'
 
 import {
-  Investment,
-  InvestmentStatus,
-  OfferingSubscription,
+  Investment, InvestmentStatus,
+  OfferingSubscription
 } from 'store/types/portfolio'
 
-import Empty from '../Empty'
 import style from './style.scss'
 import Waitlist from '../Waitlist'
 import InvestmentCard from '../InvestmentCard'
 
 export interface InvestmentsProps {
   investments: Investment[];
-  waitlist: OfferingSubscription[] | undefined;
+  waitlist?: OfferingSubscription[];
   isWaitlistLoading: boolean;
 }
 
-type InvestmentsByGroup = { [status: string]: Investment[] }
+// status list
+type GroupOrderStatus
+  = 'pending'
+  | 'hold'
+  | 'completed'
 
-const GROUP_TITLE: { [key: string]: string | undefined } = {
+// possible sort status enum
+enum SortStatus {
+  desk = 1,
+  asc = -1,
+  none = 0
+}
+
+type InvestmentsByGroup = {
+  [status in GroupOrderStatus]?: Investment[]
+}
+
+const GROUP_TITLE: { [key in GroupOrderStatus]: string } = {
   pending: 'Portfolio.investments.pending.title',
   hold: 'Portfolio.investments.hold.title',
   completed: 'Portfolio.investments.completed.title',
 }
 
-const GROUP_ORDER: { [key: string]: number } = {
+const GROUP_ORDER: { [key in GroupOrderStatus]: number } = {
   pending: 1,
   hold: 2,
   completed: 3,
 }
 
-function splitInvestmentsByGroup(list: Investment[]): InvestmentsByGroup {
-  return list.reduce((
-    result: InvestmentsByGroup,
-    current: Investment,
-  ): InvestmentsByGroup => {
-    return {
-      ...result,
-      [InvestmentStatus[current.status]]: [
-        ...(result[current.status] || []),
-        current,
-      ]
-    }
-  }, {})
-}
-
-function sortStatuses(prev: string, next: string): number {
+function sortStatuses(prev: GroupOrderStatus, next: GroupOrderStatus): SortStatus {
   if (GROUP_ORDER[prev] > GROUP_ORDER[next]) {
-    return 1
+    return SortStatus.desk
   } else if (GROUP_ORDER[prev] < GROUP_ORDER[next]) {
-    return -1
+    return SortStatus.asc
   }
 
-  return 0
+  return SortStatus.none
 }
 
 const Investments: React.FunctionComponent<InvestmentsProps> = ({
@@ -69,29 +68,39 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
   investments,
   isWaitlistLoading,
 }) => {
-  if (!investments.length) {
-    return <Empty />
-  }
-
   const i18n = useI18n()
-  const investmentsByGroup = splitInvestmentsByGroup(investments)
+  const investmentsByGroup: InvestmentsByGroup = groupBy<Investment>(investments, 'status')
 
   return (
     <>
-      {Object.keys(investmentsByGroup).sort(sortStatuses).map((status) => {
-        const title = GROUP_TITLE[status]
+      {Object
+        .keys(investmentsByGroup)
+        .sort(sortStatuses)
+        .map((status: keyof typeof InvestmentStatus) => {
 
-        if (!title) {
+        const isShowInvestment
+          = status === 'hold'
+          || status === 'completed'
+          || status === 'pending'
+
+        if (!isShowInvestment) {
           return null
         }
 
-        const list = investmentsByGroup[status]
-        const isPending = (status === 'pending')
+        const title = GROUP_TITLE[status as GroupOrderStatus]
+        const list = investmentsByGroup[status as GroupOrderStatus] instanceof Array
+          ? investmentsByGroup[status as GroupOrderStatus]
+          : []
+        const isPending = status === 'pending'
+
+        if (list === undefined) {
+          return null
+        }
 
         return (
           <div key={status} className={style.main}>
             <div className={style.title}>
-              <span className={style.text}>{i18n._(title)}</span>
+              <span>{i18n._(title)}</span>
               <span className={cc([style.count, isPending && style.pending])}>
                 {list.length}
               </span>
@@ -108,7 +117,7 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
           </div>
         )
       })}
-      {isWaitlistLoading || !waitlist ? (
+      {isWaitlistLoading || waitlist === undefined ? (
         <Loader color={LoaderColor.gray} />
       ) : (
         <Waitlist items={waitlist} />

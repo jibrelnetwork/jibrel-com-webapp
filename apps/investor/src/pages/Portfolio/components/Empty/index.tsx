@@ -17,7 +17,7 @@ const Empty: React.FunctionComponent = () => {
       </Grid.Item>
       <Grid.Item
         xs={4}
-        s={8}
+        s={4}
         m={4}
         l={4}
         xl={4}
@@ -30,4 +30,4 @@ const Empty: React.FunctionComponent = () => {
   )
 }
 
-export default Empty
+export default React.memo(Empty)
