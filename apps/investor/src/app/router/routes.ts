@@ -37,6 +37,15 @@ export const routes: RouteEnhanced[] = [
   },
 
   {
+    name: 'ApplicationPayment',
+    path: '/application/:id/payment',
+    canActivate: composeActivations([
+      isLoggedIn,
+      checkKYCStatus,
+    ]),
+  },
+
+  {
     name: 'Waitlist',
     path: '/waitlist/:offeringId',
     canActivate: isLoggedIn,

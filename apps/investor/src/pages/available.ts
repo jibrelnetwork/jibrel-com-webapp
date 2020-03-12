@@ -1,4 +1,5 @@
 export { default as Application } from './Application'
+export { default as ApplicationPayment } from './ApplicationPayment'
 export { default as Invest } from './Invest'
 export { default as Deposit } from './Deposit'
 export { default as Pending } from './Pending'

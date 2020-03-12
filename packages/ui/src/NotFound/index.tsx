@@ -1,6 +1,7 @@
 import React, { useEffect } from 'react'
 import cc from 'classcat'
 import { useI18n } from '@jibrelcom/i18n'
+import noop from 'lodash-es/noop'
 
 import {
   Grid,
@@ -10,12 +11,12 @@ import {
 import style from './style.scss'
 
 export interface NotFoundProps {
-  requestProfile: () => void;
+  requestProfile?: () => void;
   host: string;
 }
 
 const NotFound: React.FunctionComponent<NotFoundProps> = ({
-  requestProfile,
+  requestProfile = noop,
   host,
 }) => {
   const i18n = useI18n()
