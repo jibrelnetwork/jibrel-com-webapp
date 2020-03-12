@@ -2,7 +2,7 @@ import React from 'react'
 import cc from 'classcat'
 import { Trans } from '@lingui/macro'
 import { useI18n } from '@jibrelcom/i18n'
-import { groupBy } from 'lodash'
+import groupBy from 'lodash-es/groupBy'
 
 import {
   Loader,
@@ -10,7 +10,8 @@ import {
 } from '@jibrelcom/ui'
 
 import {
-  Investment, InvestmentStatus,
+  Investment,
+  InvestmentStatus,
   OfferingSubscription
 } from 'store/types/portfolio'
 
@@ -26,15 +27,15 @@ export interface InvestmentsProps {
 
 // status list
 type GroupOrderStatus
-  = 'pending'
-  | 'hold'
-  | 'completed'
+  = InvestmentStatus.pending
+  | InvestmentStatus.hold
+  | InvestmentStatus.completed
 
 // possible sort status enum
 enum SortStatus {
-  desk = 1,
-  asc = -1,
-  none = 0
+  Desc = 1,
+  Asc = -1,
+  None = 0
 }
 
 type InvestmentsByGroup = {
@@ -55,12 +56,12 @@ const GROUP_ORDER: { [key in GroupOrderStatus]: number } = {
 
 function sortStatuses(prev: GroupOrderStatus, next: GroupOrderStatus): SortStatus {
   if (GROUP_ORDER[prev] > GROUP_ORDER[next]) {
-    return SortStatus.desk
+    return SortStatus.Desc
   } else if (GROUP_ORDER[prev] < GROUP_ORDER[next]) {
-    return SortStatus.asc
+    return SortStatus.Asc
   }
 
-  return SortStatus.none
+  return SortStatus.None
 }
 
 const Investments: React.FunctionComponent<InvestmentsProps> = ({
@@ -76,14 +77,14 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
       {Object
         .keys(investmentsByGroup)
         .sort(sortStatuses)
-        .map((status: keyof typeof InvestmentStatus) => {
+        .map((status: InvestmentStatus) => {
 
-        const isShowInvestment
+        const isInvestmentVisible
           = status === 'hold'
           || status === 'completed'
           || status === 'pending'
 
-        if (!isShowInvestment) {
+        if (!isInvestmentVisible) {
           return null
         }
 

@@ -40,16 +40,20 @@ interface DispatchProps {
   getInvestments: () => void;
 }
 
-type PortfolioProps = StateProps & DispatchProps
+type PortfolioProps = StateProps & DispatchProps & {
+  companies: CompanyData[];
+  investments: Investment[];
+  waitlist: OfferingSubscription[];
+}
 
 function checkSlugEqual(offering: Offering, slug: string): boolean {
   return slug === offering.security.company.slug
 }
 
 function getMoreOpportunities(
-  companies?: CompanyData[],
-  investments?: Investment[],
-  waitlist?: OfferingSubscription[],
+  companies: CompanyData[],
+  investments: Investment[],
+  waitlist: OfferingSubscription[],
 ): CompanyData[] {
   if (!companies) {
     return []
@@ -78,9 +82,9 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
   getWaitlist,
   getCompanies,
   getInvestments,
-  waitlist,
-  companies,
-  investments,
+  waitlist = [],
+  companies = [],
+  investments = [],
   isLoading,
   isWaitlistLoading,
 }) => {

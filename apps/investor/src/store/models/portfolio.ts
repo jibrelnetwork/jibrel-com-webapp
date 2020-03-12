@@ -105,7 +105,7 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
 
         this.setCompanies(data.data)
       } catch (e) {
-        console.log(e)
+        console.error(e)
       } finally {
         this.setCompaniesLoading(false)
       }
