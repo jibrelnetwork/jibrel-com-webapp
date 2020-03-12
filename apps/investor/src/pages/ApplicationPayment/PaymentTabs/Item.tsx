@@ -36,7 +36,7 @@ export const Item: React.FunctionComponent<ItemProps> = ({
         href={`#${id}`}
         onClick={onClick}
         className={cc([
-          style.tab,
+          style.button,
           isSelected && style.isSelected,
           isDisabled && style.isDisabled,
         ])}

@@ -3,10 +3,14 @@
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
 .tabs {
-  margin-bottom: 64px;
+  margin-bottom: 48px;
 }
 
 .tab {
+  margin-bottom: 16px;
+}
+
+.button {
   display: block;
   height: 100%;
   padding: 23px;

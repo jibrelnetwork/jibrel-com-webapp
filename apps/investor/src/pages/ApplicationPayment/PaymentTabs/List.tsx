@@ -43,6 +43,7 @@ export const List: React.FunctionComponent<ListProps> = ({
         {React.Children.map(tabs, (child) => (
           <Grid.Item
             component='li'
+            className={style.tab}
             xs={4}
             s={4}
             m={4}
