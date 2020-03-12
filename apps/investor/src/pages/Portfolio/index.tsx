@@ -1,19 +1,13 @@
 import React, { useEffect } from 'react'
-import { Link } from 'react-router5'
 import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
 
 import {
   Grid,
-  Loader,
-  FormTitle,
   PageTitle,
-  SmallButton,
-  LoaderColor,
 } from '@jibrelcom/ui'
 
 import CoreLayout from 'layouts/CoreLayout'
-import CurrentBalance from 'components/CurrentBalance'
 import { Offering } from 'store/types/invest'
 
 import {
@@ -29,13 +23,13 @@ import {
 
 import style from './style.scss'
 import Companies from './components/Companies'
-import Investments from './components/Investments'
 import InvestedAmount from './components/InvestedAmount'
+import InvestmentsBody from './components/InvestmentsBody'
 
 interface StateProps {
-  companies: CompanyData[] | undefined;
-  investments: Investment[] | undefined;
-  waitlist: OfferingSubscription[] | undefined;
+  companies?: CompanyData[];
+  investments?: Investment[];
+  waitlist?: OfferingSubscription[];
   isLoading: boolean;
   isWaitlistLoading: boolean;
 }
@@ -46,16 +40,20 @@ interface DispatchProps {
   getInvestments: () => void;
 }
 
-type PortfolioProps = StateProps & DispatchProps
+type PortfolioProps = StateProps & DispatchProps & {
+  companies: CompanyData[];
+  investments: Investment[];
+  waitlist: OfferingSubscription[];
+}
 
 function checkSlugEqual(offering: Offering, slug: string): boolean {
   return slug === offering.security.company.slug
 }
 
 function getMoreOpportunities(
-  companies: CompanyData[] | undefined,
-  investments: Investment[] | undefined,
-  waitlist: OfferingSubscription[] | undefined,
+  companies: CompanyData[],
+  investments: Investment[],
+  waitlist: OfferingSubscription[],
 ): CompanyData[] {
   if (!companies) {
     return []
@@ -84,9 +82,9 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
   getWaitlist,
   getCompanies,
   getInvestments,
-  waitlist,
-  companies,
-  investments,
+  waitlist = [],
+  companies = [],
+  investments = [],
   isLoading,
   isWaitlistLoading,
 }) => {
@@ -98,8 +96,6 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
 
   const i18n = useI18n()
   const moreOpportunities = getMoreOpportunities(companies, investments, waitlist)
-
-  console.log('style.investedLoader', style.investedLoader)
 
   return (
     <CoreLayout>
@@ -125,62 +121,14 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
             {i18n._('Portfolio.totalInvestedNote')}
           </div>
         </Grid.Item>
-        <Grid.Item
-          xs={4}
-          s={4}
-          m={4}
-          l={6}
-          xl={5}
-        >
-          <div className={style.border}>
-            <h3 className={style.balance}>
-              {i18n._('Portfolio.balance')}
-            </h3>
-            <div className={style.available}>
-              <CurrentBalance
-                loaderColor={LoaderColor.gray}
-                className={`${style.subtitle} ${style.current}`}
-              />
-            </div>
-            <div className={style.buttons}>
-              <Link routeName='Unverified'>
-                <SmallButton component='button'>
-                  {i18n._('Portfolio.actions.deposit')}
-                </SmallButton>
-              </Link>
-              <div className={style.withdraw}>
-                <SmallButton
-                  component='button'
-                  isDisabled
-                >
-                  {i18n._('Portfolio.actions.withdraw')}
-                </SmallButton>
-              </div>
-            </div>
-          </div>
-        </Grid.Item>
       </Grid.Container>
-      <Grid.Container className={style.investments}>
-        <Grid.Item component={FormTitle}>
-          {i18n._('Portfolio.investments.title')}
-        </Grid.Item>
-        {(isLoading || !investments) ? (
-          <Grid.Item
-            component={Loader}
-            className={style.loader}
-            color={LoaderColor.gray}
-          />
-        ) : (
-          <Grid.Item>
-            <Investments
-              waitlist={waitlist}
-              investments={investments}
-              isWaitlistLoading={isWaitlistLoading}
-            />
-          </Grid.Item>
-        )}
-      </Grid.Container>
-      {moreOpportunities && !!moreOpportunities.length && (
+      <InvestmentsBody
+        investments={investments}
+        isLoading={isLoading}
+        waitlist={waitlist}
+        isWaitlistLoading={isWaitlistLoading}
+      />
+      {!!moreOpportunities?.length && (
         <Grid.Container className={style.opportunities}>
           <Grid.Item
             component={PageTitle}

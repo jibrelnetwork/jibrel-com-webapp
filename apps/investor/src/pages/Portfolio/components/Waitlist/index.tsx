@@ -3,7 +3,6 @@ import { useI18n } from '@jibrelcom/i18n'
 
 import { OfferingSubscription } from 'store/types/portfolio'
 
-import Empty from '../Empty'
 import WaitlistCard from '../WaitlistCard'
 import style from '../Investments/style.scss'
 
@@ -12,8 +11,8 @@ export interface WaitlistProps {
 }
 
 const Waitlist: React.FunctionComponent<WaitlistProps> = ({ items }) => {
-  if (!items.length) {
-    return <Empty />
+  if (items.length === 0) {
+    return null
   }
 
   const i18n = useI18n()
@@ -21,7 +20,7 @@ const Waitlist: React.FunctionComponent<WaitlistProps> = ({ items }) => {
   return (
     <div key={status} className={style.main}>
       <div className={style.title}>
-        <span className={style.text}>
+        <span>
           {i18n._('Portfolio.investments.waitlist.title')}
         </span>
         <span className={style.count}>

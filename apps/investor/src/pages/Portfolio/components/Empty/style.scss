@@ -1,18 +1,29 @@
 @import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
 @import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/flex';
 
 .main {
-  @include flex-column-center;
+  @include flex-column;
 
+  justify-content: center;
+  align-items: flex-start;
   height: 300px;
-  margin-left: 0;
-  margin-right: 0;
+  margin: 0;
+  padding: 0 24px;
   background-size: cover;
-  background-position: left -130px top -80px;
+  background-position: center;
   background-repeat: no-repeat;
   background-color: $color-blue-5;
-  background-image: url('../../../../public/images/img_circle_plus.png');
+  background-image: url('../../../../public/images/pic_placeholder_portfolio@2x.jpg');
+
+  @include screen('>xsmall') {
+    padding: 0 48px;
+  }
+
+  @include screen('>small') {
+    padding: 0 64px;
+  }
 
   .link {
     @include font-button-1;
@@ -26,7 +37,6 @@
 
 .title,
 .description {
-  text-align: center;
   color: $color-black;
 }
 
