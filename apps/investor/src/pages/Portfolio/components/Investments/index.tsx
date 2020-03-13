@@ -6,7 +6,6 @@ import groupBy from 'lodash-es/groupBy'
 
 import {
   Loader,
-  LoaderColor,
 } from '@jibrelcom/ui'
 
 import {
@@ -119,7 +118,7 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
         )
       })}
       {isWaitlistLoading || waitlist === undefined ? (
-        <Loader color={LoaderColor.gray} />
+        <Loader color={Loader.color.Gray} />
       ) : (
         <Waitlist items={waitlist} />
       )}

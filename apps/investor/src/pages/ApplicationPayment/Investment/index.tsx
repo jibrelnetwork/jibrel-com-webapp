@@ -5,7 +5,6 @@ import {
   Loader,
   PageTitle,
   PageBackLink,
-  LoaderColor,
   NotFound,
 } from '@jibrelcom/ui'
 import {
@@ -30,7 +29,7 @@ const Investment: React.FunctionComponent = () => {
   const investment = useStore($Investment)
 
   if (isLoading) {
-    return <Loader color={LoaderColor.blue} className={style.loader} />
+    return <Loader color={Loader.color.Blue} className={style.loader} />
   }
 
   if (investment === null) {

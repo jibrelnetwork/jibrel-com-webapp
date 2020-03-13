@@ -5,7 +5,6 @@ import {
   FormTitle,
   Grid,
   Loader,
-  LoaderColor
 } from '@jibrelcom/ui'
 
 import {
@@ -65,7 +64,7 @@ const InvestmentsBody: React.FC<InvestmentsBodyProps & BodyProps> = ({
         ? <Grid.Item
           component={Loader}
           className={style.loader}
-          color={LoaderColor.gray}
+          color={Loader.color.Gray}
         />
         : <Body {...bodyProps} />
       }
