@@ -17,7 +17,7 @@ const ApplicationPayment: React.FunctionComponent<ApplicationPaymentProps> = ({
   id,
 }) => {
   const i18n = useI18n()
-  const initialMethod = window.location.hash
+  const initialPaymentMethodId = window.location.hash
     ? window.location.hash.slice(1)
     : undefined
 
@@ -26,7 +26,7 @@ const ApplicationPayment: React.FunctionComponent<ApplicationPaymentProps> = ({
       <PageGate investmentId={id} />
       <Investment />
       <PaymentTabs.List
-        initialSelectedId={initialMethod}
+        initialSelectedId={initialPaymentMethodId}
       >
         <PaymentTabs.Item
           id='transfer'
