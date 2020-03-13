@@ -2,7 +2,6 @@ import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { Loader } from '@jibrelcom/ui'
 import { LanguageCode } from '@jibrelcom/i18n'
-import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import formatCurrency from 'utils/formatters/formatCurrency'
 
@@ -45,7 +44,7 @@ const InvestedAmount: React.FunctionComponent<InvestedAmountProps> = ({
   if (!investedAmount || isInvestedAmountLoading) {
     return (
       <Loader
-        color={LoaderColor.gray}
+        color={Loader.color.Gray}
         className={`${style.inline} ${loaderClassName}`}
       />
     )

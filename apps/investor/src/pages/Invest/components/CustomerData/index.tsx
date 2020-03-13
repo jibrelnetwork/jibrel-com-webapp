@@ -12,10 +12,7 @@ import {
   RootState,
 } from 'store'
 
-import {
-  Loader,
-  LoaderColor,
-} from '@jibrelcom/ui'
+import { Loader } from '@jibrelcom/ui'
 
 import style from './style.scss'
 import investStyle from '../../style.scss'
@@ -40,7 +37,7 @@ const CustomerData: React.FunctionComponent<CustomerDataProps> = ({
 
   return (
     <div className={cc([style.data, isLoading && style.loading])}>
-      {isLoading ? <Loader color={LoaderColor.gray} /> : (
+      {isLoading ? <Loader color={Loader.color.Gray} /> : (
         <>
           <div className={style.item}>
             <div className={investStyle.label}>

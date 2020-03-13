@@ -4,7 +4,7 @@ import { Link } from 'react-router5'
 import { useI18n } from '@jibrelcom/i18n'
 import {
   Grid,
-  LoaderColor,
+  Loader,
   SmallButton
 } from '@jibrelcom/ui'
 
@@ -29,7 +29,7 @@ const BalanceCard: React.FC = () => {
         </h3>
         <div className={style.available}>
           <CurrentBalance
-            loaderColor={LoaderColor.gray}
+            loaderColor={Loader.сolor.Gray}
             className={`${style.subtitle} ${style.current}`}
           />
         </div>

@@ -6,10 +6,14 @@ import { LoaderColor } from './types'
 
 export interface LoaderProps {
   className?: string;
-  color?: LoaderColor | void;
+  color?: LoaderColor;
 }
 
-const Loader: React.FunctionComponent<LoaderProps> = ({
+export type LoaderComponent = React.FunctionComponent<LoaderProps> & {
+  color: typeof LoaderColor;
+}
+
+const LoaderImplementation: React.FunctionComponent<LoaderProps> = ({
   color,
   className,
 }) => (
@@ -25,4 +29,10 @@ const Loader: React.FunctionComponent<LoaderProps> = ({
   </div>
 )
 
-export default React.memo(Loader)
+// eslint-disable-next-line @typescript-eslint/ban-ts-ignore
+// @ts-ignore-next-line, comment: React.memo destroys static props of component, so we need this hack
+const Loader: LoaderComponent = React.memo(LoaderImplementation)
+
+Loader.color = LoaderColor
+
+export default Loader
