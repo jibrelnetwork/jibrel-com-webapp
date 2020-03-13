@@ -1,6 +1,8 @@
 import React from 'react'
-import { Loader } from '@jibrelcom/ui'
-import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
+import {
+  Loader,
+  LoaderColor,
+} from '@jibrelcom/ui'
 
 import style from './style.scss'
 
@@ -10,7 +12,7 @@ export interface ResponseLoaderProps {
 }
 
 const ResponseLoader: React.FunctionComponent<ResponseLoaderProps> = ({
-  loaderColor = LoaderColor.blue,
+  loaderColor = Loader.color.Blue,
   children,
 }) => {
   return (

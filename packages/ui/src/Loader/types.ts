@@ -1,5 +1,5 @@
 export enum LoaderColor {
-  blue = 'blue',
-  gray = 'gray',
-  white = 'white',
+  Blue = 'blue',
+  Gray = 'gray',
+  White = 'white',
 }
