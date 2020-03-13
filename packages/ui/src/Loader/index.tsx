@@ -6,7 +6,7 @@ import { LoaderColor } from './types'
 
 export interface LoaderProps {
   className?: string;
-  color?: LoaderColor | void;
+  color?: LoaderColor;
 }
 
 export type LoaderComponent = React.FunctionComponent<LoaderProps> & {
