@@ -33,7 +33,7 @@ const Investment: React.FunctionComponent = () => {
     return <Loader color={LoaderColor.blue} className={style.loader} />
   }
 
-  if (!investment) {
+  if (investment === null) {
     return (
       <NotFound
         host={settings.HOST_CMS}
@@ -42,7 +42,7 @@ const Investment: React.FunctionComponent = () => {
   }
 
   const value = formatCurrency(
-    parseInt(investment?.amount.toString(), 10),
+    parseInt(investment.amount.toString(), 10),
     languageCode,
     'USD', {
       minimumFractionDigits: 0,
@@ -54,7 +54,7 @@ const Investment: React.FunctionComponent = () => {
     <section className={style.investment}>
       <PageTitle>
         {i18n._('ApplicationPayment.title', {
-          startupName: investment?.offering.security.company.name,
+          startupName: investment.offering.security.company.name,
         })}
       </PageTitle>
       <PageBackLink
