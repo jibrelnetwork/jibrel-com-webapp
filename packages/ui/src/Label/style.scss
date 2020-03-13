@@ -1,0 +1,20 @@
+@import '../theme/colors';
+@import '../theme/fonts';
+
+.label {
+  display: inline-block;
+  border-radius: 4px;
+  padding: 5px 8px;
+
+  @include font-button-2;
+}
+
+.blue {
+  background: $color-blue;
+  color: $color-white;
+}
+
+.green {
+  background: $color-green;
+  color: $color-white;
+}

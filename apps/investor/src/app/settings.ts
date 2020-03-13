@@ -6,6 +6,7 @@ export type Settings = {
   HOST_ID: string;
   HOST_CMS: string;
   API_REQUEST_MAX_ATTEMPTS: number;
+  FOLOOSI_MERCHANT_KEY: string;
 }
 
 declare global {
@@ -20,6 +21,7 @@ const settings: Settings = assignWith(
     FRONTEND_ROOT_DOMAIN_NAME: process.env.FRONTEND_ROOT_DOMAIN_NAME,
     API_BASE_URL: process.env.API_BASE_URL,
     API_REQUEST_MAX_ATTEMPTS: process.env.API_REQUEST_MAX_ATTEMPTS,
+    FOLOOSI_MERCHANT_KEY: process.env.FOLOOSI_MERCHANT_KEY,
   },
   window.SETTINGS,
   (objValue, srcValue) => {

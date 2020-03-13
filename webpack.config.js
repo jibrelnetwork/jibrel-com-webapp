@@ -317,6 +317,7 @@ const create = (dirname) => {
         'process.env.FRONTEND_ROOT_DOMAIN_NAME': JSON.stringify(process.env.FRONTEND_ROOT_DOMAIN_NAME),
         'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL),
         'process.env.API_REQUEST_MAX_ATTEMPTS': JSON.stringify(process.env.API_REQUEST_MAX_ATTEMPTS),
+        'process.env.FOLOOSI_MERCHANT_KEY': JSON.stringify(process.env.FOLOOSI_MERCHANT_KEY),
         '__DEV__': isEnvDevelopment,
         '__PROD__': isEnvProduction,
       }),
