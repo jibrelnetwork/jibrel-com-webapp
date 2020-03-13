@@ -1,6 +1,7 @@
 import React from 'react'
 import cc from 'classcat'
 import { connect } from 'react-redux'
+import { Link } from 'react-router5'
 
 import {
   useI18n,
@@ -34,6 +35,7 @@ interface StateProps {
 
 type OwnProps = Investment & {
   className?: string;
+  id: string;
 }
 
 type InvestmentCardProps = StateProps & OwnProps
@@ -44,6 +46,7 @@ const InvestmentCard: React.FunctionComponent<InvestmentCardProps> = ({
   status,
   updatedAt,
   languageCode,
+  id,
 }) => {
   if (!company) {
     return null
@@ -68,7 +71,6 @@ const InvestmentCard: React.FunctionComponent<InvestmentCardProps> = ({
     title,
   } = company
 
-  // FIXME should use RouterLink by name
   return (
     <div
       className={style.main}
@@ -114,8 +116,9 @@ const InvestmentCard: React.FunctionComponent<InvestmentCardProps> = ({
           <SmallButton
             className={style.pay}
             variant={SmallButtonVariant.secondary}
-            href='/application/:id/pay'
-            component='a'
+            component={Link}
+            routeName='ApplicationPayment'
+            routeParams={{ id }}
           >
             {i18n._('Portfolio.investments.card.action.pay')}
           </SmallButton>

@@ -1,5 +1,6 @@
 import React from 'react'
 import cc from 'classcat'
+import { Link } from 'react-router5'
 
 import Icon from '../Icon'
 
@@ -13,10 +14,18 @@ interface SmallButtonCommonProps {
   isDisabled?: boolean;
 }
 
-interface LinkSmallButtonProps
+interface AnchorSmallButtonProps
   extends SmallButtonCommonProps,
     React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
   component: 'a';
+}
+
+interface LinkSmallButtonProps
+  extends SmallButtonCommonProps,
+    React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
+  component: typeof Link;
+  routeName: string;
+  routeParams?: object;
 }
 
 interface ButtonSmallButtonProps
@@ -25,7 +34,7 @@ interface ButtonSmallButtonProps
   component: 'button';
 }
 
-const SmallButton: React.FunctionComponent<LinkSmallButtonProps | ButtonSmallButtonProps> = ({
+const SmallButton: React.FunctionComponent<AnchorSmallButtonProps | LinkSmallButtonProps | ButtonSmallButtonProps> = ({
   children,
   iconName,
   className,

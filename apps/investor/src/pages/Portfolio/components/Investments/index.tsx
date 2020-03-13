@@ -114,7 +114,7 @@ const Investments: React.FunctionComponent<InvestmentsProps> = ({
                 />
               </p>
             )}
-            {list.map(i => <InvestmentCard key={i.offering.uuid} {...i} />)}
+            {list.map(i => <InvestmentCard key={i.uuid} id={i.uuid} {...i} />)}
           </div>
         )
       })}

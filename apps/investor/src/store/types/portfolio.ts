@@ -19,6 +19,7 @@ export enum InvestmentStatus {
 }
 
 export interface Investment {
+  uuid: string;
   asset: Asset;
   offering: Offering;
   amount: string;
