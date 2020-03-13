@@ -10,5 +10,3 @@ export {
   $IsLoading,
   $Investment,
 } from './model'
-
-export { PageGate } from './presenter'

@@ -13,8 +13,6 @@ import {
   APIResponseRetrieveInvestmentApplication,
 } from './types'
 
-import { PageGate } from './presenter'
-
 const unpackAxiosResponse = <T>(response: AxiosResponse<APIResponse<T>>): T => response.data.data
 
 export const domain = createDomain('InvestmentPayment')
@@ -30,11 +28,6 @@ export const fetchInvestmentFx = domain.createEffect<
 
 export const $Investment = domain.createStore<InvestApplication | null>(null)
   .on(fetchInvestmentFx.doneData, (state, payload) => payload)
-
-forward({
-  from: PageGate.open.map(({ investmentId }) => investmentId),
-  to: fetchInvestmentFx,
-})
 
 export const setIsLoading = domain.createEvent<boolean>()
 

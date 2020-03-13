@@ -1,17 +1,29 @@
 import React from 'react'
+import { createGate } from 'effector-react'
+import { forward } from 'effector'
 
 import { useI18n } from '@jibrelcom/i18n'
 
 import CoreLayout from 'layouts/CoreLayout'
 
-import { PageGate } from './model'
+import { fetchInvestmentFx } from './model'
 import Investment from './Investment'
+import PaymentTabs from './PaymentTabs'
 
 interface ApplicationPaymentProps {
   id: string;
 }
 
-import PaymentTabs from './PaymentTabs'
+interface PageGateProps {
+  investmentId: string;
+}
+
+const PageGate = createGate<PageGateProps>('InvestmentPayment')
+
+forward({
+  from: PageGate.open.map(({ investmentId }) => investmentId),
+  to: fetchInvestmentFx,
+})
 
 const ApplicationPayment: React.FunctionComponent<ApplicationPaymentProps> = ({
   id,
