@@ -36,7 +36,7 @@
   "ApplicationPayment.Methods.card.title": "Bank Card",
   "ApplicationPayment.Methods.account.title": "Account Balance",
   "ApplicationPayment.Methods.crypto.title": "Crypto Deposit",
-  "ApplicationPayment.Methods.unavailable": "→ Coming soon",
+  "ApplicationPayment.Methods.soon": "→ Coming soon",
   "Invest.CustomerData.name": "Full Legal Name",
   "Invest.CustomerData.address": "Address",
   "Invest.downloadSubscription": "Download subscription agreement",

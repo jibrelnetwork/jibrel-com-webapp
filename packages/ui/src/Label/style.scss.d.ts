@@ -1,16 +1,8 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    button: string;
-    icon: string;
-    "is-disabled": string;
-    "is-selected": string;
-    isDisabled: string;
-    isSelected: string;
+    blue: string;
+    green: string;
     label: string;
-    section: string;
-    tab: string;
-    tabs: string;
-    title: string;
   }
 }
 

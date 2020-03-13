@@ -2,7 +2,11 @@ import React from 'react'
 import noop from 'lodash-es/noop'
 import cc from 'classcat'
 
-import { Icon } from '@jibrelcom/ui'
+import {
+  Icon,
+  Label,
+} from '@jibrelcom/ui'
+import { useI18n } from '@jibrelcom/i18n'
 
 import style from './style.scss'
 
@@ -26,6 +30,8 @@ export const Item: React.FunctionComponent<ItemProps> = ({
   onSelect = noop,
   children,
 }) => {
+  const i18n = useI18n()
+
   if (isRenderedAsTab) {
     const onClick = isDisabled
       ? (event: React.MouseEvent): void => event.preventDefault()
@@ -43,6 +49,14 @@ export const Item: React.FunctionComponent<ItemProps> = ({
         aria-disabled={isDisabled}
       >
         <Icon name={icon} className={style.icon} />
+        {isDisabled && (
+          <Label
+            className={style.label}
+            color={Label.color.Blue}
+          >
+            {i18n._('ApplicationPayment.Methods.soon')}
+          </Label>
+        )}
         <h3 className={style.title}>{title}</h3>
       </a>
     )
