@@ -11,8 +11,6 @@ export interface WaitlistProps {
 }
 
 const Waitlist: React.FunctionComponent<WaitlistProps> = ({ items }) => {
-  console.log('Waitlist', items)
-  
   if (items.length === 0) {
     return null
   }
