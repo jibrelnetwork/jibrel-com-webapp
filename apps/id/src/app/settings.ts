@@ -26,8 +26,14 @@ export default settings.init<Settings>(
     CMS_ORIGIN: process.env.CMS_ORIGIN,
   },
   {
-    ID_ORIGIN: (_, values) => `//id.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
-    INVESTOR_ORIGIN: (_, values) => `//investor.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
-    CMS_ORIGIN: (_, values) => `//${values.FRONTEND_ROOT_DOMAIN_NAME}`,
+    ID_ORIGIN: (value, values) => value
+      ? value
+      : `//id.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
+    INVESTOR_ORIGIN: (value, values) => value
+      ? value
+      : `//investor.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
+    CMS_ORIGIN: (value, values) => value
+      ? value
+      : `//${values.FRONTEND_ROOT_DOMAIN_NAME}`,
   }
 )

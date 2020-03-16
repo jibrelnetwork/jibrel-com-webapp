@@ -28,7 +28,9 @@ export default settings.init<Settings>(
     ID_ORIGIN: process.env.ID_ORIGIN,
   },
   {
-    ID_ORIGIN: (_, values) => `//id.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
+    ID_ORIGIN: (value, values) => value
+      ? value
+      : `//id.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
     CMS_ORIGIN: (value, values) => value
         ? value
         : `//${values.FRONTEND_ROOT_DOMAIN_NAME}`,
