@@ -72,7 +72,7 @@ const VerifyEmailInfo: React.FunctionComponent<VerifyEmailInfoProps> = ({
             {i18n._('VerifyEmail.error.message')}
           </span>
           <a
-            href={settings.HOST_CMS}
+            href={settings.CMS_ORIGIN}
             className={cc([
               style.close,
               bigButtonStyle.button,

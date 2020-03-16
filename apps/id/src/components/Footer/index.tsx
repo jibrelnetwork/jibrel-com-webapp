@@ -9,7 +9,7 @@ const FooterEnhanced: React.FunctionComponent = () => {
 
   return (
     <Footer
-      cmsURL={settings.HOST_CMS}
+      cmsURL={settings.CMS_ORIGIN}
       languageCode={languageCode}
     />
   )

@@ -3,9 +3,9 @@ import settings from 'app/settings'
 import { AvailableNextPages } from './checkRedirectParams'
 
 const NEXT_PAGES_MAP = {
-  [AvailableNextPages.main]: `//${settings.FRONTEND_ROOT_DOMAIN_NAME}/en/companies`,
-  [AvailableNextPages.invest]: `//investor.${settings.FRONTEND_ROOT_DOMAIN_NAME}/invest`,
-  [AvailableNextPages.portfolio]: `//investor.${settings.FRONTEND_ROOT_DOMAIN_NAME}/portfolio`,
+  [AvailableNextPages.main]: `${settings.CMS_ORIGIN}/en/companies`,
+  [AvailableNextPages.invest]: `${settings.INVESTOR_ORIGIN}/invest`,
+  [AvailableNextPages.portfolio]: `${settings.INVESTOR_ORIGIN}/portfolio`,
 }
 
 export default function changeLocation({

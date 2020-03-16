@@ -34,7 +34,7 @@ const Company: React.FunctionComponent<CompanyData> = ({
     <li className='companies__list-item'>
       <a
         style={{ backgroundImage: `url(${preview})` }}
-        href={`${settings.HOST_CMS}${permalink}`}
+        href={`${settings.CMS_ORIGIN}${permalink}`}
         className='company-card --with-stats'
       >
         <div
@@ -153,7 +153,7 @@ const Companies: React.FunctionComponent<CompaniesProps> = ({ list }) => {
   return (
     <>
       <link
-        href={`${settings.HOST_CMS}/styles/company.css`}
+        href={`${settings.CMS_ORIGIN}/styles/company.css`}
         type='text/css'
         rel='stylesheet'
       />
@@ -181,7 +181,7 @@ const Companies: React.FunctionComponent<CompaniesProps> = ({ list }) => {
             xl={4}
           >
             <BigButton
-              href={settings.HOST_CMS}
+              href={settings.CMS_ORIGIN}
               variant={BigButtonVariant.secondary}
               component='a'
             >

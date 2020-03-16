@@ -95,7 +95,7 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
         const { data } = await axiosPlain({
           method: 'get',
           withCredentials: true,
-          url: `${settings.HOST_CMS}/api/v1/companies`,
+          url: `${settings.CMS_ORIGIN}/api/v1/companies`,
           headers: {
             'Accept-Language': rootState.user.languageCode,
           },

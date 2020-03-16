@@ -118,7 +118,7 @@ const SuccessStep: React.FunctionComponent<{
         <div className={`${pageWithHeroStyle.button} ${pageWithHeroStyle.secondary}`}>
           <BigButton
             component='a'
-            href={settings.HOST_CMS}
+            href={settings.CMS_ORIGIN}
             variant={BigButtonVariant.secondary}
           >
             BACK TO STARTUPS
@@ -144,7 +144,7 @@ const ErrorStep: React.FunctionComponent<ErrorStepProps> = ({ slug }) => (
       <div className={pageWithHeroStyle.button}>
         <BigButton
           component='a'
-          href={slug ? `/invest/${slug}` : settings.HOST_CMS}
+          href={slug ? `/invest/${slug}` : settings.CMS_ORIGIN}
           variant={BigButtonVariant.main}
         >
           back to startup invest

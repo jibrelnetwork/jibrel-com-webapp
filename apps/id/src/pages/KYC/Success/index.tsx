@@ -32,7 +32,7 @@ const Success: React.FunctionComponent = () => {
         <BigButton
           component='a'
           className={style.submit}
-          href={`${settings.HOST_CMS}/${languageCode}`}
+          href={`${settings.CMS_ORIGIN}/${languageCode}`}
         >
           {i18n._('KYC.Success.action')}
         </BigButton>

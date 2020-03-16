@@ -134,7 +134,7 @@ const SuccessStep: React.FunctionComponent<{
   return (
     <PageWithHero
       imgSrc={heroImage}
-      href={settings.HOST_CMS}
+      href={settings.CMS_ORIGIN}
       title={i18n._('Waitlist.success.title')}
       buttonLabel={i18n._('Waitlist.success.action.back')}
       text={i18n._('Waitlist.success.text', { startupName })}
@@ -158,7 +158,7 @@ const FormStep: React.FunctionComponent<{
   return (
     <>
       <PageTitle>{i18n._('Waitlist.form.title')}</PageTitle>
-      <PageBackLink href={`${settings.HOST_CMS}/en/companies/${formatSlug(startupName)}`}>
+      <PageBackLink href={`${settings.CMS_ORIGIN}/en/companies/${formatSlug(startupName)}`}>
         {i18n._('Waitlist.form.back', { startupName })}
       </PageBackLink>
       <div className={style.message}>
