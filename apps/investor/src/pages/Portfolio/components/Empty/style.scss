@@ -16,6 +16,7 @@
   background-repeat: no-repeat;
   background-color: $color-blue-5;
   background-image: url('../../../../public/images/pic_placeholder_portfolio@2x.jpg');
+  border-radius: 24px;
 
   @include screen('>xsmall') {
     padding: 0 48px;
