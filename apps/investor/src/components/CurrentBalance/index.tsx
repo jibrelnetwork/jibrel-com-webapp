@@ -1,7 +1,11 @@
-import React, { Component } from 'react'
+import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
-import { Loader } from '@jibrelcom/ui'
 import { LanguageCode } from '@jibrelcom/i18n'
+
+import {
+  Loader,
+  LoaderColor,
+} from '@jibrelcom/ui'
 
 import formatCurrency from 'utils/formatters/formatCurrency'
 
@@ -22,38 +26,37 @@ interface DispatchProps {
 
 interface OwnProps {
   className?: string;
+  loaderColor?: LoaderColor;
 }
 
 type CurrentBalanceProps = StateProps & DispatchProps & OwnProps
 
-class CurrentBalance extends Component<CurrentBalanceProps> {
-  componentDidMount(): void {
-    this.props.getBalance()
+const CurrentBalance: React.FunctionComponent<CurrentBalanceProps> = ({
+  getBalance,
+  lang,
+  balance,
+  className,
+  loaderColor,
+  isBalanceLoading,
+}) => {
+  useEffect(() => {
+    getBalance()
+  }, [])
+
+  if (!balance || isBalanceLoading) {
+    return <Loader color={loaderColor} />
   }
 
-  render(): React.ReactNode {
-    const {
-      lang,
-      balance,
-      className,
-      isBalanceLoading,
-    }: CurrentBalanceProps = this.props
+  const value = formatCurrency(
+    parseFloat(balance.toString()),
+    lang,
+    'USD', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 2,
+    },
+  )
 
-    if (!balance || isBalanceLoading) {
-      return <Loader />
-    }
-
-    const value = formatCurrency(
-      parseFloat(balance.toString()),
-      lang,
-      'USD', {
-        minimumFractionDigits: 0,
-        maximumFractionDigits: 2,
-      },
-    )
-
-    return <span className={className}>{value}</span>
-  }
+  return <span className={className}>{value}</span>
 }
 
 export default connect<StateProps, DispatchProps, OwnProps>(

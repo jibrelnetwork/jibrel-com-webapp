@@ -6,6 +6,7 @@ export { default as Input } from './Input'
 export { default as HistoricDateInput } from './HistoricDateInput'
 export { default as Footer } from './Footer'
 export { default as Header } from './Header'
+export { default as Label } from './Label'
 export { default as Loader } from './Loader'
 export { default as Warning } from './Warning'
 export { default as Checkbox } from './Checkbox'
@@ -29,6 +30,8 @@ export { default as ErrorToast } from './ErrorToast'
 export { default as Animation }from './Animation'
 
 export { LoaderColor } from './Loader/types'
+export { BigButtonVariant } from './BigButton/types'
+export { SmallButtonVariant } from './SmallButton/types'
 
 export {
   BigButtonSubmit,

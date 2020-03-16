@@ -2,7 +2,6 @@ import React from 'react'
 import { connect } from 'react-redux'
 import { Loader } from '@jibrelcom/ui'
 import { useI18n } from '@jibrelcom/i18n'
-import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
   Form,
@@ -55,7 +54,7 @@ const EmailVerificationSending: React.FunctionComponent = () => {
   return (
     <div className={style.loading}>
       <div className={style.loader}>
-        <Loader color={LoaderColor.blue} />
+        <Loader color={Loader.color.Blue} />
       </div>
       <span>{i18n._('EmailVerification.sending')}</span>
     </div>

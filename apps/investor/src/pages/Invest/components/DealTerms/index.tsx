@@ -10,7 +10,6 @@ import {
 import {
   Loader,
   FormTitle,
-  LoaderColor,
 } from '@jibrelcom/ui'
 
 import { RootState } from 'store'
@@ -82,7 +81,7 @@ const DealTerms: React.FunctionComponent<DealTermsProps> = ({
     <>
       <FormTitle>{i18n._('Invest.DealTerms.title')}</FormTitle>
       <div className={cc([style.data, isOfferingDataLoading && style.loading])}>
-        {!data || isOfferingDataLoading ? <Loader color={LoaderColor.gray} /> : data.map(item => (
+        {!data || isOfferingDataLoading ? <Loader color={Loader.color.Gray} /> : data.map(item => (
           <div className={style.item} key={item.key}>
             <div className={investStyle.label}>{item.key}</div>
             <div className={investStyle.value}>{item.value}</div>

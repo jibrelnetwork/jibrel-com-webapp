@@ -1,18 +1,20 @@
 import React, { useEffect } from 'react'
 import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
-import { LoaderColor } from '@jibrelcom/ui/src/Loader/types'
 
 import {
   Grid,
-  Loader,
-  FormTitle,
   PageTitle,
 } from '@jibrelcom/ui'
 
 import CoreLayout from 'layouts/CoreLayout'
-import CurrentBalance from 'components/CurrentBalance'
-import { Investment } from 'store/types/portfolio'
+import { Offering } from 'store/types/invest'
+
+import {
+  Investment,
+  CompanyData,
+  OfferingSubscription,
+} from 'store/types/portfolio'
 
 import {
   Dispatch,
@@ -20,79 +22,125 @@ import {
 } from 'store'
 
 import style from './style.scss'
-import FundsCard from './components/FundsCard'
-import Investments from './components/Investments'
+import Companies from './components/Companies'
 import InvestedAmount from './components/InvestedAmount'
-import { FundsCardProps } from './components/FundsCard'
+import InvestmentsBody from './components/InvestmentsBody'
 
 interface StateProps {
-  investments: Investment[] | undefined;
-  isInvestmentsLoading: boolean;
+  companies?: CompanyData[];
+  investments?: Investment[];
+  waitlist?: OfferingSubscription[];
+  isLoading: boolean;
+  isWaitlistLoading: boolean;
 }
 
 interface DispatchProps {
+  getWaitlist: () => void;
+  getCompanies: () => void;
   getInvestments: () => void;
 }
 
-type PortfolioProps = StateProps & DispatchProps
+type PortfolioProps = StateProps & DispatchProps & {
+  companies: CompanyData[];
+  investments: Investment[];
+  waitlist: OfferingSubscription[];
+}
 
-const ADD_FUNDS: FundsCardProps[] = [{
-  label: 'Portfolio.FundsCard.wireTransfer.label',
-  title: 'Portfolio.FundsCard.wireTransfer.title',
-}, {
-  title: 'Portfolio.FundsCard.cryptoTransfer.title',
-  isComing: true,
-}, {
-  title: 'Portfolio.FundsCard.bankCard.title',
-  isComing: true,
-}]
+function checkSlugEqual(offering: Offering, slug: string): boolean {
+  return slug === offering.security.company.slug
+}
+
+function getMoreOpportunities(
+  companies: CompanyData[],
+  investments: Investment[],
+  waitlist: OfferingSubscription[],
+): CompanyData[] {
+  if (!companies) {
+    return []
+  }
+
+  return companies.filter((company: CompanyData) => {
+    const {
+      slug,
+      currentOffering,
+    } = company
+
+    if (!currentOffering) {
+      return false
+    } else if (currentOffering.flags.completed) {
+      return false
+    }
+
+    const isSubscriptionFound = !!(waitlist || []).find(i => checkSlugEqual(i.offering, slug))
+    const isInvestmentFound = !!(investments || []).find(i => checkSlugEqual(i.offering, slug))
+
+    return !(isInvestmentFound || isSubscriptionFound)
+  })
+}
 
 const Portfolio: React.FunctionComponent<PortfolioProps> = ({
+  getWaitlist,
+  getCompanies,
   getInvestments,
-  investments,
-  isInvestmentsLoading,
+  waitlist = [],
+  companies = [],
+  investments = [],
+  isLoading,
+  isWaitlistLoading,
 }) => {
   useEffect(() => {
+    getWaitlist()
+    getCompanies()
     getInvestments()
   }, [])
 
   const i18n = useI18n()
+  const moreOpportunities = getMoreOpportunities(companies, investments, waitlist)
 
   return (
     <CoreLayout>
-      <PageTitle className={style.title}>
-        {i18n._('Portfolio.title')}<InvestedAmount className={style.green} />
-      </PageTitle>
-      <Grid.Container className={style.investments}>
-        {(!investments || isInvestmentsLoading) ? (
-          <Loader
-            className={style.loader}
-            color={LoaderColor.gray}
-          />
-        ) : <Investments items={investments} />}
+      <Grid.Container>
+        <Grid.Item
+          xs={4}
+          s={4}
+          m={4}
+          l={6}
+          xl={7}
+        >
+          <PageTitle className={style.title}>
+            {i18n._('Portfolio.title')}
+          </PageTitle>
+          <h2 className={style.subtitle}>
+            {i18n._('Portfolio.totalInvested')}
+            <InvestedAmount
+              className={style.green}
+              loaderClassName={style.investedLoader}
+            />
+          </h2>
+          <div className={style.note}>
+            {i18n._('Portfolio.totalInvestedNote')}
+          </div>
+        </Grid.Item>
       </Grid.Container>
-      <PageTitle>
-        {i18n._('Portfolio.balance')}<CurrentBalance className={style.green} />
-      </PageTitle>
-      <FormTitle>{i18n._('Portfolio.addFunds.title')}</FormTitle>
-      <p className={style.description}>{i18n._('Portfolio.addFunds.description')}</p>
-      <Grid.Container className={style.deposit}>
-        {ADD_FUNDS.map(c => (
-          <FundsCard
-            key={i18n._(c.title)}
-            label={c.label ? i18n._(c.label) : undefined}
-            {...c}
-          />
-        ))}
-      </Grid.Container>
-      <FormTitle>{i18n._('Portfolio.withdraw.title')}</FormTitle>
-      <Grid.Container className={style.withdraw}>
-        <FundsCard
-          label={i18n._('Portfolio.withdraw.card.label')}
-          title={i18n._('Portfolio.withdraw.card.title')}
-          isDisabled
-        />
-      </Grid.Container>
+      <InvestmentsBody
+        investments={investments}
+        isLoading={isLoading}
+        waitlist={waitlist}
+        isWaitlistLoading={isWaitlistLoading}
+      />
+      {!!moreOpportunities?.length && (
+        <Grid.Container className={style.opportunities}>
+          <Grid.Item
+            component={PageTitle}
+            className={style.title}
+          >
+            {i18n._('Portfolio.companies.title')}
+          </Grid.Item>
+          <Grid.Item>
+            <Companies list={moreOpportunities} />
+          </Grid.Item>
+        </Grid.Container>
+      )}
     </CoreLayout>
   )
 }
@@ -100,16 +148,25 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
 export default connect<StateProps, DispatchProps>(
   (state: RootState) => {
     const {
+      waitlist,
+      companies,
       investments,
+      isWaitlistLoading,
+      isCompaniesLoading,
       isInvestmentsLoading,
     } = state.portfolio
 
     return {
+      waitlist,
+      companies,
       investments,
-      isInvestmentsLoading,
+      isWaitlistLoading,
+      isLoading: isCompaniesLoading || isInvestmentsLoading,
     }
   },
   (dispatch: Dispatch): DispatchProps => ({
+    getWaitlist: dispatch.portfolio.getWaitlist,
+    getCompanies: dispatch.portfolio.getCompanies,
     getInvestments: dispatch.portfolio.getInvestments,
   })
 )(Portfolio)

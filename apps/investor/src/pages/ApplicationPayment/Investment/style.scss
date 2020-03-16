@@ -1,0 +1,25 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/colors';
+
+.loader {
+  margin-top: 64px;
+  margin-bottom: 64px;
+}
+
+.investment {
+  margin-bottom: 64px;
+}
+
+.back {
+  margin-bottom: 24px;
+}
+
+.amount-title {
+  @include font-h2;
+  margin-bottom: 16px;
+}
+
+.amount-value {
+  @include font-h2;
+  color: $color-green;
+}

@@ -10,6 +10,15 @@ const ROUTER_ROOT = ''
 
 export const routes: RouteEnhanced[] = [
   {
+    name: 'Portfolio',
+    path: '/',
+    canActivate: composeActivations([
+      isLoggedIn,
+      checkKYCStatus,
+    ]),
+  },
+
+  {
     name: 'Invest',
     path: '/invest/:slug',
     canActivate: composeActivations([
@@ -21,6 +30,15 @@ export const routes: RouteEnhanced[] = [
   {
     name: 'Application',
     path: '/application/:id',
+    canActivate: composeActivations([
+      isLoggedIn,
+      checkKYCStatus,
+    ]),
+  },
+
+  {
+    name: 'ApplicationPayment',
+    path: '/application/:id/payment',
     canActivate: composeActivations([
       isLoggedIn,
       checkKYCStatus,
