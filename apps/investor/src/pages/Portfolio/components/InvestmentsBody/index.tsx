@@ -32,13 +32,11 @@ const Body: React.FC<BodyProps> = ({
   waitlist,
   investments
 }) => investments !== undefined && investments.length > 0
-  ? <Grid.Item>
-      <Investments
+  ? <Investments
         waitlist={waitlist}
         investments={investments}
         isWaitlistLoading={isWaitlistLoading}
       />
-    </Grid.Item>
   : <Empty />
 
 
@@ -66,7 +64,11 @@ const InvestmentsBody: React.FC<InvestmentsBodyProps & BodyProps> = ({
           className={style.loader}
           color={Loader.color.Gray}
         />
-        : <Body {...bodyProps} />
+        : (
+          <Grid.Item>
+            <Body {...bodyProps} />
+          </Grid.Item>
+        )
       }
     </Grid.Container>
   )

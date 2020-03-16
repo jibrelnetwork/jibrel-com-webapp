@@ -91,13 +91,11 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
     },
     async getCompanies(_: void, rootState: RootState): Promise<void> {
       this.setCompaniesLoading()
-      const cmsAPI = __DEV__ ? 'https://jibrelcom.develop.jdev.network' : settings.HOST_CMS
-
       try {
         const { data } = await axiosPlain({
           method: 'get',
           withCredentials: true,
-          url: `${cmsAPI}/api/v1/companies`,
+          url: `${settings.HOST_CMS}/api/v1/companies`,
           headers: {
             'Accept-Language': rootState.user.languageCode,
           },
