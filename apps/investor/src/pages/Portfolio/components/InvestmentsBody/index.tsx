@@ -1,6 +1,6 @@
 import React from 'react'
-
 import { useI18n } from '@jibrelcom/i18n'
+
 import {
   FormTitle,
   Grid,
@@ -9,65 +9,55 @@ import {
 
 import {
   Investment,
-  OfferingSubscription
+  OfferingSubscription,
 } from 'store/types/portfolio'
 
 import Investments from '../Investments'
 import Empty from '../Empty'
-
 import style from '../../style.scss'
 
-interface BodyProps {
-  isWaitlistLoading: boolean;
+interface InvestmentsListProps {
   investments?: Investment[];
   waitlist?: OfferingSubscription[];
+  isWaitlistLoading: boolean;
 }
 
-interface InvestmentsBodyProps {
+type InvestmentsBodyProps = InvestmentsListProps & {
   isLoading: boolean;
 }
 
-const Body: React.FC<BodyProps> = ({
-  isWaitlistLoading,
+const InvestmentsList: React.FC<InvestmentsListProps> = ({
   waitlist,
-  investments
-}) => investments !== undefined && investments.length > 0
-  ? <Grid.Item>
-      <Investments
-        waitlist={waitlist}
-        investments={investments}
-        isWaitlistLoading={isWaitlistLoading}
-      />
-    </Grid.Item>
-  : <Empty />
+  investments,
+  ...otherProps
+}) => (!investments?.length && !waitlist?.length) ? <Empty /> : <Investments
+  waitlist={waitlist}
+  investments={investments}
+  {...otherProps}
+/>
 
-
-const InvestmentsBody: React.FC<InvestmentsBodyProps & BodyProps> = ({
+const InvestmentsBody: React.FC<InvestmentsBodyProps> = ({
   isLoading,
-  isWaitlistLoading,
-  waitlist,
-  investments
+  ...otherProps
 }) => {
   const i18n = useI18n()
-  const bodyProps = {
-    isWaitlistLoading,
-    waitlist,
-    investments
-  }
 
   return (
     <Grid.Container className={style.investments}>
       <Grid.Item component={FormTitle}>
         {i18n._('Portfolio.investments.title')}
       </Grid.Item>
-      {isLoading
-        ? <Grid.Item
+      {isLoading ? (
+        <Grid.Item
           component={Loader}
           className={style.loader}
           color={Loader.color.Gray}
         />
-        : <Body {...bodyProps} />
-      }
+      ) : (
+        <Grid.Item>
+          <InvestmentsList {...otherProps} />
+        </Grid.Item>
+      )}
     </Grid.Container>
   )
 }
