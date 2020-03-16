@@ -138,7 +138,7 @@ const BackLink: React.FunctionComponent<{
   return !startupName ? null : (
     <PageBackLink
       className={style.back}
-      href={`${settings.HOST_CMS}/en/companies/${slug}`}
+      href={`${settings.CMS_ORIGIN}/en/companies/${slug}`}
     >
       {i18n._('Invest.back', { startupName })}
     </PageBackLink>

@@ -14,7 +14,7 @@ const NotFoundEnhanced: React.FunctionComponent<NotFoundProps> = ({ requestProfi
   <ProfileLayout>
     <NotFound
       requestProfile={requestProfile}
-      host={settings.HOST_CMS}
+      host={settings.CMS_ORIGIN}
     />
   </ProfileLayout>
 )

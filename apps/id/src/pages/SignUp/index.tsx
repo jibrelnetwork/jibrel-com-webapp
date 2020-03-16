@@ -97,7 +97,7 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
         <span
           className={style.terms}
           dangerouslySetInnerHTML={{
-            __html: i18n._('Signup.form.terms', { host: settings.HOST_CMS }),
+            __html: i18n._('Signup.form.terms', { host: settings.CMS_ORIGIN }),
           }}
         />
       </Checkbox>

@@ -29,7 +29,7 @@ const checkKYCSubmitted: ActivationFnFactory = (
     checkRedirectState(toState, user.languageCode)
 
     if (!changeLocation(toState.params)) {
-      window.location.href = `//${settings.FRONTEND_ROOT_DOMAIN_NAME}`
+      window.location.href = settings.CMS_ORIGIN
     }
 
     throw {}
