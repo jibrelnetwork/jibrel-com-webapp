@@ -1,6 +1,6 @@
 // types
 export { InvestApplication } from 'store/types/invest'
-export { CardPaymentOperation } from './types'
+export { CardPaymentOperation, InvestApplicationStore } from './types'
 
 export {
   // events

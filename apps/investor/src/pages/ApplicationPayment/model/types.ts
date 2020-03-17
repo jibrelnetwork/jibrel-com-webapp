@@ -25,3 +25,5 @@ export interface SubmitCardTokenData {
 export type APIResponseDepositCardInvestmentApplication = APIResponse<CardPaymentOperation>
 
 export type APIResponseRetrieveInvestmentApplication = APIResponse<InvestApplication>
+
+export type InvestApplicationStore = InvestApplication | null
