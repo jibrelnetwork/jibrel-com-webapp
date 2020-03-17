@@ -94,13 +94,9 @@
   color: $color-black;
 }
 
-.actions,
-.back,
-.note,
-.download,
-.agreement,
-.submit,
-.error {
+.warning,
+.header,
+.actions {
   @media print {
     display: none;
   }
