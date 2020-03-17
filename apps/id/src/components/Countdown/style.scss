@@ -9,20 +9,23 @@
   color: $color-black;
 }
 
-.fraction {
+.fraction,
+.value,
+.label {
   display: inline-block;
 }
 
-.min {
+.min,
+.value {
   order: 1;
-  margin: 0 4px;
 
   [dir=rtl] & {
     order: 2;
   }
 }
 
-.sec {
+.sec,
+.label {
   order: 2;
 
   [dir=rtl] & {
@@ -30,8 +33,8 @@
   }
 }
 
-.number {
-  margin-right: 4px;
+.value {
+  margin: 0 4px;
   font-weight: 600;
   color: $color-blue;
 }

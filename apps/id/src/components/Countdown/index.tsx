@@ -31,10 +31,10 @@ const TimeFraction: React.FunctionComponent<{
 
   return (
     <div className={`${style.fraction} ${style[fraction]}`}>
-      <span className={style.number}>
+      <span className={style.value}>
         {value}
       </span>
-      <span>
+      <span className={style.label}>
         {i18n._(`common.components.Countdown.${Fraction[fraction]}`)}
       </span>
     </div>
