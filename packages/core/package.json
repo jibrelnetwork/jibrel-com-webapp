@@ -1,0 +1,17 @@
+{
+  "name": "@jibrelcom/core",
+  "version": "0.0.1",
+  "description": "Common library with core logic used across all the Apps",
+  "main": "src/index.ts",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "dependencies": {
+    "lodash-es": "~4.17.15"
+  },
+  "devDependencies": {
+    "@types/lodash-es": "~4.17.3"
+  },
+  "author": "Jibrel AG",
+  "license": "UNLICENSED"
+}
