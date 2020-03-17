@@ -2,19 +2,7 @@
   "extends": "./tsconfig.json",
   "include": [
     "globals.d.ts",
-    "apps/id/src/**/*.ts",
-    "apps/id/src/**/*.tsx",
-    "apps/investor/src/**/*.ts",
-    "apps/investor/src/**/*.tsx",
-    "packages/core/src/**/*.ts",
-    "packages/core/src/**/*.tsx",
-    "packages/ui/src/**/*.ts",
-    "packages/ui/src/**/*.tsx",
-    "packages/i18n/src/**/*.ts",
-    "packages/i18n/src/**/*.tsx",
-    "packages/forms/src/**/*.ts",
-    "packages/forms/src/**/*.tsx",
-    "packages/router/src/**/*.ts",
-    "packages/router/src/**/*.tsx"
+    "apps/",
+    "packages/"
   ]
 }

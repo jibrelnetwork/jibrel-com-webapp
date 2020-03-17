@@ -18,7 +18,7 @@ import { formatCurrency } from 'utils/formatters'
 import {
   $IsLoading,
   $Investment,
-} from '../model'
+} from '../../model'
 
 import style from './style.scss'
 
