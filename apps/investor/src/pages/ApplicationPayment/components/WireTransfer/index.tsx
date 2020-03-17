@@ -1,6 +1,5 @@
 import React from 'react'
 import { useStore } from 'effector-react'
-
 import { useI18n } from '@jibrelcom/i18n'
 import {
   BigButton,
@@ -10,6 +9,8 @@ import {
 } from '@jibrelcom/ui'
 
 import style from './style.scss'
+
+import BankAccountDetails from '../BankAccountDetails'
 
 import {
   $BankAccount,
@@ -87,50 +88,7 @@ const WireTransfer: React.FunctionComponent = () => {
         <Warning className={style.warning}>
           {i18n._('ApplicationPayment.WireTransfer.details.warning.text')}
         </Warning>
-        <div className={style.details}>
-          <div className={style.item}>
-            <div className={style.label}>
-              {i18n._('ApplicationPayment.WireTransfer.details.bankAccountHolderName.title')}
-            </div>
-            <div className={style.value}>{bankAccountData.holderName}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>
-              {i18n._('ApplicationPayment.WireTransfer.details.iban.title')}
-            </div>
-            <div className={style.value}>{bankAccountData.ibanNumber}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>
-              {i18n._('ApplicationPayment.WireTransfer.details.accountNumber.title')}
-            </div>
-            <div className={style.value}>{bankAccountData.accountNumber}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>
-              {i18n._('ApplicationPayment.WireTransfer.details.bankName.title')}
-            </div>
-            <div className={style.value}>{bankAccountData.bankName}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>
-              {i18n._('ApplicationPayment.WireTransfer.details.bankBranchAddress.title')}
-            </div>
-            <div className={style.value}>{bankAccountData.branchAddress}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>
-              {i18n._('ApplicationPayment.WireTransfer.details.bicSwiftCode.title')}
-            </div>
-            <div className={style.value}>{bankAccountData.swiftCode}</div>
-          </div>
-          <div className={style.item}>
-            <div className={style.label}>
-              {i18n._('ApplicationPayment.WireTransfer.details.depositOrderId.title')}
-            </div>
-            <div className={style.value}>{bankAccountData.depositReferenceCode}</div>
-          </div>
-        </div>
+        <BankAccountDetails {...bankAccountData} />
       </Grid.Item>
     </Grid.Container>
   )

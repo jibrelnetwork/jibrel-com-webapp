@@ -5,12 +5,10 @@ declare namespace StyleScssModule {
     button: string;
     centered: string;
     column: string;
-    details: string;
     "details-wrapper": string;
     detailsWrapper: string;
     grid: string;
     header: string;
-    item: string;
     "l-1": string;
     "l-10": string;
     "l-11": string;
@@ -35,7 +33,6 @@ declare namespace StyleScssModule {
     l7: string;
     l8: string;
     l9: string;
-    label: string;
     "m-1": string;
     "m-2": string;
     "m-3": string;
@@ -68,7 +65,6 @@ declare namespace StyleScssModule {
     s6: string;
     s7: string;
     s8: string;
-    value: string;
     warning: string;
     "xl-1": string;
     "xl-10": string;
