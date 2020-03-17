@@ -123,9 +123,9 @@ const Portfolio: React.FunctionComponent<PortfolioProps> = ({
         </Grid.Item>
       </Grid.Container>
       <InvestmentsBody
+        waitlist={waitlist}
         investments={investments}
         isLoading={isLoading}
-        waitlist={waitlist}
         isWaitlistLoading={isWaitlistLoading}
       />
       {!!moreOpportunities?.length && (
