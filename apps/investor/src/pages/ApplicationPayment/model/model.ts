@@ -4,6 +4,7 @@ import {
 } from 'effector'
 
 import { InvestApplication } from 'store/types/invest'
+import { JibrelBankAccount } from 'store/types/user'
 
 import axios from 'store/axios'
 import { unpackAxiosResponse } from 'utils/axios'
@@ -35,4 +36,24 @@ export const $IsLoading = domain.createStore<boolean>(true)
 forward({
   from: fetchInvestmentFx.pending,
   to: setIsLoading,
+})
+
+function transformToBankAccount(investmentData: InvestApplicationStore): JibrelBankAccount | null {
+  if (investmentData === null) {
+    return null
+  }
+
+  const { bankAccount, depositReferenceCode } = investmentData
+
+  return {
+    ...bankAccount,
+    depositReferenceCode,
+  }
+}
+
+export const $BankAccount = domain.createStore<JibrelBankAccount | null>(null)
+
+forward({
+  from: $Investment.map(transformToBankAccount),
+  to: $BankAccount
 })

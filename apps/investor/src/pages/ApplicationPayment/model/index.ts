@@ -9,4 +9,5 @@ export {
   // stores
   $IsLoading,
   $Investment,
+  $BankAccount
 } from './model'

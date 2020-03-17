@@ -11,34 +11,17 @@ import {
 
 import style from './style.scss'
 
-import { $Investment } from '../../model/model'
+import {
+  $BankAccount,
+} from '../../model'
 
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
-import { JibrelBankAccount } from 'store/types/user'
-
-import { InvestApplicationStore } from '../../model'
-
-
-function transformToBankAccount(investmentData: InvestApplicationStore): JibrelBankAccount | void {
-  if (investmentData === null) {
-    return
-  }
-
-  const { bankAccount, depositReferenceCode } = investmentData
-
-  return {
-    ...bankAccount,
-    depositReferenceCode,
-  }
-}
-
 const WireTransfer: React.FunctionComponent = () => {
   const i18n = useI18n()
-  const investmentStore = useStore($Investment)
-  const data = transformToBankAccount(investmentStore)
+  const bankAccountData = useStore($BankAccount)
 
-  if (data === undefined) {
+  if (bankAccountData === null) {
     // TODO: Woops, something went wrong
     return null
   }
@@ -108,43 +91,43 @@ const WireTransfer: React.FunctionComponent = () => {
             <div className={style.label}>
               {i18n._('ApplicationPayment.WireTransfer.details.bankAccountHolderName.title')}
             </div>
-            <div className={style.value}>{data.holderName}</div>
+            <div className={style.value}>{bankAccountData.holderName}</div>
           </div>
           <div className={style.item}>
             <div className={style.label}>
               {i18n._('ApplicationPayment.WireTransfer.details.iban.title')}
             </div>
-            <div className={style.value}>{data.ibanNumber}</div>
+            <div className={style.value}>{bankAccountData.ibanNumber}</div>
           </div>
           <div className={style.item}>
             <div className={style.label}>
               {i18n._('ApplicationPayment.WireTransfer.details.accountNumber.title')}
             </div>
-            <div className={style.value}>{data.accountNumber}</div>
+            <div className={style.value}>{bankAccountData.accountNumber}</div>
           </div>
           <div className={style.item}>
             <div className={style.label}>
               {i18n._('ApplicationPayment.WireTransfer.details.bankName.title')}
             </div>
-            <div className={style.value}>{data.bankName}</div>
+            <div className={style.value}>{bankAccountData.bankName}</div>
           </div>
           <div className={style.item}>
             <div className={style.label}>
               {i18n._('ApplicationPayment.WireTransfer.details.bankBranchAddress.title')}
             </div>
-            <div className={style.value}>{data.branchAddress}</div>
+            <div className={style.value}>{bankAccountData.branchAddress}</div>
           </div>
           <div className={style.item}>
             <div className={style.label}>
               {i18n._('ApplicationPayment.WireTransfer.details.bicSwiftCode.title')}
             </div>
-            <div className={style.value}>{data.swiftCode}</div>
+            <div className={style.value}>{bankAccountData.swiftCode}</div>
           </div>
           <div className={style.item}>
             <div className={style.label}>
               {i18n._('ApplicationPayment.WireTransfer.details.depositOrderId.title')}
             </div>
-            <div className={style.value}>{data.depositReferenceCode}</div>
+            <div className={style.value}>{bankAccountData.depositReferenceCode}</div>
           </div>
         </div>
       </Grid.Item>
@@ -152,4 +135,4 @@ const WireTransfer: React.FunctionComponent = () => {
   )
 }
 
-export default WireTransfer
+export default React.memo(WireTransfer)
