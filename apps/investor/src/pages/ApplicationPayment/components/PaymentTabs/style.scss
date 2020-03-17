@@ -4,6 +4,10 @@
 
 .tabs {
   margin-bottom: 48px;
+
+  @media print {
+    display: none;
+  }
 }
 
 .tab {
