@@ -3,16 +3,19 @@ import {
   forward,
 } from 'effector'
 
+import { AxiosResponse } from 'axios'
+import { APIResponse } from 'store/types/api'
 import { InvestApplication } from 'store/types/invest'
 import { JibrelBankAccount } from 'store/types/user'
 
 import axios from 'store/axios'
-import { unpackAxiosResponse } from 'utils/axios'
 
 import {
   InvestApplicationStore,
   APIResponseRetrieveInvestmentApplication,
 } from './types'
+
+const unpackAxiosResponse = <T>(response: AxiosResponse<APIResponse<T>>): T => response.data.data
 
 export const domain = createDomain('InvestmentPayment')
 

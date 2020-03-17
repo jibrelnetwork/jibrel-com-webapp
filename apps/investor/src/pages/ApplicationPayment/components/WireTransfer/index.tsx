@@ -42,7 +42,6 @@ const WireTransfer: React.FunctionComponent = () => {
         </div>
       </Grid.Item>
       <Grid.Item
-        component={Grid.Container}
         xl={6}
         l={6}
         m={4}
@@ -53,6 +52,7 @@ const WireTransfer: React.FunctionComponent = () => {
           m={8}
           l={12}
           xl={12}
+          className={style.button}
         >
           <BigButton
             component='button'
@@ -67,6 +67,7 @@ const WireTransfer: React.FunctionComponent = () => {
           m={8}
           l={12}
           xl={12}
+          className={style.button}
         >
           <BigButton
             component='a'
