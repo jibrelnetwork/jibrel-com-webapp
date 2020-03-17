@@ -2,18 +2,16 @@ import {
   createDomain,
   forward,
 } from 'effector'
-import { AxiosResponse } from 'axios'
 
 import { InvestApplication } from 'store/types/invest'
 
 import axios from 'store/axios'
+import { unpackAxiosResponse } from 'utils/axios'
 
-import { APIResponse } from 'store/types/api'
 import {
+  InvestApplicationStore,
   APIResponseRetrieveInvestmentApplication,
 } from './types'
-
-const unpackAxiosResponse = <T>(response: AxiosResponse<APIResponse<T>>): T => response.data.data
 
 export const domain = createDomain('InvestmentPayment')
 
@@ -26,7 +24,7 @@ export const fetchInvestmentFx = domain.createEffect<
       .then(unpackAxiosResponse)
 })
 
-export const $Investment = domain.createStore<InvestApplication | null>(null)
+export const $Investment = domain.createStore<InvestApplicationStore>(null)
   .on(fetchInvestmentFx.doneData, (state, payload) => payload)
 
 export const setIsLoading = domain.createEvent<boolean>()

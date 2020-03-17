@@ -1,29 +1,47 @@
 import React from 'react'
+import { useStore } from 'effector-react'
 
+import { useI18n } from '@jibrelcom/i18n'
 import {
   BigButton,
   Grid,
   FormTitle,
   Warning
 } from '@jibrelcom/ui'
+
+import style from './style.scss'
+
+import { $Investment } from '../../model/model'
+
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
 
 import { JibrelBankAccount } from 'store/types/user'
 
-import style from './style.scss'
+import { InvestApplicationStore } from '../../model'
 
-interface WireTransferProps {
-  investmentApplicationId: string;
+
+function transformToBankAccount(investmentData: InvestApplicationStore): JibrelBankAccount | void {
+  if (investmentData === null) {
+    return
+  }
+
+  const { bankAccount, depositReferenceCode } = investmentData
+
+  return {
+    ...bankAccount,
+    depositReferenceCode,
+  }
 }
 
-const WireTransfer: React.FC<WireTransferProps> = ({
-  investmentApplicationId,
-}) => {
-  React.useEffect(() => {
+const WireTransfer: React.FunctionComponent = () => {
+  const i18n = useI18n()
+  const investmentStore = useStore($Investment)
+  const data = transformToBankAccount(investmentStore)
 
-  }, [investmentApplicationId])
-
-  const data: JibrelBankAccount = {}
+  if (data === undefined) {
+    // TODO: Woops, something went wrong
+    return null
+  }
 
   return (
     <Grid.Container
@@ -35,36 +53,49 @@ const WireTransfer: React.FC<WireTransferProps> = ({
         m={4}
       >
         <Warning className={style.warning}>
-          Please make sure to add your Deposit Order ID in the Purpose of Payment,
-          Notes, Reference, or Remarks sections.
+          {i18n._('ApplicationPayment.WireTransfer.details.warning.text')}
         </Warning>
         <div className={style.details}>
           <div className={style.item}>
-            <div className={style.label}>Bank Account Holder Name</div>
+            <div className={style.label}>
+              {i18n._('ApplicationPayment.WireTransfer.details.bankAccountHolderName.title')}
+            </div>
             <div className={style.value}>{data.holderName}</div>
           </div>
           <div className={style.item}>
-            <div className={style.label}>IBAN</div>
+            <div className={style.label}>
+              {i18n._('ApplicationPayment.WireTransfer.details.iban.title')}
+            </div>
             <div className={style.value}>{data.ibanNumber}</div>
           </div>
           <div className={style.item}>
-            <div className={style.label}>Account Number</div>
+            <div className={style.label}>
+              {i18n._('ApplicationPayment.WireTransfer.details.accountNumber.title')}
+            </div>
             <div className={style.value}>{data.accountNumber}</div>
           </div>
           <div className={style.item}>
-            <div className={style.label}>Bank Name</div>
+            <div className={style.label}>
+              {i18n._('ApplicationPayment.WireTransfer.details.bankName.title')}
+            </div>
             <div className={style.value}>{data.bankName}</div>
           </div>
           <div className={style.item}>
-            <div className={style.label}>Bank Branch Address</div>
+            <div className={style.label}>
+              {i18n._('ApplicationPayment.WireTransfer.details.bankBranchAddress.title')}
+            </div>
             <div className={style.value}>{data.branchAddress}</div>
           </div>
           <div className={style.item}>
-            <div className={style.label}>BIC/SWIFT Code</div>
+            <div className={style.label}>
+              {i18n._('ApplicationPayment.WireTransfer.details.bicSwiftCode.title')}
+            </div>
             <div className={style.value}>{data.swiftCode}</div>
           </div>
           <div className={style.item}>
-            <div className={style.label}>Deposit Order ID</div>
+            <div className={style.label}>
+              {i18n._('ApplicationPayment.WireTransfer.details.depositOrderId.title')}
+            </div>
             <div className={style.value}>{data.depositReferenceCode}</div>
           </div>
         </div>
@@ -74,18 +105,21 @@ const WireTransfer: React.FC<WireTransferProps> = ({
         xl={6}
         l={6}
         m={4}
+        className={style.actions}
       >
         <Grid.Item>
-          <FormTitle>Jibrel Bank Account Details</FormTitle>
+          <FormTitle>{i18n._('ApplicationPayment.WireTransfer.title')}</FormTitle>
           <div>
-            Final step! From this moment we will wait for your payment. And as soon as we receive it, we will notify you, and your application will become approved.
+            {i18n._('ApplicationPayment.WireTransfer.subtext')}
           </div>
+        </Grid.Item>
+        <Grid.Item>
           <BigButton
             component='button'
             onClick={window.print}
             type='button'
           >
-            Download Details
+            {i18n._('ApplicationPayment.WireTransfer.actions.download')}
           </BigButton>
         </Grid.Item>
         <Grid.Item>
@@ -94,7 +128,7 @@ const WireTransfer: React.FC<WireTransferProps> = ({
             href='/'
             variant={BigButtonVariant.secondary}
           >
-            OK, I GOT IT
+            {i18n._('ApplicationPayment.WireTransfer.actions.skip')}
           </BigButton>
         </Grid.Item>
       </Grid.Item>

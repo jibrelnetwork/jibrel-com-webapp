@@ -51,6 +51,12 @@
   color: $color-black;
 }
 
+.actions {
+  @include flex-column;
+
+  align-items: flex-start;
+}
+
 .actions,
 .back,
 .note,

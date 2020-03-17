@@ -46,7 +46,7 @@ const ApplicationPayment: React.FunctionComponent<ApplicationPaymentProps> = ({
           title={i18n._('ApplicationPayment.Methods.transfer.title')}
           icon='ic_globe_24'
         >
-          <WireTransfer investmentApplicationId={id} />
+          <WireTransfer />
         </PaymentTabs.Item>
         <PaymentTabs.Item
           id='card'
