@@ -51,6 +51,54 @@ const WireTransfer: React.FunctionComponent = () => {
         xl={6}
         l={6}
         m={4}
+        className={style.header}
+      >
+        <FormTitle>{i18n._('ApplicationPayment.WireTransfer.title')}</FormTitle>
+        <div>
+          {i18n._('ApplicationPayment.WireTransfer.subtext')}
+        </div>
+      </Grid.Item>
+      <Grid.Item
+        component={Grid.Container}
+        xl={6}
+        l={6}
+        m={4}
+        className={style.actions}
+      >
+        <Grid.Item
+          s={4}
+          m={8}
+          l={12}
+          xl={12}
+        >
+          <BigButton
+            component='button'
+            onClick={window.print}
+            type='button'
+          >
+            {i18n._('ApplicationPayment.WireTransfer.actions.download')}
+          </BigButton>
+        </Grid.Item>
+        <Grid.Item
+          s={4}
+          m={8}
+          l={12}
+          xl={12}
+        >
+          <BigButton
+            component='a'
+            href='/'
+            variant={BigButtonVariant.secondary}
+          >
+            {i18n._('ApplicationPayment.WireTransfer.actions.skip')}
+          </BigButton>
+        </Grid.Item>
+      </Grid.Item>
+      <Grid.Item
+        xl={6}
+        l={6}
+        m={4}
+        className={style.detailsWrapper}
       >
         <Warning className={style.warning}>
           {i18n._('ApplicationPayment.WireTransfer.details.warning.text')}
@@ -99,38 +147,6 @@ const WireTransfer: React.FunctionComponent = () => {
             <div className={style.value}>{data.depositReferenceCode}</div>
           </div>
         </div>
-      </Grid.Item>
-      <Grid.Item
-        component={Grid.Container}
-        xl={6}
-        l={6}
-        m={4}
-        className={style.actions}
-      >
-        <Grid.Item>
-          <FormTitle>{i18n._('ApplicationPayment.WireTransfer.title')}</FormTitle>
-          <div>
-            {i18n._('ApplicationPayment.WireTransfer.subtext')}
-          </div>
-        </Grid.Item>
-        <Grid.Item>
-          <BigButton
-            component='button'
-            onClick={window.print}
-            type='button'
-          >
-            {i18n._('ApplicationPayment.WireTransfer.actions.download')}
-          </BigButton>
-        </Grid.Item>
-        <Grid.Item>
-          <BigButton
-            component='a'
-            href='/'
-            variant={BigButtonVariant.secondary}
-          >
-            {i18n._('ApplicationPayment.WireTransfer.actions.skip')}
-          </BigButton>
-        </Grid.Item>
       </Grid.Item>
     </Grid.Container>
   )

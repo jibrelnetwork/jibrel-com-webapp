@@ -7,9 +7,12 @@ declare namespace StyleScssModule {
     centered: string;
     column: string;
     details: string;
+    "details-wrapper": string;
+    detailsWrapper: string;
     download: string;
     error: string;
     grid: string;
+    header: string;
     item: string;
     "l-1": string;
     "l-10": string;
