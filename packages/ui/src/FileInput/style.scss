@@ -1,3 +1,4 @@
+@import '../theme/fonts';
 @import '../theme/colors';
 @import '../utils/scss/iconColor';
 
@@ -16,24 +17,6 @@
   }
 
   &.active {
-    /*
-    .label {
-      color: $color-blue;
-    }
-
-    .border {
-      border-color: transparent;
-    }
-
-    .frame {
-      border-color: $color-blue;
-    }
-
-    .icon {
-      @include icon-color($color-blue);
-    }
-    */
-
     .button {
       z-index: 1;
     }
@@ -96,12 +79,17 @@
 
 .name,
 .placeholder {
+  @include font-body-l;
+
   position: absolute;
   top: 0;
   left: 0;
   padding: 29px 16px 0 16px;
-  font-size: 18px;
-  line-height: 140%;
+
+  [dir=rtl] & {
+    right: 0;
+    left: initial;
+  }
 }
 
 .name {
@@ -111,15 +99,20 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+
+  [dir=rtl] & {
+    padding-left: 180px;
+    padding-right: 16px;
+  }
 }
 
 .size {
+  @include font-body-s;
+
   position: absolute;
   top: 0;
   right: 0;
   padding: 21px 56px 0 56px;
-  font-size: 15px;
-  line-height: 140%;
   color: $color-black-40;
 }
 
@@ -135,6 +128,14 @@
   padding: 20px 16px;
   background: none;
   border: none;
+}
+
+.size,
+.button {
+  [dir=rtl] & {
+    left: 0;
+    right: initial;
+  }
 }
 
 .icon {

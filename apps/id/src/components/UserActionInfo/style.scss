@@ -1,4 +1,6 @@
-@import '~@jibrelcom/ui/src/theme';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
 @import '~@jibrelcom/ui/src/utils/scss/iconColor';
 
 .main {
@@ -27,12 +29,9 @@
 }
 
 .title {
+  @include font-h2;
+
   margin-top: 32px;
-  font-weight: 800;
-  font-size: 32px;
-  font-style: normal;
-  line-height: 38px;
-  text-align: left;
   color: $color-black;
 }
 

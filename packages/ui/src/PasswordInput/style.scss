@@ -23,15 +23,14 @@ $indicator-field-padding: 124px;
   [dir=rtl] & {
     .label,
     .input {
+      margin-right: 0;
       margin-left: $password-field-padding;
-      margin-right: $standard-field-padding;
     }
 
     &.padding {
       .label,
       .input {
         margin-left: $indicator-field-padding;
-        margin-right: $standard-field-padding;
       }
     }
   }
