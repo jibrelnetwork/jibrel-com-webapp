@@ -1,15 +1,14 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    action: string;
     actions: string;
+    body: string;
     button: string;
     centered: string;
-    choice: string;
-    chromeframe: string;
     column: string;
-    content: string;
+    "details-wrapper": string;
+    detailsWrapper: string;
     grid: string;
-    info: string;
+    header: string;
     "l-1": string;
     "l-10": string;
     "l-11": string;
@@ -66,8 +65,7 @@ declare namespace StyleScssModule {
     s6: string;
     s7: string;
     s8: string;
-    support: string;
-    title: string;
+    warning: string;
     "xl-1": string;
     "xl-10": string;
     "xl-11": string;

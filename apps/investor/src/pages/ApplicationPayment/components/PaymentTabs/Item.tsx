@@ -62,13 +62,14 @@ export const Item: React.FunctionComponent<ItemProps> = ({
     )
   }
 
+  if (!isSelected) {
+    return null
+  }
+
   return (
     <section
       id={id}
-      className={cc([
-        style.section,
-        isSelected && style.isSelected,
-      ])}
+      className={style.section}
     >
       {children}
     </section>

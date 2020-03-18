@@ -33,7 +33,20 @@
 }
 
 .left {
+  order: 1;
   transform: rotate(180deg);
+
+  [dir=rtl] & {
+    order: 3;
+  }
+}
+
+.right {
+  order: 3;
+
+  [dir=rtl] & {
+    order: 1;
+  }
 }
 
 .icon {
@@ -78,6 +91,7 @@
 }
 
 .text {
+  order: 2;
   flex: 1 1 auto;
   text-decoration: underline;
   text-decoration-color: transparent;
