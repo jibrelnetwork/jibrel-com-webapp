@@ -1,11 +1,16 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    "amount-title": string;
-    "amount-value": string;
-    amountTitle: string;
-    amountValue: string;
-    back: string;
-    investment: string;
+    "card-icon": string;
+    "card-icons": string;
+    cardIcon: string;
+    cardIcons: string;
+    error: string;
+    "error-icon": string;
+    errorIcon: string;
+    loader: string;
+    status: string;
+    success: string;
+    title: string;
   }
 }
 
