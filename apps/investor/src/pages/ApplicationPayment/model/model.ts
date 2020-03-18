@@ -80,7 +80,7 @@ export const $PageInitStatus = combine<PageInitStatusDependencies, InitStatus>(
       return InitStatus.Loading
     }
 
-    if(!investment || investment.status !== InvestmentStatus.Pending) {
+    if(investment === null || investment.status !== InvestmentStatus.Pending) {
       return InitStatus.Error
     }
 
