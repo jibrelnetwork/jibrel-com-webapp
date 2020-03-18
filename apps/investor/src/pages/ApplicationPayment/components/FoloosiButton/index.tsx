@@ -5,6 +5,7 @@ import {
   useStore,
 } from 'effector-react'
 import { forward } from 'effector'
+import isNil from 'lodash-es/isNil'
 
 import {
   BigButton,
@@ -105,7 +106,7 @@ const FoloosiButton: React.FC<FoloosiButtonProps> = ({
   const script = useStore($FoloosiScript)
 
   const clickHandler = (): void => {
-    if (script === null || payment === null || !payment.charge) {
+    if (script === null || payment === null || isNil(payment.charge)) {
       return
     }
 
