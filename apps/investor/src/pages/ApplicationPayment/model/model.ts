@@ -54,9 +54,4 @@ function transformToBankAccount(investmentData: InvestApplicationStore): JibrelB
   }
 }
 
-export const $BankAccount = domain.createStore<JibrelBankAccount | null>(null)
-
-forward({
-  from: $Investment.map(transformToBankAccount),
-  to: $BankAccount
-})
+export const $BankAccount = $Investment.map(transformToBankAccount)
