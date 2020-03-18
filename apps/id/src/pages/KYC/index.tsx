@@ -140,7 +140,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
           >
             <BigButton
               component='a'
-              href={`${settings.HOST_CMS}/${languageCode}`}
+              href={`${settings.CMS_ORIGIN}/${languageCode}`}
               variant={BigButtonVariant.secondary}
               className={style.action}
             >

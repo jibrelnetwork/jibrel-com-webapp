@@ -1,12 +1,9 @@
 import React from 'react'
 import cc from 'classcat'
-import { Trans } from '@lingui/macro'
-import { useI18n } from '@jibrelcom/i18n'
 import groupBy from 'lodash-es/groupBy'
-
-import {
-  Loader,
-} from '@jibrelcom/ui'
+import { Trans } from '@lingui/macro'
+import { Loader } from '@jibrelcom/ui'
+import { useI18n } from '@jibrelcom/i18n'
 
 import {
   Investment,
@@ -19,7 +16,7 @@ import Waitlist from '../Waitlist'
 import InvestmentCard from '../InvestmentCard'
 
 export interface InvestmentsProps {
-  investments: Investment[];
+  investments?: Investment[];
   waitlist?: OfferingSubscription[];
   isWaitlistLoading: boolean;
 }

@@ -13,7 +13,7 @@ const Invested: React.FunctionComponent = () => {
     <CoreLayout>
       <PageWithHero
         imgSrc={heroImage}
-        href={settings.HOST_CMS}
+        href={settings.CMS_ORIGIN}
         text={i18n._('Invested.text')}
         title={i18n._('Invested.title')}
         buttonLabel={i18n._('Invested.action.back')}

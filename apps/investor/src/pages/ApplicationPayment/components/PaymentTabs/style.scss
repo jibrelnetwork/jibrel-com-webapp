@@ -4,6 +4,10 @@
 
 .tabs {
   margin-bottom: 48px;
+
+  @media print {
+    display: none;
+  }
 }
 
 .tab {
@@ -74,9 +78,4 @@
 
 .section {
   margin-bottom: 64px;
-  display: none;
-
-  &.is-selected {
-    display: block;
-  }
 }

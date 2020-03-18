@@ -18,7 +18,7 @@ import { formatCurrency } from 'utils/formatters'
 import {
   $IsLoading,
   $Investment,
-} from '../model'
+} from '../../model'
 
 import style from './style.scss'
 
@@ -35,7 +35,7 @@ const Investment: React.FunctionComponent = () => {
   if (investment === null) {
     return (
       <NotFound
-        host={settings.HOST_CMS}
+        host={settings.CMS_ORIGIN}
       />
     )
   }

@@ -12,7 +12,7 @@ export interface NotFoundProps {
 const NotFoundEnhanced: React.FunctionComponent<NotFoundProps> = ({ requestProfile }) => (
   <NotFound
     requestProfile={requestProfile}
-    host={settings.HOST_CMS}
+    host={settings.CMS_ORIGIN}
   />
 )
 

@@ -21,7 +21,7 @@ const Pending: React.FunctionComponent = () => {
         text={i18n._('Pending.text')}
         title={i18n._('Pending.title')}
         buttonLabel={i18n._('Pending.action.back')}
-        href={`${settings.HOST_CMS}/${languageCode}`}
+        href={`${settings.CMS_ORIGIN}/${languageCode}`}
       />
     </CoreLayout>
   )
