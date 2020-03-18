@@ -1,0 +1,54 @@
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+
+.title {
+  @include font-h2;
+  margin: 0 0 24px;
+}
+
+.status {
+  margin-bottom: 64px;
+}
+
+.loader {
+  padding: 37px 0;
+  background: $color-black-5;
+  border-radius: 24px;
+}
+
+.error {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: $color-red-10;
+  border-radius: 24px;
+  padding: 24px;
+  color: $color-black;
+  @include font-caption;
+}
+
+.error-icon {
+  @include icon-color($color-red);
+  margin-right: 24px;
+}
+
+.success {
+  background: $color-black-5;
+  border-radius: 24px;
+  padding: 24px;
+  color: $color-black-60;
+  @include font-caption;
+}
+
+.card-icons {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  margin: 0 -12px 12px;
+}
+
+.card-icon {
+  margin: 0 12px 12px;
+}
+

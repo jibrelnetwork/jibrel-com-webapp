@@ -1,29 +1,15 @@
 import { APIResponse } from 'store/types/api'
 import { InvestApplication } from 'store/types/invest'
-
-export enum CardPaymentOperationStatus {
-  waitingPayment = 'waiting_payment',
-  processing = 'processing',
-  actionRequired = 'action_required',
-  completed = 'completed',
-  canceled = 'canceled',
-  failed = 'failed',
-}
-
-export interface CardPaymentOperation {
-  uuid: string;
-  amount: string;
-  status: CardPaymentOperationStatus;
-  redirect?: string;
-}
-
-export interface SubmitCardTokenData {
-  investmentId: string;
-  cardToken: string;
-}
-
-export type APIResponseDepositCardInvestmentApplication = APIResponse<CardPaymentOperation>
+import { DepositOperation } from 'store/types/operations'
 
 export type APIResponseRetrieveInvestmentApplication = APIResponse<InvestApplication>
 
 export type InvestApplicationStore = InvestApplication | null
+
+export type APIResponsePaymentsOperationDetails = APIResponse<DepositOperation>
+
+export enum InitStatus {
+  Loading = 'loading',
+  Success = 'success',
+  Error = 'error',
+}
