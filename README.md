@@ -76,6 +76,8 @@ Required server run environment variables:
     - Example for production: `//api.jibrel.com`
 - `CSP_CONNECT_SRC` = `connect-src` part for Content-Security-Policy header. See [connect-src on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/connect-src) for details.
     - Example for production: `*.jibrel.com` 
+- `CSP_FRAME_SRC` = `frame-src` part for Content-Security-Policy header. See [frame-src on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/frame-src) for details.
+    - For production is set to empty value 
 - `CSP_IMG_SRC` = `img-src` part for Content-Security-Policy header. See [img-src on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/img-src) for details.
     - Example for production: `jibrel.com` 
 - `CSP_STYLE_SRC` = `style-src` part for Content-Security-Policy header. See [style-src on MDN](https://developer.mozilla.org/en-US/docs/Web/HTTP/Headers/Content-Security-Policy/style-src) for details.
