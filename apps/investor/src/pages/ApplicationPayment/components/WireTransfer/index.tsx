@@ -38,11 +38,12 @@ const WireTransfer: React.FunctionComponent = () => {
         className={style.header}
       >
         <FormTitle>{i18n._('ApplicationPayment.WireTransfer.title')}</FormTitle>
-        <div>
+        <p className={style.subtext}>
           {i18n._('ApplicationPayment.WireTransfer.subtext')}
-        </div>
+        </p>
       </Grid.Item>
       <Grid.Item
+        component={Grid.Container}
         xl={6}
         l={6}
         m={4}
