@@ -1,8 +1,15 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    content: string;
-    icon: string;
-    main: string;
+    "card-icon": string;
+    "card-icons": string;
+    cardIcon: string;
+    cardIcons: string;
+    error: string;
+    "error-icon": string;
+    errorIcon: string;
+    loader: string;
+    status: string;
+    success: string;
     title: string;
   }
 }

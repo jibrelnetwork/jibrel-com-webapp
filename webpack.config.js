@@ -36,6 +36,7 @@ const create = (dirname) => {
     PUBLIC: path.resolve(dirname, 'src/public'),
     PACKAGES: path.resolve(__dirname, 'packages'),
     PUBLIC_URL_PATH: '/',
+    STATIC_URL_PATH: '/static/',
     PUBLIC_URL: '',
   }
 
@@ -104,7 +105,7 @@ const create = (dirname) => {
               loader: 'svg-sprite-loader',
               options: {
                 extract: true,
-                spriteFilename: '[hash:8].sprite-icons.svg',
+                spriteFilename: 'static/[hash:8].sprite-icons.svg',
               },
             },
             {
@@ -139,7 +140,7 @@ const create = (dirname) => {
               loader: 'svg-sprite-loader',
               options: {
                 extract: true,
-                spriteFilename: '[hash:8].sprite-colored.svg',
+                spriteFilename: 'static/[hash:8].sprite-colored.svg',
               },
             },
             {
@@ -364,7 +365,9 @@ const create = (dirname) => {
         },
       ]),
 
-      new SpriteLoaderPlugin(),
+      new SpriteLoaderPlugin({
+        publicPath: PATHS.STATIC_URL_PATH,
+      }),
 
       // we pack files more than 1kb with gzip in advance
       // to prevent nginx from converting it in run-time

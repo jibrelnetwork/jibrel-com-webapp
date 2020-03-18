@@ -105,6 +105,10 @@
   form {
     width: 100%;
   }
+
+  [dir=rtl] & {
+    background-position: top left;
+  }
 }
 
 .close {

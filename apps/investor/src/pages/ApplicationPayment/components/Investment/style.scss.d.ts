@@ -6,7 +6,6 @@ declare namespace StyleScssModule {
     amountValue: string;
     back: string;
     investment: string;
-    loader: string;
   }
 }
 

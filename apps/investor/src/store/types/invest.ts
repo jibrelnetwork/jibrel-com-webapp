@@ -90,11 +90,22 @@ export interface InvestFormFields {
   isRiskAgreed: boolean;
 }
 
+export enum InvestmentStatus {
+  Draft = 'draft',
+  Pending = 'pending',
+  Hold = 'hold',
+  Completed = 'completed',
+  Canceled = 'canceled',
+  Error = 'error',
+}
+
 export interface InvestApplication {
   uuid: string;
+  status: InvestmentStatus;
   amount: string;
   isAgreedRisks: boolean;
   bankAccount: JibrelBankAccount;
+  depositId?: string;
   depositReferenceCode: string;
   createdAt: Date;
   updatedAt: Date;

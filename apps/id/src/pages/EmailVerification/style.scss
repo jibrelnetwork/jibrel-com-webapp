@@ -1,3 +1,4 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
 @import '~@jibrelcom/ui/src/theme/colors';
 
 .info {
@@ -28,8 +29,7 @@
 
 .error,
 .countdown {
-  font-size: 15px;
-  line-height: 140%;
+  @include font-body-s;
 
   a {
     color: $color-blue;

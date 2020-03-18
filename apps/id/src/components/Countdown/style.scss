@@ -1,15 +1,40 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
 @import '~@jibrelcom/ui/src/theme/colors';
 
-.countdown {
+.main {
+  @include font-body-s;
+
   display: inline-block;
-  font-size: 15px;
-  line-height: 140%;
   text-align: center;
   color: $color-black;
 }
 
-.number {
-  margin-left: 4px;
+.fraction,
+.value,
+.label {
+  display: inline-block;
+}
+
+.min,
+.value {
+  order: 1;
+
+  [dir=rtl] & {
+    order: 2;
+  }
+}
+
+.sec,
+.label {
+  order: 2;
+
+  [dir=rtl] & {
+    order: 1;
+  }
+}
+
+.value {
+  margin: 0 4px;
   font-weight: 600;
   color: $color-blue;
 }

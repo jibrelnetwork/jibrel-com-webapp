@@ -2,7 +2,6 @@ declare namespace StyleScssModule {
   export interface IStyleScss {
     action: string;
     actions: string;
-    background: string;
     button: string;
     centered: string;
     choice: string;
@@ -10,7 +9,6 @@ declare namespace StyleScssModule {
     column: string;
     content: string;
     grid: string;
-    income: string;
     info: string;
     "l-1": string;
     "l-10": string;
@@ -52,8 +50,6 @@ declare namespace StyleScssModule {
     m6: string;
     m7: string;
     m8: string;
-    personal: string;
-    residency: string;
     "s-1": string;
     "s-2": string;
     "s-3": string;

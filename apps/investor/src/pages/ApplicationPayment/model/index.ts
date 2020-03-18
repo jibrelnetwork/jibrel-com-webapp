@@ -1,13 +1,22 @@
 // types
 export { InvestApplication } from 'store/types/invest'
-export { CardPaymentOperation, InvestApplicationStore } from './types'
+export {
+  InvestApplicationStore,
+  InitStatus,
+} from './types'
+export { DepositOperation } from 'store/types/operations'
 
 export {
   // events
-  fetchInvestmentFx,
+  init,
+  foloosiInit,
 
   // stores
-  $IsLoading,
+  $PageInitStatus,
   $Investment,
-  $BankAccount
+  $BankAccount,
+  $FoloosiInitStatus,
+  $FoloosiScript,
+  $FoloosiPayment,
+  $InvestmentAmount,
 } from './model'
