@@ -20,11 +20,7 @@
 }
 
 .subtext {
-  @include font-body-s;
-
-  @include screen('>small') {
-    @include font-body-l;
-  }
+  @include font-body;
 }
 
 .details-wrapper {
