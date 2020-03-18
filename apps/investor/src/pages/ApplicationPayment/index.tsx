@@ -7,8 +7,9 @@ import { useI18n } from '@jibrelcom/i18n'
 import CoreLayout from 'layouts/CoreLayout'
 
 import { fetchInvestmentFx } from './model'
-import Investment from './Investment'
-import PaymentTabs from './PaymentTabs'
+import Investment from './components/Investment'
+import PaymentTabs from './components/PaymentTabs'
+import WireTransfer from './components/WireTransfer'
 
 interface ApplicationPaymentProps {
   id: string;
@@ -45,7 +46,7 @@ const ApplicationPayment: React.FunctionComponent<ApplicationPaymentProps> = ({
           title={i18n._('ApplicationPayment.Methods.transfer.title')}
           icon='ic_globe_24'
         >
-          TODO: wire transfer
+          <WireTransfer />
         </PaymentTabs.Item>
         <PaymentTabs.Item
           id='card'

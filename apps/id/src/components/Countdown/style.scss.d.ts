@@ -1,7 +1,11 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
-    countdown: string;
-    number: string;
+    fraction: string;
+    label: string;
+    main: string;
+    min: string;
+    sec: string;
+    value: string;
   }
 }
 
