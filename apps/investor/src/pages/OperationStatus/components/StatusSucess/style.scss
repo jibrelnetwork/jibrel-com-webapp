@@ -1,6 +1,7 @@
 @import '~@jibrelcom/ui/src/theme/fonts';
 @import '~@jibrelcom/ui/src/theme/media';
 @import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
 
 .status-container {
   @include media('>xsmall') {
@@ -8,15 +9,31 @@
   }
 }
 
+.header {
+  @include flex-column-center;
+}
+
 .header-image {
-  text-align: center;
-  min-height: 192px;
-  margin-bottom: 24px;
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding-top: 100%;
+  height: 0;
 
   @include screen('>xsmall') {
-    min-height: 260px;
-    max-height: 344px;
-    margin-bottom: 0;
+    padding-top: 50%;
+  }
+
+  .success {
+    background-image: url('../../../../public/images/pic_status_circle@2x.png');
+  }
+
+  .error {
+    background-image: url('../../../../public/images/pic_status_cross@2x.png');
+  }
+
+  .pending {
+    background-image: url('../../../../public/images/pic_status_clock@2x.png');
   }
 }
 
@@ -26,6 +43,10 @@
   @include screen('>small') {
     margin-bottom: 64px;
   }
+}
+
+.details {
+  background-color: $color-green-10;
 }
 
 .subtext {

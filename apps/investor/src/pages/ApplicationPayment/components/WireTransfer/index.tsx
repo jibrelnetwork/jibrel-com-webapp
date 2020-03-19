@@ -3,20 +3,52 @@ import { useStore } from 'effector-react'
 import { useI18n } from '@jibrelcom/i18n'
 import {
   BigButton,
+  DetailsCard,
   Grid,
   FormTitle,
   Warning
 } from '@jibrelcom/ui'
+import { combineLabelsWithData } from '@jibrelcom/ui/src/DetailsCard/combineLabelsWithData'
 
 import style from './style.scss'
-
-import BankAccountDetails from '../BankAccountDetails'
 
 import {
   $BankAccount,
 } from '../../model'
 
+import { JibrelBankAccount } from 'store/types/user'
 import { BigButtonVariant } from '@jibrelcom/ui/src/BigButton/types'
+
+const DETAILS_LABEL_MAP: [string, keyof JibrelBankAccount][] = [
+  [
+    'ApplicationPayment.WireTransfer.details.bankAccountHolderName.title',
+    'holderName'
+  ],
+  [
+    'ApplicationPayment.WireTransfer.details.iban.title',
+    'ibanNumber'
+  ],
+  [
+    'ApplicationPayment.WireTransfer.details.accountNumber.title',
+    'accountNumber'
+  ],
+  [
+    'ApplicationPayment.WireTransfer.details.bankName.title',
+    'bankName'
+  ],
+  [
+    'ApplicationPayment.WireTransfer.details.bankBranchAddress.title',
+    'branchAddress'
+  ],
+  [
+    'ApplicationPayment.WireTransfer.details.bicSwiftCode.title',
+    'swiftCode'
+  ],
+  [
+    'ApplicationPayment.WireTransfer.details.depositOrderId.title',
+    'depositReferenceCode'
+  ]
+]
 
 const WireTransfer: React.FunctionComponent = () => {
   const i18n = useI18n()
@@ -26,6 +58,8 @@ const WireTransfer: React.FunctionComponent = () => {
     // TODO: Woops, something went wrong
     return null
   }
+
+  const details = combineLabelsWithData<JibrelBankAccount>(DETAILS_LABEL_MAP, bankAccountData)
 
   return (
     <Grid.Container
@@ -89,7 +123,7 @@ const WireTransfer: React.FunctionComponent = () => {
         <Warning className={style.warning}>
           {i18n._('ApplicationPayment.WireTransfer.details.warning.text')}
         </Warning>
-        <BankAccountDetails {...bankAccountData} />
+        <DetailsCard itemList={details} />
       </Grid.Item>
     </Grid.Container>
   )

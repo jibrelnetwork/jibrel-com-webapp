@@ -3,11 +3,10 @@ import { useI18n } from '@jibrelcom/i18n'
 import {
   BigButton,
   BigButtonVariant,
+  DetailsCard,
   FormTitle,
   Grid
 } from '@jibrelcom/ui'
-
-import statusImage from '../../../../public/images/pic_status_circle@2x.png'
 
 import style from './style.scss'
 
@@ -20,11 +19,7 @@ const StatusSuccess: React.FunctionComponent = () => {
       className={style.statusContainer}
     >
       <Grid.Item
-        component='img'
-        className={style.headerImage}
-        src={statusImage}
-        alt=''
-        aria-disabled
+        className={`${style.headerImage} ${style.success}`}
         s={4}
         m={4}
         l={6}
@@ -45,8 +40,13 @@ const StatusSuccess: React.FunctionComponent = () => {
           <p className={style.subtext}>
             {i18n._('OperationStatus.Success.description')}
           </p>
+          <DetailsCard itemList={[]} className={style.details} />
         </div>
-        <div className={style.actions}>
+        <Grid.Item
+          className={style.actions}
+          l={8}
+          xl={8}
+        >
           <BigButton
             className={style.action}
             component='a'
@@ -61,7 +61,7 @@ const StatusSuccess: React.FunctionComponent = () => {
           >
             {i18n._('OperationStatus.actions.backToMain')}
           </BigButton>
-        </div>
+        </Grid.Item>
       </Grid.Item>
     </Grid.Container>
   )

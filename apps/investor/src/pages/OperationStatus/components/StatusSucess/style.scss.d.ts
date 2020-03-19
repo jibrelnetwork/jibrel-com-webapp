@@ -3,11 +3,16 @@ declare namespace StyleScssModule {
     action: string;
     actions: string;
     body: string;
+    details: string;
+    error: string;
+    header: string;
     "header-image": string;
     headerImage: string;
+    pending: string;
     "status-container": string;
     statusContainer: string;
     subtext: string;
+    success: string;
     "success-title": string;
     successTitle: string;
   }
