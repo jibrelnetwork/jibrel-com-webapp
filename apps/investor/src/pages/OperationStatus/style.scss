@@ -1,7 +1,7 @@
-@import '~@jibrelcom/ui/src/theme/fonts';
-@import '~@jibrelcom/ui/src/theme/media';
-@import '~@jibrelcom/ui/src/theme/colors';
-@import '~@jibrelcom/ui/src/utils/scss/flex';
+@import '../../../node_modules/@jibrelcom/ui/src/theme/fonts';
+@import '../../../node_modules/@jibrelcom/ui/src/theme/media';
+@import '../../../node_modules/@jibrelcom/ui/src/theme/colors';
+@import '../../../node_modules/@jibrelcom/ui/src/utils/scss/flex';
 
 .status-container {
   @include media('>xsmall') {
@@ -23,18 +23,18 @@
   @include screen('>xsmall') {
     padding-top: 50%;
   }
+}
 
-  .success {
-    background-image: url('../../../../public/images/pic_status_circle@2x.png');
-  }
+.image-success {
+  background-image: url('../../public/images/pic_status_circle@2x.png');
+}
 
-  .error {
-    background-image: url('../../../../public/images/pic_status_cross@2x.png');
-  }
+.image-error {
+  background-image: url('../../public/images/pic_status_cross@2x.png');
+}
 
-  .pending {
-    background-image: url('../../../../public/images/pic_status_clock@2x.png');
-  }
+.image-pending {
+  background-image: url('../../public/images/pic_status_clock@2x.png');
 }
 
 .body {
@@ -53,8 +53,20 @@
   @include font-body;
 }
 
-.success-title {
+.title {
+  @include font-h1;
+}
+
+.title-success {
   color: $color-green;
+}
+
+.title-error {
+  color:  $color-red;
+}
+
+.title-pending {
+  color: $color-black-60;
 }
 
 .actions {

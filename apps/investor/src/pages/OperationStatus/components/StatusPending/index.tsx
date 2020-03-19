@@ -3,7 +3,6 @@ import { useI18n } from '@jibrelcom/i18n'
 import {
   BigButton,
   BigButtonVariant,
-  DetailsCard,
   FormTitle,
   Grid
 } from '@jibrelcom/ui'
@@ -19,7 +18,7 @@ const StatusSuccess: React.FunctionComponent = () => {
       className={style.statusContainer}
     >
       <Grid.Item
-        className={`${style.headerImage} ${style.imageSuccess}`}
+        className={`${style.headerImage} ${style.imagePending}`}
         s={4}
         m={4}
         l={6}
@@ -34,13 +33,12 @@ const StatusSuccess: React.FunctionComponent = () => {
         <div
           className={style.body}
         >
-          <FormTitle className={`${style.title} ${style.titleSuccess}`}>
-            {i18n._('OperationStatus.Success.title')}
+          <FormTitle className={`${style.title} ${style.titlePending}`}>
+            {i18n._('OperationStatus.Pending.title')}
           </FormTitle>
           <p className={style.subtext}>
-            {i18n._('OperationStatus.Success.description')}
+            {i18n._('OperationStatus.Pending.description')}
           </p>
-          <DetailsCard itemList={[]} className={style.details} />
         </div>
         <Grid.Item
           className={style.actions}

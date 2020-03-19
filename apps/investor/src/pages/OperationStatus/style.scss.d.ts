@@ -4,17 +4,25 @@ declare namespace StyleScssModule {
     actions: string;
     body: string;
     details: string;
-    error: string;
     header: string;
     "header-image": string;
     headerImage: string;
-    pending: string;
+    "image-error": string;
+    "image-pending": string;
+    "image-success": string;
+    imageError: string;
+    imagePending: string;
+    imageSuccess: string;
     "status-container": string;
     statusContainer: string;
     subtext: string;
-    success: string;
-    "success-title": string;
-    successTitle: string;
+    title: string;
+    "title-error": string;
+    "title-pending": string;
+    "title-success": string;
+    titleError: string;
+    titlePending: string;
+    titleSuccess: string;
   }
 }
 

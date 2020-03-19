@@ -3,7 +3,6 @@ import { useI18n } from '@jibrelcom/i18n'
 import {
   BigButton,
   BigButtonVariant,
-  DetailsCard,
   FormTitle,
   Grid
 } from '@jibrelcom/ui'
@@ -19,7 +18,7 @@ const StatusSuccess: React.FunctionComponent = () => {
       className={style.statusContainer}
     >
       <Grid.Item
-        className={`${style.headerImage} ${style.imageSuccess}`}
+        className={`${style.headerImage} ${style.imageError}`}
         s={4}
         m={4}
         l={6}
@@ -34,13 +33,12 @@ const StatusSuccess: React.FunctionComponent = () => {
         <div
           className={style.body}
         >
-          <FormTitle className={`${style.title} ${style.titleSuccess}`}>
-            {i18n._('OperationStatus.Success.title')}
+          <FormTitle className={`${style.title} ${style.titleError}`}>
+            {i18n._('OperationStatus.Error.title')}
           </FormTitle>
           <p className={style.subtext}>
-            {i18n._('OperationStatus.Success.description')}
+            {i18n._('OperationStatus.Error.description')}
           </p>
-          <DetailsCard itemList={[]} className={style.details} />
         </div>
         <Grid.Item
           className={style.actions}
@@ -49,17 +47,20 @@ const StatusSuccess: React.FunctionComponent = () => {
         >
           <BigButton
             className={style.action}
-            component='a'
-            href='/'
+            component='button'
+            onClick={() => {
+              alert('blablabla')
+            }}
           >
-            {i18n._('OperationStatus.actions.toPortfolio')}
+            {i18n._('OperationStatus.actions.tryAgain')}
           </BigButton>
           <BigButton
             component='a'
-            href='/'
+            href='mailto:support@jibrel.com'
+            target='_blank'
             variant={BigButtonVariant.secondary}
           >
-            {i18n._('OperationStatus.actions.backToMain')}
+            {i18n._('OperationStatus.actions.contactSupport')}
           </BigButton>
         </Grid.Item>
       </Grid.Item>
