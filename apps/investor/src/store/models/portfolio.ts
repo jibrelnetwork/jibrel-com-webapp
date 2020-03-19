@@ -1,10 +1,12 @@
 // we need axios without config for API
 // for fetching companies data from CMS
+import { actions } from 'redux-router5'
 import { default as axiosPlain } from 'axios'
 
 import {
   createModel,
   ModelConfig,
+  RematchDispatch,
 } from '@rematch/core'
 
 import settings from 'app/settings'
@@ -25,7 +27,7 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
     isInvestmentsLoading: true,
     isInvestedAmountLoading: true,
   },
-  effects: () => ({
+  effects: (dispatch: RematchDispatch) => ({
     async getInvestments(_: void, rootState: RootState): Promise<void> {
       try {
         this.setInvestmentsLoading()
@@ -42,6 +44,10 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
 
         if (status === 403) {
           return handle403(rootState.user.languageCode)
+        } else if (status === 409) {
+          dispatch(actions.navigateTo('Unverified'))
+
+          return
         }
 
         throw error
@@ -63,6 +69,10 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
 
         if (status === 403) {
           return handle403(rootState.user.languageCode)
+        } else if (status === 409) {
+          dispatch(actions.navigateTo('Unverified'))
+
+          return
         }
 
         throw error
@@ -84,6 +94,10 @@ export const portfolio: ModelConfig<PortfolioState> = createModel<PortfolioState
 
         if (status === 403) {
           return handle403(rootState.user.languageCode)
+        } else if (status === 409) {
+          dispatch(actions.navigateTo('Unverified'))
+
+          return
         }
 
         throw error
