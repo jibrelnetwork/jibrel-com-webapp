@@ -15,6 +15,8 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin')
 
+const HealthcheckPlugin = require('./healthcheck-webpack-plugin')
+
 const isEnvDevelopment = process.env.NODE_ENV === 'development'
 const isEnvProduction = process.env.NODE_ENV === 'production'
 
@@ -367,6 +369,10 @@ const create = (dirname) => {
 
       new SpriteLoaderPlugin({
         publicPath: PATHS.STATIC_URL_PATH,
+      }),
+
+      new HealthcheckPlugin({
+        publicPath: PATHS.OUTPUT,
       }),
 
       // we pack files more than 1kb with gzip in advance
