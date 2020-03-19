@@ -1,7 +1,7 @@
-@import '../../../node_modules/@jibrelcom/ui/src/theme/fonts';
-@import '../../../node_modules/@jibrelcom/ui/src/theme/media';
-@import '../../../node_modules/@jibrelcom/ui/src/theme/colors';
-@import '../../../node_modules/@jibrelcom/ui/src/utils/scss/flex';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
 
 .status-container {
   @include media('>xsmall') {
