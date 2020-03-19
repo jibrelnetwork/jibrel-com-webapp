@@ -13,6 +13,8 @@ declare namespace StyleScssModule {
     imageError: string;
     imagePending: string;
     imageSuccess: string;
+    "loading-container": string;
+    loadingContainer: string;
     "status-container": string;
     statusContainer: string;
     subtext: string;
