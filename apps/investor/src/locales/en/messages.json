@@ -95,6 +95,7 @@
   "OperationStatus.Pending.description": "Что-то просиходит, мы не знаем что. Мы вас уведомим вас как что-то изменится. Ждём-с.",
   "OperationStatus.Success.title": "Success",
   "OperationStatus.Success.description": "Ваша инвестиция успешно прошла. Теперь подождите пока мы сделаем все свои дела, и она появится у вас в портфолио.",
+  "OperationStatus.Success.Details.amount.title": "Amount",
   "Pending.action.back": "Back to startups",
   "Pending.title": "Account Verification Is in Progress",
   "Pending.text": "Your verification request is currently under review. We will notify you as soon as verification process is completed.",

@@ -1,68 +1,135 @@
-import React from 'react'
+import React, { useEffect } from 'react'
+import { connect } from 'react-redux'
+
+import { NotFound, } from '@jibrelcom/ui'
 
 import CoreLayout from 'layouts/CoreLayout'
 
+import settings from 'app/settings'
+
 import {
+  Dispatch,
+  RootState,
+} from 'store'
+
+import {
+  DepositOperation,
+  DepositOperationStatus,
+  OperationStateStatus,
+} from 'store/types/operations'
+
+import { OperationProvisionalStatus } from 'app/router/types'
+
+import {
+  Loading,
   StatusError,
   StatusPending,
   StatusSuccess,
-  Loading
 } from './components'
 
-interface OperationStatusProps {
+type StateProps = {
+  loadingStatus: OperationStateStatus;
+  operation: DepositOperation | null;
+}
+
+type DispatchProps = {
+  init: (id: string) => void;
+}
+
+type OperationStatusProps = StateProps & DispatchProps & {
   id: string;
-  foloosiTransactionId?: string;
+  status?: OperationProvisionalStatus;
 }
-
-// FIXME: JUST DEBUG THING, REMOVE BEFORE TASK DONE
-const COMPONENT_RENDER_MAP = {
-  success: StatusSuccess,
-  pending: StatusPending,
-  error: StatusError,
-  loading: Loading
-}
-
-const DebugPanel = ({ changeStatusHandler }) => (
-  <fieldset onClick={(e) => {
-    const status = e.target?.value
-    if (typeof status === 'string') {
-      changeStatusHandler(status)
-    }
-  }}>
-    <label htmlFor="status-success">
-      <p>Success</p>
-      <input type="radio" id="status-success" name="status" value='success' />
-    </label>
-    <label htmlFor="status-pending">
-      <p>Pending</p>
-      <input type="radio" id="status-pending" name="status" value='pending' />
-    </label>
-    <label htmlFor="status-error">
-      <p>Error</p>
-      <input type="radio" id="status-error" name="status" value='error'/>
-    </label>
-    <label htmlFor="status-loading">
-      <p>Loading</p>
-      <input type="radio" id="status-loading" name="status" value='loading'/>
-    </label>
-  </fieldset>
-)
-
-// !DEBUG
 
 const OperationStatus: React.FunctionComponent<OperationStatusProps> = ({
   id,
-  foloosiTransactionId
+  status: provisionalStatus,
+  loadingStatus,
+  operation,
+  init,
 }) => {
-  const [status, setStatus] = React.useState('pending')
-  const Component = COMPONENT_RENDER_MAP[status]
+  useEffect(() => {
+    init(id)
+  }, [])
 
-  return (
-    <CoreLayout>
-      <Component />
-      <DebugPanel changeStatusHandler={setStatus} />
-    </CoreLayout>
-  )
+  if (loadingStatus === OperationStateStatus.Error) {
+    return (
+      <CoreLayout>
+        <NotFound
+          host={settings.CMS_ORIGIN}
+        />
+      </CoreLayout>
+    )
+  } else if (loadingStatus === OperationStateStatus.Loading) {
+    // Optimistic UI
+    if (provisionalStatus === OperationProvisionalStatus.Failure) {
+      return (
+        <CoreLayout>
+          <StatusError />
+        </CoreLayout>
+      )
+    }
+
+    if (provisionalStatus === OperationProvisionalStatus.Pending) {
+      return (
+        <CoreLayout>
+          <StatusPending />
+        </CoreLayout>
+      )
+    }
+
+    return (
+      <CoreLayout>
+        <Loading />
+      </CoreLayout>
+    )
+  } else {
+    if (
+      operation?.status === DepositOperationStatus.Canceled
+      || operation?.status === DepositOperationStatus.Failed
+      || operation?.status === DepositOperationStatus.Expired
+      || operation?.status === DepositOperationStatus.WaitingForPayment
+      || operation?.status === DepositOperationStatus.ActionRequired
+    ) {
+      <CoreLayout>
+        <StatusError />
+      </CoreLayout>
+    }
+
+    if (operation?.status === DepositOperationStatus.Processing) {
+      return (
+        <CoreLayout>
+          <StatusPending />
+        </CoreLayout>
+      )
+    }
+
+    // it is not possible, but we can't describe it with types because of how connect is written
+    if (!operation) {
+      return null
+    }
+
+    return (
+      <CoreLayout>
+        <StatusSuccess operation={operation} />
+      </CoreLayout>
+    )
+  }
 }
 
-export default OperationStatus
+export default connect<StateProps, DispatchProps>(
+  (state: RootState) => {
+    const {
+      status: loadingStatus,
+      operation,
+    } = state.operation
+
+    return {
+      loadingStatus,
+      operation,
+    }
+  },
+  (dispatch: Dispatch): DispatchProps => ({
+    init: dispatch.operation.fetch,
+  })
+)(OperationStatus)

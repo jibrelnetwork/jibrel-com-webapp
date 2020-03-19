@@ -1,11 +1,12 @@
+import { APIResponse } from './api'
+
 export enum DepositOperationType {
   Deposit = 'deposit',
 }
 
 export enum DepositOperationStatus {
-  Unconfirmed = 'unconfirmed',
   WaitingForPayment = 'waiting_payment',
-  Pending = 'pending',
+  ActionRequired = 'action_required',
   Processing = 'processing',
   Completed = 'completed',
   Canceled = 'canceled',
@@ -42,3 +43,28 @@ export type DepositOperation = {
     referenceToken: string;
   };
 }
+
+export type APIResponsePaymentsOperationDetails = APIResponse<DepositOperation>
+
+export enum OperationStateStatus {
+  Loading,
+  Success,
+  Error,
+}
+
+export type OperationStateSuccess = {
+  status: OperationStateStatus.Success;
+  operation: DepositOperation;
+}
+
+export type OperationStateLoading = {
+  status: OperationStateStatus.Loading;
+  operation: DepositOperation | null;
+}
+
+export type OperationStateError = {
+  status: OperationStateStatus.Error;
+  operation: null;
+}
+
+export type OperationState = OperationStateSuccess | OperationStateLoading | OperationStateError

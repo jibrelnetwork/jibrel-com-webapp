@@ -1,5 +1,8 @@
 import React from 'react'
-import { useI18n } from '@jibrelcom/i18n'
+import {
+  useI18n,
+  useLanguageCode,
+} from '@jibrelcom/i18n'
 import {
   BigButton,
   BigButtonVariant,
@@ -8,10 +11,30 @@ import {
   Grid
 } from '@jibrelcom/ui'
 
+import { formatCurrency } from 'utils/formatters'
+
+import { DepositOperation } from 'store/types/operations'
+
 import style from '../../style.scss'
 
-const StatusSuccess: React.FunctionComponent = () => {
+interface StatusSuccessProps {
+  operation: DepositOperation;
+}
+
+const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
+  operation,
+}) => {
   const i18n = useI18n()
+  const languageCode = useLanguageCode()
+
+  const amount = formatCurrency(
+    parseInt(operation.debitAmount.toString(), 10),
+    languageCode,
+    'USD', {
+      minimumFractionDigits: 0,
+      maximumFractionDigits: 0,
+    },
+  )
 
   return (
     <Grid.Container
@@ -40,7 +63,9 @@ const StatusSuccess: React.FunctionComponent = () => {
           <p className={style.subtext}>
             {i18n._('OperationStatus.Success.description')}
           </p>
-          <DetailsCard itemList={[]} className={style.details} />
+          <DetailsCard itemList={[
+            { label: 'OperationStatus.Success.Details.amount.title', value: amount },
+          ]} className={style.details} />
         </div>
         <Grid.Item
           className={style.actions}
