@@ -1,0 +1,47 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+
+.status-container {
+  @include media('>xsmall') {
+    flex-direction: row-reverse;
+  }
+}
+
+.header-image {
+  text-align: center;
+  min-height: 192px;
+  margin-bottom: 24px;
+
+  @include screen('>xsmall') {
+    min-height: 260px;
+    max-height: 344px;
+    margin-bottom: 0;
+  }
+}
+
+.body {
+  margin-bottom: 48px;
+
+  @include screen('>small') {
+    margin-bottom: 64px;
+  }
+}
+
+.subtext {
+  @include font-body;
+}
+
+.success-title {
+  color: $color-green;
+}
+
+.actions {
+  > .action {
+      margin-bottom: 16px;
+
+      @include screen('>small') {
+        margin-bottom: 24px;
+      }
+  }
+}
