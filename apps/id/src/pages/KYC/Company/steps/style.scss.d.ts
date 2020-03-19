@@ -57,6 +57,8 @@ declare namespace StyleScssModule {
     m6: string;
     m7: string;
     m8: string;
+    no: string;
+    question: string;
     "s-1": string;
     "s-2": string;
     "s-3": string;
@@ -79,6 +81,7 @@ declare namespace StyleScssModule {
     submitError: string;
     subtitle: string;
     title: string;
+    wrapper: string;
     "xl-1": string;
     "xl-10": string;
     "xl-11": string;

@@ -13,11 +13,13 @@
 
 .subtitle {
   @include font-h2-l;
+
   padding: 24px 0;
 }
 
 .caption {
   @include font-caption;
+
   color: rgba(8, 30, 57, 0.6);
   margin-bottom: 30px;
 }
@@ -45,6 +47,7 @@
 
 .group-title {
   @include font-h3-s;
+
   padding: 8px 0 24px;
 }
 
@@ -71,6 +74,7 @@
 
 .submit-error {
   @include font-body-s;
+
   color: #DC3632;
 }
 
@@ -118,4 +122,16 @@
   border: none;
   background: none;
   appearance: none;
+}
+
+.wrapper {
+  width: 100%;
+}
+
+.question {
+  @include font-body;
+}
+
+.no {
+  margin-top: 24px;
 }

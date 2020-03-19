@@ -16,8 +16,10 @@ import {
 } from 'react-final-form'
 
 import {
+  BigButton,
   LinkButton,
   BigButtonSubmit,
+  BigButtonVariant,
 } from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
@@ -88,47 +90,93 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
           render={({
             handleSubmit,
             submitError,
-            values: { beneficiaries },
+            values: {
+              beneficiaries,
+              hasBeneficiary,
+            },
             form: {
-              mutators: {
-                push,
-              },
+              change,
+              mutators: { push },
             },
           }: FormRenderProps): React.ReactNode => (
-            <form onSubmit={handleSubmit}>
-              <div className={style.step}>
-                <h2 className={style.title}>
-                  {i18n._('KYC.Company.beneficiary.form.title')}
-                </h2>
-                <div className={style.caption}>
-                  {i18n._('KYC.Company.beneficiary.form.description')}
-                </div>
-                <FieldArray name='beneficiaries' initialValue={beneficiaries}>
-                  {({
-                    fields,
-                  }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
-                    name: string,
-                    index: number,
-                  ) => (
-                      <BeneficiaryFields
-                        key={name}
-                        uploadDocument={uploadDocument}
-                        deleteHandler={(): void => fields.remove(index)}
-                        documents={documents}
-                        index={index}
-                        isPrimary={(index === 0)}
-                      />
-                    ))}
-                </FieldArray>
-                <LinkButton type='button' onClick={(): void => push('beneficiaries', undefined)}>
-                  {i18n._('KYC.Company.beneficiary.form.button.add')}
-                </LinkButton>
-                {submitError && <div className={style.submitError}>{submitError}</div>}
-              </div>
-              <BigButtonSubmit className={style.submit}>
-                {nextLabel}
-              </BigButtonSubmit>
-            </form>
+            <>
+              {(hasBeneficiary === undefined) && (
+                <>
+                  <div className={style.wrapper}>
+                    <div className={style.step}>
+                      <h2 className={style.title}>
+                        {i18n._('KYC.Company.beneficiary.form.title')}
+                      </h2>
+                      <p className={style.question}>
+                        {i18n._('KYC.Company.beneficiary.form.question')}
+                      </p>
+                    </div>
+                  </div>
+                  <div className={style.submit}>
+                    <BigButton
+                      onClick={(): void => change('hasBeneficiary', true)}
+                      variant={BigButtonVariant.main}
+                      component='button'
+                    >
+                      {i18n._('KYC.Company.beneficiary.form.action.yes')}
+                    </BigButton>
+                    <BigButton
+                      onClick={(): void => {
+                        change('beneficiaries', [])
+                        change('hasBeneficiary', false)
+
+                        submit(nextHandler)({
+                          ...values,
+                          beneficiaries: [],
+                          hasBeneficiary: false,
+                        })
+                      }}
+                      className={style.no}
+                      variant={BigButtonVariant.secondary}
+                      component='button'
+                    >
+                      {i18n._('KYC.Company.beneficiary.form.action.no')}
+                    </BigButton>
+                  </div>
+                </>
+              )}
+              {hasBeneficiary && (
+                <form onSubmit={handleSubmit}>
+                  <div className={style.step}>
+                    <h2 className={style.title}>
+                      {i18n._('KYC.Company.beneficiary.form.title')}
+                    </h2>
+                    <div className={style.caption}>
+                      {i18n._('KYC.Company.beneficiary.form.description')}
+                    </div>
+                    <FieldArray name='beneficiaries' initialValue={beneficiaries}>
+                      {({
+                        fields,
+                      }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
+                        name: string,
+                        index: number,
+                      ) => (
+                          <BeneficiaryFields
+                            key={name}
+                            uploadDocument={uploadDocument}
+                            deleteHandler={(): void => fields.remove(index)}
+                            documents={documents}
+                            index={index}
+                            isPrimary={(index === 0)}
+                          />
+                        ))}
+                    </FieldArray>
+                    <LinkButton type='button' onClick={(): void => push('beneficiaries', undefined)}>
+                      {i18n._('KYC.Company.beneficiary.form.button.add')}
+                    </LinkButton>
+                    {submitError && <div className={style.submitError}>{submitError}</div>}
+                  </div>
+                  <BigButtonSubmit className={style.submit}>
+                    {nextLabel}
+                  </BigButtonSubmit>
+                </form>
+              )}
+            </>
           )}
         />
       </div>

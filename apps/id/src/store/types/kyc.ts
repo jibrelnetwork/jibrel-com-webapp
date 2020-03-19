@@ -188,6 +188,7 @@ export interface KYCInstitutionValues {
   officeAddress: OfficeAddressValues;
   beneficiaries: BeneficiariesValues;
   directors: DirectorsValues;
+  hasBeneficiary?: boolean;
 }
 
 export enum KYCStatus {
