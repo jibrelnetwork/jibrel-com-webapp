@@ -1,5 +1,6 @@
 declare namespace StyleScssModule {
   export interface IStyleScss {
+    actions: string;
     "add-link": string;
     addLink: string;
     "additional-title": string;
@@ -81,7 +82,6 @@ declare namespace StyleScssModule {
     submitError: string;
     subtitle: string;
     title: string;
-    wrapper: string;
     "xl-1": string;
     "xl-10": string;
     "xl-11": string;
