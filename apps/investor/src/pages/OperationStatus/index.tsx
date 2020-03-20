@@ -27,6 +27,50 @@ import {
   StatusSuccess,
 } from './components'
 
+enum DerivedOperationStatus {
+  NotFound = 'not_found',
+  Error = 'error',
+  Loading = 'loading',
+  Pending = 'pending',
+  Success = 'success',
+}
+
+const deriveOperationStatus = (
+  loadingStatus: OperationStateStatus,
+  provisionalStatus: OperationProvisionalStatus | undefined,
+  operationStatus: DepositOperationStatus | undefined,
+): DerivedOperationStatus => {
+  if (loadingStatus === OperationStateStatus.Error) {
+    return DerivedOperationStatus.NotFound
+  }
+
+  if (loadingStatus === OperationStateStatus.Loading) {
+    switch (provisionalStatus) {
+      case OperationProvisionalStatus.Failure:
+        return DerivedOperationStatus.Error
+      case OperationProvisionalStatus.Pending:
+        return DerivedOperationStatus.Pending
+      default:
+        return DerivedOperationStatus.Loading
+    }
+  }
+
+  switch (operationStatus) {
+    case DepositOperationStatus.Canceled:
+    case DepositOperationStatus.Failed:
+    case DepositOperationStatus.Expired:
+    case DepositOperationStatus.WaitingForPayment:
+    case DepositOperationStatus.ActionRequired:
+      return DerivedOperationStatus.Error
+    case DepositOperationStatus.Processing:
+      return DerivedOperationStatus.Pending
+    case DepositOperationStatus.Completed:
+      return DerivedOperationStatus.Success
+    default:
+      return DerivedOperationStatus.Loading
+  }
+}
+
 type StateProps = {
   loadingStatus: OperationStateStatus;
   operation: DepositOperation | null;
@@ -52,70 +96,42 @@ const OperationStatus: React.FunctionComponent<OperationStatusProps> = ({
     init(id)
   }, [])
 
-  if (loadingStatus === OperationStateStatus.Error) {
-    return (
-      <CoreLayout>
-        <NotFound
-          host={settings.CMS_ORIGIN}
-        />
-      </CoreLayout>
-    )
-  } else if (loadingStatus === OperationStateStatus.Loading) {
-    // Optimistic UI
-    if (provisionalStatus === OperationProvisionalStatus.Failure) {
+  const operationStatus = deriveOperationStatus(loadingStatus, provisionalStatus, operation?.status)
+
+  switch (operationStatus) {
+    case DerivedOperationStatus.NotFound:
+      return (
+        <CoreLayout>
+          <NotFound
+            host={settings.CMS_ORIGIN}
+          />
+        </CoreLayout>
+      )
+    case DerivedOperationStatus.Error:
       return (
         <CoreLayout>
           <StatusError />
         </CoreLayout>
       )
-    }
-
-    if (provisionalStatus === OperationProvisionalStatus.Pending) {
+    case DerivedOperationStatus.Loading:
+      return (
+        <CoreLayout>
+          <Loading />
+        </CoreLayout>
+      )
+    case DerivedOperationStatus.Pending:
       return (
         <CoreLayout>
           <StatusPending />
         </CoreLayout>
       )
-    }
-
-    return (
-      <CoreLayout>
-        <Loading />
-      </CoreLayout>
-    )
-  } else {
-    if (
-      operation?.status === DepositOperationStatus.Canceled
-      || operation?.status === DepositOperationStatus.Failed
-      || operation?.status === DepositOperationStatus.Expired
-      || operation?.status === DepositOperationStatus.WaitingForPayment
-      || operation?.status === DepositOperationStatus.ActionRequired
-    ) {
+    case DerivedOperationStatus.Success:
+      // operation existence is checked in deriving success status
       return (
         <CoreLayout>
-          <StatusError />
+          <StatusSuccess operation={operation as DepositOperation} />
         </CoreLayout>
       )
-    }
-
-    if (operation?.status === DepositOperationStatus.Processing) {
-      return (
-        <CoreLayout>
-          <StatusPending />
-        </CoreLayout>
-      )
-    }
-
-    // it is not possible, but we can't describe it with types because of how connect is written
-    if (!operation) {
-      return null
-    }
-
-    return (
-      <CoreLayout>
-        <StatusSuccess operation={operation} />
-      </CoreLayout>
-    )
   }
 }
 
