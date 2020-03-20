@@ -60,9 +60,9 @@ const deriveOperationStatus = (
     case DepositOperationStatus.Canceled:
     case DepositOperationStatus.Failed:
     case DepositOperationStatus.Expired:
+      return DerivedOperationStatus.Error
     case DepositOperationStatus.WaitingForPayment:
     case DepositOperationStatus.ActionRequired:
-      return DerivedOperationStatus.Error
     case DepositOperationStatus.Processing:
       return DerivedOperationStatus.Pending
     case DepositOperationStatus.Completed:
