@@ -17,6 +17,7 @@ import {
   DepositOperationStatus,
   OperationStateStatus,
 } from 'store/types/operations'
+import { InvestApplication } from 'store/types/invest'
 
 import { OperationProvisionalStatus } from 'app/router/types'
 
@@ -73,7 +74,8 @@ const deriveOperationStatus = (
 
 type StateProps = {
   loadingStatus: OperationStateStatus;
-  operation: DepositOperation | null;
+  operation: DepositOperation | undefined;
+  investment: InvestApplication | undefined;
 }
 
 type DispatchProps = {
@@ -90,6 +92,7 @@ const OperationStatus: React.FunctionComponent<OperationStatusProps> = ({
   status: provisionalStatus,
   loadingStatus,
   operation,
+  investment,
   init,
 }) => {
   useEffect(() => {
@@ -110,7 +113,9 @@ const OperationStatus: React.FunctionComponent<OperationStatusProps> = ({
     case DerivedOperationStatus.Error:
       return (
         <CoreLayout>
-          <StatusError />
+          <StatusError
+            investment={investment}
+          />
         </CoreLayout>
       )
     case DerivedOperationStatus.Loading:
@@ -129,7 +134,10 @@ const OperationStatus: React.FunctionComponent<OperationStatusProps> = ({
       // operation existence is checked in deriving success status
       return (
         <CoreLayout>
-          <StatusSuccess operation={operation as DepositOperation} />
+          <StatusSuccess
+            operation={operation as DepositOperation}
+            investment={investment}
+          />
         </CoreLayout>
       )
   }
@@ -140,11 +148,13 @@ export default connect<StateProps, DispatchProps>(
     const {
       status: loadingStatus,
       operation,
+      investment,
     } = state.operation
 
     return {
       loadingStatus,
       operation,
+      investment,
     }
   },
   (dispatch: Dispatch): DispatchProps => ({

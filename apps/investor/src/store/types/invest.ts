@@ -1,5 +1,7 @@
 import { CountryCode } from '@jibrelcom/countries/src/types'
 
+import { APIResponse } from './api'
+
 import { JibrelBankAccount } from './user'
 import { Asset } from './portfolio'
 
@@ -114,3 +116,5 @@ export interface InvestApplication {
   subscriptionAgreementStatus: SubscriptionAgreementStatus;
   subscriptionAgreementRedirectUrl: string;
 }
+
+export type APIResponseRetrieveInvestmentApplication = APIResponse<InvestApplication>

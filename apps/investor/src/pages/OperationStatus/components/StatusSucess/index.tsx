@@ -1,4 +1,5 @@
 import React from 'react'
+import isNil from 'lodash-es/isNil'
 import {
   useI18n,
   useLanguageCode,
@@ -14,15 +15,18 @@ import {
 import { formatCurrency } from 'utils/formatters'
 
 import { DepositOperation } from 'store/types/operations'
+import { InvestApplication } from 'store/types/invest'
 
 import style from '../../style.scss'
 
 interface StatusSuccessProps {
   operation: DepositOperation;
+  investment?: InvestApplication;
 }
 
 const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
   operation,
+  investment,
 }) => {
   const i18n = useI18n()
   const languageCode = useLanguageCode()
@@ -35,6 +39,12 @@ const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
       maximumFractionDigits: 0,
     },
   )
+
+  const investmentDetails = isNil(investment)
+    ? []
+    : [
+      { label: 'OperationStatus.Success.Details.company.title', value: investment.offering.security.company.name },
+    ]
 
   return (
     <Grid.Container
@@ -64,6 +74,7 @@ const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
             {i18n._('OperationStatus.Success.description')}
           </p>
           <DetailsCard itemList={[
+            ...investmentDetails,
             { label: 'OperationStatus.Success.Details.amount.title', value: amount },
           ]} className={style.details} />
         </div>
