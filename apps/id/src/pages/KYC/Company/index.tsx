@@ -13,10 +13,10 @@ import {
 } from './steps'
 
 const PROCESS_STEPS = [
+  BeneficiaryForm,
   CompanyInformationForm,
   RegisteredOfficeAddressForm,
   PrimaryContactForm,
-  BeneficiaryForm,
   DirectorForm,
 ]
 

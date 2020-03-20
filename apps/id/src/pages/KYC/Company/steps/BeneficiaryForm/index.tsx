@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cc from 'classcat'
 import arrayMutators from 'final-form-arrays'
 import { connect } from 'react-redux'
@@ -23,6 +23,7 @@ import {
 } from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
+import { initialFormValues } from 'store/models/kycOrganization'
 
 import {
   Dispatch,
@@ -63,24 +64,25 @@ type BeneficiaryFormProps = BeneficiaryProps & {
   formProps: FormRenderProps;
 }
 
-const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryFormProps> = ({
-  submit,
-  nextHandler,
-  values,
+type BeneficiaryConfirmationProps = BeneficiaryFormProps & {
+  setHasBeneficiary: () => void;
+}
+
+const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryConfirmationProps> = ({
+  setHasBeneficiary,
   formProps,
 }) => {
   const i18n = useI18n()
-  const { change } = formProps.form
+
+  const {
+    handleSubmit,
+    form: { change },
+    submitting,
+  } = formProps
 
   const skipBeneficiary = (): void => {
     change('beneficiaries', [])
-    change('hasBeneficiary', false)
-
-    submit(nextHandler)({
-      ...values,
-      beneficiaries: [],
-      hasBeneficiary: false,
-    })
+    handleSubmit()
   }
 
   return (
@@ -109,7 +111,7 @@ const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryFormProps> = (
           l={4}
         >
           <BigButton
-            onClick={(): void => change('hasBeneficiary', true)}
+            onClick={setHasBeneficiary}
             variant={BigButtonVariant.main}
             component='button'
           >
@@ -120,6 +122,8 @@ const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryFormProps> = (
             className={style.no}
             variant={BigButtonVariant.secondary}
             component='button'
+            isLoading={submitting}
+            isDisabled={submitting}
           >
             {i18n._('KYC.Company.beneficiary.form.action.no')}
           </BigButton>
@@ -139,10 +143,17 @@ const BeneficiaryForm: React.FunctionComponent<BeneficiaryFormProps> = ({
     handleSubmit,
     values,
     submitError,
-    form: { mutators },
+    form: {
+      change,
+      mutators,
+    },
   } = formProps
 
   const i18n = useI18n()
+
+  if (values.beneficiaries.length === 0) {
+    change('beneficiaries', initialFormValues.beneficiaries)
+  }
 
   return (
     <>
@@ -212,6 +223,8 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = (props) =>
     backLabel,
   } = props
 
+  const [hasBeneficiary, setHasBeneficiary] = useState<boolean | undefined>()
+
   return (
     <KYCLayout
       backHandler={backHandler}
@@ -227,26 +240,23 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = (props) =>
           onSubmit={submit(nextHandler)}
           initialValues={values}
           mutators={{ ...arrayMutators }}
-          render={(formProps: FormRenderProps): React.ReactNode => {
-            const { hasBeneficiary } = formProps.values
-
-            return (
-              <>
-                {(hasBeneficiary === undefined) && (
-                  <BeneficiaryConfirmation
-                    {...props}
-                    formProps={formProps}
-                  />
-                )}
-                {hasBeneficiary && (
-                  <BeneficiaryForm
-                    {...props}
-                    formProps={formProps}
-                  />
-                )}
-              </>
-            )
-          }}
+          render={(formProps: FormRenderProps): React.ReactNode => (
+            <>
+              {(hasBeneficiary === undefined) && (
+                <BeneficiaryConfirmation
+                  {...props}
+                  formProps={formProps}
+                  setHasBeneficiary={(): void => setHasBeneficiary(true)}
+                />
+              )}
+              {hasBeneficiary && (
+                <BeneficiaryForm
+                  {...props}
+                  formProps={formProps}
+                />
+              )}
+            </>
+          )}
         />
       </div>
     </KYCLayout>

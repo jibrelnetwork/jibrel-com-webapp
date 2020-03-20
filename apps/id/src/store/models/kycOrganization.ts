@@ -8,7 +8,7 @@ import {
 
 import axios from '../axios'
 
-const initialFormValues = {
+export const initialFormValues = {
   companyName: '',
   tradingName: '',
   dateOfIncorporation: '',
@@ -25,8 +25,6 @@ const initialFormValues = {
     postCode: '',
     country: '',
   },
-
-  hasBeneficiary: undefined,
 
   beneficiaries: [{
     firstName: '',
