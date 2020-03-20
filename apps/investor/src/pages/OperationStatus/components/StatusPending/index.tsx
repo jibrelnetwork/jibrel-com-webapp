@@ -9,7 +9,7 @@ import {
 
 import style from '../../style.scss'
 
-const StatusSuccess: React.FunctionComponent = () => {
+const StatusPending: React.FunctionComponent = () => {
   const i18n = useI18n()
 
   return (
@@ -65,4 +65,4 @@ const StatusSuccess: React.FunctionComponent = () => {
   )
 }
 
-export default React.memo(StatusSuccess)
+export default React.memo(StatusPending)
