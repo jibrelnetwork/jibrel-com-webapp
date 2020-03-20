@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router5'
 import { useI18n } from '@jibrelcom/i18n'
 import {
   BigButton,
@@ -6,6 +7,8 @@ import {
   FormTitle,
   Grid
 } from '@jibrelcom/ui'
+
+import settings from 'app/settings'
 
 import style from '../../style.scss'
 
@@ -47,14 +50,14 @@ const StatusPending: React.FunctionComponent = () => {
         >
           <BigButton
             className={style.action}
-            component='a'
-            href='/'
+            component={Link}
+            routeName='Portfolio'
           >
             {i18n._('OperationStatus.actions.toPortfolio')}
           </BigButton>
           <BigButton
             component='a'
-            href='/'
+            href={`${settings.CMS_ORIGIN}/`}
             variant={BigButtonVariant.secondary}
           >
             {i18n._('OperationStatus.actions.backToMain')}

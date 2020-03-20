@@ -1,4 +1,5 @@
 import React from 'react'
+import { Link } from 'react-router5'
 import isNil from 'lodash-es/isNil'
 import {
   useI18n,
@@ -11,6 +12,8 @@ import {
   FormTitle,
   Grid
 } from '@jibrelcom/ui'
+
+import settings from 'app/settings'
 
 import { formatCurrency } from 'utils/formatters'
 
@@ -85,14 +88,14 @@ const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
         >
           <BigButton
             className={style.action}
-            component='a'
-            href='/'
+            component={Link}
+            routeName='Portfolio'
           >
             {i18n._('OperationStatus.actions.toPortfolio')}
           </BigButton>
           <BigButton
             component='a'
-            href='/'
+            href={`${settings.CMS_ORIGIN}/`}
             variant={BigButtonVariant.secondary}
           >
             {i18n._('OperationStatus.actions.backToMain')}
