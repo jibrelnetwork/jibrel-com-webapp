@@ -34,15 +34,10 @@ export const operation: ModelConfig<OperationState> = createModel<OperationState
             }
 
             const { data: operation } = response.data
+            const isWaitingForPayment = operation.status === DepositOperationStatus.WaitingForPayment
+            const isActionRequired = operation.status === DepositOperationStatus.ActionRequired
 
-            if (
-              operation.status === DepositOperationStatus.WaitingForPayment
-              || operation.status === DepositOperationStatus.ActionRequired
-            ) {
-              return true
-            }
-
-            return false
+            return isWaitingForPayment || isActionRequired
           })
         })
 
