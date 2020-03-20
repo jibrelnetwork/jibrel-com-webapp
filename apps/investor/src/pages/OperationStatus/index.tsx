@@ -91,9 +91,11 @@ const OperationStatus: React.FunctionComponent<OperationStatusProps> = ({
       || operation?.status === DepositOperationStatus.WaitingForPayment
       || operation?.status === DepositOperationStatus.ActionRequired
     ) {
-      <CoreLayout>
-        <StatusError />
-      </CoreLayout>
+      return (
+        <CoreLayout>
+          <StatusError />
+        </CoreLayout>
+      )
     }
 
     if (operation?.status === DepositOperationStatus.Processing) {
