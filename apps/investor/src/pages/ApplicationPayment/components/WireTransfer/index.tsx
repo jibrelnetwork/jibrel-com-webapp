@@ -119,6 +119,7 @@ const WireTransfer: React.FunctionComponent = () => {
         l={6}
         m={4}
         className={style.detailsWrapper}
+        component='section'
       >
         <Warning className={style.warning}>
           {i18n._('ApplicationPayment.WireTransfer.details.warning.text')}

@@ -12,14 +12,14 @@ const Item: React.FunctionComponent<ItemProps> = ({
   const i18n = useI18n()
 
   return (
-    <div className={style.item}>
-      <div className={style.label}>
+    <li className={style.item}>
+      <h3 className={style.label}>
         {i18n._(label)}
-      </div>
-      <div className={style.value}>
+      </h3>
+      <p className={style.value}>
         {value}
-      </div>
-    </div>
+      </p>
+    </li>
   )
 }
 
@@ -32,7 +32,7 @@ export const DetailsCard: React.FunctionComponent<DetailsCard> = ({
   itemList,
   className,
 }) => (
-  <div className={cc([style.details, className])}>
+  <ul className={cc([style.details, className])}>
     {
       itemList.map((item, index) =>
         <Item
@@ -41,6 +41,6 @@ export const DetailsCard: React.FunctionComponent<DetailsCard> = ({
         />
       )
     }
-  </div>
+  </ul>
 )
 
