@@ -25,7 +25,7 @@ export interface Profile {
   isAgreedPrivacyPolicy: boolean;
 }
 
-export interface JibrelBankAccount {
+export type JibrelBankAccount = {
   bankName: string;
   swiftCode: string;
   holderName: string;

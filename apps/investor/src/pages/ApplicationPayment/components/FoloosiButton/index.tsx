@@ -22,6 +22,7 @@ import {
 import { formatCurrency } from 'utils/formatters'
 import settings from 'app/settings'
 import { router } from 'app/router'
+import { OperationProvisionalStatus } from 'app/router/types'
 
 import {
   $FoloosiInitStatus,
@@ -131,11 +132,12 @@ const FoloosiButton: React.FC<FoloosiButtonProps> = ({
         router.navigate('OperationStatus', {
           id: payment.uuid,
           foloosiTransactionId: event.data.data.transaction_no,
+          status: OperationProvisionalStatus.Success,
         })
       } else if (event.data.status === FoloosiEventStatus.Error) {
         router.navigate('OperationStatus', {
           id: payment.uuid,
-          status: 'failed',
+          status: OperationProvisionalStatus.Failure,
         })
       }
     })

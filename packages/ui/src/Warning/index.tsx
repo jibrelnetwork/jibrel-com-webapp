@@ -13,13 +13,13 @@ const Warning: React.FunctionComponent<PageTitleProps> = ({
   children,
   className = undefined,
 }) => (
-  <div className={cc([style.main, className])}>
+  <p className={cc([style.main, className])}>
     <Icon
       name='ic_exclamation_24'
       className={style.exclamation}
     />
     <span>{children}</span>
-  </div>
+  </p>
 )
 
 export default React.memo(Warning)
