@@ -1,14 +1,11 @@
-@import '~@jibrelcom/ui/src/theme';
+@import '~@jibrelcom/ui/scss/colors';
+@import '~@jibrelcom/ui/scss/fonts';
 
 .title {
-  @include font-h2-s;
+  @include font-h2;
 
   margin-bottom: 24px;
   width: 100%;
-
-  @include screen('>small') {
-    @include font-h2-l;
-  }
 }
 
 .choice {

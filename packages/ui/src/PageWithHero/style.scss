@@ -1,8 +1,8 @@
 @import '../Grid/grid';
-@import '../theme/fonts';
-@import '../theme/media';
-@import '../theme/colors';
-@import '../utils/scss/flex';
+@import '../../scss/fonts';
+@import '../../scss/media';
+@import '../../scss/colors';
+@import '../../scss/flex';
 
 .main {
   @include flex-column;

@@ -1,11 +1,11 @@
 @import './Grid/grid.scss';
 
 /* UTILS */
-@import './utils/scss/flex';
-@import './utils/scss/ellipsis';
-@import './utils/scss/disabled';
-@import './utils/scss/iconColor';
+@import '../scss/flex';
+@import '../scss/ellipsis';
+@import '../scss/disabled';
+@import '../scss/icon-color';
 
 /* VARIABLES */
-@import './theme/colors';
-@import './theme/fonts';
+@import '../scss/colors';
+@import '../scss/fonts';

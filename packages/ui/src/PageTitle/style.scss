@@ -1,7 +1,7 @@
 @import '../Grid/grid';
-@import '../theme/fonts';
-@import '../theme/media';
-@import '../theme/colors';
+@import '../../scss/fonts';
+@import '../../scss/media';
+@import '../../scss/colors';
 
 .main {
   @include font-h1-xs;

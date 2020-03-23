@@ -1,6 +1,6 @@
-@import '~@jibrelcom/ui/src/theme/colors';
-@import '~@jibrelcom/ui/src/theme/fonts';
-@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+@import '~@jibrelcom/ui/scss/colors';
+@import '~@jibrelcom/ui/scss/fonts';
+@import '~@jibrelcom/ui/scss/icon-color';
 
 .title {
   @include font-h2;

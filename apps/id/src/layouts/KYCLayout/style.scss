@@ -1,24 +1,13 @@
-@import '~@jibrelcom/ui/src/index.scss';
+@import '~@jibrelcom/ui/scss/fonts';
+@import '~@jibrelcom/ui/scss/grid';
 
 .title {
-  @include font-h1-xs;
+  @include font-h1;
 
   width: $column-s-4;
   padding-top: 64px;
   padding-bottom: 32px;
   flex-shrink: 1;
-
-  @include screen('>xsmall') {
-    @include font-h1-s;
-  }
-
-  @include screen('>small') {
-    @include font-h1-m;
-  }
-
-  @include screen('>medium') {
-    @include font-h1-l;
-  }
 }
 
 .back {

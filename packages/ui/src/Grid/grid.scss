@@ -1,4 +1,5 @@
-@import '../theme/media';
+@import '../../scss/media';
+@import '../../scss/grid';
 
 @mixin margin-horizontal($value) {
   margin-left: $value;
@@ -52,33 +53,6 @@
     @include padding-horizontal(12px);
   }
 }
-
-$column-s-1:  100% * 1  / 4;
-$column-s-2:  100% * 2  / 4;
-$column-s-3:  100% * 3  / 4;
-$column-s-4:  100% * 4  / 4;
-
-$column-m-1:  100% * 1  / 8;
-$column-m-2:  100% * 2  / 8;
-$column-m-3:  100% * 3  / 8;
-$column-m-4:  100% * 4  / 8;
-$column-m-5:  100% * 5  / 8;
-$column-m-6:  100% * 6  / 8;
-$column-m-7:  100% * 7  / 8;
-$column-m-8:  100% * 8  / 8;
-
-$column-l-1:  100% * 1  / 12;
-$column-l-2:  100% * 2  / 12;
-$column-l-3:  100% * 3  / 12;
-$column-l-4:  100% * 4  / 12;
-$column-l-5:  100% * 5  / 12;
-$column-l-6:  100% * 6  / 12;
-$column-l-7:  100% * 7  / 12;
-$column-l-8:  100% * 8  / 12;
-$column-l-9:  100% * 9  / 12;
-$column-l-10: 100% * 10 / 12;
-$column-l-11: 100% * 11 / 12;
-$column-l-12: 100% * 12 / 12;
 
 .xs-1 {
   width: $column-s-1;
