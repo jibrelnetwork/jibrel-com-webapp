@@ -26,14 +26,13 @@
 
 .header-image {
   background-repeat: no-repeat;
-  background-size: contain;
+  background-size: cover;
   background-position: center;
-  height: 200px;
+  padding-top: 100%;
+  height: 0;
 
   @include screen('>xsmall') {
-    background-size: cover;
     padding-top: 50%;
-    height: 0;
   }
 }
 
