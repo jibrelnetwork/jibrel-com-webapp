@@ -66,11 +66,11 @@ type BeneficiaryFormProps = BeneficiaryProps & {
 }
 
 type BeneficiaryConfirmationProps = BeneficiaryFormProps & {
-  setHasBeneficiary: () => void;
+  confirmBeneficiary: () => void;
 }
 
 const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryConfirmationProps> = ({
-  setHasBeneficiary,
+  confirmBeneficiary,
   formProps,
 }) => {
   const i18n = useI18n()
@@ -112,7 +112,7 @@ const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryConfirmationPr
           l={4}
         >
           <BigButton
-            onClick={setHasBeneficiary}
+            onClick={confirmBeneficiary}
             variant={BigButtonVariant.main}
             component='button'
           >
@@ -168,9 +168,9 @@ const BeneficiaryForm: React.FunctionComponent<BeneficiaryFormProps> = ({
           m={4}
           l={5}
         >
-          <h2 className={style.title}>
+          <FormTitle>
             {i18n._('KYC.Company.beneficiary.form.title')}
-          </h2>
+          </FormTitle>
           <div className={style.caption}>
             {i18n._('KYC.Company.beneficiary.form.description')}
           </div>
@@ -224,7 +224,7 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = (props) =>
     backLabel,
   } = props
 
-  const [hasBeneficiary, setHasBeneficiary] = useState<boolean | undefined>()
+  const [isBeneficiaryConfirmed, setBeneficiaryConfirmed] = useState<boolean>(false)
 
   return (
     <KYCLayout
@@ -243,17 +243,16 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = (props) =>
           mutators={{ ...arrayMutators }}
           render={(formProps: FormRenderProps): React.ReactNode => (
             <>
-              {(hasBeneficiary === undefined) && (
-                <BeneficiaryConfirmation
-                  {...props}
-                  formProps={formProps}
-                  setHasBeneficiary={(): void => setHasBeneficiary(true)}
-                />
-              )}
-              {hasBeneficiary && (
+              {isBeneficiaryConfirmed ? (
                 <BeneficiaryForm
                   {...props}
                   formProps={formProps}
+                />
+              ) : (
+                <BeneficiaryConfirmation
+                  {...props}
+                  formProps={formProps}
+                  confirmBeneficiary={(): void => setBeneficiaryConfirmed(true)}
                 />
               )}
             </>
