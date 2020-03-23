@@ -46,6 +46,15 @@ export const routes: RouteEnhanced[] = [
   },
 
   {
+    name: 'OperationStatus',
+    path: '/operations/:id?:foloosiTransactionId&:status',
+    canActivate: composeActivations([
+      isLoggedIn,
+      checkKYCStatus,
+    ]),
+  },
+
+  {
     name: 'Waitlist',
     path: '/waitlist/:offeringId',
     canActivate: isLoggedIn,

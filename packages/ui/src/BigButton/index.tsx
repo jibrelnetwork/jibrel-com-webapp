@@ -1,31 +1,40 @@
 import React from 'react'
 import cc from 'classcat'
+import { Link } from 'react-router5'
 
 import style from './style.scss'
 import loader from '../Loader/style.scss'
 import { BigButtonVariant } from './types'
 import { withSubmitButtonUX } from '../FieldWrapper'
 
-export interface BigButtonCommonProps {
+export interface CommonBigButtonProps {
   className?: string;
   variant?: BigButtonVariant;
   isLoading?: boolean;
   isDisabled?: boolean;
 }
 
-interface LinkBigButtonProps
-  extends BigButtonCommonProps,
+interface AnchorBigButtonProps
+  extends CommonBigButtonProps,
     React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
   component: 'a';
 }
 
+interface LinkBigButtonProps
+  extends CommonBigButtonProps,
+    React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
+  component: typeof Link;
+  routeName: string;
+  routeParams?: object;
+}
+
 interface ButtonBigButtonProps
-  extends BigButtonCommonProps,
+  extends CommonBigButtonProps,
     React.PropsWithoutRef<JSX.IntrinsicElements['button']> {
   component: 'button';
 }
 
-const BigButton: React.FunctionComponent<LinkBigButtonProps | ButtonBigButtonProps> = ({
+const BigButton: React.FunctionComponent<AnchorBigButtonProps | LinkBigButtonProps | ButtonBigButtonProps> = ({
   variant = BigButtonVariant.main,
   component = 'button',
   className,

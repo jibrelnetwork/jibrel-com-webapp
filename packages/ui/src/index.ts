@@ -26,6 +26,7 @@ export { default as PasswordInput } from './PasswordInput'
 export { default as PhoneNumberInput } from './PhoneNumberInput'
 export { default as Select } from './Select'
 export { default as ErrorToast } from './ErrorToast'
+export { DetailsCard } from './DetailsCard'
 
 export { default as Animation }from './Animation'
 

@@ -1,5 +1,6 @@
 export { user } from './user'
 export { invest } from './invest'
+export { operation } from './operation'
 export { payments } from './payments'
 export { waitlist } from './waitlist'
 export { portfolio } from './portfolio'

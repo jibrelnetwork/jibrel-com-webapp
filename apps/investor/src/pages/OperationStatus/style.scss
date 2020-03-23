@@ -1,0 +1,96 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+.status-container {
+  @include media('>xsmall') {
+    flex-direction: row-reverse;
+  }
+}
+
+.loading-container {
+  @include media('>xsmall') {
+    flex-direction: row;
+  }
+
+  > .body {
+    @include flex-column;
+    justify-content: center;
+  }
+}
+
+.header {
+  @include flex-column-center;
+}
+
+.header-image {
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  padding-top: 100%;
+  height: 0;
+
+  @include screen('>xsmall') {
+    padding-top: 50%;
+  }
+}
+
+.image-success {
+  background-image: url('../../public/images/pic_status_circle@2x.png');
+}
+
+.image-error {
+  background-image: url('../../public/images/pic_status_cross@2x.png');
+}
+
+.image-pending {
+  background-image: url('../../public/images/pic_status_clock@2x.png');
+}
+
+.body {
+  text-align: center;
+  margin-bottom: 48px;
+
+  @include screen('>xsmall') {
+    text-align: initial;
+  }
+
+  @include screen('>small') {
+    margin-bottom: 64px;
+  }
+}
+
+.details {
+  background-color: $color-green-10;
+}
+
+.subtext {
+  @include font-body;
+}
+
+.title {
+  @include font-h1;
+}
+
+.title-success {
+  color: $color-green;
+}
+
+.title-error {
+  color:  $color-red;
+}
+
+.title-pending {
+  color: $color-black-60;
+}
+
+.actions {
+  > .action {
+      margin-bottom: 16px;
+
+      @include screen('>small') {
+        margin-bottom: 24px;
+      }
+  }
+}
