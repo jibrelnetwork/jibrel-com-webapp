@@ -18,6 +18,14 @@ body {
   min-width: 360px;
 }
 
+/**
+ * Address `outline` inconsistency between Chrome and other browsers.
+ */
+
+a:focus {
+  outline: $color-blue thin dotted;
+}
+
 :global(#app) {
   height: 100%;
 }
