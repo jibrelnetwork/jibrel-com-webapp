@@ -16,6 +16,7 @@ import {
 
 import {
   Grid,
+  FormTitle,
   BigButton,
   LinkButton,
   BigButtonSubmit,
@@ -94,9 +95,9 @@ const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryConfirmationPr
           m={4}
           l={5}
         >
-          <h2 className={style.title}>
+          <FormTitle>
             {i18n._('KYC.Company.beneficiary.form.title')}
-          </h2>
+          </FormTitle>
           <p className={style.question}>
             {i18n._('KYC.Company.beneficiary.form.question')}
           </p>
