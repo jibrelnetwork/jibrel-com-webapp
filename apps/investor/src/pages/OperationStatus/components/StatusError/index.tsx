@@ -23,37 +23,43 @@ const StatusError: React.FunctionComponent<StatusErrorProps> = ({
   const i18n = useI18n()
 
   return (
-    <Grid.Container
-      component='article'
-      className={style.statusContainer}
-    >
-      <Grid.Item
-        className={`${style.headerImage} ${style.imageError}`}
-        s={4}
-        m={4}
-        l={6}
-        xl={6}
-      />
-      <Grid.Item
-        s={4}
-        m={4}
-        l={6}
-        xl={6}
+    <>
+      <Grid.Container
+        component='article'
+        className={style.statusContainer}
       >
-        <div
-          className={style.body}
+        <Grid.Item
+          className={`${style.headerImage} ${style.imageError}`}
+          s={4}
+          m={4}
+          l={6}
+          xl={6}
+        />
+        <Grid.Item
+          s={4}
+          m={4}
+          l={6}
+          xl={6}
         >
-          <FormTitle className={`${style.title} ${style.titleError}`}>
-            {i18n._('OperationStatus.Error.title')}
-          </FormTitle>
-          <p className={style.subtext}>
-            {i18n._('OperationStatus.Error.description')}
-          </p>
-        </div>
+          <div
+            className={style.body}
+          >
+            <FormTitle className={`${style.title} ${style.titleError}`}>
+              {i18n._('OperationStatus.Error.title')}
+            </FormTitle>
+            <p className={style.subtext}>
+              {i18n._('OperationStatus.Error.description')}
+            </p>
+          </div>
+        </Grid.Item>
+      </Grid.Container>
+      <Grid.Container>
         <Grid.Item
           className={style.actions}
-          l={8}
-          xl={8}
+          s={4}
+          m={4}
+          l={4}
+          xl={4}
         >
           {!isNil(investment) && (
             <BigButton
@@ -76,8 +82,8 @@ const StatusError: React.FunctionComponent<StatusErrorProps> = ({
             {i18n._('OperationStatus.actions.contactSupport')}
           </BigButton>
         </Grid.Item>
-      </Grid.Item>
-    </Grid.Container>
+      </Grid.Container>
+    </>
   )
 }
 
