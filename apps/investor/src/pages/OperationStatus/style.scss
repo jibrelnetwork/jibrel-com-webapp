@@ -26,13 +26,14 @@
 
 .header-image {
   background-repeat: no-repeat;
-  background-size: cover;
+  background-size: contain;
   background-position: center;
-  padding-top: 100%;
-  height: 0;
+  height: 200px;
 
   @include screen('>xsmall') {
+    background-size: cover;
     padding-top: 50%;
+    height: 0;
   }
 }
 
@@ -86,6 +87,11 @@
 }
 
 .actions {
+
+  @include screen('>medium') {
+    width: 65%;
+  }
+
   > .action {
       margin-bottom: 16px;
 

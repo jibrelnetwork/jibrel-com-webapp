@@ -81,11 +81,7 @@ const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
             { label: 'OperationStatus.Success.Details.amount.title', value: amount },
           ]} className={style.details} />
         </div>
-        <Grid.Item
-          className={style.actions}
-          l={8}
-          xl={8}
-        >
+        <div className={style.actions}>
           <BigButton
             className={style.action}
             component={Link}
@@ -100,7 +96,7 @@ const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
           >
             {i18n._('OperationStatus.actions.backToMain')}
           </BigButton>
-        </Grid.Item>
+        </div>
       </Grid.Item>
     </Grid.Container>
   )

@@ -50,11 +50,7 @@ const StatusError: React.FunctionComponent<StatusErrorProps> = ({
             {i18n._('OperationStatus.Error.description')}
           </p>
         </div>
-        <Grid.Item
-          className={style.actions}
-          l={8}
-          xl={8}
-        >
+        <div className={style.actions}>
           {!isNil(investment) && (
             <BigButton
               className={style.action}
@@ -75,7 +71,7 @@ const StatusError: React.FunctionComponent<StatusErrorProps> = ({
           >
             {i18n._('OperationStatus.actions.contactSupport')}
           </BigButton>
-        </Grid.Item>
+        </div>
       </Grid.Item>
     </Grid.Container>
   )

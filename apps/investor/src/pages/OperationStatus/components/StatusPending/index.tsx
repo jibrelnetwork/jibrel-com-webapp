@@ -43,11 +43,7 @@ const StatusPending: React.FunctionComponent = () => {
             {i18n._('OperationStatus.Pending.description')}
           </p>
         </div>
-        <Grid.Item
-          className={style.actions}
-          l={8}
-          xl={8}
-        >
+        <div className={style.actions}>
           <BigButton
             className={style.action}
             component={Link}
@@ -62,7 +58,7 @@ const StatusPending: React.FunctionComponent = () => {
           >
             {i18n._('OperationStatus.actions.backToMain')}
           </BigButton>
-        </Grid.Item>
+        </div>
       </Grid.Item>
     </Grid.Container>
   )
