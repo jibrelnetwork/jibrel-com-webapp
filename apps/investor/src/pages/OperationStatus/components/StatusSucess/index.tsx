@@ -50,41 +50,47 @@ const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
     ]
 
   return (
-    <Grid.Container
-      component='article'
-      className={style.statusContainer}
-    >
-      <Grid.Item
-        className={`${style.headerImage} ${style.imageSuccess}`}
-        s={4}
-        m={4}
-        l={6}
-        xl={6}
-      />
-      <Grid.Item
-        s={4}
-        m={4}
-        l={6}
-        xl={6}
+    <>
+      <Grid.Container
+        component='article'
+        className={style.statusContainer}
       >
-        <div
-          className={style.body}
+        <Grid.Item
+          className={`${style.headerImage} ${style.imageSuccess}`}
+          s={4}
+          m={4}
+          l={6}
+          xl={6}
+        />
+        <Grid.Item
+          s={4}
+          m={4}
+          l={6}
+          xl={6}
         >
-          <FormTitle className={`${style.title} ${style.titleSuccess}`}>
-            {i18n._('OperationStatus.Success.title')}
-          </FormTitle>
-          <p className={style.subtext}>
-            {i18n._('OperationStatus.Success.description')}
-          </p>
-          <DetailsCard itemList={[
-            ...investmentDetails,
-            { label: 'OperationStatus.Success.Details.amount.title', value: amount },
-          ]} className={style.details} />
-        </div>
+          <div
+            className={style.body}
+          >
+            <FormTitle className={`${style.title} ${style.titleSuccess}`}>
+              {i18n._('OperationStatus.Success.title')}
+            </FormTitle>
+            <p className={style.subtext}>
+              {i18n._('OperationStatus.Success.description')}
+            </p>
+            <DetailsCard itemList={[
+              ...investmentDetails,
+              { label: 'OperationStatus.Success.Details.amount.title', value: amount },
+            ]} className={style.details} />
+          </div>
+        </Grid.Item>
+      </Grid.Container>
+      <Grid.Container>
         <Grid.Item
           className={style.actions}
-          l={8}
-          xl={8}
+          s={4}
+          m={4}
+          l={4}
+          xl={4}
         >
           <BigButton
             className={style.action}
@@ -101,8 +107,8 @@ const StatusSuccess: React.FunctionComponent<StatusSuccessProps> = ({
             {i18n._('OperationStatus.actions.backToMain')}
           </BigButton>
         </Grid.Item>
-      </Grid.Item>
-    </Grid.Container>
+      </Grid.Container>
+    </>
   )
 }
 
