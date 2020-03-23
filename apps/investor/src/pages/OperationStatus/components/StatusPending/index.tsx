@@ -16,44 +16,34 @@ const StatusPending: React.FunctionComponent = () => {
   const i18n = useI18n()
 
   return (
-    <>
-      <Grid.Container
-        component='article'
-        className={style.statusContainer}
+    <Grid.Container
+      component='article'
+      className={style.statusContainer}
+    >
+      <Grid.Item
+        className={`${style.headerImage} ${style.imagePending}`}
+        s={4}
+        m={4}
+        l={6}
+        xl={6}
+      />
+      <Grid.Item
+        s={4}
+        m={4}
+        l={6}
+        xl={6}
       >
-        <Grid.Item
-          className={`${style.headerImage} ${style.imagePending}`}
-          s={4}
-          m={4}
-          l={6}
-          xl={6}
-        />
-        <Grid.Item
-          s={4}
-          m={4}
-          l={6}
-          xl={6}
+        <div
+          className={style.body}
         >
-          <div
-            className={style.body}
-          >
-            <FormTitle className={`${style.title} ${style.titlePending}`}>
-              {i18n._('OperationStatus.Pending.title')}
-            </FormTitle>
-            <p className={style.subtext}>
-              {i18n._('OperationStatus.Pending.description')}
-            </p>
-          </div>
-        </Grid.Item>
-      </Grid.Container>
-      <Grid.Container>
-        <Grid.Item
-          className={style.actions}
-          s={4}
-          m={4}
-          l={4}
-          xl={4}
-        >
+          <FormTitle className={`${style.title} ${style.titlePending}`}>
+            {i18n._('OperationStatus.Pending.title')}
+          </FormTitle>
+          <p className={style.subtext}>
+            {i18n._('OperationStatus.Pending.description')}
+          </p>
+        </div>
+        <div className={style.actions}>
           <BigButton
             className={style.action}
             component={Link}
@@ -68,9 +58,9 @@ const StatusPending: React.FunctionComponent = () => {
           >
             {i18n._('OperationStatus.actions.backToMain')}
           </BigButton>
-        </Grid.Item>
-      </Grid.Container>
-    </>
+        </div>
+      </Grid.Item>
+    </Grid.Container>
   )
 }
 

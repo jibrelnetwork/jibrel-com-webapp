@@ -87,6 +87,11 @@
 }
 
 .actions {
+
+  @include screen('>medium') {
+    width: 65%;
+  }
+
   > .action {
       margin-bottom: 16px;
 
