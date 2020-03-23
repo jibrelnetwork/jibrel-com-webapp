@@ -1,5 +1,7 @@
 import { CountryCode } from '@jibrelcom/countries/src/types'
 
+import { APIResponse } from './api'
+
 import { JibrelBankAccount } from './user'
 import { Asset } from './portfolio'
 
@@ -90,11 +92,22 @@ export interface InvestFormFields {
   isRiskAgreed: boolean;
 }
 
+export enum InvestmentStatus {
+  Draft = 'draft',
+  Pending = 'pending',
+  Hold = 'hold',
+  Completed = 'completed',
+  Canceled = 'canceled',
+  Error = 'error',
+}
+
 export interface InvestApplication {
   uuid: string;
+  status: InvestmentStatus;
   amount: string;
   isAgreedRisks: boolean;
   bankAccount: JibrelBankAccount;
+  depositId?: string;
   depositReferenceCode: string;
   createdAt: Date;
   updatedAt: Date;
@@ -103,3 +116,5 @@ export interface InvestApplication {
   subscriptionAgreementStatus: SubscriptionAgreementStatus;
   subscriptionAgreementRedirectUrl: string;
 }
+
+export type APIResponseRetrieveInvestmentApplication = APIResponse<InvestApplication>

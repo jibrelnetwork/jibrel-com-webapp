@@ -1,0 +1,72 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/media';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+.body {
+  @include screen('>small') {
+    @include flex-column;
+
+    max-height: 700px; // Needs to reordering elements to two columns
+  }
+}
+
+.header {
+  margin-bottom: 48px;
+
+  @include screen('>small') {
+    margin-bottom: 64px;
+  }
+}
+
+.subtext {
+  @include font-body;
+}
+
+.details-wrapper {
+  order: 2;
+
+  margin-bottom: 48px;
+
+  @include screen('>small') {
+    order: initial;
+  }
+}
+
+.actions {
+  align-items: flex-start;
+  order: 3;
+
+  > .button {
+    margin-bottom: 16px;
+  }
+
+  @include screen('>xsmall') {
+    @include flex-row;
+  }
+
+  @include screen('>small') {
+    @include flex-column;
+
+    order: 0;
+
+    > .button {
+      margin-bottom: 24px;
+      max-width: 360px;
+    }
+  }
+}
+
+.warning {
+  @media print {
+    display: none;
+  }
+}
+
+.warning,
+.header,
+.actions {
+  @media print {
+    display: none;
+  }
+}

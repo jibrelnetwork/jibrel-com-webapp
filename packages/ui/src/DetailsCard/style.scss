@@ -1,0 +1,35 @@
+@import '../theme/fonts';
+@import '../theme/colors';
+
+.details {
+  margin-top: 24px;
+  padding: 30px 24px;
+  background-color: $color-blue-10;
+  border-radius: 12px;
+
+  @media print {
+    padding: 0;
+  }
+}
+
+.item {
+  margin-top: 24px;
+  text-align: left;
+
+  &:first-child {
+    margin-top: 0;
+  }
+}
+
+.label {
+  @include font-caption;
+
+  margin-bottom: 4px;
+  color: $color-black-60;
+}
+
+.value {
+  @include font-title;
+
+  color: $color-black;
+}

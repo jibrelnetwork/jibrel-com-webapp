@@ -2,6 +2,7 @@
 
 .title {
   @include font-h1-xs;
+
   width: $column-s-4;
   padding-top: 64px;
   padding-bottom: 32px;
@@ -22,6 +23,5 @@
 
 .back {
   height: 24px;
-  margin-right: auto;
   margin-bottom: 24px;
 }

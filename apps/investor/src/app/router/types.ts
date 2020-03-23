@@ -12,3 +12,9 @@ export interface RouteEnhanced extends Route {
 export interface RouterDependencies {
   store: Store;
 }
+
+export enum OperationProvisionalStatus {
+  Success = 'success',
+  Failure = 'failure',
+  Pending = 'pending',
+}

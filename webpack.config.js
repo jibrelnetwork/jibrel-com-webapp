@@ -15,6 +15,8 @@ const ModuleNotFoundPlugin = require('react-dev-utils/ModuleNotFoundPlugin')
 
 const SpriteLoaderPlugin = require('svg-sprite-loader/plugin')
 
+const HealthcheckPlugin = require('./healthcheck-webpack-plugin')
+
 const isEnvDevelopment = process.env.NODE_ENV === 'development'
 const isEnvProduction = process.env.NODE_ENV === 'production'
 
@@ -36,6 +38,7 @@ const create = (dirname) => {
     PUBLIC: path.resolve(dirname, 'src/public'),
     PACKAGES: path.resolve(__dirname, 'packages'),
     PUBLIC_URL_PATH: '/',
+    STATIC_URL_PATH: '/static/',
     PUBLIC_URL: '',
   }
 
@@ -104,7 +107,7 @@ const create = (dirname) => {
               loader: 'svg-sprite-loader',
               options: {
                 extract: true,
-                spriteFilename: '[hash:8].sprite-icons.svg',
+                spriteFilename: 'static/[hash:8].sprite-icons.svg',
               },
             },
             {
@@ -139,7 +142,7 @@ const create = (dirname) => {
               loader: 'svg-sprite-loader',
               options: {
                 extract: true,
-                spriteFilename: '[hash:8].sprite-colored.svg',
+                spriteFilename: 'static/[hash:8].sprite-colored.svg',
               },
             },
             {
@@ -364,7 +367,13 @@ const create = (dirname) => {
         },
       ]),
 
-      new SpriteLoaderPlugin(),
+      new SpriteLoaderPlugin({
+        publicPath: PATHS.STATIC_URL_PATH,
+      }),
+
+      new HealthcheckPlugin({
+        publicPath: PATHS.OUTPUT,
+      }),
 
       // we pack files more than 1kb with gzip in advance
       // to prevent nginx from converting it in run-time

@@ -33,7 +33,7 @@
   ul {
     li {
       position: relative;
-      padding-left: 24px;
+      padding: 0 24px;
       margin-bottom: 24px;
 
       &::before {
@@ -44,6 +44,11 @@
         line-height: 140%;
         color: $color-black-30;
         content: "•";
+
+        [dir=rtl] & {
+          right: 0;
+          left: initial;
+        }
       }
     }
   }
@@ -61,25 +66,4 @@
 
 .action {
   margin-bottom: 16px;
-}
-
-.background {
-  background-size: 50%;
-  background-image: none;
-  background-repeat: no-repeat;
-  background-position: top right;
-
-  @include screen('>small') {
-    &.personal {
-      background-image: url('../../public/images/pic_kyc_man.svg');
-    }
-
-    &.residency {
-      background-image: url('../../public/images/pic_kyc_geo.svg');
-    }
-
-    &.income {
-      background-image: url('../../public/images/pic_kyc_docs.svg');
-    }
-  }
 }

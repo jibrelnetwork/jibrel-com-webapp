@@ -2,42 +2,27 @@ import React from 'react'
 import { useStore } from 'effector-react'
 
 import {
-  Loader,
   PageTitle,
   PageBackLink,
-  NotFound,
 } from '@jibrelcom/ui'
 import {
   useI18n,
   useLanguageCode,
 } from '@jibrelcom/i18n'
 
-import settings from 'app/settings'
 import { formatCurrency } from 'utils/formatters'
 
-import {
-  $IsLoading,
-  $Investment,
-} from '../model'
+import { $Investment } from '../../model'
 
 import style from './style.scss'
 
 const Investment: React.FunctionComponent = () => {
-  const isLoading = useStore($IsLoading)
   const i18n = useI18n()
   const languageCode = useLanguageCode()
   const investment = useStore($Investment)
 
-  if (isLoading) {
-    return <Loader color={Loader.color.Blue} className={style.loader} />
-  }
-
   if (investment === null) {
-    return (
-      <NotFound
-        host={settings.CMS_ORIGIN}
-      />
-    )
+    return null
   }
 
   const value = formatCurrency(
