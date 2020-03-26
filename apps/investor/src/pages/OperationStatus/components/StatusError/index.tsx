@@ -1,5 +1,4 @@
 import React from 'react'
-import isNil from 'lodash-es/isNil'
 import { Link } from 'react-router5'
 import { useI18n } from '@jibrelcom/i18n'
 import {
@@ -11,14 +10,12 @@ import {
 
 import style from '../../style.scss'
 
-import { InvestApplication } from 'store/types/invest'
-
 interface StatusErrorProps {
-  investment?: InvestApplication;
+  investmentId: string;
 }
 
 const StatusError: React.FunctionComponent<StatusErrorProps> = ({
-  investment,
+  investmentId,
 }) => {
   const i18n = useI18n()
 
@@ -51,18 +48,16 @@ const StatusError: React.FunctionComponent<StatusErrorProps> = ({
           </p>
         </div>
         <div className={style.actions}>
-          {!isNil(investment) && (
-            <BigButton
-              className={style.action}
-              component={Link}
-              routeName='ApplicationPayment'
-              routeParams={{
-                id: investment.uuid
-              }}
-            >
-              {i18n._('OperationStatus.actions.tryAgain')}
-            </BigButton>
-          )}
+          <BigButton
+            className={style.action}
+            component={Link}
+            routeName='ApplicationPayment'
+            routeParams={{
+              id: investmentId,
+            }}
+          >
+            {i18n._('OperationStatus.actions.tryAgain')}
+          </BigButton>
           <BigButton
             component='a'
             href='mailto:support@jibrel.com'
