@@ -22,6 +22,7 @@ import { JibrelBankAccount } from 'store/types/user'
 
 import style from '../style.scss'
 
+// FIXME: Use { DetailsCard } from '@jibrelcom/ui' instead of custom component
 export const SuccessStep: React.FunctionComponent<{
   data: JibrelBankAccount;
   startupName: string | void;
