@@ -5,6 +5,7 @@
 
 .button {
   @include ellipsis;
+
   box-sizing: border-box;
   display: block;
   width: 100%;
@@ -28,6 +29,22 @@
     text-decoration: none;
     cursor: pointer;
   }
+
+  &.loading {
+    height: 64px;
+    padding: 0;
+  }
+
+  @include disabled {
+    &.loading {
+      &,
+      &:hover {
+        .loader > .dot {
+          background-color: $color-black-60;
+        }
+      }
+    }
+  }
 }
 
 .main {
@@ -46,9 +63,6 @@
   }
 
   &.loading {
-    height: 64px;
-    padding: 0;
-
     &:hover {
       .loader > .dot {
         background-color: $color-blue;
@@ -65,15 +79,6 @@
     border-color: $color-black-10;
     color: $color-black-40;
     cursor: auto;
-
-    &.loading {
-      &,
-      &:hover {
-        .loader > .dot {
-          background-color: $color-black-60;
-        }
-      }
-    }
   }
 }
 
@@ -117,6 +122,15 @@
 
     &:after {
       border-color: $color-blue;
+    }
+  }
+
+  &.loading {
+    &,
+    &:hover {
+      .loader > .dot {
+        background-color: $color-blue;
+      }
     }
   }
 

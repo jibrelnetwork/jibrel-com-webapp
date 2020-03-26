@@ -1,7 +1,6 @@
-import React from 'react'
+import React, { useState } from 'react'
 import cc from 'classcat'
 import arrayMutators from 'final-form-arrays'
-import grid from '@jibrelcom/ui/src/Grid/grid.scss'
 import { connect } from 'react-redux'
 import { useI18n } from '@jibrelcom/i18n'
 
@@ -16,11 +15,16 @@ import {
 } from 'react-final-form'
 
 import {
+  Grid,
+  FormTitle,
+  BigButton,
   LinkButton,
   BigButtonSubmit,
+  BigButtonVariant,
 } from '@jibrelcom/ui'
 
 import KYCLayout from 'layouts/KYCLayout'
+import { initialFormValues } from 'store/models/kycOrganization'
 
 import {
   Dispatch,
@@ -57,17 +61,170 @@ interface OwnProps {
 
 export type BeneficiaryProps = StateProps & DispatchProps & OwnProps
 
-export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
-  submit,
-  backHandler,
-  nextHandler,
-  uploadDocument,
-  values,
-  documents,
-  backLabel,
-  nextLabel,
+type BeneficiaryFormProps = BeneficiaryProps & {
+  formProps: FormRenderProps;
+}
+
+type BeneficiaryConfirmationProps = BeneficiaryFormProps & {
+  confirmBeneficiary: () => void;
+}
+
+const BeneficiaryConfirmation: React.FunctionComponent<BeneficiaryConfirmationProps> = ({
+  confirmBeneficiary,
+  formProps,
 }) => {
   const i18n = useI18n()
+
+  const {
+    handleSubmit,
+    form: { change },
+    submitting,
+  } = formProps
+
+  const skipBeneficiary = (): void => {
+    change('beneficiaries', [])
+    handleSubmit()
+  }
+
+  return (
+    <>
+      <Grid.Container>
+        <Grid.Item
+          xs={4}
+          s={5}
+          m={4}
+          l={5}
+        >
+          <FormTitle>
+            {i18n._('KYC.Company.beneficiary.form.title')}
+          </FormTitle>
+          <p className={style.question}>
+            {i18n._('KYC.Company.beneficiary.form.question')}
+          </p>
+        </Grid.Item>
+      </Grid.Container>
+      <Grid.Container>
+        <Grid.Item
+          className={style.actions}
+          xs={4}
+          s={4}
+          m={3}
+          l={4}
+        >
+          <BigButton
+            onClick={confirmBeneficiary}
+            variant={BigButtonVariant.main}
+            component='button'
+          >
+            {i18n._('KYC.Company.beneficiary.form.action.yes')}
+          </BigButton>
+          <BigButton
+            onClick={skipBeneficiary}
+            className={style.no}
+            variant={BigButtonVariant.secondary}
+            component='button'
+            isLoading={submitting}
+            isDisabled={submitting}
+          >
+            {i18n._('KYC.Company.beneficiary.form.action.no')}
+          </BigButton>
+        </Grid.Item>
+      </Grid.Container>
+    </>
+  )
+}
+
+const BeneficiaryForm: React.FunctionComponent<BeneficiaryFormProps> = ({
+  uploadDocument,
+  documents,
+  nextLabel,
+  formProps,
+}) => {
+  const {
+    handleSubmit,
+    values,
+    submitError,
+    form: {
+      change,
+      mutators,
+    },
+  } = formProps
+
+  const i18n = useI18n()
+
+  if (values.beneficiaries.length === 0) {
+    change('beneficiaries', initialFormValues.beneficiaries)
+  }
+
+  return (
+    <>
+      <Grid.Container
+        component='form'
+        onSubmit={handleSubmit}
+      >
+        <Grid.Item
+          xs={4}
+          s={5}
+          m={4}
+          l={5}
+        >
+          <FormTitle>
+            {i18n._('KYC.Company.beneficiary.form.title')}
+          </FormTitle>
+          <div className={style.caption}>
+            {i18n._('KYC.Company.beneficiary.form.description')}
+          </div>
+          <FieldArray name='beneficiaries' initialValue={values.beneficiaries}>
+            {({
+              fields,
+            }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
+              name: string,
+              index: number,
+            ) => (
+              <BeneficiaryFields
+                key={name}
+                uploadDocument={uploadDocument}
+                deleteHandler={(): void => fields.remove(index)}
+                documents={documents}
+                index={index}
+                isPrimary={(index === 0)}
+              />
+            ))}
+          </FieldArray>
+          <LinkButton
+            onClick={(): void => mutators.push('beneficiaries', undefined)}
+            type='button'
+          >
+            {i18n._('KYC.Company.beneficiary.form.button.add')}
+          </LinkButton>
+          {submitError && <div className={style.submitError}>{submitError}</div>}
+        </Grid.Item>
+      </Grid.Container>
+      <Grid.Container>
+        <Grid.Item
+          className={style.actions}
+          xs={4}
+          s={4}
+          m={3}
+          l={4}
+        >
+          <BigButtonSubmit>{nextLabel}</BigButtonSubmit>
+        </Grid.Item>
+      </Grid.Container>
+    </>
+  )
+}
+
+export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = (props) => {
+  const {
+    submit,
+    backHandler,
+    nextHandler,
+    values,
+    backLabel,
+  } = props
+
+  const [isBeneficiaryConfirmed, setBeneficiaryConfirmed] = useState<boolean>(false)
 
   return (
     <KYCLayout
@@ -76,7 +233,6 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
     >
       <div
         className={cc([
-          grid.grid,
           style.beneficiary,
           style.background,
         ])}
@@ -85,50 +241,21 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
           onSubmit={submit(nextHandler)}
           initialValues={values}
           mutators={{ ...arrayMutators }}
-          render={({
-            handleSubmit,
-            submitError,
-            values: { beneficiaries },
-            form: {
-              mutators: {
-                push,
-              },
-            },
-          }: FormRenderProps): React.ReactNode => (
-            <form onSubmit={handleSubmit}>
-              <div className={style.step}>
-                <h2 className={style.title}>
-                  {i18n._('KYC.Company.beneficiary.form.title')}
-                </h2>
-                <div className={style.caption}>
-                  {i18n._('KYC.Company.beneficiary.form.description')}
-                </div>
-                <FieldArray name='beneficiaries' initialValue={beneficiaries}>
-                  {({
-                    fields,
-                  }: FieldArrayProps<ContactValues, HTMLElement>): React.ReactNode => fields.map((
-                    name: string,
-                    index: number,
-                  ) => (
-                      <BeneficiaryFields
-                        key={name}
-                        uploadDocument={uploadDocument}
-                        deleteHandler={(): void => fields.remove(index)}
-                        documents={documents}
-                        index={index}
-                        isPrimary={(index === 0)}
-                      />
-                    ))}
-                </FieldArray>
-                <LinkButton type='button' onClick={(): void => push('beneficiaries', undefined)}>
-                  {i18n._('KYC.Company.beneficiary.form.button.add')}
-                </LinkButton>
-                {submitError && <div className={style.submitError}>{submitError}</div>}
-              </div>
-              <BigButtonSubmit className={style.submit}>
-                {nextLabel}
-              </BigButtonSubmit>
-            </form>
+          render={(formProps: FormRenderProps): React.ReactNode => (
+            <>
+              {isBeneficiaryConfirmed ? (
+                <BeneficiaryForm
+                  {...props}
+                  formProps={formProps}
+                />
+              ) : (
+                <BeneficiaryConfirmation
+                  {...props}
+                  formProps={formProps}
+                  confirmBeneficiary={(): void => setBeneficiaryConfirmed(true)}
+                />
+              )}
+            </>
           )}
         />
       </div>
@@ -142,9 +269,7 @@ export default connect(
     values: state.kycOrganization.values,
   }),
   (dispatch: Dispatch) => ({
-    submit: (
-      callback: () => void,
-    ) => (
+    submit: (callback: () => void) => (
       values: KYCInstitutionValues,
     ): Promise<KYCInstitutionValues> | void => dispatch.kycOrganization
       .validate({ step: 3, ...values })

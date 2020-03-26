@@ -1,15 +1,10 @@
 @import '../theme/fonts';
-@import '../theme/media';
 @import '../theme/colors';
 
 .main {
-  @include font-h2-s;
+  @include font-h2;
 
   width: 100%;
   padding-bottom: 24px;
   color: $color-black;
-
-  @include screen('>small') {
-    @include font-h2-l;
-  }
 }

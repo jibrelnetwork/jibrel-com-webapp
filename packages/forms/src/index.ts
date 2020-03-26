@@ -2,4 +2,8 @@ export { default as getErrorFieldsFromResponse } from './getErrorFieldsFromRespo
 
 export { APIResponse } from './types'
 export { APIFormErrors } from './types'
-export { API_FORM_ERROR } from './types'
+
+export {
+  API_FORM_ERROR,
+  API_FORM_ERRORS,
+} from './types'
