@@ -7,6 +7,8 @@ import {
   LanguageCode,
 } from '@jibrelcom/i18n'
 
+import '@jibrelcom/ui/scss/theme/base.scss'
+
 import { router } from './app/router'
 import locales from './locales'
 import store from './store'

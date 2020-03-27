@@ -1,5 +1,5 @@
-@import '../theme/colors';
-@import '../theme/fonts';
+@import '../../scss/colors';
+@import '../../scss/fonts';
 
 .container {
   @include font-body-s;

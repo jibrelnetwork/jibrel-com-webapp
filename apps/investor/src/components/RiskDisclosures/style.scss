@@ -1,65 +1,41 @@
-@import '~@jibrelcom/ui/src/theme';
+@import '~@jibrelcom/ui/scss/media';
+@import '~@jibrelcom/ui/scss/fonts';
+@import '~@jibrelcom/ui/scss/colors';
 
 .container {
-  @include font-body-s;
+  @include font-body;
   color: $color-black;
 
-  @include screen('>small') {
-    @include font-body-l;
-  }
-
   > :global(.h1-header) {
-    @include font-h1-xs;
+    @include font-h1;
 
     margin-top: 24px;
     margin-bottom: 32px;
-
-    @include screen('>xsmall') {
-      @include font-h1-s;
-    }
-
-    @include screen('>small') {
-      @include font-h1-m;
-    }
-
-    @include screen('>medium') {
-      @include font-h1-l;
-    }
   }
 
   > :global(.subheader-2) {
-    @include font-subheader-2-s;
+    @include font-subheader-2;
     margin-top: 24px;
     margin-bottom: 24px;
-
-    @include screen('>small') {
-      @include font-subheader-2-l;
-    }
   }
 
   > :global(.h2-header) {
-    @include font-h2-s;
+    @include font-h2;
 
     margin-top: 48px;
     margin-bottom: 16px;
 
     @include screen('>small') {
-      @include font-h2-l;
-
       margin-top: 64px;
       margin-bottom: 24px;
     }
   }
 
   > :global(.h3-header) {
-    @include font-h3-s;
+    @include font-h3;
 
     margin-top: 64px;
     margin-bottom: 24px;
-
-    @include screen('>small') {
-      @include font-h3-l;
-    }
   }
 
   > :global(.body) {

@@ -1,4 +1,4 @@
-@import './media.scss';
+@import 'media';
 
 @mixin font-h1 {
   @include font-h1-xs;
@@ -43,7 +43,7 @@
 @mixin font-h2 {
   @include font-h2-s;
 
-  @include screen('>medium') {
+  @include screen('>small') {
     @include font-h2-l;
   }
 }
@@ -63,7 +63,7 @@
 @mixin font-h3 {
   @include font-h3-s;
 
-  @include screen('>medium') {
+  @include screen('>small') {
     @include font-h3-l;
   }
 }
@@ -98,6 +98,14 @@
   line-height: 28px;
 }
 
+@mixin font-subheader-2 {
+  @include font-subheader-2-s;
+
+  @include screen('>small') {
+    @include font-subheader-2-l;
+  }
+}
+
 @mixin font-title {
   font-weight: 700;
   font-size: 20px;
@@ -109,7 +117,7 @@
 @mixin font-body {
   @include font-body-s;
 
-  @include screen('>medium') {
+  @include screen('>small') {
     @include font-body-l;
   }
 }

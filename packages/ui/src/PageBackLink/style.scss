@@ -1,6 +1,6 @@
-@import '../theme/colors';
-@import '../utils/scss/flex';
-@import '../utils/scss/iconColor';
+@import '../../scss/colors';
+@import '../../scss/flex';
+@import '../../scss/icon-color';
 
 .main {
   @include flex-row-center;

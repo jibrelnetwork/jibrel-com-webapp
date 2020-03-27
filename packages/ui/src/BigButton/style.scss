@@ -1,7 +1,7 @@
-@import '../theme/colors';
+@import '../../scss/colors';
 @import '../Loader/style';
-@import '../utils/scss/ellipsis';
-@import '../utils/scss/disabled';
+@import '../../scss/ellipsis';
+@import '../../scss/disabled';
 
 .button {
   @include ellipsis;

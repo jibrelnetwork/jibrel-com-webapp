@@ -1,6 +1,6 @@
-@import '~@jibrelcom/ui/src/theme';
-@import '~@jibrelcom/ui/src/utils/scss/flex';
-@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+@import '~@jibrelcom/ui/scss/colors';
+@import '~@jibrelcom/ui/scss/flex';
+@import '~@jibrelcom/ui/scss/icon-color';
 
 .main {
   @include flex-column-center;

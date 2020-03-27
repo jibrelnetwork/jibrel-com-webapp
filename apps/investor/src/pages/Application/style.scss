@@ -1,9 +1,8 @@
-@import '~@jibrelcom/ui/src/Grid/grid';
-@import '~@jibrelcom/ui/src/theme/fonts';
-@import '~@jibrelcom/ui/src/theme/media';
-@import '~@jibrelcom/ui/src/theme/colors';
-@import '~@jibrelcom/ui/src/utils/scss/flex';
-@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+@import '~@jibrelcom/ui/scss/fonts';
+@import '~@jibrelcom/ui/scss/media';
+@import '~@jibrelcom/ui/scss/colors';
+@import '~@jibrelcom/ui/scss/flex';
+@import '~@jibrelcom/ui/scss/icon-color';
 
 .amount {
   margin-bottom: 64px;

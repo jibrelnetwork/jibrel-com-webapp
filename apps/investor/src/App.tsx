@@ -7,6 +7,8 @@ import {
   LanguageCode,
 } from '@jibrelcom/i18n'
 
+import '@jibrelcom/ui/scss/theme/base.scss'
+
 import store from './store'
 import Pages from './pages'
 import locales from './locales'

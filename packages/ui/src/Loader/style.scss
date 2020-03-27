@@ -1,5 +1,5 @@
-@import '../theme/colors';
-@import '../utils/scss/flex';
+@import '../../scss/colors';
+@import '../../scss/flex';
 
 .loader {
   @include flex-row-center;

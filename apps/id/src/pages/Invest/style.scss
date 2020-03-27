@@ -1,4 +1,7 @@
-@import '~@jibrelcom/ui/src/index';
+@import '~@jibrelcom/ui/scss/media';
+@import '~@jibrelcom/ui/scss/colors';
+@import '~@jibrelcom/ui/scss/fonts';
+@import '~@jibrelcom/ui/scss/grid';
 
 .main {
   width: 100%;
@@ -11,30 +14,22 @@
 }
 
 .title {
-  @include font-h1-xs;
+  @include font-h1;
 
   margin-top: 32px;
   text-align: center;
 
-  @include screen('>xsmall') {
-    @include font-h1-s;
-  }
-
   @include screen('>small') {
-    @include font-h1-m;
-
     margin-top: 48px;
   }
 
   @include screen('>medium') {
-    @include font-h1-l;
-
     margin-top: 64px;
   }
 }
 
 .text {
-  @include font-subheader-2-s;
+  @include font-subheader-2;
 
   width: $column-s-4;
   margin: 32px auto;
@@ -46,8 +41,6 @@
   }
 
   @include screen('>small') {
-    @include font-subheader-2-l;
-
     width: $column-m-6;
     margin: 48px auto;
   }
