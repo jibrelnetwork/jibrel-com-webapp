@@ -1,6 +1,6 @@
 {
   "name": "@jibrelnetwork/jibrel-com-webapp",
-  "version": "0.5.0",
+  "version": "0.6.0",
   "private": true,
   "scripts": {
     "clean": "npx rimraf ./build/* && npx rimraf ./reports/*",
@@ -37,11 +37,11 @@
     "html-webpack-plugin": "~4.0.0-beta.11",
     "lerna": "^3.19.0",
     "mini-css-extract-plugin": "~0.8.0",
-    "node-sass": "~4.13.0",
     "postcss-flexbugs-fixes": "~4.1.0",
     "postcss-loader": "~3.0.0",
     "react-dev-utils": "~9.1.0",
     "rimraf": "~3.0.0",
+    "sass": "~1.26.3",
     "sass-loader": "~8.0.0",
     "style-loader": "~1.0.0",
     "svg-sprite-loader": "~4.1.6",

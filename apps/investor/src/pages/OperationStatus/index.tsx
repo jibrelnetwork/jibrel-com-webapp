@@ -114,7 +114,7 @@ const OperationStatus: React.FunctionComponent<OperationStatusProps> = ({
       return (
         <CoreLayout>
           <StatusError
-            investment={investment}
+            investmentId={id}
           />
         </CoreLayout>
       )

@@ -28,7 +28,7 @@
   background-repeat: no-repeat;
   background-size: contain;
   background-position: center;
-  height: 200px;
+  height: 192px;
 
   @include screen('>xsmall') {
     background-size: cover;
@@ -51,14 +51,20 @@
 
 .body {
   text-align: center;
+  margin-top: 24px;
   margin-bottom: 48px;
 
   @include screen('>xsmall') {
     text-align: initial;
+    margin-top: 48px;
   }
 
   @include screen('>small') {
     margin-bottom: 64px;
+  }
+
+  @include screen('>medium') {
+    margin-top: 64px;
   }
 }
 
