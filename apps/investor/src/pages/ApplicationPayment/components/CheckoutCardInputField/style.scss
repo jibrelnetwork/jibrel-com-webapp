@@ -1,0 +1,129 @@
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+
+:global(iframe#controllerFrame) {
+  display: none!important;
+}
+
+:global(.frame) {
+  position: relative;
+  width: 100%;
+  height: 64px;
+  border-radius: 4px;
+  border: 1px solid $color-black-30;
+  transition: border-color 0.2s ease 0s;
+
+  &:hover {
+    border-color: $color-blue-60;
+  }
+
+  &::after {
+    z-index: -1;
+    content: '';
+    position: absolute;
+    top: -1px;
+    left: -1px;
+    width: calc(100% + 2px);
+    height: calc(100% + 2px);
+    border-radius: 4px;
+    border: 2px solid transparent;
+    background: transparent;
+    box-sizing: border-box;
+    transition: border-color 0.2s ease 0s;
+  }
+}
+
+:global(.frame.frame--focus) {
+  &,
+  &:hover {
+    border-color: $color-blue;
+  }
+
+  &::after {
+    border-color: $color-blue;
+  }
+
+  ~ .label  {
+    top: -10px;
+    left: -16px;
+    opacity: 0;
+
+    [dir=rtl] & {
+      left: 16px;
+    }
+  }
+}
+
+:global(.frame.frame--invalid) {
+  border-color: $color-red-30;
+
+  &:hover {
+    border-color: $color-red-60;
+  }
+
+  ~ .label {
+    color: $color-red;
+  }
+}
+
+:global(.frame.frame--invalid.frame--focus) {
+  &,
+  &::after {
+    border-color: $color-red;
+  }
+}
+
+.main {
+  padding-top: 24px;
+}
+
+.frame {
+  position: relative;
+}
+
+.label {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  width: 100%;
+  padding: 10px 16px 0;
+  font-size: 12px;
+  line-height: 17px;
+  color: $color-black-60;
+  transition:
+    top 0.2s ease-in-out,
+    left 0.2s ease-in-out,
+    color 0.2s ease-in-out,
+    opacity 0.2s ease-in-out;
+}
+
+.bottom {
+  @include flex-row;
+
+  padding-top: 24px;
+  margin-left: -12px;
+  margin-right: -12px;
+}
+
+.cvv,
+.date {
+  margin: 0 12px;
+}
+
+.date {
+  order: 1;
+
+  [dir=rtl] & {
+    order: 2;
+  }
+}
+
+.cvv {
+  order: 2;
+
+  [dir=rtl] & {
+    order: 1;
+  }
+}

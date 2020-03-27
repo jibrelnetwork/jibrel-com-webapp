@@ -7,6 +7,7 @@ export type Settings = {
   CMS_ORIGIN: string;
   FOLOOSI_MERCHANT_KEY: string;
   ID_ORIGIN: string;
+  CHECKOUT_PUBLIC_KEY: string;
 }
 
 declare global {
@@ -26,6 +27,7 @@ export default settings.init<Settings>(
     CMS_ORIGIN: process.env.CMS_ORIGIN,
     FOLOOSI_MERCHANT_KEY: process.env.FOLOOSI_MERCHANT_KEY,
     ID_ORIGIN: process.env.ID_ORIGIN,
+    CHECKOUT_PUBLIC_KEY: process.env.CHECKOUT_PUBLIC_KEY,
   },
   {
     ID_ORIGIN: (value, values) => value

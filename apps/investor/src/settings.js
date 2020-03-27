@@ -4,4 +4,5 @@ window.SETTINGS = {
   CMS_ORIGIN: '{{ default .Env.CMS_ORIGIN "" }}',
   API_REQUEST_MAX_ATTEMPTS: '{{ default .Env.API_REQUEST_MAX_ATTEMPTS "32" }}',
   FOLOOSI_MERCHANT_KEY: '{{ .Env.FOLOOSI_MERCHANT_KEY }}',
+  CHECKOUT_PUBLIC_KEY: '{{ default .Env.CHECKOUT_PUBLIC_KEY "" }}',
 }

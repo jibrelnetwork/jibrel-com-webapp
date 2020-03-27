@@ -1,10 +1,11 @@
 // types
 export { InvestApplication } from 'store/types/invest'
+export { DepositOperation } from 'store/types/operations'
+
 export {
   InvestApplicationStore,
   InitStatus,
 } from './types'
-export { DepositOperation } from 'store/types/operations'
 
 export {
   // events
@@ -20,3 +21,16 @@ export {
   $FoloosiPayment,
   $InvestmentAmount,
 } from './model'
+
+export {
+  // events
+  checkoutInit,
+
+  // effects
+  createDeposit,
+
+  // stores
+  $DepositPending,
+  $CheckoutFrames,
+  $CheckoutInitStatus,
+} from './checkout'

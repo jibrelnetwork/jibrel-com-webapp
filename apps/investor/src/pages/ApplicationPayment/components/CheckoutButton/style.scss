@@ -1,0 +1,56 @@
+@import '~@jibrelcom/ui/src/theme/colors';
+@import '~@jibrelcom/ui/src/theme/fonts';
+@import '~@jibrelcom/ui/src/utils/scss/flex';
+@import '~@jibrelcom/ui/src/utils/scss/iconColor';
+
+.title {
+  @include flex-row;
+
+  padding-bottom: 0;
+  align-items: center;
+}
+
+.caption {
+  @include font-caption;
+
+  margin-top: 8px;
+  color: $color-black-60;
+}
+
+.status {
+  margin-bottom: 64px;
+}
+
+.loader {
+  padding: 37px 0;
+  background: $color-black-5;
+  border-radius: 24px;
+}
+
+.error {
+  @include font-caption;
+
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  background: $color-red-10;
+  border-radius: 24px;
+  padding: 24px;
+  color: $color-black;
+}
+
+.unavailable {
+  @include icon-color($color-red);
+
+  width: 32px;
+  height: 32px;
+  margin-right: 24px;
+}
+
+.lock {
+  @include icon-color($color-black-60);
+
+  width: 32px;
+  height: 32px;
+  margin: 0 8px;
+}

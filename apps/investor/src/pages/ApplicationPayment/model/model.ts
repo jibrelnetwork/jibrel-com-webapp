@@ -24,13 +24,14 @@ import {
   DepositOperationStatus,
 } from 'store/types/operations'
 
+import { FoloosiGlobal } from './types/foloosi'
+
 import {
   APIResponsePaymentsOperationDetails,
   APIResponseRetrieveInvestmentApplication,
   InitStatus,
   InvestApplicationStore,
 } from './types'
-import { FoloosiGlobal } from './foloosi'
 
 const unpackAxiosResponse = <T>(response: AxiosResponse<APIResponse<T>>): T => response.data.data
 

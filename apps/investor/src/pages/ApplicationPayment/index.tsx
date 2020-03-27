@@ -23,7 +23,7 @@ import {
 import Investment from './components/Investment'
 import PaymentTabs from './components/PaymentTabs'
 import WireTransfer from './components/WireTransfer'
-import FoloosiButton from './components/FoloosiButton'
+import CheckoutButton from './components/CheckoutButton'
 import style from './style.scss'
 
 interface ApplicationPaymentProps {
@@ -87,7 +87,7 @@ const ApplicationPayment: React.FunctionComponent<ApplicationPaymentProps> = ({
           title={i18n._('ApplicationPayment.Methods.card.title')}
           icon='ic_card_24'
         >
-          <FoloosiButton investmentId={id} />
+          <CheckoutButton investmentId={id} />
         </PaymentTabs.Item>
         <PaymentTabs.Item
           id='account'
