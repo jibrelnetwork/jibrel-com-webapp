@@ -237,6 +237,7 @@ const create = (dirname) => {
                 {
                   loader: require.resolve('sass-loader'),
                   options: {
+                    implementation: require('sass'),
                     sourceMap: isEnvProduction,
                     sassOptions: {
                       includePaths: [
