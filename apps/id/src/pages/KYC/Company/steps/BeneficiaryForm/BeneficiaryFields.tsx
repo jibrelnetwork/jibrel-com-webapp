@@ -67,27 +67,32 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
         validate={isRequired({ i18n })}
         name={`beneficiaries[${index}].firstName`}
         label={i18n._('KYC.Company.beneficiary.form.firstName.label')}
+        id={`__firstName[${index}]`}
       />
       <Input
         name={`beneficiaries[${index}].middleName`}
         label={i18n._('KYC.Company.beneficiary.form.middleName.label')}
+        id={`__middleName[${index}]`}
       />
       <Input
         validate={isRequired({ i18n })}
         name={`beneficiaries[${index}].lastName`}
         label={i18n._('KYC.Company.beneficiary.form.lastName.label')}
+        id={`__lastName[${index}]`}
       />
       <HistoricDateInput
         validate={isRequired({ i18n })}
         hint={i18n._('form.date.hint')}
         name={`beneficiaries[${index}].birthDate`}
         label={i18n._('KYC.Company.beneficiary.form.birthDate.label')}
+        id={`__birthDate[${index}]`}
       />
       <CountrySelect
         validate={isRequired({ i18n })}
         name={`beneficiaries[${index}].nationality`}
         label={i18n._('KYC.Company.beneficiary.form.nationality.label')}
         placeholder={i18n._('KYC.Company.beneficiary.form.nationality.placeholder')}
+        id={`__nationality[${index}]`}
       />
       <h3 className={style.groupTitle}>
         {i18n._('KYC.Company.beneficiary.form.personalGroupTitle')}
@@ -96,28 +101,34 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
         validate={isRequired({ i18n })}
         hint={i18n._('form.phoneNumber.hint')}
         name={`beneficiaries[${index}].phoneNumber`}
+        id={`__phoneNumber[${index}]`}
       />
       <Input
         validate={isRequired({ i18n })}
         name={`beneficiaries[${index}].email`}
         label={i18n._('KYC.Company.beneficiary.form.email.label')}
+        id={`__email[${index}]`}
       />
       <Input
         validate={isRequired({ i18n })}
         name={`beneficiaries[${index}].streetAddress`}
         label={i18n._('KYC.Company.beneficiary.form.streetAddress.label')}
+        id={`__streetAddress[${index}]`}
       />
       <Input
         name={`beneficiaries[${index}].apartment`}
         label={i18n._('KYC.Company.beneficiary.form.apartment.label')}
+        id={`__apartment[${index}]`}
       />
       <Input
         name={`beneficiaries[${index}].city`}
         label={i18n._('KYC.Company.beneficiary.form.city.label')}
+        id={`__city[${index}]`}
       />
       <Input
         name={`beneficiaries[${index}].postCode`}
         label={i18n._('KYC.Company.beneficiary.form.postCode.label')}
+        id={`__postCode[${index}]`}
       />
       <CountrySelect
         validate={isRequired({ i18n })}
@@ -131,6 +142,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
         placeholder={i18n._('KYC.document.placeholder')}
         name={`beneficiaries[${index}].proofOfAddressDocument`}
         label={i18n._('KYC.Company.beneficiary.form.proofOfAddressDocument.label')}
+        id={`__proofOfAddress[${index}]`}
         {...(get(documents, `beneficiaries[${index}].proofOfAddressDocument`,  emptyFileField))}
       />
       <h3 className={style.groupTitle}>
@@ -140,12 +152,14 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
         validate={isRequired({ i18n })}
         name={`beneficiaries[${index}].passportNumber`}
         label={i18n._('KYC.Company.beneficiary.form.passportNumber.label')}
+        id={`__passportNumber[${index}]`}
       />
       <HistoricDateInput
         validate={isRequired({ i18n })}
         hint={i18n._('form.date.hint')}
         name={`beneficiaries[${index}].passportExpirationDate`}
         label={i18n._('KYC.Company.beneficiary.form.passportExpirationDate.label')}
+        id={`__passportExpirationDate[${index}]`}
       />
       <FileInput
         onUpload={uploadDocument}
@@ -153,6 +167,7 @@ export const BeneficiaryFields: React.FunctionComponent<BeneficiaryFieldsProps> 
         placeholder={i18n._('KYC.document.placeholder')}
         name={`beneficiaries[${index}].passportDocument`}
         label={i18n._('KYC.Company.beneficiary.form.passportDocument.label')}
+        id={`__passportDocument[${index}]`}
         {...(get(documents, `beneficiaries[${index}].passportDocument`,  emptyFileField))}
       />
     </section>

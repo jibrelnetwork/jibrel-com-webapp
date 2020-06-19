@@ -43,6 +43,7 @@ export const DirectorFields: React.FunctionComponent<DirectorFieldsProps>  = ({
         validate={isRequired({ i18n })}
         name={`directors[${index}].fullName`}
         label={i18n._('KYC.Company.director.form.fullName.label')}
+        id='fullName'
       />
     </section>
   )

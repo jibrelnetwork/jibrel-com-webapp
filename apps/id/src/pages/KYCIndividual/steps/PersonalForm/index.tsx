@@ -44,31 +44,37 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
           validate={isRequired({ i18n })}
           label={i18n._('KYC.Personal.personal.form.firstName.label')}
           name='firstName'
+          id='__firstName'
         />
         <Input
           validate={isRequired({ i18n })}
           label={i18n._('KYC.Personal.personal.form.lastName.label')}
           name='lastName'
+          id='__lastName'
         />
         <Input
           label={i18n._('KYC.Personal.personal.form.middleName.label')}
           name='middleName'
+          id='__middleName'
         />
         <Input
           label={i18n._('KYC.Personal.personal.form.alias.label')}
           name='alias'
+          id='__alias'
         />
         <HistoricDateInput
           validate={isRequired({ i18n })}
           hint={i18n._('form.date.hint')}
           label={i18n._('KYC.Personal.personal.form.birthDate.label')}
           name='birthDate'
+          id='__birthDate'
         />
         <CountrySelect
           validate={isRequired({ i18n })}
           label={i18n._('KYC.Personal.personal.form.nationality.label')}
           placeholder={i18n._('KYC.Personal.personal.form.nationality.placeholder')}
           name='nationality'
+          id='__nationality'
         />
         <h3 className={style.groupTitle}>
           {i18n._('KYC.Personal.personal.form.passportGroupTitle')}
@@ -77,12 +83,14 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
           validate={isRequired({ i18n })}
           label={i18n._('KYC.Personal.personal.form.passportNumber.label')}
           name='passportNumber'
+          id='__passportNumber'
         />
         <HistoricDateInput
           validate={isRequired({ i18n })}
           hint={i18n._('form.date.hint')}
           label={i18n._('KYC.Personal.personal.form.passportExpirationDate.label')}
           name='passportExpirationDate'
+          id='__passportExpirationDate'
         />
         <FileInput
           onUpload={uploadDocument}
@@ -90,9 +98,12 @@ const PersonalForm: React.FunctionComponent<PersonalFormProps> = ({
           placeholder={i18n._('KYC.document.placeholder')}
           label={i18n._('KYC.Personal.personal.form.passportDocument.label')}
           name='passportDocument'
+          id='__passportDocument'
         />
       </div>
-      <BigButtonSubmit className={style.submit}>
+      <BigButtonSubmit className={style.submit}
+        id='__nextButton'
+      >
         {i18n._('KYC.form.action.next')}
       </BigButtonSubmit>
     </form>

@@ -40,6 +40,7 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
           label={i18n._('KYC.Personal.income.form.occupation.label')}
           placeholder={i18n._('KYC.Personal.income.form.occupation.placeholder')}
           name='occupation'
+          id='__occupation'
         />
         <OtherSelect
           validate={isRequired({ i18n })}
@@ -48,9 +49,12 @@ const IncomeForm: React.FunctionComponent<IncomeFormProps> = ({
           label={i18n._('KYC.Personal.income.form.incomeSource.label')}
           placeholder={i18n._('KYC.Personal.income.form.incomeSource.placeholder')}
           name='incomeSource'
+          id='__incomeSource'
         />
       </div>
-      <BigButtonSubmit className={style.submit}>
+      <BigButtonSubmit className={style.submit}
+        id='__nextButton'
+      >
         {i18n._('KYC.form.action.finish')}
       </BigButtonSubmit>
     </form>

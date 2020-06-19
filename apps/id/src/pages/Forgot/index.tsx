@@ -115,13 +115,15 @@ const ForgotForm: React.FunctionComponent = (props: FormRenderProps<ForgotPasswo
       <div className={authStyle.fields}>
         <Input
           validate={isRequired({ i18n })}
+          id='__forgotEmailField'
           className={authStyle.field}
           label={i18n._('Forgot.form.email.label')}
           name='email'
           maxLength={256}
         />
       </div>
-      <BigButtonSubmit className={authStyle.submit}>
+      <BigButtonSubmit className={authStyle.submit}
+        id='__resetPassButton'>
         {i18n._('Forgot.form.submit')}
       </BigButtonSubmit>
       <div className={authStyle.switch}>

@@ -59,6 +59,7 @@
   "dependencies": {
     "@babel/plugin-proposal-optional-chaining": "^7.8.3",
     "@babel/runtime-corejs3": "~7.7.4",
-    "core-js": "~3.4.2"
+    "core-js": "~3.4.2",
+    "n": "~6.5.1"
   }
 }

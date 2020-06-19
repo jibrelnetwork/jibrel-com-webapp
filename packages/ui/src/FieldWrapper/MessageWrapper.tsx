@@ -25,7 +25,9 @@ export const MessageWrapper: React.FunctionComponent<MessageWrapperProps> = ({
         className,
       ])}>
       {children}
-      <p className={style.message}>{message}</p>
+      <p className={style.message}>
+        {message}
+      </p>
     </div>
   )
 }

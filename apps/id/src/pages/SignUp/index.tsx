@@ -62,18 +62,21 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
       <div className={auth.fields}>
         <Input
           validate={isRequired({ i18n })}
+          id='__firstName'
           label={i18n._('Signup.form.firstName.label')}
           name='firstName'
           maxLength={30}
         />
         <Input
           validate={isRequired({ i18n })}
+          id='__lastName'
           label={i18n._('Signup.form.lastName.label')}
           name='lastName'
           maxLength={30}
         />
         <Input
           validate={isRequired({ i18n })}
+          id='__email'
           label={i18n._('Signup.form.email.label')}
           name='email'
         />
@@ -87,11 +90,14 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
             values.firstName,
           ]}
           name='password'
+          id='__password'
+        
           withIndicator
         />
       </div>
       <Checkbox
         validate={isRequired({ i18n })}
+        id='__isAgreedDocuments'
         name='isAgreedDocuments'
       >
         <span
@@ -101,12 +107,14 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
           }}
         />
       </Checkbox>
-      <BigButtonSubmit className={style.submit}>
+      <BigButtonSubmit className={style.submit}
+        id='__createAccount'>
         {i18n._('Signup.form.submit')}
       </BigButtonSubmit>
       <div className={style.signin}>
         <span>{i18n._('Signup.alreadyHaveAccount')}</span>
         <InternalLink
+          id='__login'
           name='Login'
           className={style.action}
         >

@@ -66,22 +66,26 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
                 validate={isRequired({ i18n })}
                 label={i18n._('KYC.Company.company.form.companyName.label')}
                 name='companyName'
+                id='__companyName'
               />
               <Input
                 validate={isRequired({ i18n })}
                 label={i18n._('KYC.Company.company.form.tradingName.label')}
                 name='tradingName'
+                id='__tradingName'
               />
               <HistoricDateInput
                 validate={isRequired({ i18n })}
                 hint={i18n._('form.date.hint')}
                 label={i18n._('KYC.Company.company.form.dateOfIncorporation.label')}
                 name='dateOfIncorporation'
+                id='__dateOfIncorporation'
               />
               <Input
                 validate={isRequired({ i18n })}
                 label={i18n._('KYC.Company.company.form.placeOfIncorporation.label')}
                 name='placeOfIncorporation'
+                id='__placeOfIncorporation'
               />
               <h3 className={style.groupTitle}>
                 {i18n._('KYC.Company.company.form.documentationGroupTitle')}
@@ -93,6 +97,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
                 label={i18n._('KYC.Company.company.form.commercialRegister.label')}
                 {...(get(documents, 'commercialRegister', emptyFileField))}
                 name='commercialRegister'
+                id='__commercialRegister'
               />
               <FileInput
                 onUpload={uploadDocument}
@@ -101,6 +106,7 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
                 label={i18n._('KYC.Company.company.form.shareholderRegister.label')}
                 {...(get(documents, 'shareholderRegister', emptyFileField))}
                 name='shareholderRegister'
+                id='__shareholderRegister'
               />
               <FileInput
                 onUpload={uploadDocument}
@@ -109,10 +115,13 @@ const CompanyInformationFormComponent: React.FunctionComponent<FormProps> = ({
                 placeholder={i18n._('KYC.document.placeholder')}
                 {...(get(documents, 'articlesOfIncorporation', emptyFileField))}
                 name='articlesOfIncorporation'
+                id='__articlesOfIncorporation'
               />
               {submitError && <div className={style.submitError}>{submitError}</div>}
             </div>
-            <BigButtonSubmit className={style.submit}>
+            <BigButtonSubmit className={style.submit}
+              id='__nextButton'
+            >
               {nextLabel}
             </BigButtonSubmit>
           </form>

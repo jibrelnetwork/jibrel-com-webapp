@@ -50,6 +50,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             description={i18n._('KYC.Index.chooseType.individual')}
             iconName='human'
             isActive={kycType === KYCType.individual}
+            id='__indKYC'
           />
         </Grid.Item>
         <Grid.Item
@@ -65,6 +66,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             description={i18n._('KYC.Index.chooseType.institution')}
             iconName='case'
             isActive={kycType === KYCType.institution}
+            id='__instKYC'
           />
         </Grid.Item>
         {kycType !== KYCType.empty && (
@@ -127,6 +129,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               )}
               variant={BigButtonVariant.main}
               className={style.action}
+              id='__startButton'
             >
               {i18n._('KYC.Index.action.start')}
             </BigButton>
@@ -143,6 +146,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               href={`${settings.CMS_ORIGIN}/${languageCode}`}
               variant={BigButtonVariant.secondary}
               className={style.action}
+              id='__backtoMainButton'
             >
               {i18n._('KYC.Index.action.back')}
             </BigButton>

@@ -41,6 +41,7 @@ const Checkbox: React.FunctionComponent<CheckboxProps> = ({
         name={name}
         className={style.field}
         type='checkbox'
+        id='__termsCheckbox'
         disabled={isDisabled}
       />
       <Icon
