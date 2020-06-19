@@ -50,7 +50,6 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             description={i18n._('KYC.Index.chooseType.individual')}
             iconName='human'
             isActive={kycType === KYCType.individual}
-            id='__indKYC'
           />
         </Grid.Item>
         <Grid.Item
@@ -66,7 +65,6 @@ const KYC: React.FunctionComponent<KYCProps> = ({
             description={i18n._('KYC.Index.chooseType.institution')}
             iconName='case'
             isActive={kycType === KYCType.institution}
-            id='__instKYC'
           />
         </Grid.Item>
         {kycType !== KYCType.empty && (
