@@ -118,7 +118,7 @@
   "KYC.Company.director.form.fullName.label": "Full Legal Name",
   "KYC.Company.contact.form.title": "Primary Contact",
   "KYC.Company.contact.form.personalGroupTitle": "Personal Information",
-  "KYC.Company.contact.form.firstName.label": "Firat Name",
+  "KYC.Company.contact.form.firstName.label": "First Name",
   "KYC.Company.contact.form.lastName.label": "Last Name",
   "KYC.Company.contact.form.middleName.label": "Middle Name (Optional)",
   "KYC.Company.contact.form.birthDate.label": "Date of Birth",
