@@ -18,6 +18,7 @@ export const withMessage = <P extends React.PropsWithoutRef<JSX.IntrinsicElement
     ...props
   }) => (
     <MessageWrapper
+      name={props.name}
       message={message}
       messageType={messageType}
       className={className}
