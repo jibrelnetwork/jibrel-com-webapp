@@ -32,7 +32,7 @@ const Button: React.FunctionComponent<ButtonProps> = ({
         isActive && style.active,
       ])}
       type='button'
-      id={`__${KYCType[type]}KYC`}
+      id={`t_${KYCType[type]}KYC`}
     >
       <Icon name={`ic_${iconName}_24`} className={style.icon} />
       <p className={style.title}>{i18n._(`KYC.Index.button.${KYCType[type]}`)}</p>

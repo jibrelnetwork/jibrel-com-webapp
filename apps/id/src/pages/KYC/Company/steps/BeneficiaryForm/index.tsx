@@ -121,15 +121,13 @@ export const Beneficiary: React.FunctionComponent<BeneficiaryProps> = ({
                     ))}
                 </FieldArray>
                 <LinkButton type='button' onClick={(): void => push('beneficiaries', undefined)}
-                  id='__addButton'
+                  id='t_addButton'
                 >
                   {i18n._('KYC.Company.beneficiary.form.button.add')}
                 </LinkButton>
                 {submitError && <div className={style.submitError}>{submitError}</div>}
               </div>
-              <BigButtonSubmit className={style.submit}
-                id='__submitButton'
-              >
+              <BigButtonSubmit className={style.submit}>
                 {nextLabel}
               </BigButtonSubmit>
             </form>

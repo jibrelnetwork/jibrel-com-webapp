@@ -13,6 +13,8 @@ export interface OtherSelectProps extends SelectProps {
   inputValidate: (value: string | void) => string | void;
   options: { [key: string]: string };
   inputLabel?: string;
+  id?: string;
+  name?: string;
 }
 
 const OTHER_VALUE = 'other'
@@ -43,6 +45,7 @@ const OtherSelect: React.FunctionComponent<OtherSelectProps> = (props) => {
       </Select.Select>
       {(value === OTHER_VALUE) && (
         <Input
+          id={`t_${name}`}
           validate={inputValidate}
           name={`${name}Other`}
           label={inputLabel || i18n._('form.other.label')}

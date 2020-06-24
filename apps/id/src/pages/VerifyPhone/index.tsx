@@ -61,12 +61,9 @@ const VerifyPhoneForm: React.FunctionComponent<FormRenderProps<PhoneAPINumberFie
           validate={isRequired({ i18n })}
           ccc={countryData.ccc}
           name='number'
-          id='__number'
         />
       </div>
-      <BigButtonSubmit
-        id = 'submitButton'
-      >
+      <BigButtonSubmit>
         {i18n._('VerifyPhone.form.submit')}
       </BigButtonSubmit>
     </form>

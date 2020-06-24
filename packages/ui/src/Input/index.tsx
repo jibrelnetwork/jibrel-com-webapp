@@ -11,6 +11,7 @@ import {
 
 export interface InputProps {
   type?: string;
+  name: string;
   label: string;
   className?: string;
   classNames?: {
@@ -26,6 +27,7 @@ export interface InputProps {
 
 export const InputBase: React.FunctionComponent<InputProps> = ({
   label,
+  name,
   className,
   classNames = {},
   inputClassName,
@@ -45,6 +47,7 @@ export const InputBase: React.FunctionComponent<InputProps> = ({
       <input
         {...props}
         name={name}
+        id={`t_${name}`}
         type={type}
         className={cc([
           style.input,

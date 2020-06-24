@@ -17,6 +17,8 @@ import {
 export interface PasswordInputProps {
   onScoreChange?: (score: number) => void;
   checkPasswordStrength?: CheckPasswordStrengthHandler;
+  name:string;
+  id?: string;
   userInputs?: string[];
   label?: string;
   withIndicator?: boolean;
@@ -25,6 +27,8 @@ export interface PasswordInputProps {
 const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputProps> = ({
   onScoreChange = noop,
   checkPasswordStrength = undefined,
+  id,
+  name,
   userInputs,
   label,
   withIndicator = false,
@@ -43,6 +47,8 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
     >
       <Input
         {...props}
+        name={name}
+        id={`t_${name}`}
         value={value}
         classNames={style}
         type={isOpen ? 'text' : 'password'}
@@ -58,6 +64,8 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
       )}
       <button
         onClick={(): void => setIsOpen(!isOpen)}
+        id={`t_open_${name}`}
+        name={name}
         className={style.button}
         type='button'
       >

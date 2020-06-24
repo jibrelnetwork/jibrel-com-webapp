@@ -12,6 +12,7 @@ import {
 } from '../FieldWrapper'
 
 export interface HistoricDateInputProps {
+  id?: string;
   label?: string;
   className?: string;
   hasError?: boolean;
@@ -37,6 +38,8 @@ const format = () => (value: string | void): string | void => {
 }
 
 const HistoricDateInput: React.FunctionComponent<GenericFieldProps & HistoricDateInputProps> = ({
+  id,
+  name,
   label,
   className,
   hasError = false,
@@ -51,6 +54,7 @@ const HistoricDateInput: React.FunctionComponent<GenericFieldProps & HistoricDat
     ])}>
       <MaskedInput
         mask={[/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
+        id={`t_${name}`}
         placeholder='DD-MM-YYYY'
         className={style.input}
         disabled={isDisabled}

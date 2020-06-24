@@ -82,37 +82,31 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
                     label={i18n._('KYC.Company.address.form.streetAddress.label')}
                     name='companyAddressRegistered.streetAddress'
                     maxLength={256}
-                    id='__streetAddress'
                   />
                   <Input
                     label={i18n._('KYC.Company.address.form.apartment.label')}
                     name='companyAddressRegistered.apartment'
-                    id='__apartment'
                   />
                   <Input
                     validate={isRequired({i18n})}
                     label={i18n._('KYC.Company.address.form.city.label')}
                     name='companyAddressRegistered.city'
                     maxLength={256}
-                    id='__city'
                   />
                   <Input
                     label={i18n._('KYC.Company.address.form.postCode.label')}
                     name='companyAddressRegistered.postCode'
                     maxLength={256}
-                    id='__postCode'
                   />
                   <CountrySelect
                     validate={isRequired({i18n})}
                     label={i18n._('KYC.Company.address.form.country.label')}
                     placeholder={i18n._('KYC.Company.address.form.country.placeholder')}
                     name='companyAddressRegistered.country'
-                    id='__country'
                   />
                   <Checkbox
                     onChange={handleCheckboxChange(form.change, haveCompanyAddressPrincipal)}
                     name={CHECKBOX_NAME}
-                    id='__checkbox'
                   >
                     {i18n._('KYC.Company.address.form.differentAddress')}
                   </Checkbox>
@@ -126,29 +120,24 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
                         name={`${PRINCIPAL_ADDRESS_NAME}.streetAddress`}
                         label={i18n._('KYC.Company.address.form.streetAddress.label')}
                         maxLength={256}
-                        id='__streetAddress2'
                       />
                       <Input
                         name={`${PRINCIPAL_ADDRESS_NAME}.apartment`}
                         label={i18n._('KYC.Company.address.form.apartment.label')}
                         maxLength={256}
-                        id='__apartment2'
                       />
                       <Input
                         validate={isRequired({i18n})}
                         name={`${PRINCIPAL_ADDRESS_NAME}.city`}
                         label={i18n._('KYC.Company.address.form.city.label')}
                         maxLength={256}
-                        id='__city2'
                       />
                       <Input
                         name={`${PRINCIPAL_ADDRESS_NAME}.postCode`}
                         label={i18n._('KYC.Company.address.form.postCode.label')}
                         maxLength={256}
-                        id='__postCode2'
                       />
                       <CountrySelect
-                        id='__countrySelect2'
                         validate={isRequired({i18n})}
                         name={`${PRINCIPAL_ADDRESS_NAME}.country`}
                         label={i18n._('KYC.Company.address.form.country.label')}
@@ -158,9 +147,7 @@ export const RegisteredOfficeAddressFormComponent: React.FunctionComponent<FormP
                   )}
                   {submitError && <div className={style.submitError}>{submitError}</div>}
                 </div>
-                <BigButtonSubmit className={style.submit}
-                  id='__nextButton'
-                >
+                <BigButtonSubmit className={style.submit}>
                   {nextLabel}
                 </BigButtonSubmit>
               </form>

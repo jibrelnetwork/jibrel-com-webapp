@@ -76,7 +76,7 @@ const ResetSuccess: React.FunctionComponent<{ email: string }> = ({
           bigButtonStyle.button,
           bigButtonStyle.main,
         ])}
-        id='__login'
+        id='t_login'
       >
         {i18n._('Reset.success.login')}
       </Link>
@@ -141,7 +141,6 @@ class Reset extends Component<ResetProps, ResetState> {
             checkPasswordStrength={checkPasswordStrength}
             label={i18n._('Reset.form.password.label')}
             name='password'
-            id='__password'
             maxLength={256}
             withIndicator
           />
@@ -149,13 +148,10 @@ class Reset extends Component<ResetProps, ResetState> {
             validate={isMatchedPassword({ i18n })}
             label={i18n._('Reset.form.passwordConfirm.label')}
             name='passwordConfirm'
-            id='__passwordConfirm'
             maxLength={256}
           />
         </div>
-        <BigButtonSubmit
-          id='__buttonSubmit'
-        >
+        <BigButtonSubmit>
           {i18n._('Reset.form.submit')}
         </BigButtonSubmit>
       </form>

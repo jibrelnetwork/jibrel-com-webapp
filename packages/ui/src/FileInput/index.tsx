@@ -15,6 +15,8 @@ export interface FileInputProps {
   onUpload: (file: File) => Promise<string>;
   onSetUploadError: (err: string | undefined) => void;
   onSetUploadProgress: (isLoading: boolean) => void;
+  id?: string;
+  name: string;
   accept?: string;
   label: string;
   hasError?: boolean;
@@ -70,6 +72,8 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({
   onSetUploadProgress,
   accept = 'image/png,image/jpg,image/jpeg,.pdf',
   hasError = false,
+  id,
+  name,
   label,
   className,
   placeholder,
@@ -138,6 +142,7 @@ const FileInput: React.FunctionComponent<FileInputProps> = ({
         onChange={handleChange}
         className={style.field}
         type='file'
+        id={`t_${name}`}
         accept={accept}
         disabled={isDisabled || isLoading}
         key={value}

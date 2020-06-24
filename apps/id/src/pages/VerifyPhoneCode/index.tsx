@@ -56,7 +56,6 @@ const VerifyPhoneCode: React.FunctionComponent<VerifyPhoneCodeProps> = ({
           name='VerifyPhone'
           className={style.action}
           isDisabled={isLoading}
-          id='__verifyPhone'
         >
           {i18n._('VerifyPhoneCode.form.changeNumber')}
         </InternalLink>

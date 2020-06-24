@@ -127,7 +127,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               )}
               variant={BigButtonVariant.main}
               className={style.action}
-              id='__startButton'
+              id='t_startButton'
             >
               {i18n._('KYC.Index.action.start')}
             </BigButton>
@@ -144,7 +144,7 @@ const KYC: React.FunctionComponent<KYCProps> = ({
               href={`${settings.CMS_ORIGIN}/${languageCode}`}
               variant={BigButtonVariant.secondary}
               className={style.action}
-              id='__backtoMainButton'
+              id='t_backtoMainButton'
             >
               {i18n._('KYC.Index.action.back')}
             </BigButton>

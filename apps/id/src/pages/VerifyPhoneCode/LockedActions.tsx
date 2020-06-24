@@ -52,7 +52,7 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
         onClick={onRequestSMS}
         className={cc([style.action, style.wide])}
         isDisabled={isLoading}
-        id='__smsConfirm'
+        id='t_smsConfirm'
       >
         {confirmationVariant === PhoneConfirmationVariant.sms
           ? i18n._('VerifyPhoneCode.actions.resendCode')
@@ -64,7 +64,7 @@ const LockedActions: React.FunctionComponent<LockedActionsProps> = ({
         onClick={onRequestCall}
         className={cc([style.action, style.wide])}
         isDisabled={isLoading}
-        id='__callConfirm'
+        id='t_callConfirm'
       >
         {confirmationVariant === PhoneConfirmationVariant.call
           ? i18n._('VerifyPhoneCode.actions.callAgain')

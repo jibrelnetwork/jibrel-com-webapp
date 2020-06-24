@@ -62,7 +62,7 @@ const VerifyEmailInfo: React.FunctionComponent<VerifyEmailInfoProps> = ({
               bigButtonStyle.button,
               bigButtonStyle.main,
             ])}
-            id='__verifyPhone'
+            id='t_verifyPhone'
           >
             {i18n._('VerifyEmail.continue')}
           </Link>
@@ -79,7 +79,7 @@ const VerifyEmailInfo: React.FunctionComponent<VerifyEmailInfoProps> = ({
               bigButtonStyle.button,
               bigButtonStyle.main,
             ])}
-            id='__close'
+            id='t_close'
           >
             {i18n._('VerifyEmail.error.close')}
           </a>

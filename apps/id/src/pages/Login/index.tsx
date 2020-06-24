@@ -52,7 +52,6 @@ const LoginForm: React.FunctionComponent = ({
       <div className={style.fields}>
         <Input
           validate={isRequired({ i18n })}
-          id='__email'
           className={style.field}
           label={i18n._('Login.form.email.label')}
           name='email'
@@ -60,20 +59,17 @@ const LoginForm: React.FunctionComponent = ({
         />
         <PasswordInput
           validate={isRequired({ i18n })}
-          id='__password'
           className={style.field}
           name='password'
           maxLength={256}
         />
       </div>
       {!!submitError && <div className={style.error}>{submitError}</div>}
-      <BigButtonSubmit className={style.submit}
-        id='__signInButton'
-      >
+      <BigButtonSubmit className={style.submit}>
         {i18n._('Login.form.submit')}
       </BigButtonSubmit>
       <InternalLink
-        id='__Forgot'
+        id='t_forgot'
         name='Forgot'
         className={cc([style.action, style.wide])}
       >
@@ -83,7 +79,7 @@ const LoginForm: React.FunctionComponent = ({
         <span>{i18n._('Login.dontHaveAccount')}</span>
         <InternalLink
           name='SignUp'
-          id='__SignUp'
+          id='t_signUp'
           className={style.action}
         >
           {i18n._('Login.signup')}
