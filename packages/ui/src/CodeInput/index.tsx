@@ -49,7 +49,7 @@ const CodeInput: React.FunctionComponent<CodeInputProps> = ({
       <input
         {...props}
         name={name}
-        id={`t_${name}`}
+        id={id || `t_${name}`}
         className={cc([
           inputStyle.input,
           style.code,

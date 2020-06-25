@@ -75,7 +75,7 @@ const InvestmentInput: React.FunctionComponent<InputProps> = ({
     <input
       {...props}
       onChange={handleOnChange(onChange)}
-      id={`t_${name}`}
+      id={id || `t_${name}`}
       name={name}
       value={value}
       className={style.input}

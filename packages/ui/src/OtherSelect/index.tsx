@@ -45,7 +45,7 @@ const OtherSelect: React.FunctionComponent<OtherSelectProps> = (props) => {
       </Select.Select>
       {(value === OTHER_VALUE) && (
         <Input
-          id={`t_${name}`}
+          id={`t_${name}Input`}
           validate={inputValidate}
           name={`${name}Other`}
           label={inputLabel || i18n._('form.other.label')}

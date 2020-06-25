@@ -48,7 +48,7 @@ const PasswordInput: React.FunctionComponent<GenericFieldProps & PasswordInputPr
       <Input
         {...props}
         name={name}
-        id={`t_${name}`}
+        id={id || `t_${name}`}
         value={value}
         classNames={style}
         type={isOpen ? 'text' : 'password'}
