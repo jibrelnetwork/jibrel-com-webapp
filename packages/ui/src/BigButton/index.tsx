@@ -9,6 +9,8 @@ import { withSubmitButtonUX } from '../FieldWrapper'
 
 export interface CommonBigButtonProps {
   className?: string;
+  id?: string;
+  type?: string;
   variant?: BigButtonVariant;
   isLoading?: boolean;
   isDisabled?: boolean;
@@ -37,6 +39,8 @@ interface ButtonBigButtonProps
 const BigButton: React.FunctionComponent<AnchorBigButtonProps | LinkBigButtonProps | ButtonBigButtonProps> = ({
   variant = BigButtonVariant.main,
   component = 'button',
+  id,
+  type,
   className,
   isLoading = false,
   isDisabled = false,
@@ -54,6 +58,7 @@ const BigButton: React.FunctionComponent<AnchorBigButtonProps | LinkBigButtonPro
         isLoading && style.loading,
         className,
       ])}
+      id ={id || `t_${type}`}
       disabled={isDisabled}
     >
       {!isLoading ? children : (

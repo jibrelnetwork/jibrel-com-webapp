@@ -5,6 +5,7 @@ import { Link } from 'react-router5'
 import style from '../LinkButton/style.scss'
 
 export interface InternalLinkProps extends React.PropsWithoutRef<JSX.IntrinsicElements['a']> {
+  id?: string;
   params?: object;
   name: string;
   className?: string;
@@ -14,6 +15,7 @@ export interface InternalLinkProps extends React.PropsWithoutRef<JSX.IntrinsicEl
 
 const InternalLink: React.FunctionComponent<InternalLinkProps> = ({
   params = { lang: 'en' },
+  id,
   name,
   className,
   isDisabled = false,
@@ -22,6 +24,7 @@ const InternalLink: React.FunctionComponent<InternalLinkProps> = ({
 }) => (
   <Link
     {...props}
+    id={id || `t_${name}`}
     routeParams={params}
     routeName={name}
     className={cc([

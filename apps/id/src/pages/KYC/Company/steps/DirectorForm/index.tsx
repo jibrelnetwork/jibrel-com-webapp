@@ -113,6 +113,7 @@ export const Director: React.FunctionComponent<DirectorProps> = ({
                   onClick={(): void => push('directors', undefined)}
                   className={style.addLink}
                   type='button'
+                  id='t_addDirectorButton'
                 >
                   {i18n._('KYC.Company.director.form.button.add')}
                 </LinkButton>

@@ -9,7 +9,8 @@ import { withField, withFieldUX, withMessage } from '../FieldWrapper'
 import Icon from '../Icon'
 
 export interface SelectProps {
-  name: string;
+  id?: string;
+  name?: string;
   label: string;
   placeholder?: string;
   defaultValue?: string;
@@ -27,6 +28,8 @@ export const NONE_VALUE = '__none__'
 import { getPreviewOption } from './getPreviewOption'
 
 export const Select: React.FunctionComponent<SelectProps> = ({
+  id,
+  name,
   label,
   placeholder,
   defaultValue,
@@ -86,6 +89,7 @@ export const Select: React.FunctionComponent<SelectProps> = ({
         onFocus={handleFocus}
         onBlur={handleBlur}
         disabled={isDisabled}
+        id={id || `t_${name}`}
       >
         {placeholder && (
           <option

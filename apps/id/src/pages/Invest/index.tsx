@@ -35,8 +35,7 @@ const Invest: React.FunctionComponent = () => {
           >
             <BigButton
               component='a'
-              href={`${settings.CMS_ORIGIN}/${languageCode}`}
-            >
+              href={`${settings.CMS_ORIGIN}/${languageCode}`}>
               Return to Main
             </BigButton>
           </div>

@@ -46,6 +46,7 @@ const NotFound: React.FunctionComponent<NotFoundProps> = ({
           className={cc(['error__button', style.button])}
         >
           <BigButton
+            id='t_backToMain'
             component='a'
             href={host}
           >

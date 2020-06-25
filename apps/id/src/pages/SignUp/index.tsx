@@ -87,6 +87,7 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
             values.firstName,
           ]}
           name='password'
+        
           withIndicator
         />
       </div>
@@ -107,6 +108,7 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
       <div className={style.signin}>
         <span>{i18n._('Signup.alreadyHaveAccount')}</span>
         <InternalLink
+          id='t_login'
           name='Login'
           className={style.action}
         >

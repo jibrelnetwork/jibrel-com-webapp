@@ -11,6 +11,8 @@ import {
 } from '../FieldWrapper'
 
 export interface CheckboxProps {
+  id?:string;
+  name:string;
   children: React.ReactNode;
   className?: string;
   checked?: boolean;
@@ -19,6 +21,8 @@ export interface CheckboxProps {
 }
 
 const Checkbox: React.FunctionComponent<CheckboxProps> = ({
+  id,
+  name,
   children,
   className,
   checked = false,
@@ -39,6 +43,7 @@ const Checkbox: React.FunctionComponent<CheckboxProps> = ({
         {...props}
         checked={checked}
         name={name}
+        id={id || `t_${name}`}
         className={style.field}
         type='checkbox'
         disabled={isDisabled}

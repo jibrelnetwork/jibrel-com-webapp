@@ -69,6 +69,7 @@ const LoginForm: React.FunctionComponent = ({
         {i18n._('Login.form.submit')}
       </BigButtonSubmit>
       <InternalLink
+        id='t_forgot'
         name='Forgot'
         className={cc([style.action, style.wide])}
       >
@@ -78,6 +79,7 @@ const LoginForm: React.FunctionComponent = ({
         <span>{i18n._('Login.dontHaveAccount')}</span>
         <InternalLink
           name='SignUp'
+          id='t_signUp'
           className={style.action}
         >
           {i18n._('Login.signup')}

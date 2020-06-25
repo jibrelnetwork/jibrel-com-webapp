@@ -29,7 +29,7 @@ export const MessageWrapper: React.FunctionComponent<MessageWrapperProps> = ({
     >
       {children}
       <p
-        id={`__${name}-message`}
+        id={`t_${name}-message`}
         className={style.message}
       >
         {message}

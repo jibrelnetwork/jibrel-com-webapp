@@ -10,7 +10,9 @@ import {
 } from '../FieldWrapper'
 
 export interface InputProps {
+  id?: string;
   type?: string;
+  name: string;
   label: string;
   className?: string;
   classNames?: {
@@ -25,7 +27,9 @@ export interface InputProps {
 }
 
 export const InputBase: React.FunctionComponent<InputProps> = ({
+  id,
   label,
+  name,
   className,
   classNames = {},
   inputClassName,
@@ -45,6 +49,7 @@ export const InputBase: React.FunctionComponent<InputProps> = ({
       <input
         {...props}
         name={name}
+        id={id || `t_${name}`}
         type={type}
         className={cc([
           style.input,

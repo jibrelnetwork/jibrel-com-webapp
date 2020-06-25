@@ -76,6 +76,7 @@ const ResetSuccess: React.FunctionComponent<{ email: string }> = ({
           bigButtonStyle.button,
           bigButtonStyle.main,
         ])}
+        id='t_login'
       >
         {i18n._('Reset.success.login')}
       </Link>

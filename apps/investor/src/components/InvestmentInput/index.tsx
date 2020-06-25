@@ -15,6 +15,8 @@ type OnChangeHandler = ((event?: React.ChangeEvent<HTMLInputElement>) => void) |
 
 interface InputProps {
   onChange?: OnChangeHandler;
+  id?: string;
+  name: string;
   value?: string;
   className?: string;
   isDisabled?: boolean;
@@ -62,6 +64,8 @@ const handleOnChange = (onChange: OnChangeHandler) => (event: React.ChangeEvent<
 
 const InvestmentInput: React.FunctionComponent<InputProps> = ({
   value = '',
+  name,
+  id,
   className,
   onChange,
   isDisabled,
@@ -71,6 +75,8 @@ const InvestmentInput: React.FunctionComponent<InputProps> = ({
     <input
       {...props}
       onChange={handleOnChange(onChange)}
+      id={id || `t_${name}`}
+      name={name}
       value={value}
       className={style.input}
       disabled={isDisabled}
