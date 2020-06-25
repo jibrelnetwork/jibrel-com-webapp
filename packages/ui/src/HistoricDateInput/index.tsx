@@ -54,7 +54,7 @@ const HistoricDateInput: React.FunctionComponent<GenericFieldProps & HistoricDat
     ])}>
       <MaskedInput
         mask={[/\d/, /\d/, '-', /\d/, /\d/, '-', /\d/, /\d/, /\d/, /\d/]}
-        id={`t_${name}`}
+        id={id || `t_${name}`}
         placeholder='DD-MM-YYYY'
         className={style.input}
         disabled={isDisabled}
