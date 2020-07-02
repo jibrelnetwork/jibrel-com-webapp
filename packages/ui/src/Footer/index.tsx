@@ -19,7 +19,10 @@ const Footer: React.FunctionComponent<FooterProps> = ({
     <div className={grid.centered}>
       <footer className={`${style.footer} footer`}>
         <div className="footer__company">
-          <a href={`${cmsURL}/${languageCode}`} className="footer__logo-link">
+          <a
+            id='t_footerMenuLogo'
+            href={`${cmsURL}/${languageCode}`} className="footer__logo-link"
+          >
             <img className="footer__logo" src={`${cmsURL}/img/ic_logo_mono_32.svg`} />
           </a>
           <div className="footer__copyright">
@@ -31,17 +34,28 @@ const Footer: React.FunctionComponent<FooterProps> = ({
             <h2 className="footer__navigation-section-title">Jibrel</h2>
             <ul className="footer__navigation-list">
               <li className="footer__navigation-item">
-                <a href={`${cmsURL}/${languageCode}/invest`} className="footer__navigation-link">
+                <a
+                  
+                  id='t_footerMenuInvest'
+                  href={`${cmsURL}/${languageCode}/invest`} className="footer__navigation-link">
                   {i18n._('navigation.invest')}
                 </a>
               </li>
               <li className="footer__navigation-item">
-                <a href={`${cmsURL}/${languageCode}/raise`} className="footer__navigation-link">
+                <a
+                  id='t_footerMenuRaise'
+                  href={`${cmsURL}/${languageCode}/raise`}
+                  className="footer__navigation-link"
+                >
                   {i18n._('navigation.raise')}
                 </a>
               </li>
               <li className="footer__navigation-item">
-                <a href={`${cmsURL}/${languageCode}/about`} className="footer__navigation-link">
+                <a
+                  id='t_footerMenuAbout'
+                  href={`${cmsURL}/${languageCode}/about`}
+                  className="footer__navigation-link"
+                >
                   {i18n._('navigation.about')}
                 </a>
               </li>
@@ -54,6 +68,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
             <ul className="footer__navigation-list">
               <li className="footer__navigation-item">
                 <a
+                  id='t_footerMenuRisk'
                   href={`${cmsURL}/docs/en/risk-disclosures.pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -64,6 +79,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
               </li>
               <li className="footer__navigation-item">
                 <a
+                  id='t_footerMenuTerms'
                   href={`${cmsURL}/docs/en/terms-and-conditions.pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -74,6 +90,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
               </li>
               <li className="footer__navigation-item">
                 <a
+                  id='t_footerMenuPrivacy'
                   href={`${cmsURL}/docs/en/privacy-policy.pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -90,7 +107,11 @@ const Footer: React.FunctionComponent<FooterProps> = ({
             </h2>
             <ul className="footer__navigation-list">
               <li className="footer__navigation-item">
-                <a href="mailto:support@jibrel.com" className="footer__navigation-link">
+                <a
+                  id='t_footerMenuSupport'
+                  href="mailto:support@jibrel.com"
+                  className="footer__navigation-link"
+                >
                   {i18n._('navigation.support')}
                 </a>
               </li>
@@ -102,8 +123,11 @@ const Footer: React.FunctionComponent<FooterProps> = ({
             </h2>
             <ul className="footer__navigation-list">
               <li className="footer__navigation-item">
-                <a href="https://twitter.com/JibrelNetwork" target="_blank" rel="noopener noreferrer"
-                  className="footer__navigation-link">
+                <a
+                  id='t_twitter'
+                  href="https://twitter.com/JibrelNetwork" target="_blank" rel="noopener noreferrer"
+                  className="footer__navigation-link"
+                >
                   <svg className="footer__navigation-item-icon" width='24' height='24' viewBox='0 0 24 24'
                       xmlns='http://www.w3.org/2000/svg'>
                     <path
@@ -113,7 +137,9 @@ const Footer: React.FunctionComponent<FooterProps> = ({
                 </a>
               </li>
               <li className="footer__navigation-item">
-                <a href="https://www.facebook.com/jibrelnetwork/" target="_blank" rel="noopener noreferrer"
+                <a
+                  id='t_facebook'
+                  href="https://www.facebook.com/jibrelnetwork/" target="_blank" rel="noopener noreferrer"
                   className="footer__navigation-link">
                   <svg className="footer__navigation-item-icon" width='24' height='24' viewBox='0 0 24 24'
                       xmlns='http://www.w3.org/2000/svg'>
@@ -124,7 +150,9 @@ const Footer: React.FunctionComponent<FooterProps> = ({
                 </a>
               </li>
               <li className="footer__navigation-item">
-                <a href="https://medium.com/@jibrelnetwork" target="_blank" rel="noopener noreferrer"
+                <a
+                  id='t_medium'
+                  href="https://medium.com/@jibrelnetwork" target="_blank" rel="noopener noreferrer"
                   className="footer__navigation-link">
                   <svg className="footer__navigation-item-icon" width='24' height='24' viewBox='0 0 24 24'
                       xmlns='http://www.w3.org/2000/svg'>
@@ -136,6 +164,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
               </li>
               <li className="footer__navigation-item">
                 <a
+                  id='t_linkedin'
                   target="_blank"
                   rel="noopener noreferrer"
                   className="footer__navigation-link"
