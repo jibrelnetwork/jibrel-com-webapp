@@ -43,7 +43,10 @@ const Header: React.FunctionComponent<HeaderProps> = ({
       >
         <div className={cc(['navbar__wrapper', 'common__centered', style.wrapper])}>
           <nav className='navbar__content'>
-            <a href={`//${domain}/${lang}`} className="navbar__logo-link">
+            <a
+            id='t_headerMenuLogo'
+            href={`//${domain}/${lang}`} className="navbar__logo-link"
+            >
               <img
                 className="navbar__logo navbar__logo--black"
                 src={`//${domain}/img/ic_logo_colored_32.svg`}
@@ -65,6 +68,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                   <ul className="navbar__menu-list">
                     <li className="navbar__menu-item">
                       <a
+                        id='t_headerMenuInvest'
                         href={`//${domain}/${lang}/invest`}
                         className="navbar__menu-link"
                       >
@@ -73,6 +77,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     </li>
                     <li className="navbar__menu-item">
                       <a
+                        id='t_headerMenuRaise'
                         href={`//${domain}/${lang}/raise`}
                         className="navbar__menu-link"
                       >
@@ -81,6 +86,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     </li>
                     <li className="navbar__menu-item">
                       <a
+                        id='t_headerMenuAbout'
                         href={`//${domain}/${lang}/about`}
                         className="navbar__menu-link"
                       >
@@ -89,6 +95,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                     </li>
                     <li className="navbar__menu-item">
                       <a
+                        id='t_headerMenuPortfolio'
                         href={`//investor.${domain}`}
                         className={cc([
                           'navbar__menu-link',
@@ -102,6 +109,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                   <ul className="navbar__menu-list">
                     <li className="navbar__menu-item">
                       <a
+                        id='t_headerMenuLogout'
                         href="#"
                         className="navbar__menu-link"
                         onClick={logout}
@@ -115,6 +123,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                 <ul className="navbar__menu-list">
                   <li className="navbar__menu-item">
                     <a
+                      id='t_headerMenuSupport'
                       href="mailto:support@jibrel.com"
                       className="navbar__menu-link"
                     >

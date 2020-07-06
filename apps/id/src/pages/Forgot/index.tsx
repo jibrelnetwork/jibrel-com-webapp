@@ -64,7 +64,7 @@ const ForgotEmailSent: React.FunctionComponent = ({
         )}
         {!isSubmitting && submitError && (
           <div className={style.error}>
-            <span className={style.message}>
+            <span id='t_forgotError' className={style.message}>
               {i18n._('Forgot.error.unable')}
             </span><br />
             <div
@@ -76,6 +76,7 @@ const ForgotEmailSent: React.FunctionComponent = ({
         )}
         {!isSubmitting && !submitError && (
           <button
+            id='t_forgotRepeatButton'
             type='submit'
             className={style.action}
           >
