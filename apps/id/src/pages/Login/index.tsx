@@ -64,7 +64,7 @@ const LoginForm: React.FunctionComponent = ({
           maxLength={256}
         />
       </div>
-      {!!submitError && <div className={style.error}>{submitError}</div>}
+      {!!submitError && <div id='t_loginError' className={style.error}>{submitError}</div>}
       <BigButtonSubmit className={style.submit}>
         {i18n._('Login.form.submit')}
       </BigButtonSubmit>
