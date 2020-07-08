@@ -60,7 +60,7 @@ const StatusError: React.FunctionComponent<StatusErrorProps> = ({
           </BigButton>
           <BigButton
             component='a'
-            href='mailto:support@jibrel.com'
+            href='mailto:support@jibrel.network'
             target='_blank'
             variant={BigButtonVariant.secondary}
           >
