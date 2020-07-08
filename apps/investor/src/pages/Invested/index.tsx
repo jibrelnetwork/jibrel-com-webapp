@@ -18,7 +18,7 @@ const Invested: React.FunctionComponent = () => {
         title={i18n._('Invested.title')}
         buttonLabel={i18n._('Invested.action.back')}
         secondaryButtonLabel={i18n._('Invested.action.support')}
-        secondaryHref='mailto:invest@jibrel.com'
+        secondaryHref='mailto:invest@jibrel.network'
       />
     </CoreLayout>
   )
