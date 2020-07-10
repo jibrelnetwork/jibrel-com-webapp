@@ -21,19 +21,8 @@ export default settings.init<Settings>(
   {
     FRONTEND_ROOT_DOMAIN_NAME: process.env.FRONTEND_ROOT_DOMAIN_NAME,
     API_BASE_URL: process.env.API_BASE_URL,
-    ID_ORIGIN: process.env.ID_ORIGIN,
-    INVESTOR_ORIGIN: process.env.INVESTOR_ORIGIN,
-    CMS_ORIGIN: process.env.CMS_ORIGIN,
-  },
-  {
-    ID_ORIGIN: (value, values) => value
-      ? value
-      : `//id.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
-    INVESTOR_ORIGIN: (value, values) => value
-      ? value
-      : `//investor.${values.FRONTEND_ROOT_DOMAIN_NAME}`,
-    CMS_ORIGIN: (value, values) => value
-      ? value
-      : `//${values.FRONTEND_ROOT_DOMAIN_NAME}`,
+    ID_ORIGIN: process.env.ID_ORIGIN || `//id.${process.env.FRONTEND_ROOT_DOMAIN_NAME}`,
+    INVESTOR_ORIGIN: process.env.INVESTOR_ORIGIN || `//investor.${process.env.FRONTEND_ROOT_DOMAIN_NAME}`,
+    CMS_ORIGIN: process.env.CMS_ORIGIN || `//${process.env.FRONTEND_ROOT_DOMAIN_NAME}`,
   }
 )
