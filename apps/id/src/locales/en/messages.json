@@ -206,7 +206,7 @@
   "Signup.form.firstName.label": "First Name",
   "Signup.form.lastName.label": "Last Name",
   "Signup.form.email.label": "Email",
-  "Signup.form.terms": "I agree to Jibrel’s <a href='{ host }/docs/en/terms-and-conditions.pdf' target='_blank' rel='noopener noreferrer'> Terms and Conditions</a>, <a href='{ host }/docs/en/privacy-policy.pdf' target='_blank' rel='noopener noreferrer'> Privacy Policy</a> and <a href='{ host }/docs/en/risk-disclosures.pdf' target='_blank' rel='noopener noreferrer'> Risk Disclosures</a>.",
+  "Signup.form.terms": "I agree to Jibrel’s <a href=\"{ host }/docs/en/terms-and-conditions.pdf\" target=\"_blank\" rel=\"noopener noreferrer\"> Terms and Conditions</a>, <a href=\"{ host }/docs/en/privacy-policy.pdf\" target=\"_blank\" rel=\"noopener noreferrer\"> Privacy Policy</a> and <a href=\"{ host }/docs/en/risk-disclosures.pdf\" target=\"_blank\" rel=\"noopener noreferrer\"> Risk Disclosures</a>.",
   "Signup.form.submit": "Create Account",
   "Signup.alreadyHaveAccount": "Already have a Jibrel account?",
   "Signup.signin": "SIGN IN",
