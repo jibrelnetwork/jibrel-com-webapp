@@ -21,6 +21,8 @@ import AuthLayout from 'layouts/AuthLayout'
 import { Dispatch } from 'store'
 import { checkPasswordStrength } from 'utils/forms'
 
+console.log(settings)
+
 import {
   FormSubmit,
   SignUpFormFields,
@@ -52,6 +54,7 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
   form: { change },
 }) => {
   const i18n = useI18n()
+  const signupTerms = i18n._('Signup.form.terms', { host: settings.CMS_ORIGIN })
 
   return (
     <form
@@ -97,9 +100,7 @@ const SignUpForm: React.FunctionComponent<FormRenderProps> = ({
       >
         <span
           className={style.terms}
-          dangerouslySetInnerHTML={{
-            __html: i18n._('Signup.form.terms', { host: settings.CMS_ORIGIN }),
-          }}
+          dangerouslySetInnerHTML={{ __html: signupTerms }}
         />
       </Checkbox>
       <BigButtonSubmit className={style.submit}>
