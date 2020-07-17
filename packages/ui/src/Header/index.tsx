@@ -124,7 +124,7 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                   <li className="navbar__menu-item">
                     <a
                       id='t_headerMenuSupport'
-                      href="mailto:support@jibrel.com"
+                      href="mailto:support@jibrel.network"
                       className="navbar__menu-link"
                     >
                       {i18n._('navigation.support')}

@@ -54,8 +54,7 @@ export const user: ModelConfig<UserState> = createModel<UserState>({
       await axios.post('/v1/auth/logout')
       this.setProfile(undefined)
 
-      const idDomain = `id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
-      window.location.href = `//${idDomain}/${rootState.user.languageCode}/login`
+      window.location.href = `${settings.ID_ORIGIN}/${rootState.user.languageCode}/login`
 
       return
     },

@@ -109,7 +109,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
               <li className="footer__navigation-item">
                 <a
                   id='t_footerMenuSupport'
-                  href="mailto:support@jibrel.com"
+                  href="mailto:support@jibrel.network"
                   className="footer__navigation-link"
                 >
                   {i18n._('navigation.support')}

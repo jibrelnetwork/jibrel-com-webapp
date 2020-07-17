@@ -26,7 +26,7 @@ const isLoggedIn: ActivationFnFactory = (
     return true
   }
 
-  const idDomain = `//id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
+  const idDomain = settings.ID_ORIGIN
   const params = `next=invest&slug=${toState.params.slug || ''}`
   window.location.href = `${idDomain}/${user.languageCode}/login?${params}`
 

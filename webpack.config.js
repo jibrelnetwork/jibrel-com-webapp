@@ -311,15 +311,14 @@ const create = (dirname) => {
         PUBLIC_URL: PATHS.PUBLIC_URL,
         GOOGLE_ANALYTICS_ID: process.env.GOOGLE_ANALYTICS_ID,
         HOST_CMS: process.env.NODE_ENV === 'production'
-          ? '//{{ default .Env.FRONTEND_ROOT_DOMAIN_NAME \"jibrel.com\" }}'
-          : `//${process.env.FRONTEND_ROOT_DOMAIN_NAME}`
+          ? '//{{ default .Env.DOMAIN_NAME \"tokenize.jibrel.network\" }}'
+          : `//${process.env.DOMAIN_NAME}`
       }),
 
       new webpack.DefinePlugin({
         'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
         'process.env.BUILD_NUMBER': process.env.BUILD_NUMBER || 'dev',
-        'process.env.FRONTEND_ROOT_DOMAIN_NAME': JSON.stringify(process.env.FRONTEND_ROOT_DOMAIN_NAME),
-        'process.env.API_BASE_URL': JSON.stringify(process.env.API_BASE_URL),
+        'process.env.DOMAIN_NAME': JSON.stringify(process.env.DOMAIN_NAME),
         'process.env.API_REQUEST_MAX_ATTEMPTS': JSON.stringify(process.env.API_REQUEST_MAX_ATTEMPTS),
         'process.env.FOLOOSI_MERCHANT_KEY': JSON.stringify(process.env.FOLOOSI_MERCHANT_KEY),
         '__DEV__': isEnvDevelopment,
@@ -407,7 +406,7 @@ const create = (dirname) => {
 
     devServer: {
       allowedHosts: [
-        '.jibrelcom.local',
+        '.tokenize.local',
       ],
       compress: true,
       clientLogLevel: 'none',

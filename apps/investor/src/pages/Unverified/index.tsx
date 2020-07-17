@@ -15,8 +15,8 @@ const Unverified: React.FunctionComponent = () => {
         imgSrc={heroImage}
         text={i18n._('Unverified.text')}
         title={i18n._('Unverified.title')}
+        href={`${settings.ID_ORIGIN}/kyc`}
         buttonLabel={i18n._('Unverified.action.verify')}
-        href={`//id.${settings.FRONTEND_ROOT_DOMAIN_NAME}/kyc`}
       />
     </CoreLayout>
   )

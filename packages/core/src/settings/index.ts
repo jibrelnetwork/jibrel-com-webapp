@@ -21,7 +21,7 @@ export type SettingsTransforms<S> = {
 }
 
 const getValidConfigValue = (windowValue: string, envValue: string | undefined): string => {
-  if (windowValue.startsWith('{{')) {
+  if (!windowValue || windowValue.startsWith('{{')) {
     return envValue || ''
   }
 
@@ -34,7 +34,7 @@ const transformOrIdentity = (transform: undefined | Function): Function =>
     : identity
 
 export const init = <S>(fromWindow: WindowSettings<S>, fromEnv: EnvSettings<S>, transforms?: SettingsTransforms<S>): S => {
-  const keys = Object.keys(fromWindow) as Array<keyof S>
+  const keys = Object.keys({...fromWindow, ...fromEnv}) as Array<keyof S>
 
   const settings = keys.reduce((memo, key) => {
     memo[key] = getValidConfigValue(fromWindow[key], fromEnv[key])

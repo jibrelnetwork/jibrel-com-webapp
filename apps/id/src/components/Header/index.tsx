@@ -34,7 +34,7 @@ const HeaderEnhanced: React.FunctionComponent<HeaderProps> = ({
     <Header
       logout={logout}
       lang={languageCode}
-      domain={settings.FRONTEND_ROOT_DOMAIN_NAME}
+      domain={settings.DOMAIN_NAME}
       isAuthenticated={isAuthenticated}
     />
   )
