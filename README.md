@@ -10,8 +10,12 @@ Private applications and pages for Jibrel Startup Investments Platform.
 server {
     listen       80;
     server_name  tokenize.local;
+
     location / {
-        proxy_pass https://jibrelcom.develop.jibreldev.com;
+        proxy_pass http://localhost:1337;
+        proxy_http_version 1.1;
+        proxy_set_header Upgrade $http_upgrade;
+        proxy_set_header Connection "Upgrade";
     }
 }
 
@@ -48,8 +52,8 @@ server {
 
         proxy_set_header 'Origin' 'http://id.jibrelcom.develop.jibreldev.com';
         proxy_hide_header 'Access-Control-Allow-Origin';
-        proxy_cookie_domain '.jibrelcom.develop.jibreldev.com' '.jibrelcom.local';
-        proxy_cookie_domain jibrelcom.develop.jibreldev.com jibrelcom.local;
+        proxy_cookie_domain '.jibrelcom.develop.jibreldev.com' '.tokenize.local';
+        proxy_cookie_domain jibrelcom.develop.jibreldev.com tokenize.local;
         proxy_pass https://api.jibrelcom.develop.jibreldev.com;
     }
 }

@@ -406,7 +406,7 @@ const create = (dirname) => {
 
     devServer: {
       allowedHosts: [
-        '.jibrelcom.local',
+        '.tokenize.local',
       ],
       compress: true,
       clientLogLevel: 'none',
