@@ -17,10 +17,8 @@ import axios from '../axios'
 
 import { PaymentsState } from '../types/payments'
 
-const ID_DOMAIN = `id.${settings.FRONTEND_ROOT_DOMAIN_NAME}`
-
 function handle403(lang: LanguageCode): void {
-  window.location.href = `//${ID_DOMAIN}/${lang}/login`
+  window.location.href = `${settings.ID_ORIGIN}/${lang}/login`
 }
 
 export const payments: ModelConfig<PaymentsState> = createModel<PaymentsState>({
