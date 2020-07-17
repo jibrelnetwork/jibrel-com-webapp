@@ -34,6 +34,6 @@ export default settings.init<Settings>(
       : `//id.${values.DOMAIN_NAME}`,
     CMS_ORIGIN: (value, values) => value
       ? value
-      : `//id.${values.DOMAIN_NAME}`,
+      : `//${values.DOMAIN_NAME}`,
   }
 )
