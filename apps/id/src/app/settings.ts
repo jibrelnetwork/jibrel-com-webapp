@@ -17,12 +17,24 @@ declare global {
 }
 
 export default settings.init<Settings>(
-  window.SETTINGS,
-  {
+  window.SETTINGS, {
     DOMAIN_NAME: process.env.DOMAIN_NAME,
-    API_BASE_URL: `//api.${process.env.DOMAIN_NAME}`,
-    ID_ORIGIN: `//id.${process.env.DOMAIN_NAME}`,
-    INVESTOR_ORIGIN: `//investor.${process.env.DOMAIN_NAME}`,
-    CMS_ORIGIN: `//${process.env.DOMAIN_NAME}`,
-  }
+    API_BASE_URL: process.env.API_BASE_URL,
+    ID_ORIGIN: process.env.ID_ORIGIN,
+    INVESTOR_ORIGIN: process.env.INVESTOR_ORIGIN,
+    CMS_ORIGIN: process.env.CMS_ORIGIN,
+  }, {
+    API_BASE_URL: (value, values) => value
+      ? value
+      : `//api.${values.DOMAIN_NAME}`,
+    ID_ORIGIN: (value, values) => value
+      ? value
+      : `//id.${values.DOMAIN_NAME}`,
+    INVESTOR_ORIGIN: (value, values) => value
+      ? value
+      : `//investor.${values.DOMAIN_NAME}`,
+    CMS_ORIGIN: (value, values) => value
+      ? value
+      : `//${values.DOMAIN_NAME}`,
+  },
 )
