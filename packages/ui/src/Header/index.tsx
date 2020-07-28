@@ -124,7 +124,8 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                   <li className="navbar__menu-item">
                     <a
                       id='t_headerMenuSupport'
-                      href="mailto:support@jibrel.network"
+                      href="https://jibrel.zendesk.com/hc/en-us/requests/new"
+                      target='_blank' rel="noopener noreferrer"
                       className="navbar__menu-link"
                     >
                       {i18n._('navigation.support')}

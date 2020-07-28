@@ -109,7 +109,8 @@ const Footer: React.FunctionComponent<FooterProps> = ({
               <li className="footer__navigation-item">
                 <a
                   id='t_footerMenuSupport'
-                  href="mailto:support@jibrel.network"
+                  href="https://jibrel.zendesk.com/hc/en-us/requests/new"
+                  target='_blank' rel="noopener noreferrer"
                   className="footer__navigation-link"
                 >
                   {i18n._('navigation.support')}
