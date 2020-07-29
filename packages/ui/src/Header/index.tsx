@@ -123,8 +123,10 @@ const Header: React.FunctionComponent<HeaderProps> = ({
                 <ul className="navbar__menu-list">
                   <li className="navbar__menu-item">
                     <a
-                      id='t_headerMenuSupport'
-                      href="mailto:support@jibrel.network"
+                      id="t_headerMenuSupport"
+                      href="https://jibrel.zendesk.com/hc/en-us/requests/new"
+                      target="_blank"
+                      rel="noopener noreferrer"
                       className="navbar__menu-link"
                     >
                       {i18n._('navigation.support')}
