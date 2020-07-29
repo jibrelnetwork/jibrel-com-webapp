@@ -90,7 +90,7 @@ const Footer: React.FunctionComponent<FooterProps> = ({
               </li>
               <li className="footer__navigation-item">
                 <a
-                  id='t_footerMenuPrivacy'
+                  id="t_footerMenuPrivacy"
                   href={`${cmsURL}/docs/en/privacy-policy.pdf`}
                   target="_blank"
                   rel="noopener noreferrer"
@@ -108,9 +108,10 @@ const Footer: React.FunctionComponent<FooterProps> = ({
             <ul className="footer__navigation-list">
               <li className="footer__navigation-item">
                 <a
-                  id='t_footerMenuSupport'
+                  id="t_footerMenuSupport"
                   href="https://jibrel.zendesk.com/hc/en-us/requests/new"
-                  target='_blank' rel="noopener noreferrer"
+                  target="_blank"
+                  rel="noopener noreferrer"
                   className="footer__navigation-link"
                 >
                   {i18n._('navigation.support')}
