@@ -6,6 +6,6 @@
   "dependencies": {
     "@types/lodash-es": "~4.17.3",
     "final-form": "~4.18.6",
-    "lodash-es": "~4.17.15"
+    "lodash-es": "~4.17.21"
   }
 }
